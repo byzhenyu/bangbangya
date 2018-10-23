@@ -1,0 +1,134 @@
+<extend name="Common/base"/>
+<block name="style">
+
+</block>
+
+<block name="body">
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">账号管理</div>
+
+                    </div>
+                    <div class="widget-body  am-fr">
+
+                        <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <div class="am-form-group">
+                                <div class="am-btn-toolbar">
+
+                                </div>
+                            </div>
+                        </div>
+                        <form action="__SELF__" method="get">
+                            <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+                                <div class="am-form-group tpl-table-list-select">
+                                </div>
+                            </div>
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                                <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+                                    <input type="text" class="am-form-field" name="keyword" placeholder="请输入账号" value="{$keyword}">
+                                    <span class="am-input-group-btn">
+                                        <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="submit"></button>
+                                    </span>
+                                </div>
+                            </div>
+                            <input name="p" value="1" type="hidden"/>
+                        </form>
+
+                        <div class="am-u-sm-12">
+                            <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                <thead>
+                                    <tr>
+                                        <th width="20"><input class="check-all" type="checkbox"></th>
+                                        <th width="50">ID</th>
+                                        <th>账号</th>
+                                        <th width="15%" class="align-center">创建时间</th>
+                                        <th width="15%" class="align-center">到期时间</th>
+                                        <th width="12%" class="align-center">是否激活</th>
+                                        <th width="10%" class="align-center">状态</th>
+                                        <th width="10%">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <foreach name="userslist" item="v" key="k">
+                                        <tr class="gradeX">
+                                            <td><input value="{$v['user_id']}" class="ids" type="checkbox" name="chkbId"></td>
+                                            <td>{$v['user_id']}</td>
+                                            <td>{$v['user_name']}</td>
+                                            <td class="align-center">{:time_format($v['register_time'], 'Y-m-d')}</td>
+                                            <td class="align-center">{:time_format($v['expire_time'], 'Y-m-d')}</td>
+                                            <td class="align-center">
+                                                {:show_used($v['is_used'])}
+                                            </td>
+                                            <td class="align-center">
+                                                {:show_disabled($v['disabled'])}
+                                                
+                                            </td>
+                                            <td class="f-14">
+                                                <div class="tpl-table-black-operation">
+                                                    <if condition="$v['disabled'] eq 0">
+                                                        <a title="点击启用" href="javascript:void(0)" onclick="changeDisabled({$v['user_id']});">
+                                                            启用
+                                                        </a>
+                                                    </if>
+                                                    <if condition="$v['disabled'] eq 1">
+                                                        <if condition="$v['is_used'] eq 0">
+                                                            <a title="点击禁用" href="javascript:void(0)" class="tpl-table-black-operation-del" onclick="changeDisabled('{$v.user_id}');">
+                                                                禁用
+                                                            </a>
+                                                        <else/>
+                                                            ---
+                                                        </if>
+                                                    </if>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </foreach>
+
+                                <!-- more data -->
+                                </tbody>
+                            </table>
+
+                            <empty name="userslist">
+                                <h4>aOh! 没有相关内容!</h4>
+                            </empty>
+                        </div>
+                        <div class="am-u-lg-12 am-cf">
+                            <div class="am-fr">
+                                <div class="am-pagination tpl-pagination">
+                                    {$page}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        function changeDisabled(user_id){
+            $.ajax({
+                url : "{:U('User/changeDisabled')}",
+                type : "POST",
+                dataType : "json",
+                data : {
+                    "user_id" : user_id,
+                },
+                success : function(data){
+                    toastr(data.info);
+                    if(data.status == 1){
+                        setInterval('reload()', 2000);
+                    }
+                }
+            });
+        }
+        function reload() {
+            location.reload();
+        }
+    </script>
+</block>

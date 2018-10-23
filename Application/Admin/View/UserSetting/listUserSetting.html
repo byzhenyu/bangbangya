@@ -1,0 +1,91 @@
+<extend name="Common/base"/>
+<block name="style">
+
+</block>
+
+<block name="body">
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">用户学习设置列表</div>
+
+                    </div>
+                    <div class="widget-body  am-fr">
+
+                        <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <div class="am-form-group">
+                                <div class="am-btn-toolbar">
+                                    <div class="am-btn-group am-btn-group-xs">
+                                        <button type="button" class="am-btn am-btn-primary am-btn-warning " onclick="goback();">返回</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <form action="__SELF__" method="get">
+                            <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+                                <div class="am-form-group tpl-table-list-select">
+
+                                </div>
+                            </div>
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                                <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+                                    <input type="text" class="am-form-field" name="keyword" placeholder="请输入查询关键字" value="{$keyword}">
+                                    <span class="am-input-group-btn">
+                                        <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="submit"></button>
+                                        <a class="am-btn  am-btn-default am-btn-danger tpl-table-list-field am-icon-refresh" type="button" href="__ACTION__"></a>
+                                    </span>
+                                </div>
+                            </div>
+                            <input name="p" value="1" type="hidden"/>
+                        </form>
+
+                        <div class="am-u-sm-12">
+                            <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                <thead>
+                                    <tr>
+                                        <th width="7%" class="align-center">序号</th>
+                                        <th width="8%" class="align-center">用户昵称</th>
+                                        <th width="15%" class="align-center">单词数量</th>
+                                        <th width="15%" class="align-center">拼写速率</th>
+                                        <th width="15%" class="align-center">智能数量</th>
+                                        <th class="align-center">正确时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <foreach name="list" item="v">
+                                        <tr class="gradeX">
+                                            <td class="align-center">{$v['id']}</td>
+                                            <td class="align-center">{$v['nickname']}</td>
+                                            <td class="align-center">{$v['words_number']}</td>
+                                            <td class="align-center">{$v['spell_rate']}</td>
+                                            <td class="align-center">{$v['intelligent_number']}</td>
+                                            <td class="align-center">{$v['true_time']}</td>
+                                        </tr>
+                                    </foreach>
+                                </tbody>
+                            </table>
+                            <empty name="list">
+                                <h4>aOh! 没有相关内容!</h4>
+                            </empty>
+                        </div>
+                        <div class="am-u-lg-12 am-cf">
+
+                            <div class="am-fr">
+                                <div class="am-pagination tpl-pagination">
+                                    {$page}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+    </script>
+</block>

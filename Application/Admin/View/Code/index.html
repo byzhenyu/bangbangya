@@ -1,0 +1,51 @@
+<extend name="Common/base"/>
+
+<block name="style">
+
+</block>
+
+<block name="body">
+    <div class="row-content am-cf">
+        <div class="row">
+            <form class="am-form" method="post">
+                <fieldset>
+                    <legend>代码生成</legend>
+                    <div class="am-form-group">
+                        <input type="text" name="table_name" value="{:I('table_name')}" placeholder="请输入表名">
+                    </div>
+                    <div class="am-form-group">
+                        <label class="am-checkbox-inline">
+                            <if condition="I('model')">
+                                <input type="checkbox" name="model" value="1" checked> Model
+                                <else />
+                                <input type="checkbox" name="model" value="1"> Model
+                            </if>
+                        </label>
+                        <label class="am-checkbox-inline">
+                            <if condition="I('view')">
+                                <input type="checkbox" name="view" value="1" checked> View
+                                <else />
+                                <input type="checkbox" name="view" value="1"> View
+                            </if>
+                        </label>
+                        <label class="am-checkbox-inline">
+                            <if condition="I('controller')">
+                                <input type="checkbox" name="controller" value="1" checked> Controller
+                                <else />
+                                <input type="checkbox" name="controller" value="1"> Controller
+                            </if>
+                        </label>
+                    </div>
+                    <p><button type="submit" class="am-btn am-btn-default">生成</button></p>
+                    <p>{$info}</p>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+
+    </script>
+</block>

@@ -1,0 +1,84 @@
+<extend name="Common/base"/>
+
+<block name="style">
+
+</block>
+
+<block name="body">
+	<div class="row-content am-cf">
+		<div class="row">
+			<div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+				<div class="widget am-cf">
+					<div class="widget-head am-cf">
+						<div class="widget-title am-cf">用户排名</div>
+					</div>
+					<div class="widget-body am-fr">
+						<div class="am-u-sm-12 am-u-md-8 am-u-lg-8">
+							<div class="am-form-group">
+								<div class="am-btn-toolbar">
+									<div class="am-btn-group am-btn-group-xs">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="am-u-sm-12">
+							<table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black">
+								<thead>
+								<tr>
+									<th><input class="check-all" type="checkbox"></th>
+									<th>排名</th>
+									<th>用户名</th>
+									<th>昵称</th>
+									<th>掌握单词数量</th>
+									<th>操作</th>
+								</tr>
+								</thead>
+								<tbody>
+								<foreach name="list" item="v">
+									<tr class="gradeX">
+										<td><input class="ids" type="checkbox" name="chkbId" value="{$v['user_id']}"></td>
+										<td>{$v['rank']}</td>
+										
+										<td>{$v['user_name']}</td>
+										<td>{$v['nickname']}</td>
+										<td>{$v['master_words_num']}</td>
+										<td class="f-14">
+											<div class="tpl-table-black-operation">
+<!-- 												<a href="javascript:void(0);"
+												   onclick="javascript:recycle({$v['user_id']}, '确认删除?!此步骤无法恢复!', true)"
+												   class="tpl-table-black-operation-del">
+													<i class="am-icon-trash"></i> 删除
+												</a>
+ -->                                                <a href="{:U('listUserTestResult', array('user_id' => $v['user_id']))}">
+                                                    <i class="am-icon-desktop"></i> 查看测试结果
+                                                </a>
+											</div>
+										</td>
+									</tr>
+								</foreach>
+								</tbody>
+							</table>
+							<empty name="list">
+								<h4>aOh! 没有相关内容!</h4>
+							</empty>
+						</div>
+						<div class="am-u-lg-12 am-cf">
+							<div class="am-fr">
+								<div class="am-pagination tpl-pagination">
+									{$page}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+
+	</script>
+</block>
+        
