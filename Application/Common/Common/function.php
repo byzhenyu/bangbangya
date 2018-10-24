@@ -936,77 +936,22 @@ function revRowNumber($number){
     return $number;
 }
 
+
 /**
- * @desc 比较两个单词
- * @param $trueWords string 正确的单词
- * @param $wrongWords string 要比较的错误单词
+ * 商品价格转换 分-》元
+ * @param $fen
+ * @return string
+ */
+function fen_to_yuan($fen) {
+    return sprintf('%.2f', $fen / 100.00);
+    //number_format($fen,2);;
+}
+
+/**
+ * 价格转换 元-》分
+ * @param $yuan
  * @return mixed
  */
-function compareUnitWords($trueWords, $wrongWords){
-    if($trueWords == $wrongWords) return false;
-    $trueLen = strlen($trueWords);
-    $wrongLen = strlen($wrongWords);
-    $array = array();
-    if($trueLen == $wrongLen){
-        for($i=0;$i<$wrongLen;$i++){
-            if($trueWords[$i] == $wrongWords[$i]) continue;
-            $array[] = $i;
-        }
-    }
-    else{
-        $startStep = 0;
-        for($i=0;$i<$wrongLen;$i++) {
-            if ($wrongWords[$i] != $trueWords[$i]) {
-                $startStep = $i;
-                break;
-            }
-        }
-        for($i=$startStep;$i<$wrongLen;$i++) $array[] = $i;
-    }
-    return $array;
-}
-
-function show_pass_level($level){
-    switch ($level){
-        case 1: return '新手';break;
-        case 2: return '高手';break;
-        case 3: return '学霸';break;
-        default: return false; break;
-    }
-}
-
-function show_pass_result($result){
-    switch ($result){
-        case 0: return '错误';break;
-        case 1: return '正确';break;
-        default: return false;break;
-    }
-}
-
-function show_test_result($result){
-    switch ($result){
-        case 0: return '未掌握';break;
-        case 1: return '已掌握';break;
-        default: return false;break;
-    }
-}
-
-function show_code_type($type){
-    switch ($type){
-        case 30: return '一个月'; break;
-        case 90: return '一季度';break;
-        case 180: return '半年'; break;
-        case 365: return '一年';break;
-        default: return '未知';break;
-    }
-}
-
-function activate_code_type(){
-    $array = array(
-        30 => '一个月',
-        90 => '一季度',
-        180 => '半年',
-        365 => '一年'
-    );
-    return $array;
+function yuan_to_fen($yuan) {
+    return intval(strval($yuan * 100));
 }
