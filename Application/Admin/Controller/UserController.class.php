@@ -5,7 +5,9 @@
 namespace Admin\Controller;
 use Think\Controller;
 class UserController extends CommonController {
-    //账号列表
+    /**
+     * 列表
+     */
     public function listUsers(){
         $keyword = I('keyword', '');
         $userModel = D('Admin/User');
@@ -13,34 +15,29 @@ class UserController extends CommonController {
             $where['u.mobile|u.user_name'] = array('like','%'.$keyword.'%');
         }
         //查询所有的学生
-        $field = 'user_id, user_name, register_time, expire_time, is_used, disabled';
+        $field = 'user_id, nick_name,total_money, register_time, disabled';
         $data = $userModel->getUsersListByPage($where, $field);
         $this->userslist = $data['userslist'];
         $this->page = $data['page'];
         $this->display();
     }
 
-    //学生列表
-    public function student(){
-        $keyword = I('keyword', '');
-        $userModel = D('Admin/User');
-        if ($keyword) {
-            $where['u.mobile|u.user_name'] = array('like','%'.$keyword.'%');
+    /**
+     * 编辑
+     */
+    public function editUsers() {
+        $user_id = I('user_id',0,'intval');
+        if (IS_POST) {
+
         }
-        $where['u.is_used'] = 1;
-        $where['u.user_type'] = 0;
-        $field = 'u.user_id, u.user_name, u.used_time, u.expire_time, u.truename, u.school_name, u.disabled, t.teacher_name';
-        //查询所有的学生
-        $data = $userModel->getUsersList($where, $field);
-        $this->userslist = $data['userslist'];
-        $this->page = $data['page'];
+        $this->assign('user_id', $user_id);
         $this->display();
     }
 
     /**
-     * 学生详情
+     * 详情
      */
-    public function userDetail(){
+    public function userDetail() {
         $user_id = I('user_id', 0, 'intval');
         $where['user_id'] = $user_id;
         $userModel = D('Admin/User');
@@ -50,24 +47,26 @@ class UserController extends CommonController {
     }
 
     /**
-     *学生启用，禁用方法
+     *禁用方法
      */
-    public function changeDisabled(){
+    public function changeDisabled() {
         $user_id = I('user_id', 0, 'intval');
         $updateInfo = D('Admin/User')->changeDisabled($user_id);
         $this->ajaxReturn($updateInfo);
     }
 
-    public function del() {
-        $id = I('id', 0);
-        $result = V(0, '删除失败, 未知错误');
-        if($id != 0){
-            $where['user_id'] = array('in', $id);
-            $data['status'] = 0;
-            if( M('User')->data($data)->where($where)->save() !== false){
-                $result = V(1, '删除成功');
-            }
-        }
-        $this->ajaxReturn($result);
+
+    public function recycle() {
+        $this->_recycle('User');
+    }
+
+    // 删除图片
+    public function delFile() {
+        $this->_delFile();
+    }
+
+    // 上传图片
+    public function uploadImg() {
+        $this->_uploadImg();
     }
 }

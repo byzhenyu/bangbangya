@@ -6,9 +6,9 @@ namespace Admin\Model;
 use Think\Model;
 use Common\Tools\Emchat;
 class UserModel extends Model{
-    protected $insertFields = array('user_name','password','mobile','email','head_pic','nickname','truename','school_id','school_name','grade', 'disabled', 'register_time', 'is_used', 'status','user_type');
-    protected $updateFields = array('user_name','password','mobile','email','head_pic','nickname','truename','school_id','school_name','grade', 'disabled', 'register_time', 'is_used', 'status','user_type');
-    protected $selectFields = array('user_id','user_name','password','mobile','email','head_pic','nickname','truename','school_id','school_name','grade', 'disabled', 'register_time', 'is_used', 'status','user_type');
+    protected $insertFields = array('user_name','password','mobile','head_pic','nick_name', 'task_money', 'bonus_money', 'total_money', 'alipay_num', 'alipay_name', 'invitation_code', 'invitation_uid', 'open_id', 'disabled', 'register_time','status');
+    protected $updateFields = array('user_name','password','mobile','head_pic','nick_name', 'task_money', 'bonus_money', 'total_money', 'alipay_num', 'alipay_name', 'invitation_code', 'invitation_uid', 'open_id', 'disabled', 'register_time','status');
+    protected $selectFields = array('user_id','user_name','password','mobile','head_pic','nick_name', 'task_money', 'bonus_money', 'total_money', 'alipay_num', 'alipay_name', 'invitation_code', 'invitation_uid', 'open_id', 'disabled', 'register_time','status');
     protected $_validate = array(
         array('mobile', 'require', '会员手机/账号不能为空！', 1, 'regex', 3),
         array('mobile','isMobile','不是有效的手机号码',1,'function', 3),
@@ -63,7 +63,7 @@ class UserModel extends Model{
      * @param $is_admin
      * @return array
      */
-    public function changeDisabled($user_id){
+    public function changeDisabled($user_id) {
 
         $userInfo = $this->where(array('user_id'=>$user_id))->field('disabled, user_id')->find();
         $dataInfo = $userInfo['disabled'] == 1 ? 0 : 1;
@@ -72,7 +72,7 @@ class UserModel extends Model{
             //改变用户token
             $this->changeToken($userInfo['user_id']);
             return V(1, '操作成功');
-        }else{
+        } else {
             return V(0, '操作成功');
         }
     }
@@ -121,7 +121,7 @@ class UserModel extends Model{
      * @param null $fields
      * @return mixed
      */
-    public function getUserInfo($where, $fields = null){
+    public function getUserInfo($where=[], $fields = null){
         if(is_null($fields)){
             $fields = $this->selectFields;
         }

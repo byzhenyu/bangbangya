@@ -26,24 +26,34 @@
 							</thead>
 							<tbody>
 							<tr>
-								<td><div align="right"><strong>用户名：</strong></div></td>
-								<td>{$userInfo['user_name']}</td>
-							</tr>
-							<tr>
 								<td><div align="right"><strong>昵称：</strong></div></td>
-								<td>{$userInfo['nickname']}</td>
+								<td>{$userInfo['nick_name']}</td>
 							</tr>
 							<tr>
-								<td><div align="right"><strong>手机号：</strong></div></td>
-								<td>{$userInfo['mobile']}</td>
+								<td><div align="right"><strong>头像：</strong></div></td>
+								<td><img style="width: 100px;height: 100px;" src="{$userInfo['mobile']}"></td>
 							</tr>
 							<tr>
-								<td><div align="right"><strong>邮箱：</strong></div></td>
-								<td>{$userInfo['email']}</td>
+								<td><div align="right"><strong>任务币：</strong></div></td>
+								<td>{:fen_to_yuan($userInfo['task_money'])}</td>
+							</tr>
+							<tr>
+								<td><div align="right"><strong>分红金额：</strong></div></td>
+								<td>{:fen_to_yuan($userInfo['bonus_money'])}</td>
+							</tr><tr>
+								<td><div align="right"><strong>总金额：</strong></div></td>
+								<td>{:fen_to_yuan($userInfo['total_money'])}</td>
 							</tr>
 							<tr>
 								<td><div align="right"><strong>注册时间：</strong></div></td>
 								<td>{:time_format($userInfo['register_time'])}</td>
+							</tr>
+							<tr>
+								<td><div align="right"><strong>支付宝账号：</strong></div></td>
+								<td>{$userInfo['alipay_num']}</td>
+							</tr><tr>
+								<td><div align="right"><strong>支付宝真实姓名：</strong></div></td>
+								<td>{$userInfo['alipay_name']}</td>
 							</tr>
 							<tr>
 								<td><div align="right"><strong>邀请码：</strong></div></td>
