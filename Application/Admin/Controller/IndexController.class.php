@@ -10,7 +10,6 @@ class IndexController extends CommonController {
         $admin_id = session('admin_id');
         $menu = D('Admin/Privilege')->getMenu($admin_id);
         $this->assign('menu',$menu);
-
         $this->display();
     }
 
