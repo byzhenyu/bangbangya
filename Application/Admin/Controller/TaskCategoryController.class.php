@@ -14,7 +14,8 @@ namespace Admin\Controller;
  */
 class TaskCategoryController extends CommonController {
     public function listTaskCategory(){
-        $data = D('Admin/TaskCategory')->getTaskCategoryList();
+        $where['status'] = array('eq', 1);
+        $data = D('Admin/TaskCategory')->getTaskCategoryList($where);
         $this->assign('list', $data['list']);
         $this->assign('page', $data['page']);
         $this->display();
@@ -44,11 +45,10 @@ class TaskCategoryController extends CommonController {
         $this->assign('info', $info);
         $this->display();
     }
-    
-    public function del(){
-        $this->_del('TaskCategory', 'id');
-    }
 
+    public function recycle() {
+        $this->_recycle('TaskCategory', 'id');
+    }
     // 删除图片
     public function delFile(){
         $this->_delFile();  //调用父类的方法
