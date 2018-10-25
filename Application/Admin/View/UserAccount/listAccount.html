@@ -1,0 +1,130 @@
+<extend name="Common/base"/>
+<block name="style"></block>
+
+<block name="body">
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">提现列表</div>
+                    </div>
+                    <div class="widget-body  am-fr">
+                        <div class="am-u-sm-12 am-u-md-8 am-u-lg-8">
+                            <div class="am-form-group">
+                                <div class="am-btn-toolbar">
+                                    <div class="am-btn-group am-btn-group-xs">
+                                        <button type="button" class="am-btn am-btn-default am-btn-danger" onclick="javascript:recycle('chkbId', '确认删除?! 删除后无法恢复!', true)">
+                                            <span class="am-icon-trash-o"></span> 批量删除
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form action="__SELF__" method="get">
+                            <div class="am-u-sm-12 am-u-md-4 am-u-lg-4">
+                                <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+                                    <input type="text" class="am-form-field" name="keyword" placeholder="请输入申请人" value="{$keyword}">
+                                    <span class="am-input-group-btn">
+                                        <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="submit"></button>
+                                        <a class="am-btn  am-btn-default am-btn-danger tpl-table-list-field am-icon-refresh" type="button" href="__ACTION__"></a>
+                                    </span>
+                                </div>
+                            </div>
+                            <input name="p" value="1" type="hidden"/>
+                        </form>
+
+                        <div class="am-u-sm-12">
+                            <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                <thead>
+                                <tr>
+                                    <th><input class="check-all" type="checkbox"></th>
+                                    <th width="50">ID</th>
+                                    <th width="10%">申请人</th>
+                                    <th width="10%">类型</th>
+                                    <th width="10%">金额</th>
+                                    <th width="12%">支付宝</th>
+                                    <th width="8%">真实姓名</th>
+                                    <th width="8%">处理人</th>
+                                    <th width="10%">处理时间</th>
+                                    <th width="10%">添加时间</th>
+                                    <th width="8%">审核状态</th>
+                                    <th width="20%">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <foreach name="list" item="v">
+                                    <tr class="gradeX" title="{$v['id']}">
+                                        <td><input class="ids" type="checkbox" name="chkbId" value="{$v['id']}"></td>
+                                        <td>{$v['id']}</td>
+                                        <td>{$v['user_name']}</td>
+                                        <td>
+                                            <if condition="$v['type'] eq 1">
+                                                分红提现
+                                                <else/>
+                                                余额提现
+                                            </if>
+                                        </td>
+                                        <td>{:fen_to_yuan($v['money'])}</td>
+                                        <td>{$v['alipay_num']}</td>
+                                        <td>{$v['alipay_name']}</td>
+                                        <td>{$v['admin_user']}</td>
+                                        <td>
+                                            <if condition="$v['admin_time'] eq '0'">
+                                                <else/>
+                                                {:time_format($v['admin_time'])}
+                                            </if>
+                                        </td>
+                                        <td class="center">
+                                            {:time_format($v['create_time'])}
+                                        </td>
+                                        <td>
+                                            <switch name="v['state']">
+                                                <case value="0">待处理</case>
+                                                <case value="1">通过</case>
+                                                <case value="2">驳回</case>
+                                            </switch>
+                                        </td>
+                                        <td class="f-14">
+                                            <div class="tpl-table-black-operation">
+                                                <if condition="$v['state'] eq 0">
+                                                    <a title="点击通过" href="{:U('UserAccount/State',array('id'=>$v['id'],'state'=>1))}">通过</a>
+                                                    <a title="点击驳回" href="{:U('UserAccount/State',array('id'=>$v['id'],'state'=>2))}" class="tpl-table-black-operation-del">驳回</a>
+                                                </if>
+                                                <a title="点击查看" href="{:U('UserAccount/AccountInfo',array('id'=>$v['id']))}">
+                                                    <i class="am-icon-eye"></i> 查看
+                                                </a>
+                                                <a title="点击删除" href="javascript:void(0)" onclick="javascript:recycle({$v['id']}, '确认删除?!此步骤无法恢复!', true)" class="tpl-table-black-operation-del">
+                                                    <i class="am-icon-trash"></i> 删除
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </foreach>
+
+                                <!-- more data -->
+                                </tbody>
+                            </table>
+
+                            <empty name="list">
+                                <h4>aOh! 没有相关内容!</h4>
+                            </empty>
+                        </div>
+                        <div class="am-u-lg-12 am-cf">
+
+                            <div class="am-fr">
+                                <div class="am-pagination tpl-pagination">
+                                    {$page}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script"></block>
