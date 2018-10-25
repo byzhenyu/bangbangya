@@ -17,7 +17,7 @@ use Think\Model;
 class TaskCategoryModel extends Model {
     protected $insertFields = array('id', 'category_name', 'category_img', 'status');
     protected $updateFields = array('id', 'category_name', 'category_img', 'status');
-
+    protected $selectFields = array('id', 'category_name', 'category_img', 'status');
     protected $_validate = array(
         array('category_name', 'require', '请输入分类名称 ', 1, 'regex', 3),
         array('category_name', '0,10', '您输入的分类名称过长，超过了10个字符数限制', 1, 'length', 3),

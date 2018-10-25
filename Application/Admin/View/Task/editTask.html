@@ -14,7 +14,14 @@
                     </div>
                     <div class="widget-body am-fr">
                         <form action="__ACTION__" method="post" class="ajaxForm am-form tpl-form-border-form tpl-form-border-br">
-                            
+                             <div class="am-form-group">
+                                <label class="am-u-sm-3 am-form-label">上级分类 <span class="tpl-form-line-small-title"></span></label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    <div class="tpl-table-list-select am-align-left" id="goods_cat_id_div" style="width:100%;">
+                                        <input type="hidden" name="category_id" id="goods_cat_id" value="{$info.category_id}" />
+                                    </div>
+                                </div>
+                            </div>
                             <div class="am-form-group">
                                 <label for="title" class="am-u-sm-3 am-form-label">
                                     任务标题
@@ -25,20 +32,7 @@
                                            placeholder="请输入任务标题">
                                     <small></small>
                                 </div>
-                            </div>
-            
-                            <div class="am-form-group">
-                                <label for="category_id" class="am-u-sm-3 am-form-label">
-                                    
-                                    <span class="tpl-form-line-small-title must-input">*</span>
-                                </label>
-                                <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="number" id="category_id" name="category_id" value="{$info['category_id']}"
-                                           placeholder="请输入">
-                                    <small></small>
-                                </div>
-                            </div>
-            
+                            </div>             
                             <div class="am-form-group">
                                 <label for="mobile_type" class="am-u-sm-3 am-form-label">
                                     支持设备 (全部，安卓,苹果)
@@ -200,5 +194,13 @@
 
 <block name="script">
 
+<script type="text/javascript">
+        var catListStr = {$catListStr};
+        var cat_ids = {$cat_ids};
+        $(function(){
+            initCatSelect();
+        })
+</script>
+<script type="text/javascript" charset="utf-8" src="__ADMIN__/js/goods_class.js?v=1.0"></script>
 </block>
         

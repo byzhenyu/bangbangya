@@ -20,10 +20,6 @@ class BannerController extends CommonController{
         $data = $BannerModel->getBannerListByPage($where, $field);
         $this->bannerlist = $data['bannerlist'];
         $this->page = $data['page'];
-       // echo  '<pre>';
-       //  print_r($data);
-       //  echo '</pre>';
-
         $this->display();
      }
      /*

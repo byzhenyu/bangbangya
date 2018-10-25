@@ -988,3 +988,22 @@ function account_log($user_id, $money, $type, $desc = '', $order_sn = ''){
          default: return '非合作商'; break;
      }
  }
+/**
+ * TaskCategroy  or TaskCateInfo
+ * @param $category_id
+ * @return array
+ * 
+ */
+ function TaskCategory($category_id = null,$order = 'id ASC')
+ {
+    $TaskCategoryModel = D('Admin/TaskCategory');
+    $where['status'] = 1;
+    $field = '';
+     if(is_null($category_id))
+     {
+        $data = $TaskCategoryModel->where($where)->order($order)->select();
+     }else{
+        $data = $TaskCategoryModel->where($where)->order($order)->find();
+     }
+     return $data;
+ }

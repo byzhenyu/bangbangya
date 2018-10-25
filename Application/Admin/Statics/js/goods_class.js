@@ -28,10 +28,10 @@ function Select(arr,chg){
         _select.style.height="31px";
         _select.style.float='left';
         _select.name="jsname";
-        _select.options.add(new Option('-请选择商品分类-',""));
+        _select.options.add(new Option('-请选择任务分类-',""));
         for(var i=0;i<arr.length;i++){
             if(arr[i].parent_id==pid){
-                _select.options.add(new Option("|-"+arr[i].cat_name,arr[i].cat_id));
+                _select.options.add(new Option("|-"+arr[i].category_name,arr[i].id));
             }
         }
         var delChildfun=function(obj){

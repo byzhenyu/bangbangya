@@ -22,8 +22,7 @@ class TaskController extends CommonController {
     
     public function editTask(){
         $id = I('id');
-        $taskModel = D('Admin/Task');
-        
+        $taskModel = D('Admin/Task');     
         if (IS_POST) {
             if ($taskModel->create() === false) {
                 $this->ajaxReturn(V(0, $taskModel->getError()));
@@ -39,8 +38,15 @@ class TaskController extends CommonController {
             }
             $this->ajaxReturn(V(0, $taskModel->getDbError()));
         }
-        
         $info = $taskModel->find($id);
+        $categoryList = D('Admin/task_category')->field('id, category_name, category_img')->where('status = 1')->select();
+        echo '<pre>';
+        print_r($categoryList);
+        echo '</pre>';
+        // exit;
+        $cat_ids = array();
+        $this->catListStr = json_encode($categoryList);
+        $this->cat_ids = json_encode($cat_ids);
         $this->assign('info', $info);
         $this->display();
     }

@@ -23,8 +23,7 @@ class TaskCategoryController extends CommonController {
     
     public function editTaskCategory(){
         $id = I('id');
-        $taskCategoryModel = D('Admin/TaskCategory');
-        
+        $taskCategoryModel = D('Admin/TaskCategory');       
         if (IS_POST) {
             if ($taskCategoryModel->create() === false) {
                 $this->ajaxReturn(V(0, $taskCategoryModel->getError()));
@@ -40,7 +39,6 @@ class TaskCategoryController extends CommonController {
             }
             $this->ajaxReturn(V(0, $taskCategoryModel->getDbError()));
         }
-        
         $info = $taskCategoryModel->find($id);
         $this->assign('info', $info);
         $this->display();
