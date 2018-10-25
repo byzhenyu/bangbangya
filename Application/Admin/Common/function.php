@@ -95,14 +95,13 @@ function admin_log($log_info = '', $log_sql = '') {
     M('AdminLog')->add($data);
 }
 
-function show_agent($id) {
-    $name = M('Agent')->where(array('id'=>$id))->getField('agent_name');
-    return $name;
-}
-/*
- *查询学段表信息
- * */
-function show_period($id) {
-    $name = M('CoursePeriod')->where(array('id'=>$id))->getField('period_name');
-    return $name;
+/**
+ * 审核状态
+ */
+function showAuditStatus($audit_status) {
+    switch ($audit_status) {
+        case '0': return '待审核'; break;
+        case '1': return '审核通过'; break;
+        case '2': return '审核未通过'; break;
+    }
 }
