@@ -1,0 +1,56 @@
+<?php
+/**
+ * Copyright (c) 山东六牛网络科技有限公司 https://www.liuniukeji.com
+ *
+ * @Description
+ * @Author         
+ * @Date           2018/10/25
+ * @CreateBy       PhpStorm
+ */
+namespace Admin\Model;
+
+use Think\Model;
+ 
+/**
+ * 任务表模型
+ */
+class TaskModel extends Model {
+    protected $insertFields = array('id', 'title', 'category_id', 'mobile_type', 'end_time', 'price', 'task_num', 'total_price', 'link_url', 'validate_words', 'remark', 'audit_status', 'audit_info', 'add_time', 'status');
+    protected $updateFields = array('id', 'title', 'category_id', 'mobile_type', 'end_time', 'price', 'task_num', 'total_price', 'link_url', 'validate_words', 'remark', 'audit_status', 'audit_info', 'add_time', 'status');
+
+    protected $_validate = array(
+        array('title', 'require', '请输入 任务标题 ', 1, 'regex', 3),
+        array('title', '0,255', '您输入的 任务标题 过长，超过了 255 个字符数限制', 1, 'length', 3),
+        array('category_id', 'require', '请输入  ', 1, 'regex', 3),
+        array('mobile_type', 'require', '请输入 支持设备 (全部，安卓,苹果) ', 1, 'regex', 3),
+        array('mobile_type', '0,10', '您输入的 支持设备 (全部，安卓,苹果) 过长，超过了 10 个字符数限制', 1, 'length', 3),
+        array('end_time', 'require', '请输入 任务截止时间 ', 1, 'regex', 3),
+        array('price', 'require', '请输入 出价金额（分） ', 1, 'regex', 3),
+        array('task_num', 'require', '请输入 任务数量 ', 1, 'regex', 3),
+        array('total_price', 'require', '请输入 总金额(分) ', 1, 'regex', 3),
+        array('link_url', 'require', '请输入 链接地址 ', 1, 'regex', 3),
+        array('link_url', '0,255', '您输入的 链接地址 过长，超过了 255 个字符数限制', 1, 'length', 3),
+        array('validate_words', 'require', '请输入 验证文字内容 ', 1, 'regex', 3),
+        array('validate_words', '0,255', '您输入的 验证文字内容 过长，超过了 255 个字符数限制', 1, 'length', 3),
+        array('remark', 'require', '请输入 备注 ', 1, 'regex', 3),
+        array('remark', '0,255', '您输入的 备注 过长，超过了 255 个字符数限制', 1, 'length', 3),
+        array('audit_status', 'require', '请输入 审核状态0 未审核 1 审核通过 2 审核未通过 ', 1, 'regex', 3),
+        array('audit_info', 'require', '请输入 审核理由说明 ', 1, 'regex', 3),
+        array('audit_info', '0,255', '您输入的 审核理由说明 过长，超过了 255 个字符数限制', 1, 'length', 3),
+        array('add_time', 'require', '请输入 添加时间 ', 1, 'regex', 3),
+        array('status', 'require', '请输入 1正常 0删除 ', 1, 'regex', 3),
+
+    );
+
+    public function getTaskList($where = [], $field = '', $order = '') {
+        $count = $this->where($where)->count();
+        $page = get_page($count);
+        $list = $this->field($field)->where($where)->limit($page['limit'])->order($order)->select();
+        return array(
+            'list' => $list,
+            'page' => $page['page']
+        );
+    }
+    
+}
+        

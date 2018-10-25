@@ -1,0 +1,115 @@
+<extend name="Common/base"/>
+<block name="style">
+    <style>
+        .am-table {
+            font-size: 1.3rem;
+            margin-bottom: 0;
+        }
+        .am-btn{
+            padding:5px 15px;font-size:12px
+        }
+    </style>
+</block>
+<block name="body">
+    <!-- 内容区域 -->
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">提现详情</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <form id="orderForm" action="__ACTION__" method="post" class="ajaxForm">
+                        <table width="100%" class="am-table am-table-bordered">
+                            <thead>
+                            <tr><th colspan="4">提现详情</th></tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><div align="right"><strong>申请人id：</strong></div></td>
+                                <td>{$userInfo['id']}</td>
+                            </tr>
+                            <tr>
+                                <td><div align="right"><strong>申请人：</strong></div></td>
+                                <td>{$userInfo['user_name']}</td>
+                            </tr>
+                            <tr>
+                                <td><div align="right"><strong>金额：</strong></div></td>
+                                <td>{:fen_to_yuan($userInfo['money'])}</td>
+                            </tr>
+                            <tr>
+                                <td><div align="right"><strong>提现账号：</strong></div></td>
+                                <td>{$userInfo['brank_no']}</td>
+                            </tr>
+                            <tr>
+                                <td><div align="right"><strong>开户行：</strong></div></td>
+                                <td>{$userInfo['brank_name']}</td>
+                            </tr>
+                            <tr>
+                                <td><div align="right"><strong>持卡人姓名：</strong></div></td>
+                                <td>{$userInfo['brank_user_name']}</td>
+                            </tr>
+                            <tr>
+                                <td><div align="right"><strong>用户备注：</strong></div></td>
+                                <td>{$userInfo['user_note']}</td>
+                            </tr>
+
+                            <if condition="$userInfo['state'] eq '0'">
+                                <else/>
+                                <tr>
+                                    <td><div align="right"><strong>操作管理员：</strong></div></td>
+                                    <td>{$userInfo['admin_user']}</td>
+                                </tr>
+                                <tr>
+                                    <td><div align="right"><strong>管理员备注：</strong></div></td>
+                                    <td>{$userInfo['admin_note']}</td>
+                                </tr>
+                                <tr>
+                                    <td><div align="right"><strong>管理员处理时间：</strong></div></td>
+                                    <td>
+                                        <if condition="$userInfo['admin_time'] eq '0'">
+                                            暂无
+                                            <else/>
+                                            {:time_format($userInfo['admin_time'])}
+                                        </if>
+                                    </td>
+                                </tr>
+                            </if>
+
+                            <tr>
+                                <td><div align="right"><strong>支付流水号：</strong></div></td>
+                                <td>{$userInfo['trade_no']}</td>
+                            </tr>
+                            <tr>
+                                <td><div align="right"><strong>审核状态：</strong></div></td>
+                                <td>
+                                    <switch name="userInfo['state']">
+                                        <case value="0">待处理</case>
+                                        <case value="1">通过</case>
+                                        <case value="2">驳回</case>
+                                    </switch>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><div align="right"><strong>添加时间：</strong></div></td>
+                                <td>{:time_format($userInfo['add_time'])}</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <table width="100%" class="am-table">
+                            <tbody>
+                            <tr>
+                                <td align="center">
+                                    <button type="button" class="am-btn am-btn-default tpl-btn-bg-color-default " onclick="goback()">返回</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script"></block>

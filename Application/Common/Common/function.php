@@ -975,3 +975,16 @@ function account_log($user_id, $money, $type, $desc = '', $order_sn = ''){
     $data["order_sn"] = $order_sn;
     return M('AccountLog')->add($data);
 }
+
+/**
+ * 合作商类型
+ */
+
+ function getShopLevel($shop_type) {
+     switch ($shop_type){
+         case 1: return '普通合作商';break;
+         case 2: return '金牌合作商';break;
+         case 3: return '白金合作商';break;
+         default: return '非合作商'; break;
+     }
+ }

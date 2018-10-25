@@ -1,0 +1,115 @@
+<extend name="Common/base"/>
+
+<block name="style">
+
+</block>
+
+<block name="body">
+	<div class="row-content am-cf">
+		<div class="row">
+			<div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+				<div class="widget am-cf">
+					<div class="widget-head am-cf">
+						<div class="widget-title am-cf">任务表列表</div>
+					</div>
+					<div class="widget-body am-fr">
+						<div class="am-u-sm-12 am-u-md-8 am-u-lg-8">
+							<div class="am-form-group">
+								<div class="am-btn-toolbar">
+									<div class="am-btn-group am-btn-group-xs">
+										<a type="button" class="am-btn am-btn-default am-btn-success"
+										   href="{:U('Task/editTask')}">
+											<span class="am-icon-plus"></span> 新增
+										</a>
+										<button type="button" class="am-btn am-btn-default am-btn-danger"
+												onclick="javascript:recycle('chkbId', '确认删除?! 删除后无法恢复!', true)">
+											<span class="am-icon-trash-o"></span> 批量删除
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="am-u-sm-12">
+							<table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black">
+								<thead>
+								<tr>
+									<th width="50"><input class="check-all" type="checkbox"></th>
+									<th width="70">序号</th>
+									
+									<th width="10%">任务标题</th>
+									<th width="10%"></th>
+									<th width="10%">支持设备 (全部，安卓,苹果)</th>
+									<th width="10%">任务截止时间</th>
+									<th width="10%">出价金额（分）</th>
+									<th width="10%">任务数量</th>
+									<th width="10%">总金额(分)</th>
+									<th width="10%">链接地址</th>
+									<th width="10%">验证文字内容</th>
+									<th width="10%">备注</th>
+									<th width="10%">审核状态0 未审核 1 审核通过 2 审核未通过</th>
+									<th width="10%">审核理由说明</th>
+									<th width="10%">添加时间</th>
+									<th width="10%">1正常 0删除</th>
+									<th width="10%">操作</th>
+								</tr>
+								</thead>
+								<tbody>
+								<foreach name="list" item="v">
+									<tr class="gradeX">
+										<td><input class="ids" type="checkbox" name="chkbId" value="{$v['id']}"></td>
+										<td>{$v['id']}</td>
+										
+										<td>{$v['title']}</td>
+										<td>{$v['category_id']}</td>
+										<td>{$v['mobile_type']}</td>
+										<td>{$v['end_time']}</td>
+										<td>{$v['price']}</td>
+										<td>{$v['task_num']}</td>
+										<td>{$v['total_price']}</td>
+										<td>{$v['link_url']}</td>
+										<td>{$v['validate_words']}</td>
+										<td>{$v['remark']}</td>
+										<td>{$v['audit_status']}</td>
+										<td>{$v['audit_info']}</td>
+										<td>{$v['add_time']}</td>
+										<td>{$v['status']}</td>
+										<td class="f-14">
+											<div class="tpl-table-black-operation">
+												<a href="{:U('Task/editTask', array('id' => $v['id']))}">
+													<i class="am-icon-pencil"></i> 编辑
+												</a>
+												<a href="javascript:void(0);"
+												   onclick="javascript:recycle({$v['id']}, '确认删除?!此步骤无法恢复!', true)"
+												   class="tpl-table-black-operation-del">
+													<i class="am-icon-trash"></i> 删除
+												</a>
+											</div>
+										</td>
+									</tr>
+								</foreach>
+								</tbody>
+							</table>
+							<empty name="list">
+								<h4>aOh! 没有相关内容!</h4>
+							</empty>
+						</div>
+						<div class="am-u-lg-12 am-cf">
+							<div class="am-fr">
+								<div class="am-pagination tpl-pagination">
+									{$page}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+
+	</script>
+</block>
+        
