@@ -46,10 +46,10 @@
 									<th width="10%">链接地址</th>
 									<th width="10%">验证文字内容</th>
 									<th width="10%">备注</th>
-									<th width="10%">审核状态0 未审核 1 审核通过 2 审核未通过</th>
+									<th width="10%">审核状态</th>
 									<th width="10%">审核理由说明</th>
 									<th width="10%">添加时间</th>
-									<th width="10%">1正常 0删除</th>
+
 									<th width="10%">操作</th>
 								</tr>
 								</thead>
@@ -69,10 +69,12 @@
 										<td>{$v['link_url']}</td>
 										<td>{$v['validate_words']}</td>
 										<td>{$v['remark']}</td>
-										<td>{$v['audit_status']}</td>
+										<td>
+											{:showAuditStatus($v['audit_status'])}
+										</td>
 										<td>{$v['audit_info']}</td>
-										<td>{$v['add_time']}</td>
-										<td>{$v['status']}</td>
+										<td>{:time_format($v['add_time'])}</td>
+
 										<td class="f-14">
 											<div class="tpl-table-black-operation">
 												<a href="{:U('Task/editTask', array('id' => $v['id']))}">
