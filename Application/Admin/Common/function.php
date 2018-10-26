@@ -16,7 +16,21 @@ function show_disabled($disabled) {
         default : return    false;      break;
     }
 }
-
+/**
+ * 获取配置的分组
+ * @param int status 
+ * @param string  
+ * @return string
+ * @author liuniu 
+ */
+function showChangeStatus($status,$string)
+{
+    switch ($status) {
+        case 0  : return    '<span style="color: #ff4211">'.$string.'</span>';   break;
+        case 1  : return    '<span style="color: #00CE96">'.$string.'</span>';   break;
+        default : return    false;      break;
+    }
+}
 // 是否启用
 function show_used($used) {
     switch ($used) {

@@ -8,10 +8,22 @@
         <div class="row">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                 <div class="widget am-cf">
-                    <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">账号管理</div>
-
+                  <div class="widget-head am-cf">
+                        <div class="widget-title am-cf">申诉列表</div>
                     </div>
+                    <div class="widget-body am-fr">
+                        <div class="am-u-sm-12 am-u-md-8 am-u-lg-8">
+                            <div class="am-form-group">
+                                <div class="am-btn-toolbar">
+                                    <div class="am-btn-group am-btn-group-xs">
+                                        <button type="button" class="am-btn am-btn-default am-btn-danger"
+                                                onclick="javascript:recycle('chkbId', '确认删除?! 删除后无法恢复!', true)">
+                                            <span class="am-icon-trash-o"></span> 批量删除
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     <div class="widget-body  am-fr">
 
                         <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -28,7 +40,7 @@
                             </div>
                             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
                                 <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                    <input type="text" class="am-form-field" name="keyword" placeholder="请输入手机号或昵称" value="{$keyword}">
+                                    <input type="text" class="am-form-field" name="keyword" placeholder="请输入任务ID" value="{$keyword}">
                                     <span class="am-input-group-btn">
                                         <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="submit"></button>
                                     </span>
@@ -40,54 +52,36 @@
                             <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
                                 <thead>
                                     <tr>
-                                        <th width="20"><input class="check-all" type="checkbox"></th>
-                                        <th width="50">ID</th>
-                                        <th width="15%" class="align-center">昵称</th>
-                                        <th width="15%" class="align-center">余额</th>
-                                        <th width="15%" class="align-center">注册时间</th>
-                                        <th width="10%" class="align-center">状态</th>
-                                        <th width="20%">操作</th>
+                                        <th width="5%"><input class="check-all" type="checkbox"></th>
+                                        <th width="5%">ID</th>
+                                        <th width="5%" class="align-center">类型</th>
+                                        <th width="5%" class="align-center">任务ID</th>
+                                        <th width="5%" class="align-center">用户ID</th>
+                                        <th width="5%" class="align-center">处理状态</th>
+                                        <th width="5%" class="align-center">信息状态</th>
+                                        <th width="10%" class="align-center">处理时间</th>
+                                        <th width="30%">操作</th>                                       
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <foreach name="userslist" item="v" key="k">
+                                    <foreach name="list" item="v" key="k">
                                         <tr class="gradeX">
-                                            <td><input value="{$v['user_id']}" class="ids" type="checkbox" name="chkbId"></td>
-                                            <td>{$v['user_id']}</td>
-
-                                            <td class="align-center">{$v['nick_name']}</td>
-                                            <td class="align-center">{:fen_to_yuan($v['total_money'])}</td>
-                                            <td class="align-center">{:time_format($v['register_time'], 'Y-m-d')}</td>
+                                            <td><input value="{$v['id']}" class="ids" type="checkbox" name="chkbId"></td>
+                                            <td>{$v['id']}</td>
+                                            <td class="align-center">{:showChangeStatus($v['type'],$v['type'] == 0?'投诉':'申诉')}</td>
+                                            <td class="align-center">{$v['task_id']}</td>
+                                            <td class="align-center">{$v['user_id']}</td>
+                                            <td class="align-center">{:showChangeStatus($v['audit_status'],$v['audit_status'] == 0?'未处理':'已处理')}</td>
                                             <td class="align-center">
-                                                {:show_disabled($v['disabled'])}
-                                                
+                                                {:showChangeStatus($v['status'],$v['status'] == 1?'正常':'删除')}
                                             </td>
+                                            <td class="align-center">{:time_format($v['add_time'], 'Y-m-d H:i:s')}</td>
                                             <td class="f-14">
-                                                <div class="tpl-table-black-operation">
-                                                    <if condition="$v['disabled'] eq 0">
-                                                        <a title="点击启用" href="javascript:void(0)" onclick="changeDisabled({$v['user_id']});">
-                                                            启用
-                                                        </a>
-                                                    </if>
-                                                    <if condition="$v['disabled'] eq 1">
-                                                        <if condition="$v['is_used'] eq 0">
-                                                            <a title="点击禁用" href="javascript:void(0)" class="tpl-table-black-operation-del" onclick="changeDisabled('{$v.user_id}');">
-                                                                禁用
-                                                            </a>
-                                                        <else/>
-
-                                                        </if>
-                                                    </if>
-                                                    <a href="{:U('Shop/shopDetail',array('user_id'=>$v['user_id']))}">
-                                                        <i class="am-icon-pencil"></i> 店铺信息
-                                                    </a>
-                                                    <!-- <a href="{:U('Fans/listFans',array('user_id'=>$v['user_id']))}">
-                                                        <i class="am-icon-server"></i> 粉丝
-                                                    </a> -->
-                                                    <a href="{:U('userDetail',array('user_id'=>$v['user_id']))}">
+                                                <div class="tpl-table-black-operation">                                              
+                                                    <a href="{:U('ComplaintDetail',array('id'=>$v['id']))}">
                                                         <i class="am-icon-desktop"></i> 详情
                                                     </a>
-                                                    <a href="javascript:void(0)" onclick="javascript:recycle({$v['user_id']}, '确认删除?!')" class="tpl-table-black-operation-del">
+                                                    <a href="javascript:void(0)" onclick="javascript:recycle({$v['id']}, '确认删除?!')" class="tpl-table-black-operation-del">
                                                         <i class="am-icon-trash"></i> 删除
                                                     </a>
                                                 </div>
@@ -99,7 +93,7 @@
                                 </tbody>
                             </table>
 
-                            <empty name="userslist">
+                            <empty name="list">
                                 <h4>aOh! 没有相关内容!</h4>
                             </empty>
                         </div>

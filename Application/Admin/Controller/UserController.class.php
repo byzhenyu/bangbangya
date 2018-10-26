@@ -12,7 +12,7 @@ class UserController extends CommonController {
         $keyword = I('keyword', '');
         $userModel = D('Admin/User');
         if ($keyword) {
-            $where['u.nick_name|u.user_name'] = array('like','%'.$keyword.'%');
+            $where['nick_name|mobile|user_name'] = array('like','%'.$keyword.'%');
         }
         //查询所有的学生
         $field = 'user_id, nick_name,total_money, register_time, disabled';

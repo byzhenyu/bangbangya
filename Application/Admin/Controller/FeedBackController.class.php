@@ -17,16 +17,11 @@ class FeedBackController extends CommonController
      */
     public function listFeedBack(){
         $mobile = I('mobile', '', 'trim');
-        $keyword = I('keyword', '', 'trim');
         $where = array();
         if($mobile){
-            $where['u.mobile'] = array('eq', $mobile);
-        }
-        if($keyword){
-            $where['_string'] = " f.comment like '%$keyword%'";
+            $where['mobile'] = array('like', '%'.$mobile.'%');
         }
         $feedBackInfo = D('Admin/FeedBack')->getFeedBackByPage($where);
-
         $this->info = $feedBackInfo['info'];
         $this->page = $feedBackInfo['page'];
         $this->mobile = $mobile;
