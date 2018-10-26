@@ -27,7 +27,7 @@ function Select(arr,chg){
         _select.style.marginRight="0px";
         _select.style.height="31px";
         _select.style.float='left';
-        _select.name="jsname";
+        _select.name="category_id";
         _select.options.add(new Option('-请选择任务分类-',""));
         for(var i=0;i<arr.length;i++){
             if(arr[i].parent_id==pid){
@@ -108,9 +108,8 @@ for(var i=0;i<_arr.length;i++){
 
 var ids = cat_ids;
 function initCatSelect(){
-
     for(var i=0;i<ids.length;i++){
-        var jsname=document.getElementsByName("jsname");
+        var jsname=document.getElementsByName("category_id");
         var options = jsname[i].options;
         var count=0;
         var id=ids[ids.length-(i+1)];

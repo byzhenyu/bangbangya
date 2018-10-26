@@ -37,7 +37,6 @@ class TaskModel extends Model {
         array('audit_status', 'require', '请输入 审核状态0 未审核 1 审核通过 2 审核未通过 ', 1, 'regex', 3),
         array('audit_info', 'require', '请输入 审核理由说明 ', 1, 'regex', 3),
         array('audit_info', '0,255', '您输入的 审核理由说明 过长，超过了 255 个字符数限制', 1, 'length', 3),
-        array('add_time', 'require', '请输入 添加时间 ', 1, 'regex', 3),
         array('status', 'require', '请输入 1正常 0删除 ', 1, 'regex', 3),
 
     );
@@ -45,12 +44,23 @@ class TaskModel extends Model {
     public function getTaskList($where = [], $field = '', $order = '') {
         $count = $this->where($where)->count();
         $page = get_page($count);
-        $list = $this->field($field)->where($where)->limit($page['limit'])->order($order)->select();
+        $list = $this->alias('t')->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')->field('t.*,c.id as category_id,c.category_name ')->where($where)->limit($page['limit'])->order($order)->select();
         return array(
             'list' => $list,
             'page' => $page['page']
         );
     }
-    
+    /**
+     * 处理数据添加的时间 转换为时间戳
+     * @param POST data 
+     * @param array()
+     * @return data
+     */
+    public function timeToTimestamp($data)
+    {
+        $data['add_time'] = strtotime($data['add_time']);
+        $data['end_time'] = strtotime($data['end_time']);
+        return $data;
+    }
 }
         

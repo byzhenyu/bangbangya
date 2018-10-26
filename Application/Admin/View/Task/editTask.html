@@ -18,7 +18,7 @@
                                 <label class="am-u-sm-3 am-form-label">上级分类 <span class="tpl-form-line-small-title"></span></label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
                                     <div class="tpl-table-list-select am-align-left" id="goods_cat_id_div" style="width:100%;">
-                                        <input type="hidden" name="category_id" id="goods_cat_id" value="{$info.category_id}" />
+                                        <!-- <input id="category" type="hidden" name="category_id" id="goods_cat_id" value="{$info.category_id}" /> -->
                                     </div>
                                 </div>
                             </div>
@@ -50,9 +50,8 @@
                                     任务截止时间
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
-                                <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="number" id="end_time" name="end_time" value="{$info['end_time']}"
-                                           placeholder="请输入任务截止时间">
+                                <div class="am-u-sm-7 am-u-sm-pull-2">                              
+                                    <input type="text" onclick="laydate({format:'YYYY-MM-DD hh:mm:ss',festival: true})"  class="input-text"  name="end_time" id="end_time" value="{$info['end_time']|time_format=###,'Y-m-d H:i:s'}" placeholder="请选择任务结束时间">
                                     <small></small>
                                 </div>
                             </div>
@@ -159,8 +158,9 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="number" id="add_time" name="add_time" value="{$info['add_time']}"
-                                           placeholder="请输入添加时间">
+                                   <!--  <input type="number" id="add_time" name="add_time" value="{$info['add_time']}"
+                                           placeholder="请输入添加时间"> -->
+                                     <input type="text" onclick="laydate({format:'YYYY-MM-DD hh:mm:ss',festival: true})"  class="input-text"  name="add_time" id="start_time" value="{$info['add_time']|time_format=###,'Y-m-d H:i:s'}" placeholder="请选择任务开始时间">
                                     <small></small>
                                 </div>
                             </div>
@@ -193,13 +193,22 @@
 </block>
 
 <block name="script">
-
+<script type="text/javascript" src="__ADMIN__/layDate-v5.0.9/laydate/laydate.js"></script>
 <script type="text/javascript">
         var catListStr = {$catListStr};
         var cat_ids = {$cat_ids};
         $(function(){
             initCatSelect();
         })
+        laydate.render({
+            elem: '#start_time',
+            type: 'datetime'
+        });
+        laydate.render({
+            elem: '#end_time',
+            type: 'datetime'
+        });
+        _NEED_REFRESH = true;
 </script>
 <script type="text/javascript" charset="utf-8" src="__ADMIN__/js/goods_class.js?v=1.0"></script>
 </block>

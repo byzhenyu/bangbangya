@@ -34,14 +34,14 @@
 								<thead>
 								<tr>
 									<th width="50"><input class="check-all" type="checkbox"></th>
-									<th width="70">序号</th>
+									<th width="30">序号</th>
 									<th width="10%">轮播图标题</th>
 									<th width="10%">图片</th>
 									<th width="10%">跳转地址</th>
 									<th width="10%">排序</th>
-									<th width="10%">状态</th>
 									<th width="10%">添加时间</th>
-									<th width="10%">操作</th>
+									<th width="10%">状态</th>
+									<th width="20%">操作</th>
 								</tr>
 								</thead>
 								<tbody>
@@ -53,10 +53,19 @@
 										<td><img src="{$v['img_url']}" width="40"></td>
 										<td>{$v['jump_url']}</td>
 										<td>{$v['sort']}</td>
-										<td>{:show_dispaly($v['status'])}</td>
 										<td>{:time_format($v['add_time'], 'Y-m-d')}</td>
+										<td>{:show_dispaly($v['status'])}</td>										
 										<td class="f-14">
 											<div class="tpl-table-black-operation">
+									            <if condition="$v['status'] eq 0">
+                                                        <a title="点击启用" href="javascript:void(0)" onclick="changeDisabled({$v['id']});">
+                                                            启用
+                                                        </a>
+                                                       <else /> 
+                                                        <a title="点击禁用" href="javascript:void(0)" class="tpl-table-black-operation-del" onclick="changeDisabled('{$v.id}');">
+                                                                禁用
+                                                            </a>
+                                                </if>
 												<a href="{:U('Banner/editBanner', array('id' => $v['id']))}">
 													<i class="am-icon-pencil"></i> 编辑
 												</a>
@@ -91,7 +100,28 @@
 
 <block name="script">
 	<script type="text/javascript">
-
+        function changeDisabled(id){
+            $.ajax({
+                url : "{:U('Banner/changeDisabled')}",
+                type : "POST",
+                dataType : "json",
+                data : {
+                    "id" : id,
+                },
+                success : function(data){
+                    toastr(data.info);
+                    if(data.status == 1){
+                        setInterval('reload()', 2000);
+                    }else if(data.status == 3)
+                    {
+                    	 alert('35');
+                    }
+                }
+            });
+        }
+        function reload() {
+            location.reload();
+        }
 	</script>
 </block>
         

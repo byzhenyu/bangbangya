@@ -65,4 +65,13 @@ class BannerController extends CommonController{
         public function del(){
         $this->_del('Banner', 'id');
     }
+    /**
+     *禁用方法
+     */
+    public function changeDisabled() {
+        $id = I('id', 0, 'intval');
+        $updateInfo = D('Admin/Banner')->changeDisabled($id);
+        $this->ajaxReturn($updateInfo);
+    }
+
 }

@@ -33,7 +33,19 @@ class TaskCategoryModel extends Model {
             'list' => $list,
             'page' => $page['page']
         );
+    } 
+    /**
+     * @desc 获取分类Id
+     * @param $categoryList 分类数据
+     * @return $categoryList['id'] array();
+     */
+    public function getIds($categoryList)
+    {
+         $ids = array();
+         foreach ($categoryList as $key => $value) {
+             $ids[$key] = $value['id'];
+         }
+         return $ids;
     }
-    
 }
         

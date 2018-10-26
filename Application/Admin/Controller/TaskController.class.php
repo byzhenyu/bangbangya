@@ -24,7 +24,9 @@ class TaskController extends CommonController {
         $id = I('id');
         $taskModel = D('Admin/Task');     
         if (IS_POST) {
-            if ($taskModel->create() === false) {
+            $data = I('post.');
+            $newDate  = D('Admin/Task')->timeToTimestamp($data); /*处理任务添加时间转换为时间戳*/
+            if ($taskModel->create($newDate) === false) {
                 $this->ajaxReturn(V(0, $taskModel->getError()));
             }
             if ($id) {
@@ -40,11 +42,9 @@ class TaskController extends CommonController {
         }
         $info = $taskModel->find($id);
         $categoryList = D('Admin/task_category')->field('id, category_name, category_img')->where('status = 1')->select();
-        echo '<pre>';
-        print_r($categoryList);
-        echo '</pre>';
-        // exit;
-        $cat_ids = array();
+        /*insert into categoryid  to set input selected*/
+        $cat_ids = $info['category_id'];
+        // $cat_ids = array();
         $this->catListStr = json_encode($categoryList);
         $this->cat_ids = json_encode($cat_ids);
         $this->assign('info', $info);

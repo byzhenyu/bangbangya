@@ -7,7 +7,7 @@ namespace Admin\Model;
 use Think\Model;
 class BannerModel extends Model{
     protected $insertFields = array('title', 'img_url', 'jump_url', 'sort', 'add_time');
-    protected $updateFields = array('title', 'img_url', 'jump_url', 'sort');
+    protected $updateFields = array('id','title', 'img_url', 'jump_url', 'sort');
     protected $selectFields = array('id','title', 'img_url', 'jump_url', 'sort', 'add_time','status');
     protected $_validate = array(
         array('title', 'require', '标题不能为空！', 1, 'regex', 3),
@@ -21,7 +21,7 @@ class BannerModel extends Model{
      * @param $sort string 排序顺序
      * @return mixed
      */
-    public function getBannerListByPage($where, $field = false, $sort = 'sort desc , add_time desc'){
+    public function getBannerListByPage($where, $field = false, $sort = 'sort asc , add_time desc'){
 
         if(is_null($field)){
             $field = $this->selectFields;
@@ -33,7 +33,21 @@ class BannerModel extends Model{
             'bannerlist'=>$bannerlist,
             'page'=>$page['page']
         );
+    }
+    /**
+     * 修改用户启用禁用状态
+     * @param $id
+     * @return array
+     */
+    public function changeDisabled($id) {
 
-
+        $bannerlist = $this->where(array('id'=>$id))->field('status, id')->find();
+        $dataInfo = $bannerlist['status'] == 1 ? 0 : 1;
+        $update_info = $this->where(array('id'=>$id))->setField('status', $dataInfo);
+        if($update_info !== false){
+            return V(1, '操作成功');
+        } else {
+            return V(0, '操作成功');
+        }
     }
 }
