@@ -14,8 +14,12 @@ namespace Admin\Controller;
  */
 class TaskCategoryController extends CommonController {
     public function listTaskCategory(){
-        $where['status'] = array('eq', 1);
-        $data = D('Admin/TaskCategory')->getTaskCategoryList($where);
+        $keyword = I('keyword', '');
+        $TaskCategoryModel = D('Admin/TaskCategory');
+        if ($keyword) {
+            $where['category_name'] = array('like','%'.$keyword.'%');
+        }
+        $data = $TaskCategoryModel->getTaskCategoryList($where);
         $this->assign('list', $data['list']);
         $this->assign('page', $data['page']);
         $this->display();

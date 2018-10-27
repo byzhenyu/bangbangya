@@ -44,11 +44,10 @@ class ArticleCategoryController extends CommonController {
     //显示文章分类
     public function listArticleCategory(){
         $keyword = I('keyword', '');
-        $where = '';
+        $where = array();
         if ($keyword != '') {
             $where['cat_name'] = array('like', '%'. $keyword .'%');
         }
-
         $categoryModel = D('Admin/ArticleCategory');
         $catlist = $categoryModel->getArticleCategoryList($where);
         $this->keyword = $keyword;

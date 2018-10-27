@@ -24,8 +24,19 @@ class TaskCategoryModel extends Model {
         array('category_img', 'require', '请上传分类图片 ', 1, 'regex', 3),
 
     );
-
-    public function getTaskCategoryList($where = [], $field = '', $order = '') {
+    /**
+     * @desc 获取分类Id
+     * @param $where where
+     * @param $field field
+     * @param $order order
+     * @param $status    0删除  1 正常
+     * @return $data
+     */
+    public function getTaskCategoryList($where = [], $field = '', $order = '',$status = null) {
+        if(is_null($status))
+        {
+             $where['status'] = 1;
+        }
         $count = $this->where($where)->count();
         $page = get_page($count);
         $list = $this->field($field)->where($where)->limit($page['limit'])->order($order)->select();

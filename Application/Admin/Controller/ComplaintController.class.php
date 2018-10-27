@@ -17,7 +17,7 @@ class ComplaintController extends CommonController {
         $keyword = I('keyword', '');
         $ComplaintModel = D('Admin/Complaint');
         if ($keyword) {
-            $where['task_id']  = array('like', '%'.$keyword.'%');
+            $where['task_id|user_id']  = array('like', '%'.$keyword.'%');
         }
         $data =  $ComplaintModel->getComplaintList($where);
         $this->assign('list', $data['Complaintlist']);
