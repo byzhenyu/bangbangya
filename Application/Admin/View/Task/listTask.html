@@ -17,10 +17,10 @@
 							<div class="am-form-group">
 								<div class="am-btn-toolbar">
 									<div class="am-btn-group am-btn-group-xs">
-										<a type="button" class="am-btn am-btn-default am-btn-success"
+										<!-- <a type="button" class="am-btn am-btn-default am-btn-success"
 										   href="{:U('Task/editTask')}">
 											<span class="am-icon-plus"></span> 新增
-										</a>
+										</a> -->
 										<button type="button" class="am-btn am-btn-default am-btn-danger"
 												onclick="javascript:recycle('chkbId', '确认删除?! 删除后无法恢复!', true)">
 											<span class="am-icon-trash-o"></span> 批量删除
@@ -49,18 +49,17 @@
 								<tr>
 									<th width="50"><input class="check-all" type="checkbox"></th>
 									<th width="70">序号</th>
+									<th width="5%">发帖人ID</th>
+									<th width="5%">商铺ID</th>
 									<th width="10%">任务标题</th>
 									<th width="5%">任务类型</th>
-									<th width="5%">支持设备 (全部，安卓,苹果)</th>
+									<th width="5%">支持设备</th>
 									<th width="8%">任务截止时间</th>
-									<th width="5%">出价金额（分）</th>
+									<th width="5%">出价金额</th>
 									<th width="5%">任务数量</th>
-									<th width="5%">总金额(分)</th>
+									<th width="5%">总金额</th>
 									<th width="5%">链接地址</th>
-									<th width="10%">验证文字内容</th>
-									<th width="10%">备注</th>
 									<th width="5%">审核状态</th>
-									<th width="10%">审核理由说明</th>
 									<th width="8%">添加时间</th>
 									<th width="20%">操作</th>
 								</tr>
@@ -69,21 +68,20 @@
 								<foreach name="list" item="v">
 									<tr class="gradeX">
 										<td><input class="ids" type="checkbox" name="chkbId" value="{$v['id']}"></td>
-										<td>{$v['id']}</td>										
+										<td>{$v['id']}</td>
+										<td>{$v['user_id']}</td>
+										<td>{$v['shop_id']}</td>
 										<td>{$v['title']}</td>
 										<td>{$v['category_name']}</td>
 										<td>{$v['mobile_type']}</td>
 										<td>{:time_format($v['end_time'])}</td>
-										<td>{$v['price']}</td>
+										<td>{$v['price'] / 100}元</td>
 										<td>{$v['task_num']}</td>
-										<td>{$v['total_price']}</td>
+										<td>{$v['total_price'] / 100}元</td>
 										<td>{$v['link_url']}</td>
-										<td>{$v['validate_words']}</td>
-										<td>{$v['remark']}</td>
 										<td>
 											{:showAuditStatus($v['audit_status'])}
 										</td>
-										<td>{$v['audit_info']}</td>
 										<td>{:time_format($v['add_time'])}</td>
 
 										<td class="f-14">
@@ -125,4 +123,3 @@
 
 	</script>
 </block>
-        

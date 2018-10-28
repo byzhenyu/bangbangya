@@ -3,28 +3,23 @@
  * Copyright (c) 山东六牛网络科技有限公司 https://www.liuniukeji.com
  *
  * @Description
- * @Author         
+ * @Author
  * @Date           2018/10/25
  * @CreateBy       PhpStorm
  */
 namespace Admin\Model;
 
 use Think\Model;
- 
+
 /**
  * 任务表模型
  */
 class ComplaintModel extends Model {
-    protected $insertFields = array('task_id', 'user_id', 'add_time', 'type', 'audit_status','status');
-    protected $updateFields = array('id','task_id', 'user_id', 'add_time', 'type', 'audit_status','status');
-    protected $selectFields = array('id','task_id', 'user_id', 'add_time', 'type', 'audit_status','status');
+    protected $insertFields = array('task_id', 'user_id', 'add_time', 'type', 'audit_status','status','shop_id');
+    protected $updateFields = array('id','audit_status');
+    protected $selectFields = array('id','task_id', 'user_id', 'add_time', 'type', 'audit_status','status','shop_id');
     protected $_validate = array(
-        array('task_id', 'require', '任务ID不能为空!', 1, 'regex', 3),
-        array('user_id', 'require', '投诉人ID不能为空!', 1, 'regex', 3),
-        array('add_time', 'require', '投诉人时间不能为空!', 1, 'regex', 3),
-        array('information', '0,255', '您输入的投内容过长!，超过了 255 个字符数限制', 1, 'length', 3),
-        array('type', 'require', '没有传入类型!', 1, 'regex', 3),   
-        array('status', 'require', '请输入 1正常 0删除 ', 1, 'regex', 3),
+        array('audit_status', 'require', '处理状态不能为空!', 1, 'regex', 3),
 
     );
      /**
@@ -53,7 +48,7 @@ class ComplaintModel extends Model {
      * @ 申诉详情
      * @param $where
      * @param null $fields
-     * @return arr 
+     * @return arr
      */
     public function getComplaintInfo($where=[], $fields = null)
     {

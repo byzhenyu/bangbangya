@@ -10,7 +10,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
-                        <div class="widget-title am-fl">申诉详情</div>
+                        <div class="widget-title am-fl">{$Info['type'] == '0'?'投诉':'申诉'}详情</div>
                     </div>
                     <div class="widget-body am-fr">
                         <form action="__ACTION__" method="post" class="ajaxForm am-form tpl-form-border-form tpl-form-border-br">
@@ -20,10 +20,10 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    {:showChangeStatus($Info['type'],$Info['type'] == 0?'投诉':'申诉')}
+                                    {$Info['type'] == '0'?'投诉':'申诉'}
                                     <small></small>
                                 </div>
-                            </div>  
+                            </div>
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
                                     任务id
@@ -33,7 +33,7 @@
                                     {$Info['task_id']}
                                     <small></small>
                                 </div>
-                            </div>         
+                            </div>
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
                                     任务标题
@@ -43,7 +43,7 @@
                                     {$Info['title'] == ''? '任务已经被管理员删除!!!':$Info['title']}
                                     <small></small>
                                 </div>
-                            </div>         
+                            </div>
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
                                     投诉人ID
@@ -64,10 +64,10 @@
                                     <small></small>
                                 </div>
                             </div>
-            
+
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
-                                    投诉时间
+                                   {$Info['type'] == '0'?'投诉':'申诉'}时间
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
@@ -77,29 +77,50 @@
                             </div>
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
-                                    投诉内容
+                                    {$Info['type'] == '0'?'投诉':'申诉'}内容
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <textarea disabled="disabled">{$Info['information']}</textarea>
+                                   {$Info['information']}
                                     <small></small>
                                 </div>
                             </div>
-                            <div class="am-form-group">
+<!--                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
                                     处理状况
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    {:showChangeStatus($Info['audit_status'],$Info['audit_status'] == 0?'未处理':'处理')}
+                                    {:showAuditStatus($Info['audit_status'])}
+                                    <small></small>
+                                </div>
+                            </div> -->
+                         <div class="am-form-group">
+                                <label for="mobile_type" class="am-u-sm-3 am-form-label">
+                                     审核状态
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                <div >
+                                    <select  id="audit_status" name="audit_status" data-am-selected="">
+                                        <option >请选择审核状态</option>
+                                        <option value="0">待审核</option>
+                                        <option value="1">{$Info['type'] == '0'?'投诉':'申诉'}成功</option>
+                                        <option value="2">{$Info['type'] == '0'?'投诉':'申诉'}失败</option>
+                                    </select>
+                                     <script>
+                                       $('#audit_status').val('{$Info['audit_status']}');
+                                     </script>
+                                </div>
                                     <small></small>
                                 </div>
                             </div>
+                            <input type="hidden" name="id" value="{$Info['id']}"/>
                             <div class="am-form-group">
                                 <div class="am-u-sm-9 am-u-sm-push-3">
-                                	<if condition="$Info['audit_status'] eq 0  ">
-                                		<button type="submit" onclick="changeAuditStatus({$Info['id']});" class="am-btn am-btn-primary tpl-btn-bg-color-success">完成处理</button>
-                                	</if>
+                                       <if condition="$Info['audit_status']  eq 0">
+                                         <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success">审核</button>
+                                       </if>
                                     <button type="button" class="am-btn am-btn-primary am-btn-warning" onclick="goback();">返回</button>
                                 </div>
                             </div>
@@ -134,4 +155,3 @@
         }
     </script>
 </block>
-        

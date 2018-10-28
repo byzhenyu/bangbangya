@@ -57,10 +57,10 @@
                                         <th width="5%" class="align-center">类型</th>
                                         <th width="5%" class="align-center">任务ID</th>
                                         <th width="5%" class="align-center">用户ID</th>
-                                        <th width="5%" class="align-center">处理状态</th>
+                                        <th width="5%" class="align-center">审核状态</th>
                                         <th width="5%" class="align-center">信息状态</th>
                                         <th width="10%" class="align-center">处理时间</th>
-                                        <th width="30%">操作</th>                                       
+                                        <th width="30%">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,13 +71,13 @@
                                             <td class="align-center">{:showChangeStatus($v['type'],$v['type'] == 0?'投诉':'申诉')}</td>
                                             <td class="align-center">{$v['task_id']}</td>
                                             <td class="align-center">{$v['user_id']}</td>
-                                            <td class="align-center">{:showChangeStatus($v['audit_status'],$v['audit_status'] == 0?'未处理':'已处理')}</td>
+                                            <td class="align-center">{:showAuditStatus($v['audit_status'])}</td>
                                             <td class="align-center">
                                                 {:showChangeStatus($v['status'],$v['status'] == 1?'正常':'删除')}
                                             </td>
                                             <td class="align-center">{:time_format($v['add_time'], 'Y-m-d H:i:s')}</td>
                                             <td class="f-14">
-                                                <div class="tpl-table-black-operation">                                              
+                                                <div class="tpl-table-black-operation">
                                                     <a href="{:U('ComplaintDetail',array('id'=>$v['id']))}">
                                                         <i class="am-icon-desktop"></i> 详情
                                                     </a>

@@ -9,9 +9,9 @@
         <div class="row">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                 <div class="widget am-cf">
-                    <div class="widget-head am-cf">
+                 <!--    <div class="widget-head am-cf">
                         <div class="widget-title am-fl">{$info['id'] ? '编辑' : '添加'}任务表</div>
-                    </div>
+                    </div> -->
                     <div class="widget-body am-fr">
                         <form action="__ACTION__" method="post" class="ajaxForm am-form tpl-form-border-form tpl-form-border-br">
                              <div class="am-form-group">
@@ -32,30 +32,38 @@
                                            placeholder="请输入任务标题">
                                     <small></small>
                                 </div>
-                            </div>             
+                            </div>
                             <div class="am-form-group">
                                 <label for="mobile_type" class="am-u-sm-3 am-form-label">
-                                    支持设备 (全部，安卓,苹果)
+                                    支持设备
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="text" id="mobile_type" name="mobile_type" value="{$info['mobile_type']}"
-                                           placeholder="请输入支持设备 (全部，安卓,苹果)">
+                                <div >
+                                    <select  id="type" name="mobile_type" data-am-selected="">
+                                        <option >请选择支持设备</option>
+                                        <option value="全部">全部</option>
+                                        <option value="安卓">安卓</option>
+                                        <option value="苹果">苹果</option>
+                                    </select>
+                                     <script>
+                                       $('#type').val('{$info['mobile_type']}');
+                                     </script>
+                                </div>
                                     <small></small>
                                 </div>
                             </div>
-            
                             <div class="am-form-group">
                                 <label for="end_time" class="am-u-sm-3 am-form-label">
                                     任务截止时间
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
-                                <div class="am-u-sm-7 am-u-sm-pull-2">                              
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
                                     <input type="text" onclick="laydate({format:'YYYY-MM-DD hh:mm:ss',festival: true})"  class="input-text"  name="end_time" id="end_time" value="{$info['end_time']|time_format=###,'Y-m-d H:i:s'}" placeholder="请选择任务结束时间">
                                     <small></small>
                                 </div>
                             </div>
-            
+
                             <div class="am-form-group">
                                 <label for="price" class="am-u-sm-3 am-form-label">
                                     出价金额（分）
@@ -67,7 +75,7 @@
                                     <small></small>
                                 </div>
                             </div>
-            
+
                             <div class="am-form-group">
                                 <label for="task_num" class="am-u-sm-3 am-form-label">
                                     任务数量
@@ -79,7 +87,7 @@
                                     <small></small>
                                 </div>
                             </div>
-            
+
                             <div class="am-form-group">
                                 <label for="total_price" class="am-u-sm-3 am-form-label">
                                     总金额(分)
@@ -91,7 +99,7 @@
                                     <small></small>
                                 </div>
                             </div>
-            
+
                             <div class="am-form-group">
                                 <label for="link_url" class="am-u-sm-3 am-form-label">
                                     链接地址
@@ -103,7 +111,7 @@
                                     <small></small>
                                 </div>
                             </div>
-            
+
                             <div class="am-form-group">
                                 <label for="validate_words" class="am-u-sm-3 am-form-label">
                                     验证文字内容
@@ -115,7 +123,7 @@
                                     <small></small>
                                 </div>
                             </div>
-            
+
                             <div class="am-form-group">
                                 <label for="remark" class="am-u-sm-3 am-form-label">
                                     备注
@@ -127,19 +135,6 @@
                                     <small></small>
                                 </div>
                             </div>
-            
-                            <div class="am-form-group">
-                                <label for="audit_status" class="am-u-sm-3 am-form-label">
-                                    审核状态0 未审核 1 审核通过 2 审核未通过
-                                    <span class="tpl-form-line-small-title must-input">*</span>
-                                </label>
-                                <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="number" id="audit_status" name="audit_status" value="{$info['audit_status']}"
-                                           placeholder="请输入审核状态0 未审核 1 审核通过 2 审核未通过">
-                                    <small></small>
-                                </div>
-                            </div>
-            
                             <div class="am-form-group">
                                 <label for="audit_info" class="am-u-sm-3 am-form-label">
                                     审核理由说明
@@ -151,7 +146,7 @@
                                     <small></small>
                                 </div>
                             </div>
-            
+
                             <div class="am-form-group">
                                 <label for="add_time" class="am-u-sm-3 am-form-label">
                                     添加时间
@@ -164,19 +159,46 @@
                                     <small></small>
                                 </div>
                             </div>
-            
                             <div class="am-form-group">
-                                <label for="status" class="am-u-sm-3 am-form-label">
-                                    1正常 0删除
+                                <label for="mobile_type" class="am-u-sm-3 am-form-label">
+                                     审核状态
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="number" id="status" name="status" value="{$info['status']}"
-                                           placeholder="请输入1正常 0删除">
+                                <div >
+                                    <select  id="audit" name="audit_status" data-am-selected="">
+                                        <option >请选择审核状态</option>
+                                        <option value="0">待审核</option>
+                                        <option value="1">通过</option>
+                                        <option value="2">未通过</option>
+                                    </select>
+                                     <script>
+                                       $('#audit').val('{$info['audit_status']}');
+                                     </script>
+                                </div>
                                     <small></small>
                                 </div>
                             </div>
-            
+                          <div class="am-form-group">
+                                <label for="mobile_type" class="am-u-sm-3 am-form-label">
+                                     任务状态
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                <div >
+                                    <select  id="status" name="status" data-am-selected="">
+                                        <option >请选择任务状态</option>
+                                        <option value="0">删除</option>
+                                        <option value="1">正常</option>
+                                    </select>
+                                     <script>
+                                       $('#status').val('{$info['status']}');
+                                     </script>
+                                </div>
+                                    <small></small>
+                                </div>
+                            </div>
+
                             <div class="am-form-group">
                                 <div class="am-u-sm-9 am-u-sm-push-3">
                                     <input type="hidden" name="id" value="{$info['id']}">
@@ -212,4 +234,3 @@
 </script>
 <script type="text/javascript" charset="utf-8" src="__ADMIN__/js/goods_class.js?v=1.0"></script>
 </block>
-        

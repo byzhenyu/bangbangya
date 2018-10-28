@@ -3,14 +3,14 @@
  * Copyright (c) 山东六牛网络科技有限公司 https://www.liuniukeji.com
  *
  * @Description
- * @Author         
+ * @Author
  * @Date           2018/10/25
  * @CreateBy       PhpStorm
  */
 namespace Admin\Model;
 
 use Think\Model;
- 
+
 /**
  * 任务表模型
  */
@@ -44,7 +44,11 @@ class TaskModel extends Model {
     public function getTaskList($where = [], $field = '', $order = '') {
         $count = $this->where($where)->count();
         $page = get_page($count);
-        $list = $this->alias('t')->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')->field('t.*,c.id as category_id,c.category_name ')->where($where)->limit($page['limit'])->order($order)->select();
+        $list = $this->alias('t')
+              ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')->field('t.*,c.id as category_id,c.category_name ')
+              ->where($where)->limit($page['limit'])
+              ->order($order)
+              ->select();
         return array(
             'list' => $list,
             'page' => $page['page']
@@ -52,7 +56,7 @@ class TaskModel extends Model {
     }
     /**
      * 处理数据添加的时间 转换为时间戳
-     * @param POST data 
+     * @param POST data
      * @param array()
      * @return data
      */
@@ -63,4 +67,3 @@ class TaskModel extends Model {
         return $data;
     }
 }
-        

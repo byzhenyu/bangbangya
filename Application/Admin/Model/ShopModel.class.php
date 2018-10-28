@@ -3,14 +3,14 @@
  * Copyright (c) 山东六牛网络科技有限公司 https://www.liuniukeji.com
  *
  * @Description
- * @Author         
+ * @Author
  * @Date           2018/10/24
  * @CreateBy       PhpStorm
  */
 namespace Admin\Model;
 
 use Think\Model;
- 
+
 /**
  * 店铺模型
  */
@@ -26,9 +26,10 @@ class ShopModel extends Model {
 
     public function getShopList($where = [], $field = '', $order = '') {
         $count = $this->where($where)->count();
-        
         $page = get_page($count);
-        $list = $this->field($field)
+        $list = $this->alias('s')
+               ->join('__TASK__ as t on s.teacher_id = t.id', 'LEFT')
+               ->field($field)
                ->where($where)
                ->limit($page['limit'])
                ->order($order)
@@ -44,6 +45,5 @@ class ShopModel extends Model {
         $info = $this->where($where)->find();
         return $info;
     }
-    
+
 }
-        

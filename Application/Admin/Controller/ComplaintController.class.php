@@ -3,7 +3,7 @@
  * Copyright (c) 山东六牛网络科技有限公司 https://www.liuniukeji.com
  *
  * @Description
- * @Author         
+ * @Author
  * @Date           2018/10/25
  * @CreateBy       PhpStorm
  */
@@ -33,26 +33,28 @@ class ComplaintController extends CommonController {
      */
     public function ComplaintDetail() {
         $id = I('id', 0, 'intval');
-        $where['id'] = $id;
         $ComplaintModel = D('Admin/Complaint');
-        $ComplaintInfo = $ComplaintModel->getComplaintInfo($where);
+        if(IS_POST){
+            if($id > 0){
+                if($ComplaintModel ->create()){
+                    $result = $ComplaintModel->save();
+                    if($result === false){
+                        $this->ajaxReturn(V(0, '操作失败'));
+                    }
+                    $this->ajaxReturn(V(1, '操作成功', $id));
+                }
+                else{
+                    $this->ajaxReturn(V(2, $ComplaintModel->getError()));
+                }
+            }
+        }
+        $where['id'] = $id;
+        $ComplaintInfo = $ComplaintModel ->getComplaintInfo($where);
         $this->Info = $ComplaintInfo;
         $this->display();
     }
     public function del(){
         $this->_del('Complaint', 'id');
-    }
-    /*完成*/
-    public function ComplaintComplete($id)
-    {
-    	$ComplaintTable = M('Complaint');
-    	$result = $ComplaintTable -> where('id = '.$id) ->save(array('audit_status' => 1));
-    	if($result)
-    	{
-            $this->success("成功！", U("Complaint/listComplaint"));
-    	}else{
-            $this->error("删除失败！", $ComplaintTable->getError());
-    	}
     }
     /*投诉信息变更完成*/
     public function changeAuditStatus() {

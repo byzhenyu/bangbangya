@@ -15,7 +15,7 @@
                     <div class="widget-body am-fr">
                         <form action="__ACTION__" method="post" class="ajaxForm am-form tpl-form-border-form tpl-form-border-br">
 
-            
+
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
                                     店铺名称
@@ -26,7 +26,7 @@
                                     <small></small>
                                 </div>
                             </div>
-            
+
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
                                     头像
@@ -37,7 +37,7 @@
                                     <small></small>
                                 </div>
                             </div>
-            
+
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
                                     保证金
@@ -48,7 +48,7 @@
                                     <small></small>
                                 </div>
                             </div>
-            
+
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
                                     置顶截止时间
@@ -59,7 +59,7 @@
                                     <small></small>
                                 </div>
                             </div>
-            
+
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
                                     合作商类型
@@ -70,7 +70,7 @@
                                     <small></small>
                                 </div>
                             </div>
-            
+
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
                                     合作商截止时间
@@ -81,25 +81,34 @@
                                     <small></small>
                                 </div>
                             </div>
-            
+
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
-                                    发任务
+                                    发任务量
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-
+                                         {$info['task_count']}
                                     <small></small>
                                 </div>
                             </div>
-
+                            <div class="am-form-group">
+                                <label class="am-u-sm-3 am-form-label">
+                                    接任务
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    {$info['magic_guild_num']}
+                                    <small></small>
+                                </div>
+                            </div>
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
                                     总发单
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-
+                                    {$info['task_count']}
                                     <small></small>
                                 </div>
                             </div>
@@ -109,7 +118,7 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-
+                                   {$info['vol']}
                                     <small></small>
                                 </div>
                             </div>
@@ -119,7 +128,7 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-
+                                   {$info['complain_num']}
                                     <small></small>
                                 </div>
                             </div>
@@ -129,7 +138,7 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-
+                                  {$info['be_complain_num']}
                                     <small></small>
                                 </div>
                             </div>
@@ -150,4 +159,3 @@
 <block name="script">
 
 </block>
-        

@@ -18,10 +18,10 @@ function show_disabled($disabled) {
 }
 /**
  * 获取配置的分组
- * @param int status 
- * @param string  
+ * @param int status
+ * @param string
  * @return string
- * @author liuniu 
+ * @author liuniu
  */
 function showChangeStatus($status,$string)
 {
@@ -115,7 +115,7 @@ function admin_log($log_info = '', $log_sql = '') {
 function showAuditStatus($audit_status) {
     switch ($audit_status) {
         case '0': return '待审核'; break;
-        case '1': return '审核通过'; break;
-        case '2': return '审核未通过'; break;
+        case '1': return '通过'; break;
+        case '2': return '未通过'; break;
     }
 }
