@@ -8,7 +8,7 @@ namespace Home\Model;
 use Think\Model;
 class UserTokenModel extends Model
 {
-    protected $insertFields = array('user_id', 'user_name', 'token', 'login_time', 'client_type');
+    protected $insertFields = array('token_id','user_id', 'user_name', 'token', 'login_time');
     protected $updateFields = array('id', 'token', 'login_time', 'client_type');
 
     protected function _before_insert(&$data, $option){

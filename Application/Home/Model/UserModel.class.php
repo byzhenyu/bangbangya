@@ -17,22 +17,23 @@ class UserModel extends Model
     );
 
     // 用户登录
-    public function doLogin($open_id='', $field=null){
+    public function doLogin($open_id,$where=[], $field=null){
         if ($open_id == '') return V(0, '参数错误');
-        if ($field == null) $field = $this->findFields;
-
-        $map['status'] = 1; // 用户未被逻辑删除
+        $where['u.status'] = 1; // 用户未被逻辑删除
+        $where['u.open_id'] = $open_id; // 用户未被逻辑删除
         /* 获取用户数据 */
-        $user = $this->field($field)->where($map)->where('open_id = ' .$open_id)->find();
-        // p($User);
-        // die;
+        $user = $this->alias('u')
+             ->join('__SHOP__ as s on s.user_id = u.user_id','LEFT')
+             ->field($field)
+             ->where($where)
+             ->find();
         if(is_array($user)){
                 if ($user['disabled'] != 1) {
                     return V(0, '用户账号已经被禁用');
                 }
                 unset($user['password']);
                 $user['token'] = $this->_createTokenAndSave($user); //生成登录token并保存
-                
+                session('user_auth', $user);
                 return V(2, '登录成功', $user);
         } else {
             return V(0, '用户名或密码错误.');
@@ -47,12 +48,10 @@ class UserModel extends Model
     protected function _createTokenAndSave($userInfo){
         $token = randNumber(18); // 18位纯数字
         $where['user_id'] = $userInfo['user_id'];
-        $token = D('Home/UserToken')->where($where)->getField('token');
-        return $token;
-        //上线前需用下面代码
-        /*$data['token'] = $token;
+        $data['token'] = $token;
+        $data['login_time'] = NOW_TIME;
         D('Home/UserToken')->where($where)->data($data)->save();
-        return $token;*/
+        return $token;
     }
     /**
      * 保存头像

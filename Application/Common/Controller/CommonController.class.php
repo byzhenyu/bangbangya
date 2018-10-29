@@ -18,9 +18,9 @@ class CommonController extends Controller
         $this->get_global_config();
         //获取搜索关键词
         if (is_login()){
-            define('UID', session('user_auth')['uid']);
+            define('UID', session('user_auth')['user_id']);
 
-            $this->nickname = session('user_auth.nickname') ? session('user_auth.nickname') : session('user_auth.mobile');
+            $this->nickname = session('user_auth.nick_name') ? session('user_auth.nick_name') : session('user_auth.mobile');
         }
     }
 
