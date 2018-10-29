@@ -1,3 +1,0 @@
-<?php
-//000000000060a:16:{s:17:"CONFIG_GROUP_LIST";a:4:{i:1;s:12:"基本设置";i:15;s:12:"短信接口";i:40;s:12:"系统参数";i:60;s:15:"程序员设置";}s:16:"CONFIG_TYPE_LIST";a:5:{i:0;s:6:"数字";i:1;s:6:"字符";i:2;s:6:"文本";i:3;s:6:"枚举";i:4;s:6:"数组";}s:12:"LOCATION_URL";s:1:"/";s:9:"WEB_TITLE";s:9:"帮帮鸭";s:9:"PAGE_SIZE";s:2:"15";s:8:"APP_NAME";s:9:"帮帮鸭";s:3:"ICP";s:0:"";s:12:"COMPANY_NAME";s:9:"帮帮鸭";s:13:"META_KEYWORDS";s:9:"帮帮鸭";s:16:"META_DESCRIPTION";s:0:"";s:14:"SMS_MODPWD_MSG";s:33:"修改密码, 您的验证码为:";s:17:"SMS_MODMOBILE_MSG";s:36:"绑定手机号, 您的验证码为:";s:15:"SMS_FINDPWD_MSG";s:34:"找回密码，您的验证码为:";s:12:"SMS_CODE_LEN";s:1:"4";s:12:"UNIT_THROUGH";s:5:"5|3|1";s:18:"THROUGH_PASS_SCORE";s:2:"60";}
-?>
