@@ -3,14 +3,14 @@
  * Copyright (c) 山东六牛网络科技有限公司 https://www.liuniukeji.com
  *
  * @Description
- * @Author         
+ * @Author
  * @Date           2018/10/25
  * @CreateBy       PhpStorm
  */
 namespace Admin\Model;
 
 use Think\Model;
- 
+
 /**
  * 任务类型模型
  */
@@ -30,7 +30,7 @@ class TaskCategoryModel extends Model {
      * @param $field field
      * @param $order order
      * @param $status    0删除  1 正常
-     * @return $list  arr   
+     * @return $list  arr
      */
     public function getTaskCategoryList($where = [], $field = '', $order = '',$status = null) {
         if(is_null($status))
@@ -44,8 +44,8 @@ class TaskCategoryModel extends Model {
             'list' => $list,
             'page' => $page['page']
         );
-        
-    } 
+
+    }
     /**
      * @desc 获取分类Id
      * @param $categoryList 分类数据
@@ -60,4 +60,3 @@ class TaskCategoryModel extends Model {
          return $ids;
     }
 }
-        
