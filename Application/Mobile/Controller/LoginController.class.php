@@ -1,8 +1,8 @@
 <?php
 /**
  * @Description    登录注册控制器
- * @Author         <809888972@qq.com>
- * @Date           2018/10/18
+ * @Author         <406752025@qq.com>
+ * @Date           2018/10/29
  */
 namespace Mobile\Controller;
 use Common\Controller\CommonController;
