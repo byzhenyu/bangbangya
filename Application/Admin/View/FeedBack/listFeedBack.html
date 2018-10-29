@@ -44,9 +44,7 @@
                                     <tr>
                                         <th width="2%"><input class="check-all" type="checkbox"></th>
                                         <th class="align-center" width="4%">ID</th>
-                                        <th class="align-center" width="4%">反馈人ID</th>
                                         <th class="align-center" width="4%">反馈人手机号</th>
-                                        <th class="align-left" >反馈内容</th>
                                         <th class="align-center" width="18%">反馈时间</th>
                                         <th class="align-center" width="10%">类型</th>
                                         <th width="15%">操作</th>
@@ -57,9 +55,7 @@
                                         <tr class="gradeX" title="{$v['comment']}">
                                             <td><input class="ids" type="checkbox" name="chkbId" value="{$v['id']}"></td>
                                             <td class="align-center">{$v['id']}</td>
-                                            <td class="align-center">{$v['user_id']}</td>
                                             <td class="align-center">{$v['mobile']}</td>
-                                            <td >{$v['comment']} </td>
                                             <td class="align-center">{:time_format($v['create_time'])}</td>
                                             <td class="align-center">{:show_feed_type($v['type'])}</td>
                                             <td class="f-14">

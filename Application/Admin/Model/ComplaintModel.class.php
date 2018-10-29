@@ -15,9 +15,9 @@ use Think\Model;
  * 任务表模型
  */
 class ComplaintModel extends Model {
-    protected $insertFields = array('task_id', 'user_id', 'add_time', 'type', 'audit_status','status','shop_id');
+    protected $insertFields = array('task_id', 'user_id', 'add_time', 'audit_status','status');
     protected $updateFields = array('id','audit_status');
-    protected $selectFields = array('id','task_id', 'user_id', 'add_time', 'type', 'audit_status','status','shop_id');
+    protected $selectFields = array('id','task_id', 'user_id', 'add_time', 'audit_status','status');
     protected $_validate = array(
         array('audit_status', 'require', '处理状态不能为空!', 1, 'regex', 3),
 
@@ -61,7 +61,7 @@ class ComplaintModel extends Model {
         return $list;
     }
     /**
-     * 修改投诉信息的状态
+     * 修改申诉信息的状态
      * @param $shop_id
      * @param $is_admin
      * @return array
@@ -77,5 +77,4 @@ class ComplaintModel extends Model {
             return V(0, '操作成功');
         }
     }
-
 }

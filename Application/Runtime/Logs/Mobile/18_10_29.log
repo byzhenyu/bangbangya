@@ -1,0 +1,309 @@
+[ 2018-10-29T09:45:23+08:00 ] 127.0.0.1 /index.php/Mobile/user/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_config` [ RunTime:0.0440s ]
+SQL: SELECT `type`,`key`,`value` FROM `ln_config`  [ RunTime:0.0450s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2018-10-29T13:55:49+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_config` [ RunTime:0.0470s ]
+SQL: SELECT `type`,`key`,`value` FROM `ln_config`  [ RunTime:0.0430s ]
+
+[ 2018-10-29T13:56:57+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_config` [ RunTime:0.0500s ]
+SQL: SELECT `type`,`key`,`value` FROM `ln_config`  [ RunTime:0.0500s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0490s ]
+NOTIC: [8] Undefined index: open_id C:\Users\Administrator\Desktop\bangbangya\Application\Mobile\Controller\LoginController.class.php 第 33 行.
+
+[ 2018-10-29T13:58:11+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_config` [ RunTime:0.1160s ]
+SQL: SELECT `type`,`key`,`value` FROM `ln_config`  [ RunTime:0.0580s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0470s ]
+NOTIC: [8] Undefined index: open_id C:\Users\Administrator\Desktop\bangbangya\Application\Mobile\Controller\LoginController.class.php 第 33 行.
+
+[ 2018-10-29T13:58:27+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0470s ]
+NOTIC: [8] Undefined index: open_id C:\Users\Administrator\Desktop\bangbangya\Application\Mobile\Controller\LoginController.class.php 第 33 行.
+
+[ 2018-10-29T13:58:35+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0460s ]
+NOTIC: [8] Undefined index: open_id C:\Users\Administrator\Desktop\bangbangya\Application\Mobile\Controller\LoginController.class.php 第 33 行.
+
+[ 2018-10-29T13:59:00+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0480s ]
+NOTIC: [8] Undefined index: open_id C:\Users\Administrator\Desktop\bangbangya\Application\Mobile\Controller\LoginController.class.php 第 33 行.
+
+[ 2018-10-29T13:59:11+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0470s ]
+NOTIC: [8] Undefined index: open_id C:\Users\Administrator\Desktop\bangbangya\Application\Mobile\Controller\LoginController.class.php 第 33 行.
+
+[ 2018-10-29T14:01:43+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+SQL: SHOW COLUMNS FROM `ln_config` [ RunTime:0.0470s ]
+SQL: SELECT `type`,`key`,`value` FROM `ln_config`  [ RunTime:0.0470s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0470s ]
+
+[ 2018-10-29T14:02:09+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0500s ]
+
+[ 2018-10-29T14:02:11+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0520s ]
+
+[ 2018-10-29T14:02:53+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+SQL: SHOW COLUMNS FROM `ln_config` [ RunTime:0.0510s ]
+SQL: SELECT `type`,`key`,`value` FROM `ln_config`  [ RunTime:0.0490s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0480s ]
+
+[ 2018-10-29T14:03:11+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0470s ]
+NOTIC: [8] Undefined index: open_id C:\Users\Administrator\Desktop\bangbangya\Application\Mobile\Controller\LoginController.class.php 第 34 行.
+
+[ 2018-10-29T14:03:54+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_config` [ RunTime:0.0450s ]
+SQL: SELECT `type`,`key`,`value` FROM `ln_config`  [ RunTime:0.0440s ]
+
+[ 2018-10-29T14:04:57+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_config` [ RunTime:0.0440s ]
+SQL: SELECT `type`,`key`,`value` FROM `ln_config`  [ RunTime:0.0440s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0460s ]
+NOTIC: [8] Undefined index: open_id C:\Users\Administrator\Desktop\bangbangya\Application\Mobile\Controller\LoginController.class.php 第 34 行.
+
+[ 2018-10-29T14:05:32+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0480s ]
+NOTIC: [8] Undefined index: open_id C:\Users\Administrator\Desktop\bangbangya\Application\Mobile\Controller\LoginController.class.php 第 34 行.
+
+[ 2018-10-29T14:07:37+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_config` [ RunTime:0.0440s ]
+SQL: SELECT `type`,`key`,`value` FROM `ln_config`  [ RunTime:0.0430s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0440s ]
+NOTIC: [8] Undefined index: open_id C:\Users\Administrator\Desktop\bangbangya\Application\Mobile\Controller\LoginController.class.php 第 34 行.
+
+[ 2018-10-29T14:08:25+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0470s ]
+
+[ 2018-10-29T14:10:12+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_config` [ RunTime:0.0450s ]
+SQL: SELECT `type`,`key`,`value` FROM `ln_config`  [ RunTime:0.0450s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0450s ]
+
+[ 2018-10-29T14:11:23+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_config` [ RunTime:0.0470s ]
+SQL: SELECT `type`,`key`,`value` FROM `ln_config`  [ RunTime:0.0460s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0460s ]
+
+[ 2018-10-29T14:11:27+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin?open_id=123456
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0450s ]
+
+[ 2018-10-29T14:11:50+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0480s ]
+
+[ 2018-10-29T14:11:58+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0430s ]
+NOTIC: [8] Undefined index: auto C:\Users\Administrator\Desktop\bangbangya\ThinkPHP\Library\Think\Model.class.php 第 1128 行.
+SQL: SELECT `user_id`,`user_name`,`password`,`mobile`,`head_pic`,`nick_name`,`task_money`,`frozen_money`,`bonus_money`,`total_money`,`alipay_num`,`alipay_name`,`invitation_code`,`invitation_uid`,`disabled`,`register_time`,`open_id`,`status` FROM `ln_user` WHERE `status` = 1 AND ( open_id = 123456 ) LIMIT 1   [ RunTime:0.0440s ]
+NOTIC: [8] Undefined variable: User C:\Users\Administrator\Desktop\bangbangya\Application\Home\Model\UserModel.class.php 第 27 行.
+SQL: SHOW COLUMNS FROM `ln_user_token` [ RunTime:0.0430s ]
+SQL: SELECT `token` FROM `ln_user_token` WHERE `user_id` = 1 LIMIT 1   [ RunTime:0.0420s ]
+
+[ 2018-10-29T14:12:14+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0490s ]
+NOTIC: [8] Undefined index: auto C:\Users\Administrator\Desktop\bangbangya\ThinkPHP\Library\Think\Model.class.php 第 1128 行.
+SQL: SELECT `user_id`,`user_name`,`password`,`mobile`,`head_pic`,`nick_name`,`task_money`,`frozen_money`,`bonus_money`,`total_money`,`alipay_num`,`alipay_name`,`invitation_code`,`invitation_uid`,`disabled`,`register_time`,`open_id`,`status` FROM `ln_user` WHERE `status` = 1 AND ( open_id = 123456 ) LIMIT 1   [ RunTime:0.0480s ]
+SQL: SHOW COLUMNS FROM `ln_user_token` [ RunTime:0.0470s ]
+SQL: SELECT `token` FROM `ln_user_token` WHERE `user_id` = 1 LIMIT 1   [ RunTime:0.0460s ]
+
+[ 2018-10-29T14:12:35+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+SQL: SHOW COLUMNS FROM `ln_config` [ RunTime:0.0460s ]
+SQL: SELECT `type`,`key`,`value` FROM `ln_config`  [ RunTime:0.0470s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0480s ]
+NOTIC: [8] Undefined index: auto C:\Users\Administrator\Desktop\bangbangya\ThinkPHP\Library\Think\Model.class.php 第 1128 行.
+SQL: SELECT `user_id`,`user_name`,`password`,`mobile`,`head_pic`,`nick_name`,`task_money`,`frozen_money`,`bonus_money`,`total_money`,`alipay_num`,`alipay_name`,`invitation_code`,`invitation_uid`,`disabled`,`register_time`,`open_id`,`status` FROM `ln_user` WHERE `status` = 1 AND ( open_id = 123456 ) LIMIT 1   [ RunTime:0.0470s ]
+SQL: SHOW COLUMNS FROM `ln_user_token` [ RunTime:0.0520s ]
+SQL: SELECT `token` FROM `ln_user_token` WHERE `user_id` = 1 LIMIT 1   [ RunTime:0.0460s ]
+
+[ 2018-10-29T14:14:02+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+ERR: syntax error, unexpected 'if' (T_IF)
+
+[ 2018-10-29T14:14:25+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+SQL: SHOW COLUMNS FROM `ln_config` [ RunTime:0.0470s ]
+SQL: SELECT `type`,`key`,`value` FROM `ln_config`  [ RunTime:0.0470s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0460s ]
+NOTIC: [8] Undefined index: auto C:\Users\Administrator\Desktop\bangbangya\ThinkPHP\Library\Think\Model.class.php 第 1128 行.
+SQL: SELECT `user_id`,`user_name`,`password`,`mobile`,`head_pic`,`nick_name`,`task_money`,`frozen_money`,`bonus_money`,`total_money`,`alipay_num`,`alipay_name`,`invitation_code`,`invitation_uid`,`disabled`,`register_time`,`open_id`,`status` FROM `ln_user` WHERE `status` = 1 AND ( open_id = 123456 ) LIMIT 1   [ RunTime:0.0490s ]
+SQL: SHOW COLUMNS FROM `ln_user_token` [ RunTime:0.0480s ]
+SQL: SELECT `token` FROM `ln_user_token` WHERE `user_id` = 1 LIMIT 1   [ RunTime:0.0460s ]
+
+[ 2018-10-29T14:14:34+08:00 ] 127.0.0.1 /index.php/mobile/login/dologin
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `ln_user` [ RunTime:0.0470s ]
+NOTIC: [8] Undefined index: auto C:\Users\Administrator\Desktop\bangbangya\ThinkPHP\Library\Think\Model.class.php 第 1128 行.
+SQL: SELECT `user_id`,`user_name`,`password`,`mobile`,`head_pic`,`nick_name`,`task_money`,`frozen_money`,`bonus_money`,`total_money`,`alipay_num`,`alipay_name`,`invitation_code`,`invitation_uid`,`disabled`,`register_time`,`open_id`,`status` FROM `ln_user` WHERE `status` = 1 AND ( open_id = 123456 ) LIMIT 1   [ RunTime:0.0470s ]
+SQL: SHOW COLUMNS FROM `ln_user_token` [ RunTime:0.0480s ]
+SQL: SELECT `token` FROM `ln_user_token` WHERE `user_id` = 1 LIMIT 1   [ RunTime:0.0480s ]
+

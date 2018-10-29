@@ -14,7 +14,11 @@ namespace Admin\Controller;
  */
 class TaskController extends CommonController {
     public function listTask(){
-        $data = D('Admin/Task')->getTaskList();
+        $keyword = I('keyword', '');
+        if ($keyword) {
+            $where['t.title'] = array('like','%'.$keyword.'%');
+        }
+        $data = D('Admin/Task')->getTaskList($where);
         $this->assign('list', $data['list']);
         $this->assign('page', $data['page']);
         $this->display();
@@ -40,11 +44,12 @@ class TaskController extends CommonController {
             }
             $this->ajaxReturn(V(0, $taskModel->getDbError()));
         }
-        $info = $taskModel->find($id);
+        $info = $taskModel->getTaskDetail($id);
         $categoryList = D('Admin/task_category')->field('id, category_name, category_img')->where('status = 1')->select();
         /*insert into categoryid  to set input selected*/
         $cat_ids = $info['category_id'];
         // $cat_ids = array();
+        // p($categoryList);
         $this->catListStr = json_encode($categoryList);
         $this->cat_ids = json_encode($cat_ids);
         $this->assign('info', $info);

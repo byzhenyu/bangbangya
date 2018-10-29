@@ -10,7 +10,7 @@
 namespace Admin\Controller;
 use Think\Controller;
 /**
- * 任务表控制器
+ * 申诉表控制器
  */
 class ComplaintController extends CommonController {
     public function listComplaint(){
@@ -37,13 +37,42 @@ class ComplaintController extends CommonController {
         if(IS_POST){
             if($id > 0){
                 if($ComplaintModel ->create()){
+                    $data = I('post.','');
                     $result = $ComplaintModel->save();
-                    if($result === false){
-                        $this->ajaxReturn(V(0, '操作失败'));
+                    if($data['audit_status'] == 1)
+                    {
+                          $ComplaintInfo = $ComplaintModel ->getComplaintInfo($data['id']);
+                          $taskInfo = D('Admin/Task') ->getTaskDetail($ComplaintInfo['task_id']);
+                          if($taskInfo['total_price'] == 0) $this->ajaxReturn(V(2, '任务总金额不足', $taskInfo['id']));
+                          // die;
+                          //开启事务 
+                          M() ->startTrans();
+                          /*更新用户数据*/
+                          $userData = array(
+                              'task_money'  => array('exp','task_money +'.$taskInfo['price']),
+                               'total_money' => array('exp','total_money +'.$taskInfo['price'])
+                          );
+                          $userRes = D('Admin/User')->updateUserInfo($ComplaintInfo['user_id'],$userData);
+                          /*更新任务表数据*/
+                          $taskData = array(
+                              'task_num'  => array('exp','task_num - 1'),
+                               'total_price' => array('exp','total_price -'.$taskInfo['price'])
+                          );
+                          $taskRes = D('Admin/Task')->updateTaskinfo($taskInfo['id'],$taskData);
+                          if($userRes  &&  $taskRes  && $result)
+                          {
+
+                              M()->commit();
+                              $this->ajaxReturn(V(1, '操作成功', $id));
+                          }else{
+                              M()->rollback();
+                              $this->ajaxReturn(V(0, '操作失败'));                    
+                          }
+                    }else if($result === false){
+                           $this->ajaxReturn(V(0, '操作失败'));
                     }
                     $this->ajaxReturn(V(1, '操作成功', $id));
-                }
-                else{
+                }else{
                     $this->ajaxReturn(V(2, $ComplaintModel->getError()));
                 }
             }
@@ -56,7 +85,7 @@ class ComplaintController extends CommonController {
     public function del(){
         $this->_del('Complaint', 'id');
     }
-    /*投诉信息变更完成*/
+    /*申诉信息变更完成*/
     public function changeAuditStatus() {
         $id = I('id', 0, 'intval');
         $updateInfo = D('Admin/Complaint')->changeAuditStatus($id);

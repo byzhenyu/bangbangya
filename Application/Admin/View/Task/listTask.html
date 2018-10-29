@@ -36,7 +36,7 @@
                             </div>
                             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
                                 <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                    <input type="text" class="am-form-field" name="keyword" placeholder="请输入手机号或昵称" value="{$keyword}">
+                                    <input type="text" class="am-form-field" name="keyword" placeholder="请输入任务标题" value="{$keyword}">
                                     <span class="am-input-group-btn">
                                         <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="submit"></button>
                                     </span>
@@ -47,20 +47,13 @@
 							<table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black">
 								<thead>
 								<tr>
-									<th width="50"><input class="check-all" type="checkbox"></th>
-									<th width="70">序号</th>
-									<th width="5%">发帖人ID</th>
-									<th width="5%">商铺ID</th>
-									<th width="10%">任务标题</th>
+									<th width="5%"><input class="check-all" type="checkbox"></th>
+									<th width="5%">序号</th>
+									<th width="15%">任务标题</th>
 									<th width="5%">任务类型</th>
 									<th width="5%">支持设备</th>
-									<th width="8%">任务截止时间</th>
-									<th width="5%">出价金额</th>
-									<th width="5%">任务数量</th>
-									<th width="5%">总金额</th>
-									<th width="5%">链接地址</th>
 									<th width="5%">审核状态</th>
-									<th width="8%">添加时间</th>
+									<th width="5%">信息状态</th>
 									<th width="20%">操作</th>
 								</tr>
 								</thead>
@@ -69,21 +62,13 @@
 									<tr class="gradeX">
 										<td><input class="ids" type="checkbox" name="chkbId" value="{$v['id']}"></td>
 										<td>{$v['id']}</td>
-										<td>{$v['user_id']}</td>
-										<td>{$v['shop_id']}</td>
 										<td>{$v['title']}</td>
 										<td>{$v['category_name']}</td>
 										<td>{$v['mobile_type']}</td>
-										<td>{:time_format($v['end_time'])}</td>
-										<td>{$v['price'] / 100}元</td>
-										<td>{$v['task_num']}</td>
-										<td>{$v['total_price'] / 100}元</td>
-										<td>{$v['link_url']}</td>
 										<td>
 											{:showAuditStatus($v['audit_status'])}
 										</td>
-										<td>{:time_format($v['add_time'])}</td>
-
+                                        <td>{:show_dispaly($v['status'])}</td>
 										<td class="f-14">
 											<div class="tpl-table-black-operation">
 												<a href="{:U('Task/editTask', array('id' => $v['id']))}">

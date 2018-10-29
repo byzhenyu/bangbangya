@@ -7,8 +7,8 @@ use Think\Model;
 use Common\Tools\Emchat;
 class UserModel extends Model{
     protected $insertFields = array('user_name','password','mobile','head_pic','nick_name', 'task_money', 'bonus_money', 'total_money', 'alipay_num', 'alipay_name', 'invitation_code', 'invitation_uid', 'open_id', 'disabled', 'register_time','status');
-    protected $updateFields = array('user_name','password','mobile','head_pic','nick_name', 'task_money', 'bonus_money', 'total_money', 'alipay_num', 'alipay_name', 'invitation_code', 'invitation_uid', 'open_id', 'disabled', 'register_time','status');
     protected $selectFields = array('user_id','user_name','password','mobile','head_pic','nick_name', 'task_money', 'bonus_money', 'total_money', 'alipay_num', 'alipay_name', 'invitation_code', 'invitation_uid', 'open_id', 'disabled', 'register_time','status');
+    protected $findFileds = array('user_id','user_name','password','mobile','head_pic','nick_name', 'task_money', 'bonus_money', 'total_money', 'alipay_num', 'alipay_name', 'invitation_code', 'invitation_uid', 'open_id', 'disabled', 'register_time','status');
     protected $_validate = array(
         array('mobile', 'require', '会员手机/账号不能为空！', 1, 'regex', 3),
         array('mobile','isMobile','不是有效的手机号码',1,'function', 3),
@@ -146,5 +146,15 @@ class UserModel extends Model{
         M('user_token')->where($where)->data($data)->save();
         return $token;
     }
-
+    /**
+     * 更新用户信息
+     *@param $user_id
+     *@param  $[data] [<更新数据>]
+     *@return bool
+     */
+    public function updateUserInfo($user_id = '',$data = []){
+        if($user_id == '') return false;
+        $result = $this->where(' user_id = '.$user_id) ->save($data);
+        return $result;
+    }
 }

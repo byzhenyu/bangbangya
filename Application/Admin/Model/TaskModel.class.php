@@ -41,11 +41,19 @@ class TaskModel extends Model {
 
     );
 
-    public function getTaskList($where = [], $field = '', $order = '') {
-        $count = $this->where($where)->count();
+    public function getTaskList($where = [], $field = '', $order = 't.add_time desc') {
+        $where['u.disabled'] = 1;  /*用户状态*/
+        $count = $this->alias('t')
+              ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')
+              ->join('__USER__ as u on t.user_id = u.user_id')
+              ->field('t.*,c.id as category_id,c.category_name,u.user_name')
+              ->where($where)
+              ->count();
         $page = get_page($count);
         $list = $this->alias('t')
-              ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')->field('t.*,c.id as category_id,c.category_name ')
+              ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')
+              ->join('__USER__ as u on t.user_id = u.user_id')
+              ->field('t.*,c.id as category_id,c.category_name,u.user_name')
               ->where($where)->limit($page['limit'])
               ->order($order)
               ->select();
@@ -53,6 +61,33 @@ class TaskModel extends Model {
             'list' => $list,
             'page' => $page['page']
         );
+    }
+     /**
+     * 查看任务详情
+     * @param $id task id
+     * @return data
+     */
+    public function getTaskDetail($id = '')
+    {
+        if($id == '') return false;
+        $list = $this->alias('t')
+              ->join('__USER__ as u on t.user_id = u.user_id','LEFT')
+              ->field('t.*,u.user_name')
+              ->where('t.id ='.$id)
+              ->find();
+        return $list;
+    }
+   /**
+     * 处理数据添加的时间 转换为时间戳
+     * @param POST data
+     * @param array()
+     * @return data
+     */
+    public function updateTaskinfo($task_id = '', $data = [])
+    {
+        if($task_id == '') return false;
+        $result = $this->where(' id = '.$task_id) ->save($data);
+        return $result;
     }
     /**
      * 处理数据添加的时间 转换为时间戳
@@ -66,4 +101,5 @@ class TaskModel extends Model {
         $data['end_time'] = strtotime($data['end_time']);
         return $data;
     }
+
 }

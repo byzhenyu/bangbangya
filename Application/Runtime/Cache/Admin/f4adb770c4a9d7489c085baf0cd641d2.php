@@ -1,24 +1,41 @@
-<extend name="Common/base"/>
+<?php if (!defined('THINK_PATH')) exit();?><!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><?php echo C('WEB_TITLE');?> - 六牛科技技术支持</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <link rel="stylesheet" type="text/css" href="/Application/Admin/Statics/ui/css/admin.css?v=1.1" media="all">
+    <link rel="stylesheet" type="text/css" href="/Application/Admin/Statics/ui/css/amazeui.min.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/Application/Admin/Statics/ui/css/app.css?v=1.07" media="all">
+    <!-- <script type="text/javascript" src="/Application/Admin/Statics/layDate-v5.0.9/laydate/laydate.js"></script> -->
+    <!--[if lt IE 9]-->
+    <script type="text/javascript" src="/Public/jquery-1.10.2.min.js"></script>
+    <!--[endif]-->
+    <script type="text/javascript" src="/Public/jquery-2.0.3.min.js"></script>
+    
 
-<block name="style">
 
-</block>
-
-<block name="body">
+</head>
+<body>
+    
+    <!-- 内容区 -->
+    <div id="content">
+        
     <div class="row-content am-cf">
         <div class="row">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                 <div class="widget am-cf">
                  <!--    <div class="widget-head am-cf">
-                        <div class="widget-title am-fl">{$info['id'] ? '编辑' : '添加'}任务表</div>
+                        <div class="widget-title am-fl"><?php echo ($info['id'] ? '编辑' : '添加'); ?>任务表</div>
                     </div> -->
                     <div class="widget-body am-fr">
-                        <form action="__ACTION__" method="post" class="ajaxForm am-form tpl-form-border-form tpl-form-border-br">
+                        <form action="/index.php/Admin/Task/editTask" method="post" class="ajaxForm am-form tpl-form-border-form tpl-form-border-br">
                              <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">上级分类 <span class="tpl-form-line-small-title"></span></label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
                                     <div class="tpl-table-list-select am-align-left" id="goods_cat_id_div" style="width:100%;">
-                                        <!-- <input id="category" type="hidden" name="category_id" id="goods_cat_id" value="{$info.category_id}" /> -->
+                                        <!-- <input id="category" type="hidden" name="category_id" id="goods_cat_id" value="<?php echo ($info["category_id"]); ?>" /> -->
                                     </div>
                                 </div>
                             </div>
@@ -28,7 +45,7 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="text" disabled="disabled" value="{$info['user_name']}"
+                                    <input type="text" disabled="disabled" value="<?php echo ($info['user_name']); ?>"
                                            placeholder="">
                                     <small></small>
                                 </div>
@@ -39,7 +56,7 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="text" id="title" name="title" value="{$info['title']}"
+                                    <input type="text" id="title" name="title" value="<?php echo ($info['title']); ?>"
                                            placeholder="请输入任务标题">
                                     <small></small>
                                 </div>
@@ -58,7 +75,7 @@
                                         <option value="苹果">苹果</option>
                                     </select>
                                      <script>
-                                       $('#type').val('{$info['mobile_type']}');
+                                       $('#type').val('<?php echo ($info['mobile_type']); ?>');
                                      </script>
                                 </div>
                                     <small></small>
@@ -70,7 +87,7 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="text" onclick="laydate({format:'YYYY-MM-DD hh:mm:ss',festival: true})"  class="input-text"  name="end_time" id="end_time" value="{$info['end_time']|time_format=###,'Y-m-d H:i:s'}" placeholder="请选择任务结束时间">
+                                    <input type="text" onclick="laydate({format:'YYYY-MM-DD hh:mm:ss',festival: true})"  class="input-text"  name="end_time" id="end_time" value="<?php echo (time_format($info['end_time'],'Y-m-d H:i:s')); ?>" placeholder="请选择任务结束时间">
                                     <small></small>
                                 </div>
                             </div>
@@ -81,7 +98,7 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="number" id="price" name="price" value="{$info['price']}"
+                                    <input type="number" id="price" name="price" value="<?php echo ($info['price']); ?>"
                                            placeholder="请输入出价金额（分）">
                                     <small></small>
                                 </div>
@@ -93,7 +110,7 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="number" id="task_num" name="task_num" value="{$info['task_num']}"
+                                    <input type="number" id="task_num" name="task_num" value="<?php echo ($info['task_num']); ?>"
                                            placeholder="请输入任务数量">
                                     <small></small>
                                 </div>
@@ -105,7 +122,7 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="number" id="total_price" name="total_price" value="{$info['total_price']}"
+                                    <input type="number" id="total_price" name="total_price" value="<?php echo ($info['total_price']); ?>"
                                            placeholder="请输入总金额(分)">
                                     <small></small>
                                 </div>
@@ -117,7 +134,7 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="text" id="link_url" name="link_url" value="{$info['link_url']}"
+                                    <input type="text" id="link_url" name="link_url" value="<?php echo ($info['link_url']); ?>"
                                            placeholder="请输入链接地址">
                                     <small></small>
                                 </div>
@@ -129,7 +146,7 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="text" id="validate_words" name="validate_words" value="{$info['validate_words']}"
+                                    <input type="text" id="validate_words" name="validate_words" value="<?php echo ($info['validate_words']); ?>"
                                            placeholder="请输入验证文字内容">
                                     <small></small>
                                 </div>
@@ -141,7 +158,7 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="text" id="remark" name="remark" value="{$info['remark']}"
+                                    <input type="text" id="remark" name="remark" value="<?php echo ($info['remark']); ?>"
                                            placeholder="请输入备注">
                                     <small></small>
                                 </div>
@@ -152,7 +169,7 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="text" id="audit_info" name="audit_info" value="{$info['audit_info']}"
+                                    <input type="text" id="audit_info" name="audit_info" value="<?php echo ($info['audit_info']); ?>"
                                            placeholder="请输入审核理由说明">
                                     <small></small>
                                 </div>
@@ -172,7 +189,7 @@
                                         <option value="2">未通过</option>
                                     </select>
                                      <script>
-                                       $('#audit').val('{$info['audit_status']}');
+                                       $('#audit').val('<?php echo ($info['audit_status']); ?>');
                                      </script>
                                 </div>
                                     <small></small>
@@ -180,7 +197,7 @@
                             </div>
                             <div class="am-form-group">
                                 <div class="am-u-sm-9 am-u-sm-push-3">
-                                    <input type="hidden" name="id" value="{$info['id']}">
+                                    <input type="hidden" name="id" value="<?php echo ($info['id']); ?>">
                                     <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success">提交</button>
                                     <button type="button" class="am-btn am-btn-primary am-btn-warning" onclick="goback();">返回</button>
                                 </div>
@@ -191,13 +208,37 @@
             </div>
         </div>
     </div>
-</block>
 
-<block name="script">
-<script type="text/javascript" src="__ADMIN__/layDate-v5.0.9/laydate/laydate.js"></script>
+    </div>
+    <div class="align-center" style="margin-top: 0px; margin-bottom:15px;">
+        <!--<small>版权所有 &copy; <a href="javascript:void(0)" target="_blank" >六牛科技</a></small>-->
+    </div>
+    <!-- /内容区 -->
+    <script type="text/javascript" src="/Application/Admin/Statics/ui/js/theme.js"></script>
+    <script type="text/javascript" src="/Application/Admin/Statics/ui/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="/Application/Admin/Statics/ui/js/amazeui.datatables.min.js"></script>
+    <script type="text/javascript" src="/Application/Admin/Statics/ui/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="/Application/Admin/Statics/ui/js/app.js?v=1.02"></script>
+    <script type="text/javascript" src="/Public/layer/layer.js"></script>
+    <script type="text/javascript" src="/Application/Admin/Statics/js/common.js?v=1.01"></script>
+    <script type="text/javascript" src="/Static/js/ajaxForm.js"></script>
+
+
+    <script>
+        // 定义全局变量
+        RECYCLE_URL = "<?php echo U('recycle');?>"; // 默认逻辑删除操作执行的地址
+        RESTORE_URL = "<?php echo U('restore');?>"; // 默认逻辑删除恢复执行的地址
+        DELETE_URL = "<?php echo U('del');?>"; // 默认删除操作执行的地址
+        UPLOAD_IMG_URL = "<?php echo U('uploadImg');?>"; // 默认上传图片地址
+        UPLOAD_FIELD_URL = "<?php echo U('uploadField');?>"; // 默认上传图片地址
+        DELETE_FILE_URL = "<?php echo U('delFile');?>"; // 默认删除图片执行的地址
+        CHANGE_STAUTS_URL = "<?php echo U('changeDisabled');?>"; // 修改数据的启用状态
+    </script>
+    
+<script type="text/javascript" src="/Application/Admin/Statics/layDate-v5.0.9/laydate/laydate.js"></script>
 <script type="text/javascript">
-        var catListStr = {$catListStr};
-        var cat_ids = {$cat_ids};
+        var catListStr = <?php echo ($catListStr); ?>;
+        var cat_ids = <?php echo ($cat_ids); ?>;
         $(function(){
             initCatSelect();
         })
@@ -211,5 +252,7 @@
         });
         _NEED_REFRESH = true;
 </script>
-<script type="text/javascript" charset="utf-8" src="__ADMIN__/js/goods_class.js?v=1.0"></script>
-</block>
+<script type="text/javascript" charset="utf-8" src="/Application/Admin/Statics/js/goods_class.js?v=1.0"></script>
+
+</body>
+</html>
