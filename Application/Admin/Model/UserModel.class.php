@@ -157,4 +157,5 @@ class UserModel extends Model{
         $result = $this->where(' user_id = '.$user_id) ->save($data);
         return $result;
     }
+
 }

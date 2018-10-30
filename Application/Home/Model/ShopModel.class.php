@@ -26,12 +26,34 @@ class ShopModel extends Model{
                  ->where($where)
                  ->find();
           /*判断是否是自己的店铺*/
-          if($user_id !== $shop_id)
-          {
-          	 $info['isOwnShop'] = 0;
-          }else{
-          	 $info['isOwnShop'] = 1;
-          }
+         $user_id === $shop_id ? $info['isOwnShop'] = 1 : $info['isOwnShop'] = 0;
+
           return $info;
+    }
+    /**
+     * 查看所有店铺
+     * @param  $[where] [<条件查找>]
+     * @return  arr
+     */
+    public function getAllShop($where = [],$field = '' ,$sort = ' s.top_time  DESC')
+    {
+    	$where[] = array('u.disabled' => 1,'u.status' => 1,'s.status' => 1);
+    	$count =  $this->alias('s')
+    	         ->join('__USER__ as u on u.user_id = s.user_id','LEFT')
+    	         ->field($field) 
+    	         ->where($where)
+    	         ->count(); 
+        $page = get_page($count);
+        $shopList = $this->alias('s')
+                 ->join('__USER__ as u on u.user_id = s.user_id','LEFT')
+                 ->field($field)
+                 ->where($where)
+                 ->limit($page['limit'])
+                 ->order($sort)
+                 ->select();
+        return array(
+            'shopList'=>$shopList,
+            'page'=>$page['page']
+        );                        
     }
 }

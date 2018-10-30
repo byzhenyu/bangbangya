@@ -1007,3 +1007,17 @@ function account_log($user_id, $money, $type, $desc = '', $order_sn = ''){
      }
      return $data;
  }
+ /**
+  * 查看粉丝表是否存在
+  */
+ function fansSverify($where)
+ {
+      $fansModel = D('Home/Fans');
+      $fansInfo = $fansModel->where($where)->find();
+      if($fansInfo && is_array($fansInfo))
+      {
+           return true;
+      }else{
+           return false;
+      }
+ }

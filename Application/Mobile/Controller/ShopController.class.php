@@ -16,11 +16,19 @@ class ShopController extends CommonController {
     {
     	$user_id = UID;
         $ShopModel = D('Home/Shop');
-        $ShopInfo = $ShopModel->getShopInfo($user_id);
+        $field= 'u.head_pic,u.user_id,s.shop_name,s.shop_accounts,s.task_count,s.task_num,s.vol,s.complain_num,s.be_complain_num,s.magic_guild_num,s.top_time';
+        $ShopInfo = $ShopModel->getShopInfo($user_id,'',$field);
         p($ShopInfo);
-        die;
+        exit;
         $this->assgin('ShopInfo',$ShopInfo);
         $this->display();
     }
-
+    /*获取店铺信息*/
+    public function getShopInfo()
+    {
+    	$ShopModel = D('Home/Shop');
+        $ShopInfo = $ShopModel->getAllShop();
+        p($ShopInfo);
+        exit;
+    }
 }

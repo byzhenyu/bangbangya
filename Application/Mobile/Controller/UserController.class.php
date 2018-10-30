@@ -24,10 +24,24 @@ class UserController extends CommonController {
     	$userInfo = $userModel->getUserInfo($where,$field);
     	P($code);
     	p($userInfo);
-    	die;
+    	exit;
     	$this->assign('code',$code);
     	$this->assign('userInfo',$userInfo);
     	$this->display();
     }
-    
+    /**
+     * 任务总收入排名
+     * @return   arr
+     */
+    public function getRankList()
+    {
+        $userModel = D('Home/User');
+        $field = 'user_id,head_pic,user_name, task_suc_money';
+        $rankList = $userModel->getRankList('', $field);
+        p($rankList);
+        exit;
+        $this->assign('randList',$rankList);
+        $this->display();
+    }
+
 }

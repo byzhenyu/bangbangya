@@ -1,0 +1,60 @@
+<extend name="Common/base"/>
+<block name="style">
+
+</block>
+
+<block name="body">
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">文章列表</div>
+
+                    </div>
+                    <div class="widget-body  am-fr">
+                        <div class="am-u-sm-12">
+                            <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                <thead>
+                                    <tr>
+                                        <th width="50"></th>
+                                        <th>提现比例</th>
+                                        <th>充值比例</th>
+                                        <th>修改时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr class="gradeX">
+                                            <td width="50"></td>                                
+                                            <td class="center">{$list['pay']} %</td>
+                                            <td class="center">{$list['deposit']} %</td>
+                                            <td class="center"> {:time_format($list['change_time'])}</td>
+                                            <td class="f-14">
+                                                <div class="tpl-table-black-operation">
+                                                    <a href="{:U('Ratio/editDistribution',array('id'=>$list['id']))}">
+                                                        <i class="am-icon-pencil"></i> 编辑
+                                                    </a>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                <!-- more data -->
+                                </tbody>
+                            </table>
+
+                            <empty name="list">
+                                <h4>aOh! 没有相关内容!</h4>
+                            </empty>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+    </script>
+</block>
