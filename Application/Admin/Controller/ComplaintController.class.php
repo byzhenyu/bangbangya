@@ -71,9 +71,8 @@ class ComplaintController extends CommonController {
                     }else if($result === false){
                            $this->ajaxReturn(V(0, '操作失败'));
                     }
-                    $this->ajaxReturn(V(1, '操作成功', $id));
                 }else{
-                    $this->ajaxReturn(V(2, $ComplaintModel->getError()));
+                    $this->ajaxReturn(V(3, $ComplaintModel->getError()));
                 }
             }
         }

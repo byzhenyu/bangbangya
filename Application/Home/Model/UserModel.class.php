@@ -10,7 +10,7 @@ use Think\Model;
 use Common\Tools\Emchat;
 class UserModel extends Model
 {
-    protected $findFields = array('user_id', 'user_name', 'password','mobile','head_pic','nick_name','task_money','frozen_money','bonus_money','total_money','alipay_num','alipay_name','invitation_code','invitation_uid','disabled','register_time','open_id','status');
+    protected $findFields = array('user_id', 'user_name','mobile','head_pic','nick_name','task_money','frozen_money','bonus_money','total_money','alipay_num','alipay_name','invitation_code','invitation_uid','register_time','open_id');
     //登录时表单验证的规则
     public $_login_validate = array(
         array('open_id', 'require', '微信未授权登录!',1,'regex'),
@@ -71,4 +71,76 @@ class UserModel extends Model
             return V(0, '保存失败');
         }
     }
+    /**
+     * 生成用户的邀请码 唯一性
+     * @param $user_id
+     * @return   str
+     */
+    function createCode($user_id)
+
+    {
+
+        static $source_string = 'E5FCDG3HQA4B1NOPIJ2RSTUV67MWX89KLYZ';
+
+        $num = $user_id;
+
+        $code = '';
+
+        while ( $num > 0) {
+
+            $mod = $num % 35;
+
+            $num = ($num - $mod) / 35;
+
+            $code = $source_string[$mod].$code;
+
+        }
+
+        if(empty($code[3]))
+
+            $code = str_pad($code,4,'0',STR_PAD_LEFT);
+
+        return $code;
+
+    }
+     /**
+     * 解码
+     * @param $code  
+     * @return   user_id
+     */
+    function decode($code) {
+
+    static $source_string = 'E5FCDG3HQA4B1NOPIJ2RSTUV67MWX89KLYZ';
+
+    if (strrpos($code, '0') !== false)
+
+        $code = substr($code, strrpos($code, '0')+1);
+
+    $len = strlen($code);
+
+    $code = strrev($code);
+
+    $num = 0;
+
+    for ($i=0; $i < $len; $i++) {
+
+        $num += strpos($source_string, $code[$i]) * pow(35, $i);
+
+    }
+
+    return $num;
+
+   }
+   /**
+    * 用户信息
+    * @param    where
+    * @return arr
+    */
+   public function getUserInfo($where = [],$field = null)
+   {
+        if(is_null($field))  $field = $this->findFields;
+        $where[] = array('disabled'=> 1 ,'status' => 1);
+        $info = $this->field($field) -> where($where) ->find();
+        return $info;
+   }
 }
