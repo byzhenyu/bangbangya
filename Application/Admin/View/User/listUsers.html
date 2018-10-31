@@ -40,23 +40,22 @@
                             <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
                                 <thead>
                                     <tr>
-                                        <th width="20"><input class="check-all" type="checkbox"></th>
                                         <th width="50">ID</th>
-                                        <th width="15%" class="align-center">昵称</th>
+                                        <th >昵称</th>
                                         <th width="15%" class="align-center">余额</th>
+                                        <th width="15%" class="align-center">邀请码</th>
                                         <th width="15%" class="align-center">注册时间</th>
                                         <th width="10%" class="align-center">状态</th>
-                                        <th width="20%">操作</th>
+                                        <th width="30%">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <foreach name="userslist" item="v" key="k">
                                         <tr class="gradeX">
-                                            <td><input value="{$v['user_id']}" class="ids" type="checkbox" name="chkbId"></td>
                                             <td>{$v['user_id']}</td>
-
-                                            <td class="align-center">{$v['nick_name']}</td>
+                                            <td>{$v['nick_name']}</td>
                                             <td class="align-center">{:fen_to_yuan($v['total_money'])}</td>
+                                            <td class="align-center">{$v['invitation_code']}</td>
                                             <td class="align-center">{:time_format($v['register_time'], 'Y-m-d')}</td>
                                             <td class="align-center">
                                                 {:show_disabled($v['disabled'])}
