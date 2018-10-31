@@ -56,4 +56,13 @@ class ShopModel extends Model{
             'page'=>$page['page']
         );                        
     }
+     /**
+     * 任务条件搜索
+     * @param $where
+     * @return where
+     */
+    public function getTopShop($where = [],$field= '',$order=' shop_type DESC')
+    {
+
+    }
 }

@@ -19,7 +19,7 @@ class TaskController extends CommonController {
      * @return
      */
     public function listTask(){
-        define('UID',1);
+        // define('UID',1);
         $keyword = I('keyword', '');
         /*order */
         $typeOrder = I('typeOrder',0,'intval');
@@ -53,7 +53,7 @@ class TaskController extends CommonController {
         /*任务类别*/
         $taskCategory = D('Home/Task')->getTaskCategory();
         /*置顶店铺*/
-        $topShop = D('Home/Task')->getTopShop();
+        $topShop = D('Home/Shop')->getTopShop();
         p($taskInfo);
         p($taskCategory);
         exit;
