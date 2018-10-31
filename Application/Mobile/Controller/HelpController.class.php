@@ -1,7 +1,7 @@
 <?php
 /**
- * @Description    登录注册控制器
- * @Author         <406752025@qq.com>
+ * @Description    常见问题使用帮助控制器
+ * @Author         <byzhenyu@qq.com>
  * @Date           2018/10/29
  */
 namespace Mobile\Controller;

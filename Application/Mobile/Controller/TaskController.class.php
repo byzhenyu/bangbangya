@@ -1,16 +1,15 @@
 <?php
 /**
- * @Author: wangzhenyu      byzhenyu@qq.com
- * @Date:   2018-10-29 20:11:54
- * @Last Modified by:   Marte
- * @Last Modified time: 2018-10-29 22:14:57
+ * @Description    任务控制器
+ * @Author         <byzhenyu@qq.com>
+ * @Date           2018/10/30
  */
 namespace Mobile\Controller;
 use Common\Controller\CommonController;
 class TaskController extends CommonController {
     /**
      * 首页接单信息页面
-     * @param $UID
+     * @param $UID 
      * @param  $[order] 排序方式 未定
      * @return
      */
