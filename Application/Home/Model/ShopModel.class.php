@@ -35,7 +35,7 @@ class ShopModel extends Model{
      * @param  $[where] [<条件查找>]
      * @return  arr
      */
-    public function getAllShop($where = [],$field = '' ,$sort = ' s.top_time  DESC')
+    public function getAllShop($where = [],$field = null ,$sort = ' s.top_time  DESC')
     {
     	$where[] = array('u.disabled' => 1,'u.status' => 1,'s.status' => 1);
     	$count =  $this->alias('s')
@@ -43,7 +43,7 @@ class ShopModel extends Model{
     	         ->field($field) 
     	         ->where($where)
     	         ->count(); 
-        $page = get_page($count);
+        $page = get_page($count,10);
         $shopList = $this->alias('s')
                  ->join('__USER__ as u on u.user_id = s.user_id','LEFT')
                  ->field($field)
@@ -55,14 +55,5 @@ class ShopModel extends Model{
             'shopList'=>$shopList,
             'page'=>$page['page']
         );                        
-    }
-     /**
-     * 任务条件搜索
-     * @param $where
-     * @return where
-     */
-    public function getTopShop($where = [],$field= '',$order=' shop_type DESC')
-    {
-
     }
 }
