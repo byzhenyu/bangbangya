@@ -1,6 +1,6 @@
 <?php
 /**
- * @Description    登录注册控制器
+ * @Description    粉丝控制器
  * @Author         <406752025@qq.com>
  * @Date           2018/10/29
  */
@@ -62,6 +62,6 @@ class FansController extends CommonController {
 	        $result = $fansModel->where($where)->save(array('status' => 0));
 	        $this->ajaxReturn(V(0, '取消成功'));
         }
-        $this->ajaxReturn(V(1, '取消失败'));
+        $this->ajaxReturn(V(1, '取消失败 '));
     }
 }

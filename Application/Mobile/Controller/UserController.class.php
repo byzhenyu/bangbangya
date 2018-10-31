@@ -1,6 +1,6 @@
 <?php
 /**
- * @Description    登录注册控制器
+ * @Description    用户控制器
  * @Author         <byzhenyu@qq.com>
  * @Date           2018/10/29
  */
