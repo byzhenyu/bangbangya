@@ -37,8 +37,7 @@ class HelpController extends Controller
         p($data);
         exit;
          /*判断模板引用*/
-        if($type == 1)
-        {
+        if($type == 1) {
             $this->display('questionList');
         }else{
             $this->display();
