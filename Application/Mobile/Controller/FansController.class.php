@@ -62,6 +62,6 @@ class FansController extends CommonController {
 	        $result = $fansModel->where($where)->save(array('status' => 0));
 	        $this->ajaxReturn(V(0, '取消成功'));
         }
-        $this->ajaxReturn(V(1, '取消失败s'));
+        $this->ajaxReturn(V(1, '取消失败'));
     }
 }
