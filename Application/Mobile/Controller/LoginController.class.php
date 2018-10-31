@@ -7,10 +7,6 @@
 namespace Mobile\Controller;
 use Common\Controller\CommonController;
 class LoginController extends CommonController {
-    public function __construct(){
-        parent::__construct();
-        $this->get_global_config();
-    }
     /**
      * 登录页
      **/

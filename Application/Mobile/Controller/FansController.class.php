@@ -20,11 +20,11 @@ class FansController extends CommonController {
     	$field = 'f.user_id,u.head_pic,u.nick_name,f.add_time'; 
         $fansModel = D('Home/Fans');
         /*我的粉丝*/
-        $fanslist =  $fansModel->getFansList($where,$field,'',0);
+        $fanslist =  $fansModel->getFansList($where, $field, '', 0);
         /*我的关注*/
         unset($where);
         $where['f.user_id']  =  UID;
-        $focuslist =  $fansModel->getFansList($where,$field,'',1);
+        $focuslist =  $fansModel->getFansList($where, $field, '', 1);
         p($fanslist);
         p($focuslist);
         $this->assign('fanslist',$fanslist);
@@ -42,12 +42,11 @@ class FansController extends CommonController {
         $where['fans_user_id'] = I('fans_id',0 ,'intval');
         $fansModel = D('Home/Fans');
         /*查看是否有信息*/
-        if(fansSverify($where)){
+        if (fansSverify($where)){
 	        $result = $fansModel->where($where)->save(array('status' => 1));
         	$this->ajaxReturn(V(0, '关注成功'));
         }else{
-        	if($fansModel->add($where) !== false)
-	        {
+        	if ($fansModel->add($where) !== false){
 	            $this->ajaxReturn(V(0, '关注成功'));
 	        }
         }
@@ -59,7 +58,7 @@ class FansController extends CommonController {
         $where['fans_user_id'] = I('fans_id',0 ,'intval');
         $fansModel = D('Home/Fans');
         /*查看是否有信息*/
-        if(fansSverify($where)){
+        if (fansSverify($where)){
 	        $result = $fansModel->where($where)->save(array('status' => 0));
 	        $this->ajaxReturn(V(0, '取消成功'));
         }
