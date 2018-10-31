@@ -1,8 +1,13 @@
 <?php
 /**
- * @Description    登录注册控制器
- * @Author         <406752025@qq.com>
- * @Date           2018/10/29
+ * /**
+ * Copyright (c) 山东六牛网络科技有限公司 https://liuniukeji.com
+ *
+ * @Description    登录控制器
+ * @Author         (wangzhenyu/byzhenyu@qq.com)
+ * @Copyright      Copyright (c) 山东六牛网络科技有限公司 保留所有版权(https://www.liuniukeji.com)
+ * @Date           2018/10/28 0031 16:41
+ * @CreateBy       PhpStorm
  */
 namespace Mobile\Controller;
 use Common\Controller\CommonController;

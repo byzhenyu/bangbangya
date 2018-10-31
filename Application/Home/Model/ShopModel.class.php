@@ -1,7 +1,13 @@
 <?php
 /**
- * Created by PhpStorm.
- * ShopModel
+ * /**
+ * Copyright (c) 山东六牛网络科技有限公司 https://liuniukeji.com
+ *
+ * @Description     商铺信息 Model
+ * @Author         (wangzhenyu/byzhenyu@qq.com)
+ * @Copyright      Copyright (c) 山东六牛网络科技有限公司 保留所有版权(https://www.liuniukeji.com)
+ * @Date           2018/10/31 0031 16:41
+ * @CreateBy       PhpStorm
  */
 namespace Home\Model;
 use  Think\Model;

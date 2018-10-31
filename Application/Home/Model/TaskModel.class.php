@@ -1,28 +1,31 @@
 <?php
 /**
- * @Author: Marte
- * @Date:   2018-10-29 20:18:52
- * @Last Modified by:   Marte
- * @Last Modified time: 2018-10-29 22:20:16
+ * /**
+ * Copyright (c) 山东六牛网络科技有限公司 https://liuniukeji.com
+ *
+ * @Description     任务信息类
+ * @Author         (wangzhenyu/byzhenyu@qq.com)
+ * @Copyright      Copyright (c) 山东六牛网络科技有限公司 保留所有版权(https://www.liuniukeji.com)
+ * @Date           2018/10/31 0031 15:22
+ * @CreateBy       PhpStorm
  */
 namespace Home\Model;
 use Think\Model;
 class TaskModel extends Model
 {
     protected $selectFields = array('id','title','category_id', 'mobile_type', 'end_time','price','task_num','total_price','link_url','validate_words','remark','is_show','audit_status','audit_info','add_time','status','user_id');
-    /**
-     * 任务类型
-     * @param $where
-     * @return array
-     */
-    public function getTaskCategory($where = [], $field = '', $order = 'id ASC') {
-        $where = array('status' => 1);
-        $list = M('task_category')->field($field)
-              ->where($where)->limit($page['limit'])
-              ->order($order)
-              ->select();
-        return $list;
-    }
+    protected $findFields = array('id','title','category_id', 'mobile_type', 'end_time','price','task_num','total_price','link_url','validate_words','remark','is_show','audit_status','audit_info','add_time','user_id');
+    protected $_validate = array(
+        array('title', 'require', '标题不能为空！', 1, 'regex', 3),
+        array('title', 'checkTitleLength', '标题不能超过30个字！', 2, 'callback', 3),
+        array('title', 'checkTitle', '标题重复！', 1, 'callback', 3),
+        array('category_id', 'require', '任务分类不能为空！', 1, 'regex', 3),
+        array('mobile_type', 'require', '支持设备不能为空！', 1, 'regex', 3),
+        array('end_time', 'require', '任务截止时间不能为空！', 1, 'regex', 3),
+        array('price', 'number', '任务价格必须是一个数字！', 1, 'regex', 3),
+        array('task_num', 'number', '任务数量必须是一个数字！', 1, 'regex', 3),
+        array('total_price', 'number', '任务总金额不能为空！', 1, 'regex', 3)
+    );
     /**
      * 任务详情
      * @param $where
@@ -50,4 +53,35 @@ class TaskModel extends Model
             'page' => $page['page']
         );
     }
+    /**
+    * @desc 获取任务详情
+    * @param $where  查找条件
+    * @param $field  显示字段
+    * @return array
+    */
+    public  function  getTaskDetail($id = '' ,$field = null){
+        if(is_null($field)){
+            $field = $this->$findFields;
+        }
+        if($id == '') return false;
+        $info = $this->field($field)->where('id  = '.$id)->find();
+        return $info;
+    }
+    //添加操作前的钩子操作
+    protected function _before_insert(&$data, $option){
+        $data['add_time'] = NOW_TIME;
+        $data['is_show'] = 1;
+        $data['audit_status'] = 0;
+        $data['status'] = 1;
+        $data['user_id'] = UID;
+    }
+    //添加操作前的钩子操作
+    protected function _after_insert(&$data, $option){
+
+    }
+    //修改操作前的钩子操作
+    protected function _before_update(&$data, $option){
+
+    }
+    
 }

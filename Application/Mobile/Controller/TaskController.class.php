@@ -1,8 +1,13 @@
 <?php
 /**
- * @Description    任务控制器
- * @Author         <byzhenyu@qq.com>
- * @Date           2018/10/30
+ * /**  
+ * Copyright (c) 山东六牛网络科技有限公司 https://liuniukeji.com
+ *
+ * @Description     任务信息控制器
+ * @Author         (wangzhenyu/byzhenyu@qq.com)
+ * @Copyright      Copyright (c) 山东六牛网络科技有限公司 保留所有版权(https://www.liuniukeji.com)
+ * @Date           2018/10/31 0031 15:16
+ * @CreateBy       PhpStorm
  */
 namespace Mobile\Controller;
 use Common\Controller\CommonController;
@@ -51,7 +56,7 @@ class TaskController extends CommonController {
         }
         $where['t.user_id'] = array('NEQ',UID);
         /*任务类别*/
-        $taskCategory = D('Home/Task')->getTaskCategory();
+        $taskCategory = D('Home/TaskCategory')->getTaskCategory();
         /*任务信息*/
         $taskInfo = D('Home/Task')->getTaskList($where, '', $order);
         /*置顶店铺*/
@@ -73,6 +78,36 @@ class TaskController extends CommonController {
     * @return mixed
     */
     public function taskAnnouncement(){
-
+        $taskCategoryModel = D('Home/TaskCategory');
+        $taskCategoryField = 'id, category_name';
+        $taskCategoryInfo = $taskCategoryModel->getTaskCategory('', $taskCategoryField);
+        p($taskCategoryInfo);
+//        exit;
+        $id = I('id', 0 ,'intval');
+        if($id >0)
+        {
+            $taskInfo = $taskModel->getTaskDetail($id);
+        }else{
+            $taskInfo = [];
+        }
+        $taskModel = D('Home/Task');
+        if (IS_POST) {
+            if ($taskModel->create() === false) {
+                $this->ajaxReturn(V(0, $taskModel->getError()));
+            }
+            if ($id) {
+                if ($taskModel->save() !== false) {
+                    $this->ajaxReturn(V(1, '编辑成功'));
+                }
+            } else {
+                if ($taskModel->add() !== false) {
+                    $this->ajaxReturn(V(1, '添加成功'));
+                }
+            }
+            $this->ajaxReturn(V(0, $taskModel->getDbError()));
+        }
+        $this->assign('taskInfo',$taskInfo);
+        $this->assign('taskCategoryInfo', $taskCategoryInfo);
+        $this->display();
     }
 }
