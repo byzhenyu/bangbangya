@@ -19,25 +19,10 @@ class TaskModel extends Model {
     protected $updateFields = array('id', 'title', 'category_id', 'mobile_type', 'end_time', 'price', 'task_num', 'total_price', 'link_url', 'validate_words', 'remark', 'audit_status', 'audit_info', 'add_time', 'status');
 
     protected $_validate = array(
-        array('title', 'require', '请输入 任务标题 ', 1, 'regex', 3),
-        array('title', '0,255', '您输入的 任务标题 过长，超过了 255 个字符数限制', 1, 'length', 3),
-        array('category_id', 'require', '请输入  ', 1, 'regex', 3),
-        array('mobile_type', 'require', '请输入 支持设备 (全部，安卓,苹果) ', 1, 'regex', 3),
-        array('mobile_type', '0,10', '您输入的 支持设备 (全部，安卓,苹果) 过长，超过了 10 个字符数限制', 1, 'length', 3),
-        array('end_time', 'require', '请输入 任务截止时间 ', 1, 'regex', 3),
-        array('price', 'require', '请输入 出价金额（分） ', 1, 'regex', 3),
-        array('task_num', 'require', '请输入 任务数量 ', 1, 'regex', 3),
-        array('total_price', 'require', '请输入 总金额(分) ', 1, 'regex', 3),
-        array('link_url', 'require', '请输入 链接地址 ', 1, 'regex', 3),
-        array('link_url', '0,255', '您输入的 链接地址 过长，超过了 255 个字符数限制', 1, 'length', 3),
-        array('validate_words', 'require', '请输入 验证文字内容 ', 1, 'regex', 3),
-        array('validate_words', '0,255', '您输入的 验证文字内容 过长，超过了 255 个字符数限制', 1, 'length', 3),
-        array('remark', 'require', '请输入 备注 ', 1, 'regex', 3),
-        array('remark', '0,255', '您输入的 备注 过长，超过了 255 个字符数限制', 1, 'length', 3),
-        array('audit_status', 'require', '请输入 审核状态0 未审核 1 审核通过 2 审核未通过 ', 1, 'regex', 3),
-        array('audit_info', 'require', '请输入 审核理由说明 ', 1, 'regex', 3),
-        array('audit_info', '0,255', '您输入的 审核理由说明 过长，超过了 255 个字符数限制', 1, 'length', 3),
-        array('status', 'require', '请输入 1正常 0删除 ', 1, 'regex', 3),
+
+        array('audit_status', array(0,1,2), '审核状态非法', 1, 'in', 5),
+        array('audit_info', 'require', '请输入 审核理由说明 ', 1, 'regex', 5),
+        array('audit_info', '0,30', '您输入的 审核理由过长，超过了30个字符数限制', 1, 'length', 5),
 
     );
 
@@ -67,14 +52,32 @@ class TaskModel extends Model {
      * @param $id task id
      * @return data
      */
-    public function getTaskDetail($id = '')
-    {
-        if($id == '') return false;
+    public function getTaskDetail($id = 0) {
+
         $list = $this->alias('t')
               ->join('__USER__ as u on t.user_id = u.user_id','LEFT')
-              ->field('t.*,u.user_name')
+              ->join('__TASK_CATEGORY__ c on t.category_id = c.id', 'LEFT')
+              ->field('t.*,u.nick_name,c.category_name')
               ->where('t.id ='.$id)
               ->find();
+        if ($list) {
+            $step = D('TaskStep')->getTaskStepList(array('task_id'=>$id));
+            $c = 0;
+            $s = 0;
+            foreach ($step as $k=>$v) {
+                if ($v['type'] == 2) {
+                    $list['checkInfo'][$c] = $v;
+                    $c++;
+                } else {
+                    $list['stepInfo'][$s] = $v;
+                    $s++;
+                }
+
+            }
+
+        } else {
+            $list = [];
+        }
         return $list;
     }
    /**
@@ -83,12 +86,11 @@ class TaskModel extends Model {
      * @param array()
      * @return data
      */
-    public function updateTaskinfo($task_id = '', $data = [])
-    {
+   public function updateTaskinfo($task_id = '', $data = []) {
         if($task_id == '') return false;
         $result = $this->where(' id = '.$task_id) ->save($data);
         return $result;
-    }
+   }
     /**
      * 处理数据添加的时间 转换为时间戳
      * @param POST data

@@ -13,7 +13,7 @@
 						<div class="widget-title am-cf">任务表列表</div>
 					</div>
 					<div class="widget-body am-fr">
-						<div class="am-u-sm-12 am-u-md-8 am-u-lg-8">
+						<div class="am-u-sm-12 am-u-md-3 am-u-lg-3">
 							<div class="am-form-group">
 								<div class="am-btn-toolbar">
 									<div class="am-btn-group am-btn-group-xs">
@@ -22,7 +22,7 @@
 											<span class="am-icon-plus"></span> 新增
 										</a> -->
 										<button type="button" class="am-btn am-btn-default am-btn-danger"
-												onclick="javascript:recycle('chkbId', '确认删除?! 删除后无法恢复!', true)">
+												onclick="javascript:recycle('chkbId', '确认删除?! 删除后无法恢复!')">
 											<span class="am-icon-trash-o"></span> 批量删除
 										</button>
 									</div>
@@ -30,11 +30,8 @@
 							</div>
 						</div>
 						<form action="__SELF__" method="get">
+
                             <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
-                                <div class="am-form-group tpl-table-list-select">
-                                </div>
-                            </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
                                 <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
                                     <input type="text" class="am-form-field" name="keyword" placeholder="请输入任务标题" value="{$keyword}">
                                     <span class="am-input-group-btn">
@@ -53,7 +50,6 @@
 									<th width="5%">任务类型</th>
 									<th width="5%">支持设备</th>
 									<th width="5%">审核状态</th>
-									<th width="5%">信息状态</th>
 									<th width="20%">操作</th>
 								</tr>
 								</thead>
@@ -68,14 +64,20 @@
 										<td>
 											{:showAuditStatus($v['audit_status'])}
 										</td>
-                                        <td>{:show_dispaly($v['status'])}</td>
 										<td class="f-14">
 											<div class="tpl-table-black-operation">
-												<a href="{:U('Task/editTask', array('id' => $v['id']))}">
-													<i class="am-icon-pencil"></i> 编辑
-												</a>
+												<if condition="$v['audit_status'] eq 0">
+													<a href="{:U('Task/editTask', array('id' => $v['id']))}">
+														<i class="am-icon-pencil"></i> 审核
+													</a>
+													<else />
+													<a href="{:U('Task/taskDetail', array('id' => $v['id']))}">
+														<i class="am-icon-desktop"></i> 详情
+													</a>
+												</if>
+
 												<a href="javascript:void(0);"
-												   onclick="javascript:recycle({$v['id']}, '确认删除?!此步骤无法恢复!', true)"
+												   onclick="javascript:recycle({$v['id']}, '确认删除?!此步骤无法恢复!')"
 												   class="tpl-table-black-operation-del">
 													<i class="am-icon-trash"></i> 删除
 												</a>

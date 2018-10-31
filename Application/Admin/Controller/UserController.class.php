@@ -1,6 +1,12 @@
 <?php
 /**
- * 学生管理类
+ * Copyright (c) 山东六牛网络科技有限公司 https://liuniukeji.com
+ *
+ * @Description    用户管理
+ * @Author         (jicy QQ:510434563)
+ * @Copyright      Copyright (c) 山东六牛网络科技有限公司 保留所有版权(https://www.liuniukeji.com)
+ * @Date           ${DATE} ${TIME}
+ * @CreateBy       ${PRODUCT_NAME}
  */
 namespace Admin\Controller;
 use Think\Controller;
@@ -14,8 +20,8 @@ class UserController extends CommonController {
         if ($keyword) {
             $where['nick_name|mobile|user_name'] = array('like','%'.$keyword.'%');
         }
-        //查询所有的学生
-        $field = 'user_id, nick_name,total_money, register_time, disabled';
+
+        $field = 'user_id, nick_name,total_money, register_time, disabled, invitation_code';
         $data = $userModel->getUsersListByPage($where, $field);
         $this->userslist = $data['userslist'];
         $this->page = $data['page'];
@@ -57,7 +63,7 @@ class UserController extends CommonController {
 
 
     public function recycle() {
-        $this->_recycle('User');
+        $this->_recycle('user');
     }
 
     // 删除图片
