@@ -57,6 +57,7 @@ class TaskLogModel extends  Model{
          return $taskInfo;
     }
     protected function _before_insert(&$data, $option){
+        $data['valid_time'] = NOW_TIME  + 1200;
         $data['valid_status'] = 0;
         $data['status'] = 1;
         $data['add_time'] = NOW_TIME;
