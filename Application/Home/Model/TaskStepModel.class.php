@@ -16,12 +16,16 @@ class TaskStepModel extends  Model {
     protected $_validate = array(
         array('task_id', 'require', '任务Id不能为空！', 1, 'regex', 3)
     );
-    public function getTaskStep($task_id = '',$field = null , sort = 'add_time DESC' ){
+    public function getTaskStep($task_id = '',$field = null , $sort = 'add_time DESC' ){
         if($task_id == '') return false;
         if(is_null($field)){
-            $field = $this->$selectFields;
+            $field = $this->selectFields;
         }
         $taskStepInfo = $this->field($field)->where('task_id =  '.$task_id)->select();
         return $taskStepInfo;
+    }
+    //添加操作前的钩子操作
+    protected function _before_insert(&$data, $option){
+        $data['add_time'] = NOW_TIME;
     }
 }

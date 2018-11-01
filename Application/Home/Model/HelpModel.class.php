@@ -8,7 +8,8 @@ use  Think\Model;
 class HelpModel extends Model {
     protected $insertFields = array('title', 'type', 'content', 'add_time','status','sort');
     protected $updateFields = array('id','title', 'type', 'content', 'add_time','status','sort');
-    protected $selectFields = array('id','title', 'type', 'content', 'add_time','status','sort');
+    protected $selectFields = array('id','title', 'type', 'content', 'add_time');
+    protected $findFields = array('id','title', 'type', 'content', 'add_time');
     protected $_validate = array(
         array('title', 'require', '请输入帮助问题的标题 ', 1, 'regex', 3),
         array('title', '0,255', '您输入的 任务标题 过长，超过了 255 个字符数限制', 1, 'length', 3),
@@ -34,5 +35,18 @@ class HelpModel extends Model {
             'Helplist'=>$Helplist,
             'page'=>$page['page']
         );
+    }
+    /**
+    * @desc
+    * @param
+    * @return mixed
+    */
+    public function getQuestionDetail($id = 0,$field  = null){
+        if($id == 0) return false;
+        if(is_null($field)){
+            $field = $this->findFields;
+        }
+        $info = $this->field($field)->where('id = '.$id)->find();
+        return $info;
     }
 }

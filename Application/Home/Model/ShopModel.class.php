@@ -15,8 +15,8 @@ class ShopModel extends Model{
     protected $findFields = array('id','user_id', 'shop_name', 'shop_img','shop_accounts','top_time','partner_time','add_time','status','task_count','task_num','vol','complain_num','be_complain_num','magic_guild_num');
     /**
      * 商铺信息查询
-     * @param  $user_id UID
-     * @param  $shop_id 查找shop的userid
+     * @param  $user_id   user_id
+     * @param  $shop_id shop.userid
      * @param  $[isOwnShop] 是否是自己的店铺 1 是  0 不是
      * @return arr
      */
@@ -39,7 +39,7 @@ class ShopModel extends Model{
     /**
      * 查看所有店铺
      * @param  $[where] [<条件查找>]
-     * @return  arr
+     * @return  array
      */
     public function getAllShop($where = [],$field = null ,$sort = ' s.top_time  DESC')
     {

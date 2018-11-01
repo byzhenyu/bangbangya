@@ -13,7 +13,7 @@ use Think\Model;
 use Common\Tools\Emchat;
 class UserModel extends Model
 {
-    protected $findFields = array('user_id', 'user_name','mobile','head_pic','nick_name','task_money','frozen_money','bonus_money','total_money','alipay_num','alipay_name','invitation_code','invitation_uid','register_time','open_id');
+    protected $findFields = array('user_id', 'user_name','mobile','head_pic','nick_name','task_money','frozen_money','bonus_money','total_money','alipay_num','alipay_name','invitation_code','invitation_uid','open_id');
     //登录时表单验证的规则
     public $_login_validate = array(
         array('open_id', 'require', '微信未授权登录!',1,'regex'),
@@ -79,9 +79,7 @@ class UserModel extends Model
      * @param $user_id
      * @return   str
      */
-    function createCode($user_id)
-
-    {
+    function createCode($user_id){
 
         static $source_string = 'E5FCDG3HQA4B1NOPIJ2RSTUV67MWX89KLYZ';
 
@@ -136,21 +134,33 @@ class UserModel extends Model
    }
    /**
     * 用户信息
-    * @param    where
+    * @param  $where
+    * @param  $field
     * @return arr
     */
-   public function getUserInfo($where = [],$field = null)
-   {
+   public function getUserInfo($where = [],$field = null){
         if(is_null($field))  $field = $this->findFields;
         $where[] = array('disabled'=> 1 ,'status' => 1);
         $info = $this->field($field) -> where($where) ->find();
         return $info;
    }
    /**
+   * @desc 获取用户字段
+   * @param $where
+   * @param $field
+   * @return mixed
+   */
+   public function getUserField($where = [], $field = null){
+       if(is_null($field)){
+           $field = $this->findFields;
+       }
+       $userField = $this->where($where)->getField($field);
+       return $userField;
+   }
+   /**
     * 赚钱排名
     */
-   public function getRankList($where = [],$field = "", $sort = ' task_suc_money DESC')
-   {
+   public function getRankList($where = [],$field = "", $sort = ' task_suc_money DESC'){
        if(is_null($field))  $field = $this->findFields;
        $count = $this->where($where)->count();
        $page = get_page($count, 10);

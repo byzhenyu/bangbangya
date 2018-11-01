@@ -73,41 +73,65 @@ class TaskController extends CommonController {
         $this->display();
     }
     /**
-    * @desc 任务发布
+    * @desc 发布任务
     * @param $POST['data']
     * @return mixed
     */
     public function taskAnnouncement(){
+        $where['user_id'] = UID;
         $taskCategoryModel = D('Home/TaskCategory');
         $taskCategoryField = 'id, category_name';
+        /*任务分类信息*/
         $taskCategoryInfo = $taskCategoryModel->getTaskCategory('', $taskCategoryField);
-        p($taskCategoryInfo);
-//        exit;
+        /*用户总金额金额*/
+        $userField = 'total_money';
+        $userMoney = D('Home/User')->getUserField($where, $userField);
         $id = I('id', 0 ,'intval');
-        if($id >0)
-        {
-            $taskInfo = $taskModel->getTaskDetail($id);
+        $taskModel = D('Home/Task');
+        $taskStepModel = D('Home/TaskStep');
+        if($id >0) {
+            $taskInfo = $taskModel->getMyTaskDetail($id);
         }else{
             $taskInfo = [];
         }
-        $taskModel = D('Home/Task');
         if (IS_POST) {
-            if ($taskModel->create() === false) {
-                $this->ajaxReturn(V(0, $taskModel->getError()));
-            }
+            $data = json_decode(I('data', '', 'strip_tags'),true);
             if ($id) {
                 if ($taskModel->save() !== false) {
                     $this->ajaxReturn(V(1, '编辑成功'));
                 }
             } else {
-                if ($taskModel->add() !== false) {
+                $createTask = $taskModel->addTask($data, $where);
+                if($createTask)
+                {
                     $this->ajaxReturn(V(1, '添加成功'));
                 }
             }
             $this->ajaxReturn(V(0, $taskModel->getDbError()));
         }
-        $this->assign('taskInfo',$taskInfo);
+        P($userMoney);
+        p($taskCategoryInfo);
+        p($taskInfo);
+//        exit;
+        $this->assign('taskInfo', $taskInfo);
+        $this->assign('userMoney', $userMoney);
         $this->assign('taskCategoryInfo', $taskCategoryInfo);
+        $this->display();
+    }
+    /**
+    * @desc  接单任务详情
+    * @param  $id
+    * @param  $user_id
+    * @return mixed
+    */
+    public  function taskDetail(){
+        $id = I('id', 0, 'intval');
+        $where['user_id'] = UID;
+        $where['t.id'] = $id;
+        $field = '';
+        $taskModel = D('Home/Task');
+        $taskInfo = $taskModel->getTaskDetail($where, $field);
+        $this->assign('$taskInfo', $taskInfo);
         $this->display();
     }
 }

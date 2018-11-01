@@ -11,10 +11,9 @@
  */
 namespace Home\Model;
 use Think\Model;
-class TaskModel extends Model
-{
+class TaskModel extends Model{
     protected $selectFields = array('id','title','category_id', 'mobile_type', 'end_time','price','task_num','total_price','link_url','validate_words','remark','is_show','audit_status','audit_info','add_time','status','user_id');
-    protected $findFields = array('id','title','category_id', 'mobile_type', 'end_time','price','task_num','total_price','link_url','validate_words','remark','is_show','audit_status','audit_info','add_time','user_id');
+    protected $findFields = array('id','title','category_id', 'mobile_type', 'end_time','price','task_num','total_price','link_url','validate_words','remark','audit_info');
     protected $_validate = array(
         array('title', 'require', '标题不能为空！', 1, 'regex', 3),
         array('title', 'checkTitleLength', '标题不能超过30个字！', 2, 'callback', 3),
@@ -45,7 +44,8 @@ class TaskModel extends Model
               ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')
               ->join('__SHOP__ as s on s.user_id = t.user_id')
               ->field('t.*,c.id as category_id,c.category_name')
-              ->where($where)->limit($page['limit'])
+              ->where($where)
+              ->limit($page['limit'])
               ->order($order)
               ->select();
         return array(
@@ -54,34 +54,80 @@ class TaskModel extends Model
         );
     }
     /**
-    * @desc 获取任务详情
-    * @param $where  查找条件
-    * @param $field  显示字段
+    * @desc 获取我发布任务详情
+    * @param $id
+    * @param $field
     * @return array
     */
-    public  function  getTaskDetail($id = '' ,$field = null){
+    public  function  getMyTaskDetail($id = 0,$field = null){
+        if($id == 0) return false;
         if(is_null($field)){
-            $field = $this->$findFields;
+            $field = $this->findFields;
         }
-        if($id == '') return false;
-        $info = $this->field($field)->where('id  = '.$id)->find();
+        $info = $this->field($field)->where($where)->find();
+        $info['taskStep'] = D('Home/TaskStep')->where('task_id = '.$id)->select();
         return $info;
     }
     //添加操作前的钩子操作
     protected function _before_insert(&$data, $option){
-        $data['add_time'] = NOW_TIME;
-        $data['is_show'] = 1;
         $data['audit_status'] = 0;
-        $data['status'] = 1;
-        $data['user_id'] = UID;
+        $data['add_time'] = NOW_TIME;
     }
-    //添加操作前的钩子操作
-    protected function _after_insert(&$data, $option){
-
+    /**
+    * @desc  发布任务
+    * @param $data
+    * @return mixed
+    */
+    public  function addTask($data, $where = [])
+    {
+        $task = $data['task'];
+        $taskStep = $data['taskStep'];
+        //开启事务
+        M() ->startTrans();
+        $result = $this->add($task);
+        if($result)
+        {
+            if($task['is_show']  == 1){
+                /*改变用户金额*/
+                $userMoney = array(
+                    'total_money'  => array('exp','total_money - '.$task['total_price']),
+                    'frozen_money' => array('exp','frozen_money + '.$task['total_price'])
+                );
+                $changeUserMoney = D('Home/User')->where($where)->save($userMoney);
+                if($changeUserMoney)
+                {
+                    /*记录用户消费几率*/
+                   $changeMoney  =  account_log($where['user_id'], $task['total_price'], 3, $desc = '发布标题为<'.$task['title'].'>的任务', $result);
+                }else{
+                    $changeMoney = false;
+                }
+            }
+            $taskStepModel = D('Home/TaskStep');
+            $addDateNum = 0;
+            foreach($taskStep as $key=>$value){
+                $addDateNum ++ ;
+                $value['task_id']  = $result;
+                $taskStepModel->add($value);
+            }
+        }
+        if($result && count($taskStep))
+        {
+            M()->commit();
+            return true;
+        }else{
+            M()->rollback();
+            return false;
+        }
     }
-    //修改操作前的钩子操作
-    protected function _before_update(&$data, $option){
-
+    /**
+    * @desc 接单_任务详情
+    * @param $where
+    * @param $field
+    * @return mixed
+    */
+    public function getTaskDetail($where = [], $field = null){
+          if(is_null($field)) {
+               $field = $this->findFields;
+          }
     }
-    
 }

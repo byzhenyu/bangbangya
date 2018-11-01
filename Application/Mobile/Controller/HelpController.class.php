@@ -19,28 +19,36 @@ class HelpController extends Controller
     * @param  $[type] [<类型 0 常见问题  1 使用帮助>]
     * @return  array()
     */
-    public function questionList($type = 0){
+    public function questionList(){
+        $type  =  I('type', 0 ,'intval');
         if (is_null($type)) {
         	$where['type'] = 0;
         }else{
         	$where['type'] = $type;
         }
-        $keyword = I('keyword', '');
-        $HelpModel = D('Admin/Help');
-        if ($keyword) {
-            $where['title'] = array('like','%'.$keyword.'%');
-        }
-        $data = $HelpModel->getHelpList($where);     
+        $HelpModel = D('Home/Help');
+        $field = 'id, title';
+        $data = $HelpModel->getHelpList($where,$field);
         $this->assign('list', $data['Helplist']);
         $this->assign('page', $data['page']);
         $this->assign('type', $type);
         p($data);
         exit;
-         /*判断模板引用*/
-        if($type == 1) {
-            $this->display('questionList');
-        }else{
-            $this->display();
-        }       
+        $this->display();
+    }
+    /**
+    * @desc 问题详情
+    * @param  $id
+    * @return mixed
+    */
+    public function getQuestionDetail()
+    {
+         $id = I('id', 0, 'intval');
+         $helpModel = D('Home/Help');
+         $field = 'title, content';
+         $questionInfo =  $helpModel -> getQuestionDetail($id, $field);
+         P($questionInfo);
+         $this->assign('questionInfo', $questionInfo);
+         $this->display();
     }
 }
