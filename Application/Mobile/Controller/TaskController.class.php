@@ -124,14 +124,16 @@ class TaskController extends CommonController {
     * @param  $user_id
     * @return mixed
     */
-    public  function taskDetail(){
+     public  function taskDetail(){
         $id = I('id', 0, 'intval');
-        $where['user_id'] = UID;
+//        $where['t.user_id'] = UID;
         $where['t.id'] = $id;
         $field = '';
         $taskModel = D('Home/Task');
-        $taskInfo = $taskModel->getTaskDetail($where, $field);
-        $this->assign('$taskInfo', $taskInfo);
+        $taskDetail = $taskModel->getTaskDetail($where, $field);
+        p($taskDetail);
+        exit;
+        $this->assign('taskDetail', $taskDetail);
         $this->display();
     }
 }

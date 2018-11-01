@@ -97,9 +97,7 @@ class TaskModel extends Model{
                 if($changeUserMoney)
                 {
                     /*记录用户消费几率*/
-                   $changeMoney  =  account_log($where['user_id'], $task['total_price'], 3, $desc = '发布标题为<'.$task['title'].'>的任务', $result);
-                }else{
-                    $changeMoney = false;
+                   account_log($where['user_id'], $task['total_price'], 3, $desc = '发布标题为<'.$task['title'].'>的任务', $result);
                 }
             }
             $taskStepModel = D('Home/TaskStep');
@@ -126,8 +124,13 @@ class TaskModel extends Model{
     * @return mixed
     */
     public function getTaskDetail($where = [], $field = null){
-          if(is_null($field)) {
-               $field = $this->findFields;
-          }
+        $taskDetail =  $this->alias('t')
+                       ->join('__USER__ as u on t.user_id = u.user_id', 'LEFT')
+                       ->join('__SHOP__ as s  on s.user_id = t.user_id')
+                       ->join('__TASK_CATEGORY__ as c on c.id = t.category_id')
+                       ->field($field)
+                       ->where($where)
+                       ->find();
+        return $taskDetail;
     }
 }
