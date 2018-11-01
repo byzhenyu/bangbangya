@@ -1021,3 +1021,17 @@ function account_log($user_id, $money, $type, $desc = '', $order_sn = ''){
            return false;
       }
  }
+
+ /**
+  * 显示任务审核状态
+  *
+  */
+ function show_valid_status($status) {
+     switch ($status) {
+         case '0': return '待提交'; break;
+         case '1': return '待审核'; break;
+         case '2': return '不合格'; break;
+         case '3': return '已完成'; break;
+         case '4': return '已放弃'; break;
+     }
+ }
