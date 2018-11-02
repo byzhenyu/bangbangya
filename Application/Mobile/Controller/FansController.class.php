@@ -22,7 +22,7 @@ class FansController extends CommonController {
     public function FansList()
     {
     	$where['f.fans_user_id']  =  UID;
-    	$field = 'f.user_id,u.head_pic,u.nick_name,f.add_time'; 
+    	$field = 'f.user_id,u.head_pic,u.nick_name,f.add_time';
         $fansModel = D('Home/Fans');
         /*我的粉丝*/
         $fanslist =  $fansModel->getFansList($where, $field, '', 0);
@@ -47,7 +47,7 @@ class FansController extends CommonController {
         $where['fans_user_id'] = I('fans_id',0 ,'intval');
         $fansModel = D('Home/Fans');
         /*查看是否有信息*/
-        if (fansSverify($where)){
+        if (fansSverify($where['user_id'], $where['fans_user_id'])){
 	        $result = $fansModel->where($where)->save(array('status' => 1));
         	$this->ajaxReturn(V(0, '关注成功'));
         }else{
@@ -63,7 +63,7 @@ class FansController extends CommonController {
         $where['fans_user_id'] = I('fans_id',0 ,'intval');
         $fansModel = D('Home/Fans');
         /*查看是否有信息*/
-        if (fansSverify($where)){
+        if (fansSverify($where['user_id'],$where['fans_user_id'] )){
 	        $result = $fansModel->where($where)->save(array('status' => 0));
 	        $this->ajaxReturn(V(0, '取消成功'));
         }

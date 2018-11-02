@@ -77,7 +77,7 @@ class TaskController extends CommonController {
     * @param $POST['data']
     * @return mixed
     */
-    public function taskAnnouncement(){
+    public function addTask(){
         $where['user_id'] = UID;
         $taskCategoryModel = D('Home/TaskCategory');
         $taskCategoryField = 'id, category_name';
@@ -119,21 +119,36 @@ class TaskController extends CommonController {
         $this->display();
     }
     /**
-    * @desc  接单任务详情
+    * @desc  接单任务详情  && 我的任务上传验证页面
     * @param  $id
     * @param  $user_id
     * @return mixed
     */
      public  function taskDetail(){
         $id = I('id', 0, 'intval');
-//        $where['t.user_id'] = UID;
         $where['t.id'] = $id;
-        $field = '';
+        $field = 'u.nick_name, u.head_pic, s.shop_accounts, s.top_time,s.user_id, t.id, c.category_name, t.price, t.validate_words, t.link_url, t.remark, t.end_time ';
         $taskModel = D('Home/Task');
         $taskDetail = $taskModel->getTaskDetail($where, $field);
         p($taskDetail);
-        exit;
+//        exit;
         $this->assign('taskDetail', $taskDetail);
         $this->display();
+    }
+    /**
+     * @desc 我的任务-上传验证
+     * @param $task_id
+     * @return mixed
+     */
+    public function taskVerify()
+    {
+        $data = json_decode(I('data', '', 'strip_tags'),true);
+        $result  = $this->TaskLogModel->add($data);
+        if($result) {
+            changeTask($data['id'], 1);
+            $this->ajaxReturn(V(1,'上传验证成功'));
+        }else{
+            $this->ajaxReturn(V(0, $this->TaskLogModel->getDbError()));
+        }
     }
 }

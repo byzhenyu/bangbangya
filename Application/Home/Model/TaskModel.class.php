@@ -26,13 +26,13 @@ class TaskModel extends Model{
         array('total_price', 'number', '任务总金额不能为空！', 1, 'regex', 3)
     );
     /**
-     * 任务详情
+     * 接单赚钱_任务列表
      * @param $where
      * @return array
      */
     public function getTaskList($where = [], $field = '', $order = 't.add_time desc') {
         /*任务状态查询条件*/
-        $where[] = array('t.end_time' =>array('EGT',NOW_TIME),'t.task_num'=>array('GT',0),'t.status'=> 1,'t.audit_status' =>1,'t.is_show' =>1);
+        $where[] = array('t.end_time' =>array('gt',NOW_TIME),'t.task_num'=>array('GT',0),'t.status'=> 1,'t.audit_status' =>1,'t.is_show' =>1);
         $count = $this->alias('t')
               ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')
               ->join('__SHOP__ as s on s.user_id = t.user_id')
@@ -64,7 +64,7 @@ class TaskModel extends Model{
         if(is_null($field)){
             $field = $this->findFields;
         }
-        $info = $this->field($field)->where($where)->find();
+        $info = $this->field($field)->where(array('id = '.$id))->find();
         $info['taskStep'] = D('Home/TaskStep')->where('task_id = '.$id)->select();
         return $info;
     }
@@ -81,6 +81,7 @@ class TaskModel extends Model{
     public  function addTask($data, $where = [])
     {
         $task = $data['task'];
+        $task['user_id'] = UID;
         $taskStep = $data['taskStep'];
         //开启事务
         M() ->startTrans();
@@ -104,6 +105,11 @@ class TaskModel extends Model{
             $addDateNum = 0;
             foreach($taskStep as $key=>$value){
                 $addDateNum ++ ;
+                if($key == 0) {
+                     $value['type'] = 1;
+                }else{
+                     $value['type'] = 2;
+                }
                 $value['task_id']  = $result;
                 $taskStepModel->add($value);
             }
@@ -131,6 +137,22 @@ class TaskModel extends Model{
                        ->field($field)
                        ->where($where)
                        ->find();
+
+        /*查看任务详情信息*/
+        $taskDetail['taskStep'] = D('Home/taskStep')->where('task_id = '.$where['t.id'])->select();
+        /*查看粉丝关注状态   0 不是粉丝  1 是粉丝*/
+        fansSverify(UID, $taskDetail['user_id'], 1) == true? $taskDetail['is_fans'] = 1: $taskDetail['is_fans'] = 0;
+        /*判断任务是否到期  is_stale 0到期 1正常 */
+        $taskDetail['end_time'] < NOW_TIME? $taskDetail['is_stale'] = 0 : $taskDetail['is_stale'] = 1;
+        /*判断是否已经接单 is_task   0 未接单  1 已经正常接单  2接单失效过期重新 抢单*/
+        $valid_time  = D('Home/TaskLog')->where(array('user_id' => UID, 'task_id'=> $where['t.id']))->getField('valid_time');
+        if($valid_time){
+            $taskDetail['is_task'] = 1;
+            /*判断订单是否到期 is_past  0过期 1正常*/
+            $valid_time > NOW_TIME?$taskDetail['is_past'] = 1:$taskDetail['is_past'] = 0;
+        }else{
+            $taskDetail['is_task'] = 0;
+        }
         return $taskDetail;
     }
 }

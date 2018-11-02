@@ -33,15 +33,26 @@ class TaskLogModel extends  Model{
                 ->field($field)
                 ->where($where)
                 ->limit($page['limit'])
-                ->order($order)
+                ->order($sort)
                 ->select();
+        /*判断任务是否失效  is_past 1正常  0已经过期*/
+        foreach($list as $key=>$value){
+            if($value['valid_status'] == 0){
+                if($value['valid_time'] > NOW_TIME){
+                    $list[$key]['is_past'] = 1;
+                }else{
+                    $list[$key]['is_past'] = 0;
+                }
+            }
+            unset($value['valid_time']);
+        }
         return array(
             'list' => $list,
             'page' => $page['page']
         );
     }
     /**
-    * @desc 接单任务详情
+    * @desc 我的任务详情
     * @param  $where
     * @param  $field
     * @return mixed
@@ -64,5 +75,73 @@ class TaskLogModel extends  Model{
     }
     protected function _before_update(&$data, $option){
         $data['finish_time'] = NOW_TIME;
+    }
+    /**
+    * @desc  丢弃任务
+    * @param $task_id
+    * @return mixed
+    */
+    public  function delTaskLog($id)
+    {
+          $taskLogDel = $this->where(array('user_id' => UID,'task_id' => $id))->save(array('status' => 0));
+          $taskInfo   = D('Home/Task')->where('id = '.$id)->find();
+          if($taskLogDel) {
+              /*task 更新的数据*/
+              $where['task_num'] = array('exp', ' task_num + 1');
+              $where['discard_id'] = $taskInfo['discard_id'].UID.',';
+          }else{
+              $where['discard_id'] = $taskInfo['discard_id'].UID.',';
+          }
+          $result  = D('Home/Task')->where('id = '.$id)->save($where);
+          if($result) {
+              return true;
+          }else{
+              return false;
+          }
+    }
+    /**
+    * @desc 判断是否有任务
+    * @param $user_id
+    * @param $task_id
+    * @return mixed
+    */
+    public function  activateTask($user_id, $task_id)
+    {
+          $where['user_id'] = $user_id;
+          $where['task_id'] = $task_id;
+          $where['audit_status'] = 0;
+          $result  = $this->where($where)->find();
+          if($result)
+          {
+               $this->where($where)->save(array('end_time' => NOW_TIME + 1200));
+               return true;
+          }else{
+               return false;
+          }
+    }
+    /**
+     * @desc 改变接单状态
+     * @param $task_id
+     * @return mixed
+     */
+    public function changeTask($task_id, $valid_status = 1){
+        //开启事务
+//         M() ->startTrans();
+//         if($valid_status == 3){
+//             $taskLogInfo = $this->field('task_id, user_id, task_price')->where('id = '.$task_id)->find();
+//             $taskInfo = $this->field('task_id, user_id, task_price')->where('id = '.$task_id)->find();
+//             $taskInfo = $this->alias('')
+//                         ->
+//             $userModel = D('Home/User');
+//             /*更新用户数据*/
+//             $userData = array(
+//                 'task_money'  => array('exp','task_money +'.$taskInfo['price']),
+//                 'task_money'  => array('exp','task_suc_money +'.$taskInfo['price']),
+//                 'total_money' => array('exp','total_money +'.$taskInfo['price'])
+//             );
+//             $changeUserMoney = $userModel->where('id = '.$taskInfo['user_id'])->save($userData);
+//         }
+//         $result =  $this->where('id = '.$task_id)->save(array('valid_status' => $valid_status));
+
     }
 }

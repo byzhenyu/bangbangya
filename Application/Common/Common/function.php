@@ -1010,15 +1010,18 @@ function account_log($user_id, $money, $type, $desc = '', $order_sn = ''){
  /**
   * 查看粉丝表是否存在
   */
- function fansSverify($where)
- {
+ function fansSverify($user_id, $fans_user_id, $status = null){
+       if(!is_null($status)) {
+         $where['status'] = $status;
+       }
+      $where['user_id'] = $user_id;
+      $where['fans_user_id'] = $fans_user_id;
       $fansModel = D('Home/Fans');
       $fansInfo = $fansModel->where($where)->find();
-      if($fansInfo && is_array($fansInfo))
-      {
-           return true;
+      if($fansInfo) {
+          return true;
       }else{
-           return false;
+          return false;
       }
  }
 
@@ -1035,3 +1038,19 @@ function account_log($user_id, $money, $type, $desc = '', $order_sn = ''){
          case '4': return '已放弃'; break;
      }
  }
+ /**
+ * @desc  判断单子数量
+ * @param $task_id
+ * @return mixed
+ */
+function taskNum($task_id){
+    $taskModel = D('Home/Task');
+    $result = $taskModel->where('id = '.$task_id)->getField('task_num');
+    if($result <= 0) return false;
+    $task_num = $taskModel->where('id = '.$task_id)->setDec('task_num');
+    if($task_num){
+        return true;
+    }else{
+        return false;
+    }
+}
