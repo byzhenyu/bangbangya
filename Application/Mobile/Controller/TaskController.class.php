@@ -135,20 +135,4 @@ class TaskController extends CommonController {
         $this->assign('taskDetail', $taskDetail);
         $this->display();
     }
-    /**
-     * @desc 我的任务-上传验证
-     * @param $task_id
-     * @return mixed
-     */
-    public function taskVerify()
-    {
-        $data = json_decode(I('data', '', 'strip_tags'),true);
-        $result  = $this->TaskLogModel->add($data);
-        if($result) {
-            changeTask($data['id'], 1);
-            $this->ajaxReturn(V(1,'上传验证成功'));
-        }else{
-            $this->ajaxReturn(V(0, $this->TaskLogModel->getDbError()));
-        }
-    }
 }

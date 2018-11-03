@@ -107,5 +107,24 @@ class TaskLogController extends CommonController {
              $this->ajaxReturn(V(0, $this->TaskLogModel->getDbError()));
          }
      }
+    /**
+     * @desc 我的任务-上传验证
+     * @param $task_id
+     * @return mixed
+     */
+     public function taskVerify()
+    {
+        $data = json_decode(I('data', '', 'strip_tags'),true);
+        if(IS_POST)
+        {
+            $taskLogRes  = $this->TaskLogModel->save($data);
+            $taskRes = $this->TaskLogModel->changeTaskStatus($data['id'], 1);
+        }
+        if($taskRes && $taskLogRes) {
+            $this->ajaxReturn(V(1,'上传验证成功'));
+        }else{
+            $this->ajaxReturn(V(0, $this->TaskLogModel->getDbError()));
+        }
+     }
 }
 

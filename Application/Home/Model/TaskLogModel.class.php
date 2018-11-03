@@ -124,24 +124,46 @@ class TaskLogModel extends  Model{
      * @param $task_id
      * @return mixed
      */
-    public function changeTask($task_id, $valid_status = 1){
-        //开启事务
-//         M() ->startTrans();
-//         if($valid_status == 3){
-//             $taskLogInfo = $this->field('task_id, user_id, task_price')->where('id = '.$task_id)->find();
-//             $taskInfo = $this->field('task_id, user_id, task_price')->where('id = '.$task_id)->find();
-//             $taskInfo = $this->alias('')
-//                         ->
-//             $userModel = D('Home/User');
-//             /*更新用户数据*/
-//             $userData = array(
-//                 'task_money'  => array('exp','task_money +'.$taskInfo['price']),
-//                 'task_money'  => array('exp','task_suc_money +'.$taskInfo['price']),
-//                 'total_money' => array('exp','total_money +'.$taskInfo['price'])
-//             );
-//             $changeUserMoney = $userModel->where('id = '.$taskInfo['user_id'])->save($userData);
-//         }
-//         $result =  $this->where('id = '.$task_id)->save(array('valid_status' => $valid_status));
+    public function changeTaskStatus($tasklog_id, $valid_status = 1){
+
+         $where['id'] = $tasklog_id;
+         if($valid_status == 3){
+             // 开启事务
+             M() ->startTrans();
+             /*查询任务信息*/
+             $field =  'l.user_id, l.task_id, l.task_price, t.user_id as t_user_id, t.price, t.total_price, t.title';
+             $taskInfo = $this->alias('l')
+                 ->join('__TASK__ as t on t.id = l.task_id', 'LEFT')
+                 ->field($field)
+                 ->where('l.id ='.$tasklog_id)
+                 ->find();
+             $userModel = D('Home/User');
+             /*更新接单用户数据*/
+             $userData = array(
+                 'task_money'  => array('exp','task_money +'.$taskInfo['task_price']),
+                 'task_money'  => array('exp','task_suc_money +'.$taskInfo['task_price']),
+                 'total_money' => array('exp','total_money +'.$taskInfo['task_price'])
+             );
+             account_log($taskInfo['user_id'], $taskInfo['task_price'],'4', '您完成了'.$taskInfo['title'].'的任务',$taskInfo['task_id']);
+             $userModel->where('user_id = '.$taskInfo['user_id'])->save($userData);
+             /*更新发单用户的数据*/
+             account_log($taskInfo['t_user_id'], $taskInfo['task_price'],'5', $taskInfo['title'].'的任务被完成',$taskInfo['task_id']);
+             $userModel->where('user_id = '.$taskInfo['t_user_id'])->setDec('frozen_money', $taskInfo['task_price']);
+             /*更新任务数据*/
+             $taskRes = D('Home/Task')->where('id = '.$taskInfo['task_id'])->setDec('total_price', $taskInfo['task_price']);
+            /*更新店铺数据*/
+             $shopModel = D('Home/Shop');
+             $shopModel->where('user_id = '.$taskInfo['user_id'])->setInc('take_task');
+             $shopModel->where('user_id = '.$taskInfo['t_user_id'])->setInc('vol');
+         }
+         $taskLogRes =  $this->where($where)->save(array('valid_status' => $valid_status));
+         if($taskLogRes){
+             M()->commit();
+             return true;
+         }else{
+             M()->rollback();
+             return false;
+         }
 
     }
 }
