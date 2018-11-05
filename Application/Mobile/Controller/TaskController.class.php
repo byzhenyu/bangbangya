@@ -84,8 +84,11 @@ class TaskController extends CommonController {
         /*任务分类信息*/
         $taskCategoryInfo = $taskCategoryModel->getTaskCategory('', $taskCategoryField);
         /*用户总金额金额*/
-        $userField = 'total_money';
-        $userMoney = D('Home/User')->getUserField($where, $userField);
+        $userInfo  = session('user_auth');
+        $userMoney = $userInfo['total_money'];
+        if($userInfo['shop_type'] != 0 && $userInfo['top_time'] > NOW_TIME){
+            $userInfo['shop_type'] = 0;
+        }
         $id = I('id', 0 ,'intval');
         $taskModel = D('Home/Task');
         $taskStepModel = D('Home/TaskStep');
