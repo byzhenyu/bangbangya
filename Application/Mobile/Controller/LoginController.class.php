@@ -16,12 +16,13 @@ class LoginController extends CommonController {
      * 登录页
      **/
     public function login(){
-        if(is_login()) {
-            $this->redirect('Mobile/Index/index');
-        }
-        else{
-            $this->display();
-        }
+        $this->display();
+//        if(is_login()) {
+//            $this->redirect('Mobile/Index/index');
+//        }
+//        else{
+//            $this->display();
+//        }
     }
 
     /**
@@ -33,23 +34,16 @@ class LoginController extends CommonController {
         $data = I('post.');
         if($UserModel->validate($UserModel->_login_validate)->create($data)){
             $userInfo = $UserModel->doLogin($data['open_id']);
-            if(is_array($userInfo)){
-
-                $this->ajaxReturn(V(1, '登录成功,正在跳转！',$userInfo));
+            if( $userInfo['status'] == 1 ){ //登录成功
+                unset($userInfo['data']['password']);
+                /* 存入session */
+                session('user_auth',$userInfo['data']);
+                $this->ajaxReturn(V(1, '登录成功',session('user_auth')['user_id']));
+            } else {
+                $this->ajaxReturn(V(2, $userInfo['info']));
             }
         }
         $this->ajaxReturn(V(0, $UserModel->getError()));
-    }
-    /**
-     * 注册页
-     **/
-    public function register(){
-        if(is_login()) {
-            $this->redirect('Mobile/Index/index');
-        }
-        else{
-            $this->display();
-        }
     }
     /**
      * 退出登录

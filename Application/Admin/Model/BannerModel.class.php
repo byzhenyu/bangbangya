@@ -6,9 +6,9 @@
 namespace Admin\Model;
 use Think\Model;
 class BannerModel extends Model{
-    protected $insertFields = array('title', 'img_url', 'jump_url', 'sort', 'add_time');
-    protected $updateFields = array('id','title', 'img_url', 'jump_url', 'sort');
-    protected $selectFields = array('id','title', 'img_url', 'jump_url', 'sort', 'add_time','status');
+    protected $insertFields = array('title', 'img_url', 'jump_url', 'sort', 'add_time','type');
+    protected $updateFields = array('id','title', 'img_url', 'jump_url', 'sort','type');
+    protected $selectFields = array('id','title', 'img_url', 'jump_url', 'sort', 'add_time','status','type');
     protected $_validate = array(
         array('title', 'require', '标题不能为空！', 1, 'regex', 3),
         array('img_url', 'require', '图片地址不能为空！', 1, 'regex', 3),
@@ -49,5 +49,9 @@ class BannerModel extends Model{
         } else {
             return V(0, '操作成功');
         }
+    }
+    //添加操作前的钩子操作
+    protected function _before_insert(&$data, $option){
+        $data['add_time'] = NOW_TIME;
     }
 }

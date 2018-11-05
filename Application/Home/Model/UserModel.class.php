@@ -16,7 +16,7 @@ class UserModel extends Model
     protected $findFields = array('user_id', 'user_name','mobile','head_pic','nick_name','task_money','frozen_money','bonus_money','total_money','alipay_num','alipay_name','invitation_code','invitation_uid','open_id');
     //登录时表单验证的规则
     public $_login_validate = array(
-        array('open_id', 'require', '微信未授权登录!',1,'regex'),
+        array('open_id', 'require', '微信未授权登录!',1,'regex',3),
     );
 
     // 用户登录
@@ -36,12 +36,25 @@ class UserModel extends Model
                 }
                 unset($user['password']);
                 $user['token'] = $this->_createTokenAndSave($user); //生成登录token并保存
-                session('user_auth', $user);
-                return V(2, '登录成功', $user);
+                return V(1, '登录成功', $user);
         } else {
-            return V(0, '用户名或密码错误.');
+            return V(2, '登录名或者密码错误');
         }
 
+    }
+    /**
+    * @desc 生成新的用户
+    * @param $open_id
+    * @return mixed
+    */
+    public function createNewUser($data = []){
+        M()->startTrans();
+        $user_id  =  $this->add($data);
+        $data['user_id'] = $user_id;
+        $shop_id  = D('Home/Shop')->add($data);
+        if($user_id && $shop_id){
+            $this->doLogin($user_id);
+        }
     }
     /**
      * 生成token值, 并保存到数据库

@@ -14,7 +14,25 @@
                     </div>
                     <div class="widget-body am-fr">
                         <form action="__ACTION__" method="post" class="ajaxForm am-form tpl-form-border-form tpl-form-border-br">
-                            
+                            <div class="am-form-group">
+                                <label class="am-u-sm-3 am-form-label">
+                                    类别
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    <div >
+                                        <select  id="audit" name="type" data-am-selected="">
+                                            <option >请选择轮播图类别</option>
+                                            <option value="0">手机端</option>
+                                            <option value="1">网页端</option>
+                                        </select>
+                                        <script>
+                                            $('#audit').val('{$info['type']}');
+                                        </script>
+                                    </div>
+                                    <small></small>
+                                </div>
+                            </div>
                             <div   class="am-form-group">
                                 <label  class="am-u-sm-3 am-form-label">
                                     轮播图名称

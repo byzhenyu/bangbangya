@@ -15,9 +15,9 @@ class BannerController extends CommonController{
         if ($keyword) {
             $where['title'] = array('like','%'.$keyword.'%');
         }
-        print_r($keyword);
+//        print_r($keyword);
         /*查询轮播图field*/
-        $field = 'id, title,img_url, jump_url, sort,add_time,status';
+        $field = 'id, title,img_url, jump_url, sort,add_time,status,type';
         $data = $BannerModel->getBannerListByPage($where, $field);
         $this->bannerlist = $data['bannerlist'];
         $this->page = $data['page'];
@@ -31,9 +31,7 @@ class BannerController extends CommonController{
      	$id = I('id',0,'intval');
         $BannerModel = D('Admin/Banner');     
         if (IS_POST) {
-        	$data = I('post.');
-        	$data['add_time'] = NOW_TIME;
-            if ($BannerModel->create($data) === false) {
+            if ($BannerModel->create() === false) {
                 $this->ajaxReturn(V(0, $BannerModel->getError()));
             }
             if ($id) {

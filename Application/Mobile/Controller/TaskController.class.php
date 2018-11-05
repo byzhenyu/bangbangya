@@ -54,7 +54,7 @@ class TaskController extends CommonController {
         if ($keyword) {
             $where['t.title|t.id'] = array('like', '%'.$keyword.'%');
         }
-        $where['t.user_id'] = array('NEQ',UID);
+//        $where['t.user_id'] = array('NEQ',UID);
         /*任务类别*/
         $taskCategory = D('Home/TaskCategory')->getTaskCategory();
         /*任务信息*/
@@ -66,7 +66,7 @@ class TaskController extends CommonController {
         p($taskInfo);
         p($taskCategory);
         p($topShop);
-        exit;
+//        exit;
         $this->assign('taskCategory',$taskCategory);
         $this->assign('taskInfo', $taskInfo['list']);
         $this->assign('page', $taskInfo['page']);
@@ -109,9 +109,9 @@ class TaskController extends CommonController {
             }
             $this->ajaxReturn(V(0, $taskModel->getDbError()));
         }
-        P($userMoney);
-        p($taskCategoryInfo);
-        p($taskInfo);
+//        P($userMoney);
+//        p($taskCategoryInfo);
+//        p($taskInfo);
 //        exit;
         $this->assign('taskInfo', $taskInfo);
         $this->assign('userMoney', $userMoney);
@@ -135,4 +135,9 @@ class TaskController extends CommonController {
         $this->assign('taskDetail', $taskDetail);
         $this->display();
     }
+    /**
+    * @desc  图片上传
+    * @param
+    * @return mixed
+    */
 }

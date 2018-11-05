@@ -19,7 +19,6 @@ class CommonController extends Controller
         //获取搜索关键词
         if (is_login()){
             define('UID', session('user_auth')['user_id']);
-
             $this->nickname = session('user_auth.nick_name') ? session('user_auth.nick_name') : session('user_auth.mobile');
         }
     }

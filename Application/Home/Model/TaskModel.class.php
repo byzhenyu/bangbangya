@@ -47,7 +47,9 @@ class TaskModel extends Model{
               ->where($where)
               ->limit($page['limit'])
               ->order($order)
+              ->fetchSql(true)
               ->select();
+        return $list;
         return array(
             'list' => $list,
             'page' => $page['page']
