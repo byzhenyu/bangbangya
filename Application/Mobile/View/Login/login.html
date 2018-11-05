@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>登录</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body>
+
+    <div class="login-index-top">
+        <img class="help_duck_logo" src="__PUBLIC__/mobile/images/logoin_img_logo.png">
+        <img class="help_duck_font" src="__PUBLIC__/mobile/images/login_font.png">
+    </div>
+
+    <div class="login-index-middle">
+        <p>投票、关注、浏览也可以赚钱</p>
+        <p>需要投票、需要粉丝、需要流量？</p>
+        <p>帮帮鸭帮你实现</p>
+    </div>
+
+    <div class="login-index-agree">
+        <label class="login-index-check">
+            <input class="check-login" name="user_agreement" type="checkbox">
+            <i></i>
+            <span>同意《帮帮鸭用户协议》</span>
+        </label>
+    </div>
+
+    <div  class="login-index-wx">
+        <a>
+            <img onclick="dologin()" src="__PUBLIC__/mobile/images/login_btn_wechat.png">
+        </a>
+    </div>
+
+    <div class="login-index-bottom"></div>
+
+</body>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/url.js"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+    function dologin()
+    {
+
+        mui.ajax(url + 'mobile/login/dologin',{
+            data:{
+                open_id:'123456'
+            },
+            dataType:'json',//服务器返回json格式数据
+            type:'post',//HTTP请求类型
+            timeout:10000,//超时时间设置为10秒；
+            // headers:{'Content-Type':'application/json'},
+            success:function(data){
+                mui.toast(data['info']);
+                // alert(JSON.stringify(data));
+                if(data['data'] == 1){
+                    setTimeout(function(){
+                        mui.openWindow({
+                            url:  url + '/mobile/index/index'
+                        });
+                    }, 1500);
+                }
+            },
+            error:function(xhr,type,errorThrown){
+                //异常处理；
+                console.log(type);
+            }
+        });
+    }
+
+</script>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>发布任务</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body style="background: #f6f6f6">
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <p class="mui-title">发布任务</p>
+        <a href="my-task.html">我的任务</a>
+    </header>
+
+    <div class="task-type-title">
+        <span>选择类型</span>
+        <a href="task-type-explain.html"><p>类别说明</p></a>
+    </div>
+
+    <div class="task-type-list">
+        <div class="task-type-row">
+        <foreach name="taskCategoryInfo" item="v" key="k">
+            <div class="task-type-single">
+                <input name="category_id" type="radio" {$k == 0 ? 'checked':''} value="{$v.id}">
+                <label>{$v.category_name}</label>
+            </div>
+        </foreach>
+        </div>
+        <!--<div class="task-type-row">-->
+            <!--<div class="task-type-single">-->
+                <!--<input name="task-type" type="radio"  value="注册">-->
+                <!--<label>注册</label>-->
+            <!--</div>-->
+
+            <!--<div class="task-type-single">-->
+                <!--<input name="task-type" type="radio" value="投票">-->
+                <!--<label>投票</label>-->
+            <!--</div>-->
+
+            <!--<div class="task-type-single">-->
+                <!--<input name="task-type" type="radio" value="关注">-->
+                <!--<label>关注</label>-->
+            <!--</div>-->
+
+            <!--<div class="task-type-single">-->
+                <!--<input name="task-type" type="radio" value="浏览">-->
+                <!--<label>浏览</label>-->
+            <!--</div>-->
+        <!--</div>-->
+
+       <!--<div class="task-type-row">-->
+           <!--<div class="task-type-single">-->
+               <!--<input name="task-type" type="radio" value="加粉">-->
+               <!--<label>加粉</label>-->
+           <!--</div>-->
+
+           <!--<div class="task-type-single">-->
+               <!--<input name="task-type" type="radio" value="转发">-->
+               <!--<label>转发</label>-->
+           <!--</div>-->
+
+           <!--<div class="task-type-single">-->
+               <!--<input name="task-type" type="radio" value="发帖">-->
+               <!--<label>发帖</label>-->
+           <!--</div>-->
+
+           <!--<div class="task-type-single">-->
+               <!--<input name="task-type" type="radio" value="评论">-->
+               <!--<label>评论</label>-->
+           <!--</div>-->
+       <!--</div>-->
+
+        <!--<div class="task-type-row">-->
+            <!--<div class="task-type-single">-->
+                <!--<input name="task-type" type="radio" value="高价">-->
+                <!--<label>高价</label>-->
+            <!--</div>-->
+
+            <!--<div class="task-type-single">-->
+                <!--<input name="task-type" type="radio" value="特单">-->
+                <!--<label>特单</label>-->
+            <!--</div>-->
+
+            <!--<div class="task-type-single">-->
+                <!--<input name="task-type" type="radio" value="长单">-->
+                <!--<label>长单</label>-->
+            <!--</div>-->
+
+            <!--<div class="task-type-single">-->
+                <!--<input name="task-type" type="radio" value="电商">-->
+                <!--<label>电商</label>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="task-type-row">-->
+            <!--<div class="task-type-single">-->
+                <!--<input name="task-type" type="radio" value="其他">-->
+                <!--<label>其他</label>-->
+            <!--</div>-->
+        <!--</div>-->
+
+    </div>
+
+    <div class="task-type-info">
+        <div class="task-choose-system">
+            <p>支持设备</p>
+            <div class="phone-sysytem">
+                <div>
+                    <input type="radio" name="mobile_type" value="全部" checked>
+                    <label>全部</label>
+                </div>
+                <div>
+                    <input type="radio" name="mobile_type" value="安卓">
+                    <label>安卓</label>
+                </div>
+                <div>
+                    <input type="radio" name="mobile_type" value="苹果">
+                    <label>苹果</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="task-type-basic">
+            <div class="task-basic-row">
+                <div>
+                    <span>标题</span>
+                    <input type="text"  name="title" placeholder="请您输入任务标题" style="padding-left: .24rem;width: 7rem;">
+                </div>
+            </div>
+
+            <a  class="task-basic-row">
+               <div>
+                   <span>截止时间</span>
+                   <input type="text"    id="end_time" name="end_time"  onclick="laydate({format:'YYYY-MM-DD hh:mm:ss',festival: true})" >
+               </div>
+                <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+            </a>
+
+            <div class="task-basic-row">
+               <div class="task-min">
+                   <div>
+                       <p>出价</p>
+                       <span>最低出价<i>0.5</i>元</span>
+                   </div>
+               </div>
+                <div>
+                    <input type="number" name="price" id="price">
+                    <p>元</p>
+                </div>
+            </div>
+
+            <div class="task-basic-row">
+                <div class="task-min">
+                    <div>
+                        <p>数量</p>
+                        <span>最少50单</span>
+                    </div>
+                </div>
+                <div>
+                    <input type="number" name="task_num" id="task_num">
+                    <p>单</p>
+                </div>
+            </div>
+
+            <div class="task-basic-row">
+                <div class="task-min">
+                    <div>
+                        <p>合计</p>
+                        <span>服务费：成交额12%，最低1元</span>
+                    </div>
+                </div>
+                <div>
+                    <input disabled="disabled" type="number" name="total_price" id="total_price">
+                    <p>元</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="task-audit-imgs">
+        <p>审核图样</p>
+        <span>上传验证图样例，<i>最多可上传5张</i></span>
+    </div>
+
+    <div id="img" class="task-audit-imgs-add">
+        <div>
+            <img  src="__PUBLIC__/mobile/images/home_jdzq_icon_fans.png">
+            <input type="hidden" value="" name="category_img" id="img" />
+            <img class="del-img" src="__PUBLIC__/mobile/images/common_icon_closebox.png">
+        </div>
+
+        <div>
+            <img src="__PUBLIC__/mobile/images/home_jdzq_icon_fans.png">
+            <img class="del-img" src="__PUBLIC__/mobile/images/common_icon_closebox.png">
+        </div>
+
+        <img    src="__PUBLIC__/mobile/images/common_icon_addpicture.png">
+    </div>
+
+    <div class="mui-table-view-cell mui-collapse task-operation-explain">
+        <a class="mui-navigate-right">操作说明</a>
+        <div class="mui-collapse-content">
+            <div class="task-operation-row1">
+                <div>
+                    <p>1</p>
+                    <p>删除</p>
+                </div>
+                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_fans.png">
+                <p>首先请下载该APP，然后登录，选择第三方就可以，去个人中心点击领取福利进入该页面，然后输入身份证号和姓名点领取</p>
+            </div>
+            <div class="task-operation-row2">
+                <div>
+                    <p>2</p>
+                    <p>删除</p>
+                </div>
+                <img src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">
+                <p>请输入文字说明</p>
+            </div>
+            <div class="task-operation-row3">
+                <button>添加步骤</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="task-type-other">
+        <div class="type-other-link">
+            <span>链接</span>
+            <input type="text" placeholder="请输入准确链接地址，如无链接可不填">
+        </div>
+
+        <div class="type-other-row">
+            <div class="mui-input-row">
+                <p>文字验证</p>
+                <textarea rows="3" placeholder="如需接单者提供文字信息，请在此输入内容，如不需要可不填"></textarea>
+            </div>
+            <div class="mui-input-row">
+                <p>备注</p>
+                <textarea rows="3" placeholder="200字以内"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="release-task-agree">
+        <label class="release-task-check">
+            <input class="check-task" type="checkbox" checked>
+            <i></i>
+            <span>我已阅读、理解并同意<i>《发布规则》</i>的全部内容</span>
+        </label>
+    </div>
+
+    <div class="release-task-btns">
+        <button>保存</button>
+        <button id="balance-insufficient">发布</button>
+    </div>
+
+    <p class="release-task-tip">提示！平台禁止发布黄赌毒及涉政等一切法律所禁止的内容，另外与本平台又同类性质功能的软件或平台禁止在本平台发布推广任务，如发现将查封账户，余款不退，敬请周知。</p>
+
+
+</body>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="__ADMIN__/layDate-v5.0.9/laydate/laydate.js"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+    laydate.render({
+        elem: '#start_time',
+        type: 'datetime'
+    });
+    laydate.render({
+        elem: '#end_time',
+        type: 'datetime'
+    });
+    _NEED_REFRESH = true;
+</script>
+<script>
+    //mui初始化
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+    document.getElementById("balance-insufficient").addEventListener('tap', function() {
+        var delArray = ['确定'];
+        mui.confirm('您账户余额不足，请到个人中心充值后再发布', '提示', delArray, function(e) {
+            if (e.index == 0) {
+                // 点击了确定
+            }
+
+        })
+    });
+    var charge = 0.12;
+    var all = 1 + charge;
+    /*判断任务价钱*/
+    $("#task_num").focusout(function() {
+        var price = $('#price').val();
+        var task_num = $('#task_num').val();
+        if($('#price').val() != null && $('#task_num').val() != null)
+        {
+             var zong =  (price * task_num *  all).toFixed(2);
+            $('#total_price').val(zong);
+        }
+    });
+    $("#price").focusout(function() {
+        var price = $('#price').val();
+        var task_num = $('#task_num').val();
+        if($('#price').val() != null && $('#task_num').val() != null)
+        {
+            var zong = (price * task_num *  all).toFixed(2);
+            $('#total_price').val(zong);
+        }
+    });
+</script>
+
+</html>

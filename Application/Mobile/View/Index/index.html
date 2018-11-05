@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>首页</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body style="background: #f6f6f6">
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a></a>
+        <p class="mui-title">帮帮鸭</p>
+        <a></a>
+    </header>
+    <div class="index-top">
+    <foreach name="bannerList" item="v">
+        <a href="$v.jump_url">
+                <img src="{$v.img_url}">
+        </a>
+    </foreach>
+    </div>
+    <div class="index-content">
+        <a class="index-content-single" href="{:U('Task/listTask')}">
+            <img src="__PUBLIC__/mobile/images/home_icon_jiedanzhuanqian.png">
+            <div>
+                <p>接单赚钱</p>
+                <span>投票、关注、浏览也可以赚钱</span>
+            </div>
+        </a>
+
+        <a class="index-content-single" href="{:U('Task/addTask')}">
+            <img src="__PUBLIC__/mobile/images/home_icon_publish.png">
+            <div>
+                <p>发布任务</p>
+                <span>要投票？要粉丝？还是品牌推广？</span>
+            </div>
+        </a>
+
+        <a class="index-content-single">
+            <img src="__PUBLIC__/mobile/images/home_icon_invite%20friends.png">
+            <div>
+                <p>好友邀请</p>
+                <span>推荐好友返利多多</span>
+            </div>
+        </a>
+
+        <a class="index-content-single">
+            <img src="__PUBLIC__/mobile/images/home_icon_my%20task.png">
+            <div>
+                <p>我的任务</p>
+                <span>已接单的任务在这里</span>
+            </div>
+        </a>
+    </div>
+
+    <footer class="mui-bar mui-bar-tab help-duck-foot">
+        <a href="index.html">
+            <div>
+                <img src="__PUBLIC__/mobile/images/tab_icon_home_s.png">
+                <span style="color: #6f75ef">首页</span>
+            </div>
+        </a>
+        <a href="message.html">
+            <div>
+                <img src="__PUBLIC__/mobile/images/tab_icon_message_n.png">
+                <span>消息</span>
+            </div>
+        </a>
+        <a href="rank-week.html">
+            <div>
+                <img src="__PUBLIC__/mobile/images/tab_icon_rank_n.png">
+                <span>排行榜</span>
+            </div>
+        </a>
+        <a href="personal-center.html">
+            <div>
+                <img src="__PUBLIC__/mobile/images/tab_icon_my_n.png">
+                <span>我的</span>
+            </div>
+        </a>
+    </footer>
+
+</body>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+</script>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+</html>
