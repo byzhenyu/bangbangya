@@ -33,7 +33,7 @@ class ShopModel extends Model{
                  ->find();
           /*判断是否是自己的店铺*/
          $user_id === $shop_id ? $info['isOwnShop'] = 1 : $info['isOwnShop'] = 0;
-
+         $info['top_time'] > NOW_TIME? $info['is_top'] = 1 :$info['is_top'] = 0;
           return $info;
     }
     /**
@@ -61,5 +61,32 @@ class ShopModel extends Model{
             'shopList'=>$shopList,
             'page'=>$page['page']
         );                        
+    }
+    /**
+    * @desc  置顶店铺
+    * @param  $uid 用户ID
+    * @param  $top_time 置顶时间 timestamp
+    * @param  $zong 置顶需要的money
+    * @return mixed
+    */
+    public  function  topShop($data){
+        /*开启事务*/
+        M() ->startTrans();
+        $userRes =  D('Home/User')->where('user_id = '.$data['user_id'])->setDec('total_money',$data['zong']);
+        $shopTopTime = $this->where('user_id = '.$data['user_id'])->getField('top_time');
+        if($shopTopTime < NOW_TIME){
+              $changeTime = NOW_TIME + $data['top_time'];
+        }else{
+              $changeTime = $shopTopTime + $data['top_time'];
+        }
+        account_log($data['user_id'], $data['zong'], 6, '您置顶了店铺消费了'.data['zong'].'元','');
+        $shopRes = $this->where('user_id = '.$data['user_id'])->save(array('top_time' => $changeTime));
+        if($userRes && $shopRes){
+             M()->commit();
+             return true;
+        }else{
+             M()->rollback();
+             return false;
+        }
     }
 }

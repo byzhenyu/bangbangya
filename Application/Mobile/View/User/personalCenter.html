@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>个人中心</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body>
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a></a>
+        <p class="mui-title">个人中心</p>
+        <a onclick="logOut()">退出</a>
+    </header>
+
+    <div class="personal-center-top">
+        <div class="personal-center-info">
+            <div class="personal-center-left">
+                <div class="personal-head-img">
+                    <img src="__PUBLIC__/mobile/images/QR-code.png">
+                    <img src="__PUBLIC__/mobile/images/my_icon_edit.png">
+                </div>
+                <div class="persoanl-name-id">
+                    <p>{$userList.nick_name}</p>
+                    <span>ID</span><span>{$userList.user_id}</span>
+                </div>
+            </div>
+            <if condition="$userList['is_accounts'] eq  0 ">
+                <a onclick="securityDeposit({$userList['shop_accounts']})">
+                    <div class="personal-application-protect">
+                        <p>申请</p>
+                    </div>
+                </a>
+                <else />
+                <a onclick="securityDeposit({$userList['shop_accounts']})">
+                    <div class="personal-application-protect">
+                        <p>保障金</p>
+                    </div>
+                </a>
+            </if>
+
+        </div>
+
+        <div class="personal-center-data">
+            <div class="center-data-details">
+                <span>完成</span>
+                <p><span>{$userList.take_task}</span>单</p>
+            </div>
+            <div class="center-column-line"></div>
+            <div class="center-data-details">
+                <span>余额</span>
+                <p>￥<span>{$userList.total_money}</span></p>
+            </div>
+            <div class="center-column-line"></div>
+            <div class="center-data-details">
+                <span>收入</span>
+                <p>￥<span>{$userList.zong}</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="personal-center-middle">
+      <a class="personal-center-item" href="partners.html">
+          <div class="center-item-info">
+              <div class="center-item-basic">
+                  <img src="__PUBLIC__/mobile/images/my_icon_cooperate.png">
+                  <p>合作商</p>
+              </div>
+          </div>
+          <div class="center-item-right">
+              <p onclick="apply({$userList['shop_type']})">申请</p>
+              <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+          </div>
+      </a>
+
+        <a class="personal-center-item" href="{:U('Shop/myShopInfo',array('user_id' => $userList['user_id']))}">
+            <div class="center-item-info">
+                <div class="center-item-basic">
+                    <img src="__PUBLIC__/mobile/images/my_icon_myshop.png" style="width: .44rem; height: .4rem;">
+                    <p>我的店铺</p>
+                </div>
+            </div>
+            <div class="center-item-right">
+                <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+            </div>
+        </a>
+
+        <a class="personal-center-item" href="{:U('Fans/myFans',array('user_id' => $userList['user_id']))}">
+            <div class="center-item-info">
+                <div class="center-item-basic">
+                    <img src="__PUBLIC__/mobile/images/my_icon_fans.png" style="width: .44rem; height: .38rem;">
+                    <p>粉丝关注</p>
+                </div>
+            </div>
+            <div class="center-item-right">
+                <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+            </div>
+        </a>
+
+        <a class="personal-center-item" href="my-wallet.html">
+            <div class="center-item-info">
+                <div class="center-item-basic">
+                    <img src="__PUBLIC__/mobile/images/my_icon_mywallet.png" style="width: .42rem; height: .38rem;">
+                    <p>我的钱包</p>
+                </div>
+            </div>
+            <div class="center-item-right">
+                <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+            </div>
+        </a>
+
+        <a class="personal-center-item" href="income-dividends.html">
+            <div class="center-item-info">
+                <div class="center-item-basic">
+                    <img src="__PUBLIC__/mobile/images/my_icon_income.png" style="width: .42rem; height: .40rem;">
+                    <p>收入分红</p>
+                </div>
+            </div>
+            <div class="center-item-right">
+                <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+            </div>
+        </a>
+
+        <a class="personal-center-item" href="bind-zfb.html">
+            <div class="center-item-info">
+                <div class="center-item-basic">
+                    <img src="__PUBLIC__/mobile/images/my_icon_zhifubao.png" style="width: .42rem; height: .32rem;">
+                    <p>绑定支付宝</p>
+                </div>
+            </div>
+            <div class="center-item-right">
+                <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+            </div>
+        </a>
+
+        <a class="personal-center-item" href="my-task.html">
+            <div class="center-item-info">
+                <div class="center-item-basic">
+                    <img src="__PUBLIC__/mobile/images/my_icon_my%20task.png" style="width: .42rem; height: .42rem;">
+                    <p>我的任务</p>
+                </div>
+            </div>
+            <div class="center-item-right">
+                <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+            </div>
+        </a>
+
+        <a class="personal-center-item" href="my-release.html">
+            <div class="center-item-info">
+                <div class="center-item-basic">
+                    <img src="__PUBLIC__/mobile/images/my_icon_mypublish.png" style="width: .40rem; height: .42rem;">
+                    <p>我的发布</p>
+                </div>
+            </div>
+            <div class="center-item-right">
+                <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+            </div>
+        </a>
+
+        <a class="personal-center-item" href="friends-invit.html">
+            <div class="center-item-info">
+                <div class="center-item-basic">
+                    <img src="__PUBLIC__/mobile/images/my_icon_invite%20friends.png" style="width: .44rem; height: .42rem;">
+                    <p>好友邀请</p>
+                </div>
+            </div>
+            <div class="center-item-right">
+                <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+            </div>
+        </a>
+
+        <a class="personal-center-item" href="common-problem.html">
+            <div class="center-item-info">
+                <div class="center-item-basic">
+                    <img src="__PUBLIC__/mobile/images/my_icon_question.png" style="width: .44rem; height: .44rem;">
+                    <p>常见问题</p>
+                </div>
+            </div>
+            <div class="center-item-right">
+                <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+            </div>
+        </a>
+
+        <a class="personal-center-item" href="use-help.html">
+            <div class="center-item-info">
+                <div class="center-item-basic">
+                    <img src="__PUBLIC__/mobile/images/my_icon_help.png" style="width: .44rem; height: .44rem;">
+                    <p>使用帮助</p>
+                </div>
+            </div>
+            <div class="center-item-right">
+                <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+            </div>
+        </a>
+
+        <a class="personal-center-item" href="user-feedback.html">
+            <div class="center-item-info">
+                <div class="center-item-basic">
+                    <img src="__PUBLIC__/mobile/images/my_icon_opinion.png" style="width: .42rem; height: .38rem;">
+                    <p>意见反馈</p>
+                </div>
+            </div>
+            <div class="center-item-right">
+                <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+            </div>
+        </a>
+    </div>
+
+    <footer class="mui-bar mui-bar-tab help-duck-foot">
+        <a href="index.html">
+            <div>
+                <img src="__PUBLIC__/mobile/images/tab_icon_home_n.png">
+                <span>首页</span>
+            </div>
+        </a>
+        <a href="message.html">
+            <div>
+                <img src="__PUBLIC__/mobile/images/tab_icon_message_n.png">
+                <span>消息</span>
+            </div>
+        </a>
+        <a href="rank-week.html">
+            <div>
+                <img src="__PUBLIC__/mobile/images/tab_icon_rank_n.png">
+                <span>排行榜</span>
+            </div>
+        </a>
+        <a href="personal-center.html">
+            <div>
+                <img src="__PUBLIC__/mobile/images/tab_icon_my_s.png">
+                <span style="color: #6f75ef">我的</span>
+            </div>
+        </a>
+    </footer>
+
+
+</body>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/url.js"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+    function logOut()
+    {
+        mui.confirm('您是否退出登录?', '提示', '', function(e) {
+            if (e.index == 1) {
+                mui.ajax(url + 'mobile/login/logOut',{
+                    dataType:'json',//服务器返回json格式数据
+                    type:'get',//HTTP请求类型
+                    timeout:10000,//超时时间设置为10秒；
+                    headers:{'Content-Type':'application/json'},
+                    success:function(data){
+                        mui.toast(data['info']);
+                        alert(JSON.stringify(data));
+                        if(data['status'] == 1){
+                            setTimeout(function(){
+                                mui.openWindow({
+                                    url:  url + '/mobile/login/login'
+                                });
+                            }, 1500);
+                        }
+                    },
+                    error:function(xhr,type,errorThrown){
+                        //异常处理；
+                        console.log(type);
+                    }
+                });
+            }else{
+                mui.alert('您取消了操作');
+            }
+
+        })
+    }
+    function securityDeposit($shop_accounts)
+    {
+         mui.openWindow({
+            url:url + 'mobile/user/securityDeposit/shop_accounts/' + $shop_accounts,
+        });
+    }
+    function apply($shop_type){
+        mui.openWindow({
+            url:url + 'mobile/user/partners/shop_type/' + $shop_type,
+        });
+    }
+</script>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+</html>

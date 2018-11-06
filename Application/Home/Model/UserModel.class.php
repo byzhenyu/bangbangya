@@ -153,8 +153,18 @@ class UserModel extends Model
     */
    public function getUserInfo($where = [],$field = null){
         if(is_null($field))  $field = $this->findFields;
-        $where[] = array('disabled'=> 1 ,'status' => 1);
-        $info = $this->field($field) -> where($where) ->find();
+        $info = $this->alias('u')
+               ->join('__SHOP__ as s on u.user_id = s.user_id','LEFT')
+               ->field($field)
+               -> where($where)
+               ->find();
+        /*判断是否缴纳保证金*/
+        if($info['shop_accounts'] > 0) {
+            $info['is_accounts'] = 1;
+        }else{
+            $info['is_accounts'] = 0;
+       }
+       $info['zong'] = $info['bonus_money'] + $info['task_suc_money'];
         return $info;
    }
    /**

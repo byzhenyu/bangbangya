@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>合作商</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body style="background: #f6f6f6">
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <p class="mui-title">合作商</p>
+        <a></a>
+    </header>
+
+    <div class="partners-my-level">
+        <if condition="$shop_type eq 0">
+            <p>小主，您的级别是非合作商</p>
+        </if>
+    </div>
+
+    <div class="partners-level-intro">
+        <div class="partners-level-title">
+            <p>合作商级别</p>
+            <p>交易手续费</p>
+            <p>提现手续费</p>
+        </div>
+
+        <div class="partners-level-info">
+            <p>非合作商</p>
+            <span>12%</span>
+            <span>15%</span>
+        </div>
+
+        <div class="partners-level-info">
+            <p>普通合作商</p>
+            <span>10%</span>
+            <span>10%</span>
+        </div>
+
+        <div class="partners-level-info">
+            <p>金牌合作商</p>
+            <span>8%</span>
+            <span>8%</span>
+        </div>
+
+        <div class="partners-level-info">
+            <p>白金合作商</p>
+            <span>5%</span>
+            <span>5%</span>
+        </div>
+    </div>
+
+    <div class="app-partners">
+        <div class="app-partners-title">
+            <p>申请合作商</p>
+            <span>月卡</span>
+            <span>年卡</span>
+        </div>
+
+        <div class="app-partners-info">
+            <div class="partners-level-name">
+                <img src="__PUBLIC__/mobile/images/my_cooperate_icon_putong.png">
+                <span>普通合作商</span>
+            </div>
+            <div class="partners-month">
+                <p>￥40</p>
+                <button>购买</button>
+            </div>
+            <div class="partners-year">
+                <p>￥400</p>
+                <button>购买</button>
+            </div>
+        </div>
+
+        <div class="app-partners-info">
+            <div class="partners-level-name">
+                <img src="__PUBLIC__/mobile/images/my_cooperate_icon_gold.png">
+                <span>金牌合作商</span>
+            </div>
+            <div class="partners-month">
+                <p>￥100</p>
+                <button>购买</button>
+            </div>
+            <div class="partners-year">
+                <p>￥800</p>
+                <button>购买</button>
+            </div>
+        </div>
+
+        <div class="app-partners-info">
+            <div class="partners-level-name">
+                <img src="__PUBLIC__/mobile/images/my_cooperate_icon_baijin.png">
+                <span>白金合作商</span>
+            </div>
+            <div class="partners-month">
+                <p>￥200</p>
+                <button>购买</button>
+            </div>
+            <div class="partners-year">
+                <p>￥1500</p>
+                <button>购买</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="partners-interests-intro">
+        <span>合作商权益说明</span>
+        <p>
+            1.同级别续费，时间自动累计顺延；升级级别，原级别将失效，时间不顺延。<br>
+            2.合作商一天可以提现三次，非合作商7天内只能提现一次，提现需要人工审核，非工作日不能提现;<br>
+            3.合作商可以减免部分手续费；发单没有最低手续费要求。
+        </p>
+    </div>
+
+</body>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+</script>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+</html>

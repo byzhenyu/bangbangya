@@ -12,26 +12,26 @@
 namespace Mobile\Controller;
 use Common\Controller\CommonController;
 class FansController extends CommonController {
-    public function __construct(){
-        parent::__construct();
-        $this->get_global_config();
+    public function _initialize() {
+        $this->Fans = D("Home/Fans");
     }
     /**
      * 我的粉丝和我的关注信息
      */
-    public function FansList()
+    public function myFans()
     {
-    	$where['f.fans_user_id']  =  UID;
+        $user_id = I('user_id', 0 ,'intval');
+    	$where['f.fans_user_id']  =  $user_id;
     	$field = 'f.user_id,u.head_pic,u.nick_name,f.add_time';
-        $fansModel = D('Home/Fans');
         /*我的粉丝*/
-        $fanslist =  $fansModel->getFansList($where, $field, '', 0);
+        $fanslist =  $this->Fans->getFansList($where, $field, '', 0);
         /*我的关注*/
         unset($where);
-        $where['f.user_id']  =  UID;
-        $focuslist =  $fansModel->getFansList($where, $field, '', 1);
+        $where['f.user_id']  =  $user_id;
+        $focuslist = $this->Fans->getFansList($where, $field, '', 1);
         p($fanslist);
         p($focuslist);
+        $this->assign('userInfo', $this->userInfo);
         $this->assign('fanslist',$fanslist);
         $this->assign('focuslist',$focuslist);
         $this->display();
@@ -48,10 +48,10 @@ class FansController extends CommonController {
         $fansModel = D('Home/Fans');
         /*查看是否有信息*/
         if (fansSverify($where['user_id'], $where['fans_user_id'])){
-	        $result = $fansModel->where($where)->save(array('status' => 1));
+	        $result = $this->Fans->where($where)->save(array('status' => 1));
         	$this->ajaxReturn(V(0, '关注成功'));
         }else{
-        	if ($fansModel->add($where) !== false){
+        	if ($this->Fans->add($where) !== false){
 	            $this->ajaxReturn(V(0, '关注成功'));
 	        }
         }
@@ -61,10 +61,9 @@ class FansController extends CommonController {
     {
         $where['user_id'] = UID;
         $where['fans_user_id'] = I('fans_id',0 ,'intval');
-        $fansModel = D('Home/Fans');
         /*查看是否有信息*/
         if (fansSverify($where['user_id'],$where['fans_user_id'] )){
-	        $result = $fansModel->where($where)->save(array('status' => 0));
+	        $result = $this->Fans->where($where)->save(array('status' => 0));
 	        $this->ajaxReturn(V(0, '取消成功'));
         }
         $this->ajaxReturn(V(1, '取消失败 '));

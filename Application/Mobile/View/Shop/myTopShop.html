@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>置顶店铺</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body style="background: #f6f6f6">
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <p class="mui-title">置顶店铺</p>
+        <a></a>
+    </header>
+
+    <div class="top-shop-price">
+        <p>周期价格</p>
+        <div class="top-shop-price-details">
+            <div>
+                <div class="top-shop-single">
+                    <input name="my-top-price" type="radio" value="30" checked>
+                    <label>￥30/小时</label>
+                </div>
+
+                <div class="top-shop-single">
+                    <input name="my-top-price" type="radio" value="288">
+                    <label>￥288/天</label>
+                </div>
+            </div>
+
+            <div>
+                <div class="top-shop-single">
+                    <input name="my-top-price" type="radio" value="1588">
+                    <label>￥1588/周</label>
+                </div>
+
+                <div class="top-shop-single">
+                    <input name="my-top-price" type="radio" value="4888">
+                    <label>￥4888/月</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="my-top-input">
+        <div class="my-top-num">
+            <p>周期数量</p>
+            <input id="num" type="number">
+            <p>个</p>
+        </div>
+        <div class="my-top-num">
+            <p>金额合计</p>
+            <input disabled="disabled" id="zong" type="number">
+            <p>元</p>
+        </div>
+    </div>
+    <div class="top-shop-position">
+        <p>置顶位置</p>
+        <img src="__PUBLIC__/mobile/images/my_shoptop_img_locate.png">
+    </div>
+
+    <div class="my-top-btn">
+        <button id="top-shop-buy">确定</button>
+    </div>
+
+</body>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/url.js"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+</script>
+<script>
+    //mui初始化
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+    $("#num").focusout(function() {
+        var topMoney = $('input[name="my-top-price"]:checked').val();
+        var num = $('#num').val();
+        var zong = topMoney * num;
+        $('#zong').val(zong);
+    });
+    $(":radio").click(function(){
+        var topMoney = $('input[name="my-top-price"]:checked').val();
+        var num = $('#num').val();
+        var zong = topMoney * num;
+        $('#zong').val(zong);
+    });
+    document.getElementById("top-shop-buy").addEventListener('tap', function() {
+        mui.confirm('是否置顶您的店铺?', '提示', '', function(e) {
+            if (e.index == 1) {
+                var topMoney = $('input[name="my-top-price"]:checked').val();
+                var num = $('#num').val();
+                var top_time = 0;
+                if(topMoney == 30){
+                      top_time =  3600 * num;
+                }else if(topMoney == 1588){
+                      top_time =  604800 * num;
+                }else if(topMoney == 288){
+                      top_time =  86400 * num;
+                }else{
+                      top_time =  2592000 * num;
+                }
+                // alert(top_time);
+                var total_money = {$total_money};
+                var zong = $('#zong').val();
+                if(total_money < zong){
+                    mui.confirm('您的金额不足!是否去充值?', '提示', '', function(e) {
+                        if (e.index == 1) {
+                            mui.openWindow({
+                                url:url + 'mobile/pay/topUpsPage',
+                            });
+                        }else{
+                            mui.toast('您取消了操作');
+                        }
+                    })
+                }else{
+                    if(zong == 0 || top_time ==0 ){
+                        mui.toast('请您选择置顶时间');
+                        return;
+                    }
+                    mui.ajax(url + 'mobile/shop/myTopShop',{
+                        data:{
+                            top_time:top_time,
+                            zong:zong
+                        },
+                        dataType:'json',//服务器返回json格式数据
+                        type:'post',//HTTP请求类型
+                        timeout:10000,//超时时间设置为10秒；
+                        success:function(data){
+                            mui.toast(data['info']);
+                            // alert(JSON.stringify(data));
+                            if(data['status'] == 1){
+                                setTimeout(function(){
+                                    mui.openWindow({
+                                        url:  url + '/mobile/shop/myShopInfo'
+                                    });
+                                }, 1500);
+                            }
+                        },
+                        error:function(xhr,type,errorThrown){
+                            //异常处理；
+                            console.log(type);
+                        }
+                    });
+                }
+            }else{
+                mui.toast('您取消了操作');
+            }
+        })
+    });
+</script>
+</html>
