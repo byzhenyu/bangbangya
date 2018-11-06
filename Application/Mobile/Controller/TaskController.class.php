@@ -54,7 +54,7 @@ class TaskController extends CommonController {
         if ($keyword) {
             $where['t.title|t.id'] = array('like', '%'.$keyword.'%');
         }
-//        $where['t.user_id'] = array('NEQ',UID);
+        $where['t.user_id'] = array('NEQ',UID);
         /*任务类别*/
         $taskCategory = D('Home/TaskCategory')->getTaskCategory();
         /*任务信息*/
@@ -67,6 +67,7 @@ class TaskController extends CommonController {
         p($taskCategory);
         p($topShop);
 //        exit;
+        $this->assign('topShop',$topShop['shopList']);
         $this->assign('taskCategory',$taskCategory);
         $this->assign('taskInfo', $taskInfo['list']);
         $this->assign('page', $taskInfo['page']);
@@ -89,6 +90,9 @@ class TaskController extends CommonController {
         if($userInfo['shop_type'] != 0 && $userInfo['top_time'] > NOW_TIME){
             $userInfo['shop_type'] = 0;
         }
+        p($userInfo);
+        p($userInfo['shop_type']);
+        die;
         $id = I('id', 0 ,'intval');
         $taskModel = D('Home/Task');
         $taskStepModel = D('Home/TaskStep');

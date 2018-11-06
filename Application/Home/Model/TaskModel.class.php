@@ -36,7 +36,6 @@ class TaskModel extends Model{
         $count = $this->alias('t')
               ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')
               ->join('__SHOP__ as s on s.user_id = t.user_id')
-              ->field('t.*,c.id as category_id,c.category_name')
               ->where($where)
               ->count();
         $page = get_page($count);
@@ -47,9 +46,13 @@ class TaskModel extends Model{
               ->where($where)
               ->limit($page['limit'])
               ->order($order)
-              ->fetchSql(true)
               ->select();
-        return $list;
+        /*判断是否丢失任务*/
+        foreach ($list  as  $key=> $value) {
+            if (strpos($value['discard_id'], ',' . UID . ',') !== false) {
+                unset($list[$key]);
+            }
+        }
         return array(
             'list' => $list,
             'page' => $page['page']

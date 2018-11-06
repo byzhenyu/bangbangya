@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>接单赚钱</title>
-    <link href="__PUBLIC___/mobile/css/mui.min.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="__PUBLIC___/mobile/css/style.css"/>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
 </head>
 <body style="background: #F6F6F6">
     <header class="mui-bar mui-bar-nav help-duck-head">
@@ -28,62 +28,27 @@
     <div class="get-order-list">
         <div>
             <p class="get-order-single get-order-single-check">全部</p>
-            <p class="get-order-single">注册</p>
-            <p class="get-order-single">投票</p>
-            <p class="get-order-single">关注</p>
-            <p class="get-order-single">浏览</p>
-            <p class="get-order-single">加粉</p>
-            <p class="get-order-single">转发</p>
-        </div>
-        <div>
-            <p class="get-order-single">发帖</p>
-            <p class="get-order-single">评论</p>
-            <p class="get-order-single">高价</p>
-            <p class="get-order-single">特单</p>
-            <p class="get-order-single">长单</p>
-            <p class="get-order-single">电商</p>
-            <p class="get-order-single">其他</p>
+        <foreach name="taskCategory" item="v">
+            <p onclick="" class="get-order-single">{$v['category_name']}</p>
+        </foreach>
         </div>
     </div>
 
     <div class="get-order-topshop">
         <p class="topshop-title"><span>置顶</span><span>店铺</span></p>
         <div class="topshop-headimg">
-           <a class="topshop-single">
-              <img class="headimg-show" src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_img_shop.png">
-              <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/my_icon_myshop.png">
-              <p>我要刷单</p>
-           </a>
-
-            <a class="topshop-single">
-                <img class="headimg-show" src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_img_shop.png">
-                <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/my_icon_myshop.png">
-                <p>来注册</p>
-            </a>
-
-            <a class="topshop-single">
-                <img class="headimg-show" src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_img_shop.png">
-                <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/my_icon_myshop.png">
-                <p>哈哈</p>
-            </a>
-
-            <a class="topshop-single">
-                <img class="headimg-show" src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_img_shop.png">
-                <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/my_icon_myshop.png">
-                <p>没有腹肌...</p>
-            </a>
-
-            <a class="topshop-single">
-                <img class="headimg-show" src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_img_shop.png">
-                <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/my_icon_myshop.png">
-                <p>快看发帖</p>
-            </a>
-
-            <a class="topshop-single">
-                <img class="headimg-show" src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_img_shop.png">
-                <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/my_icon_myshop.png">
-                <p>汪汪屋</p>
-            </a>
+           <!--<a class="topshop-single">-->
+              <!--<img class="headimg-show" src="__PUBLIC__/mobile/images/home_jdzq_img_shop.png">-->
+              <!--<img src="__PUBLIC__/mobile/images/my_icon_myshop.png">-->
+              <!--<p>我要刷单</p>-->
+           <!--</a>-->
+            <foreach name="topShop" item="v">
+                <a class="topshop-single">
+                    <img class="headimg-show" src="__PUBLIC__/mobile/images/home_jdzq_img_shop.png">
+                    <img src="{$v.shop_img}">
+                    <p>{$v.shop_name}</p>
+                </a>
+            </foreach>
         </div>
     </div>
 
@@ -114,12 +79,12 @@
                     <ul class="mui-table-view">
                         <li class="mui-table-view-cell get-order-li">
                             <div class="orders-details">
-                                <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_icon_register.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_register.png">
                                 <div class="orders-details-info">
                                     <div>
                                         <p>注册</p>
-                                        <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                        <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                                     </div>
                                     <span>天天快报一秒完成</span>
                                     <span>编号：740006</span>
@@ -130,12 +95,12 @@
 
                         <li class="mui-table-view-cell get-order-li">
                             <div class="orders-details">
-                                <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_icon_vote.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_vote.png">
                                 <div class="orders-details-info">
                                     <div>
                                         <p>投票</p>
-                                        <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                        <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                                     </div>
                                     <span>京东砍快通过</span>
                                     <span>编号：750940</span>
@@ -146,12 +111,12 @@
 
                         <li class="mui-table-view-cell get-order-li">
                             <div class="orders-details">
-                                <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_icon_attention.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_attention.png">
                                 <div class="orders-details-info">
                                     <div>
                                         <p>关注</p>
-                                        <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                        <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                                     </div>
                                     <span>关注任务</span>
                                     <span>编号：751327</span>
@@ -162,12 +127,12 @@
 
                         <li class="mui-table-view-cell get-order-li">
                             <div class="orders-details">
-                                <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_icon_skan.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_skan.png">
                                 <div class="orders-details-info">
                                     <div>
                                         <p>浏览</p>
-                                        <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                        <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                                     </div>
                                     <span>简单阅读即可</span>
                                     <span>编号：329640</span>
@@ -178,12 +143,12 @@
 
                         <li class="mui-table-view-cell get-order-li">
                             <div class="orders-details">
-                                <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_icon_fans.png">
+                                <img src="__PUBLIC__/mobile/home_jdzq_icon_fans.png">
                                 <div class="orders-details-info">
                                     <div>
                                         <p>加粉</p>
-                                        <img src="__PUBLIC___/mobile/__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                                     </div>
                                     <span>微信加粉</span>
                                     <span>编号：135434</span>
@@ -194,12 +159,12 @@
 
                         <li class="mui-table-view-cell get-order-li">
                             <div class="orders-details">
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_forward.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_forward.png">
                                 <div class="orders-details-info">
                                     <div>
                                         <p>转发</p>
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                                     </div>
                                     <span>简单转发</span>
                                     <span>编号：738161</span>
@@ -210,12 +175,12 @@
 
                         <li class="mui-table-view-cell get-order-li">
                             <div class="orders-details">
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_post.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_post.png">
                                 <div class="orders-details-info">
                                     <div>
                                         <p>发帖</p>
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                                     </div>
                                     <span>趣头条福利</span>
                                     <span>编号：667250</span>
@@ -226,12 +191,12 @@
 
                         <li class="mui-table-view-cell get-order-li">
                             <div class="orders-details">
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_commend.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_commend.png">
                                 <div class="orders-details-info">
                                     <div>
                                         <p>评论</p>
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                                     </div>
                                     <span>天猫评价</span>
                                     <span>编号：657753</span>
@@ -242,12 +207,12 @@
 
                         <li class="mui-table-view-cell get-order-li">
                             <div class="orders-details">
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_post.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_post.png">
                                 <div class="orders-details-info">
                                     <div>
                                         <p>高价</p>
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                                     </div>
                                     <span>收一年以上微信号</span>
                                     <span>编号：727476</span>
@@ -258,12 +223,12 @@
 
                         <li class="mui-table-view-cell get-order-li">
                             <div class="orders-details">
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_special.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_special.png">
                                 <div class="orders-details-info">
                                     <div>
                                         <p>特单</p>
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                                     </div>
                                     <span>微信预加好友解封</span>
                                     <span>编号：658718</span>
@@ -274,12 +239,12 @@
 
                         <li class="mui-table-view-cell get-order-li">
                             <div class="orders-details">
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_long.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_long.png">
                                 <div class="orders-details-info">
                                     <div>
                                         <p>长单</p>
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                                     </div>
                                     <span>快头条</span>
                                     <span>编号：749315</span>
@@ -290,12 +255,12 @@
 
                         <li class="mui-table-view-cell get-order-li">
                             <div class="orders-details">
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_commerce.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_commerce.png">
                                 <div class="orders-details-info">
                                     <div>
                                         <p>电商</p>
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                                     </div>
                                     <span>支付宝领红包</span>
                                     <span>编号：618338</span>
@@ -306,12 +271,12 @@
 
                         <li class="mui-table-view-cell get-order-li">
                             <div class="orders-details">
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_other.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_other.png">
                                 <div class="orders-details-info">
                                     <div>
                                         <p>其他</p>
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                                     </div>
                                     <span>辅助</span>
                                     <span>编号：703774</span>
@@ -331,12 +296,12 @@
             <ul class="mui-table-view">
                 <li class="mui-table-view-cell get-order-li">
                     <div class="orders-details">
-                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_register.png">
+                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_register.png">
                         <div class="orders-details-info">
                             <div>
                                 <p>注册</p>
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                             </div>
                             <span>天天快报一秒完成</span>
                             <span>编号：740006</span>
@@ -347,12 +312,12 @@
 
                 <li class="mui-table-view-cell get-order-li">
                     <div class="orders-details">
-                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_vote.png">
+                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_vote.png">
                         <div class="orders-details-info">
                             <div>
                                 <p>投票</p>
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                             </div>
                             <span>京东砍快通过</span>
                             <span>编号：750940</span>
@@ -367,12 +332,12 @@
             <ul class="mui-table-view">
                 <li class="mui-table-view-cell get-order-li">
                     <div class="orders-details">
-                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_vote.png">
+                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_vote.png">
                         <div class="orders-details-info">
                             <div>
                                 <p>投票</p>
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                             </div>
                             <span>京东砍快通过</span>
                             <span>编号：750940</span>
@@ -383,12 +348,12 @@
 
                 <li class="mui-table-view-cell get-order-li">
                     <div class="orders-details">
-                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_register.png">
+                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_register.png">
                         <div class="orders-details-info">
                             <div>
                                 <p>注册</p>
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                             </div>
                             <span>天天快报一秒完成</span>
                             <span>编号：740006</span>
@@ -438,12 +403,12 @@
             <ul class="mui-table-view">
                 <li class="mui-table-view-cell get-order-li">
                     <div class="orders-details">
-                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_vote.png">
+                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_vote.png">
                         <div class="orders-details-info">
                             <div>
                                 <p>投票</p>
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                             </div>
                             <span>京东砍快通过</span>
                             <span>编号：750940</span>
@@ -454,12 +419,12 @@
 
                 <li class="mui-table-view-cell get-order-li">
                     <div class="orders-details">
-                        <img src="__PUBLIC___/mobile/images/home_jdzq_icon_register.png">
+                        <img src="__PUBLIC__/mobile/images/home_jdzq_icon_register.png">
                         <div class="orders-details-info">
                             <div>
                                 <p>注册</p>
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_top.png">
-                                <img src="__PUBLIC___/mobile/images/home_jdzq_icon_promise.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_top.png">
+                                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
                             </div>
                             <span>天天快报一秒完成</span>
                             <span>编号：740006</span>
@@ -472,14 +437,14 @@
     </div>
 
     <a  class="task-limit">
-        <img src="__PUBLIC___/mobile/images/home_jdzq_btn_rank.png">
+        <img src="__PUBLIC__/mobile/images/home_jdzq_btn_rank.png">
     </a>
 
 </body>
-<script src="__PUBLIC___/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
 <script type="text/javascript" charset="utf-8">
     mui.init();
 </script>
-<script src="__PUBLIC___/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="__PUBLIC___/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
 </html>
