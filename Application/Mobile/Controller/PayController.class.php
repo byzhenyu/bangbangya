@@ -12,12 +12,36 @@
 namespace Mobile\Controller;
 use Common\Controller\CommonController;
 class PayController  extends CommonController{
+    /**
+     * @desc 我的钱包
+     * @param uid
+     * @return mixed
+     */
+    public function myWallet(){
+        $where['change_type'] = 0;
+        $payRecord = getAccount($where);
+        $where['change_type'] = array('IN','1,3,6');
+        $expendRecord = getAccount($where);
+        $this->assign('userInfo',$this->userInfo);
+        $this->assign('payRecord',$payRecord);
+        $this->assign('expendRecord',$expendRecord);
+        $this->display();
+    }
       /**
       * @desc 充值页面
       * @param
       * @return mixed
       */
       public function topUpsPage(){
+          $this->display();
+      }
+      /**
+      * @desc  用户提现
+      * @param  user_id
+      * @return mixed
+      */
+      public  function withdraw()
+      {
           $this->display();
       }
 }

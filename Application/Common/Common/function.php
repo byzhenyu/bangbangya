@@ -1054,3 +1054,15 @@ function taskNum($task_id){
         return false;
     }
 }
+/**
+* @desc  用户记录日志查看
+* @param  user_id
+* @return mixed
+*/
+function getAccount($where = [], $field = null ,$sort = 'change_time DESC'){
+     if(is_null($field)){
+         $field = 'user_money, change_time, change_desc, change_type, order_sn';
+     }
+     $result = M('AccountLog')->where($where)->order($sort)->select();
+     return $result;
+}

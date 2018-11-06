@@ -97,7 +97,7 @@
             </div>
         </a>
 
-        <a class="personal-center-item" href="my-wallet.html">
+        <a class="personal-center-item" href="{:U('Pay/myWallet',array('user_id' => $userList['user_id']))}">
             <div class="center-item-info">
                 <div class="center-item-basic">
                     <img src="__PUBLIC__/mobile/images/my_icon_mywallet.png" style="width: .42rem; height: .38rem;">
@@ -121,7 +121,7 @@
             </div>
         </a>
 
-        <a class="personal-center-item" href="bind-zfb.html">
+        <a class="personal-center-item" href="{:U('User/bindAlipay',array('user_id' => $userList['user_id']))}">
             <div class="center-item-info">
                 <div class="center-item-basic">
                     <img src="__PUBLIC__/mobile/images/my_icon_zhifubao.png" style="width: .42rem; height: .32rem;">

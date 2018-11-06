@@ -87,4 +87,24 @@ class UserController extends CommonController {
          $this->assign('shop_type', $shop_type);
          $this->display();
     }
+    /**
+    * @desc 绑定支付宝
+    * @param
+    * @return mixed
+    */
+    public function bindAlipay(){
+         $user_id = I('user_id', 0, 'intval');
+         if(IS_POST){
+             $data = I('post.', 3);
+             $this->ajaxReturn(V(1, '绑定成功',$data));
+             $result = $this->user->save($data);
+              if($result){
+                  $this->ajaxReturn(V(1, '绑定成功'));
+              }else{
+                  $this->ajaxReturn(V(0, $this->user->getError()));
+              }
+         }
+         $this->assign('user_id',$user_id);
+         $this->display();
+    }
 }
