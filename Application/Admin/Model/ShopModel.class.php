@@ -26,10 +26,9 @@ class ShopModel extends Model {
 
     public function getShopList($where = [], $field = '', $order = '') {
         $count = $this->where($where)->count();
+        
         $page = get_page($count);
-        $list = $this->alias('s')
-               ->join('__TASK__ as t on s.teacher_id = t.id', 'LEFT')
-               ->field($field)
+        $list = $this->field($field)
                ->where($where)
                ->limit($page['limit'])
                ->order($order)
