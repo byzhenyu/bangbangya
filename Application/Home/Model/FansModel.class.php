@@ -42,7 +42,7 @@ class FansModel extends Model
                 ->limit($page['limit'])
                 ->order($sort)
                 ->select();
-        return array('list'=>$list,'page'=>$page['page']);
+        return array('list'=>$list,'page'=>$page['page'],'fans_count'=>$count);
 	}
 	/**
      * 数据插入前操作

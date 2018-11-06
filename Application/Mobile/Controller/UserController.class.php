@@ -13,6 +13,38 @@
 namespace Mobile\Controller;
 use Common\Controller\CommonController;
 class UserController extends CommonController {
+    public function _initialize() {
+        $this->user = D("Home/User");
+    }
+    /**
+    * @desc 用户中心
+    * @param uid
+    * @return mixed
+    */
+    public function personalCenter(){
+          $where['u.user_id'] = UID;
+          $field = 'u.head_pic, u.nick_name, u.total_money,u.bonus_money,s.shop_type, u.task_suc_money,u.user_id, s.shop_accounts,s.take_task';
+          $userList = $this->user->getUserInfo($where, $field);
+          $this->assign('userList',$userList);
+          $this->display();
+    }
+    /**
+    * @desc 保证金
+    * @param UID
+    * @return mixed
+    */
+    public function securityDeposit(){
+        $shop_accounts = I('shop_accounts');
+        /*是否解冻*/
+        if($shop_accounts > 0){
+            $unfreeze = 1;
+        }else{
+            $unfreeze = 0;
+        }
+        $this->assign('unfreeze',$unfreeze);
+        $this->assign('shop_accounts',$shop_accounts);
+        $this->display();
+    }
     /**
      * 好友邀请
      * @return [type] [description]
@@ -45,5 +77,14 @@ class UserController extends CommonController {
         $this->assign('randList', $rankList);
         $this->display();
     }
-
+    /**
+    * @desc 查看我的合作商等级
+    * @param uid
+    * @return mixed
+    */
+    public function getVip(){
+         $shop_type = I('shop_type');
+         $this->assign('shop_type', $shop_type);
+         $this->display();
+    }
 }

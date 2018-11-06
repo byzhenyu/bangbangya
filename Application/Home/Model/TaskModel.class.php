@@ -30,9 +30,9 @@ class TaskModel extends Model{
      * @param $where
      * @return array
      */
-    public function getTaskList($where = [], $field = '', $order = 't.add_time desc') {
+    public function getTaskList($where = [], $field = '', $order = 't.end_time desc ') {
         /*任务状态查询条件*/
-        $where[] = array('t.end_time' =>array('gt',NOW_TIME),'t.task_num'=>array('GT',0),'t.status'=> 1,'t.audit_status' =>1,'t.is_show' =>1);
+        $where[] = array('t.status'=> 1,'t.audit_status' =>1,'t.is_show' =>1);
         $count = $this->alias('t')
               ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')
               ->join('__SHOP__ as s on s.user_id = t.user_id')
@@ -42,7 +42,7 @@ class TaskModel extends Model{
         $list = $this->alias('t')
               ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')
               ->join('__SHOP__ as s on s.user_id = t.user_id')
-              ->field('t.*,c.id as category_id,c.category_name')
+              ->field($field)
               ->where($where)
               ->limit($page['limit'])
               ->order($order)

@@ -17,12 +17,12 @@ class LoginController extends CommonController {
      **/
     public function login(){
         $this->display();
-//        if(is_login()) {
-//            $this->redirect('Mobile/Index/index');
-//        }
-//        else{
-//            $this->display();
-//        }
+        if(is_login()) {
+            $this->redirect('Mobile/user/personalCenter');
+        }
+        else{
+            $this->display();
+        }
     }
 
     /**
@@ -36,6 +36,9 @@ class LoginController extends CommonController {
             $userInfo = $UserModel->doLogin($data['open_id']);
             if( $userInfo['status'] == 1 ){ //登录成功
                 unset($userInfo['data']['password']);
+                if($userInfo['data']['disabled'] == 0){
+                    $this->ajaxReturn(V(3, '您的账号已被停用'));
+                }
                 /* 存入session */
                 session('user_auth',$userInfo['data']);
                 $this->ajaxReturn(V(1, '登录成功',session('user_auth')['user_id']));
@@ -50,6 +53,7 @@ class LoginController extends CommonController {
      **/
     public function logout(){
         session('user_auth',null);
-        $this->redirect('Mobile/Index/Index');
+        define('UID', null);
+        $this->ajaxReturn(V(1, '您退出了登录'));
     }
 }
