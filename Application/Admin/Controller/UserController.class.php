@@ -52,6 +52,25 @@ class UserController extends CommonController {
         $this->display();
     }
 
+    //分销记录
+    public function getInvitationList() {
+
+        $where['invitation_num'] = array('gt', 0);
+        $data = D('Admin/User')->getUsersListByPage($where);
+        $this->assign('userslist', $data['userslist']);
+        $this->assign('page', $data['page']);
+        $this->display();
+    }
+
+    public function invitationDetail() {
+        $user_id = I('user_id', 0, 'intval');
+        $where['invitation_uid'] = array('eq', $user_id);
+        $data = D('Admin/User')->getUsersListByPage($where);
+        $this->assign('userslist', $data['userslist']);
+        $this->assign('page', $data['page']);
+        $this->display();
+    }
+
     /**
      *禁用方法
      */

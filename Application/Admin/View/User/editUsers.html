@@ -1,0 +1,186 @@
+<extend name="Common/base"/>
+<block name="style"></block>
+
+<block name="body">
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title am-fl">{$user_id ? '编辑' : '添加'}账号</div>
+                    </div>
+                    <div class="widget-body am-fr">
+
+                        <form action="__ACTION__" method="post" class="ajaxForm am-form tpl-form-border-form tpl-form-border-br">
+
+                            <div class="am-form-group">
+                                <label for="mobile" class="am-u-sm-2 am-form-label">
+                                    手机号码 <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-6 am-u-end">
+                                    <if condition="$id neq 0">
+                                        {$info['mobile']}
+                                        <else />
+                                        <input type="text" class="tpl-form-input" id="mobile" name="mobile" placeholder="请输入手机号"  value="{$info['mobile']}">
+                                    </if>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="password" class="am-u-sm-2 am-form-label">
+                                    密码 <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-6 am-u-end">
+                                    <input type="password" class="tpl-form-input" id="password" name="password" placeholder="请填写密码"  value="">
+                                    <small>密码最少6位{$info['id'] ? '如果不修改密码, 请留空' : ''}</small>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="real_name" class="am-u-sm-2 am-form-label">
+                                    真实姓名<span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-6 am-u-end">
+                                    <input type="text" class="tpl-form-input" id="real_name" name="real_name" placeholder="请输入真实姓名"  value="{$info['real_name']}">
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="idcard" class="am-u-sm-2 am-form-label">
+                                    身份证号 <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-6 am-u-end">
+                                    <input type="text" class="tpl-form-input" id="idcard" name="idcard" placeholder="请输入身份证号"  value="{$info['idcard']}">
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label class="am-u-sm-2 am-form-label">
+                                    所属公司
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-3 am-u-end">
+                                    <select id="drive_id" name="drive_id" multiple data-am-selected>
+                                        <volist name="driveInfo" id="vo">
+                                            <option value="{$vo.id}">{$vo.company_name}</option>
+                                        </volist>
+                                    </select>
+
+                                        <if condition="$info['drive_id'] gt 0">
+                                            <script>
+                                                $('#drive_id').val("{$info['drive_id']}");
+                                            </script>
+                                        </if>
+
+                                </div>
+
+                            </div>
+                            <div class="am-form-group">
+                                <label for="number_a" class="am-u-sm-2 am-form-label">
+                                    主车车牌号 <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-6 am-u-end">
+                                    <input type="text" class="tpl-form-input" id="number_a" name="license_number_a" placeholder="主车车牌号"  value="{$info['license_number_a']}">
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="number_b" class="am-u-sm-2 am-form-label">
+                                    挂车车牌号 <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-6 am-u-end">
+                                    <input type="text" class="tpl-form-input" id="number_b" name="license_number_b" placeholder="请输入挂车车牌号"  value="{$info['license_number_b']}">
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label class="am-u-sm-2 am-form-label">行驶证照片</label>
+                                <div class="am-u-sm-6 am-u-end">
+                                    <div class="row">
+                                        <div class="am-u-sm-6">
+                                            <div class="am-form-group am-form-file">
+                                                <div class="tpl-form-file-img">
+                                                    <img src="{$info['drive_license']}" alt="" style="min-height:122px; width: 122px;" id="img_0">
+                                                </div>
+                                                <input type="hidden" value="{$info['drive_license']}" name="drive_license" id="img0" />
+                                                <button type="button" class="am-btn am-btn-success am-btn-sm" id="btnUpload0">上传</button>
+                                                <button type="button" class="am-btn am-btn-danger am-btn-sm" onclick="delFile($('#img0').val(), '')" id="btn_delete_0">删除</button>
+                                                <if condition="$info['drive_license'] eq ''">
+                                                    <script>
+                                                        $("#img_0, #btn_delete_0").hide();
+                                                    </script>
+                                                </if>
+                                            </div>
+                                        </div>
+                                        <div class="am-u-sm-9"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label class="am-u-sm-2 am-form-label">
+                                    车辆类型 <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-3 am-u-end">
+                                    <select id="car_type" name="car_type" multiple data-am-selected>
+
+                                    <foreach name="carInfo" item="vo">
+                                        <option value="{$key}">{$vo}</option>
+                                    </foreach>
+                                    </select>
+                                    <if condition="$info['car_type'] gt 0">
+                                        <script>
+                                            $('#car_type').val("{$info['car_type']}");
+                                        </script>
+                                    </if>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label class="am-u-sm-2 am-form-label">
+                                    是否启用<span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-6 am-u-end">
+                                    <div class="am-form-group">
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="display" id="display" value="1" data-am-ucheck> 启用
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="display" id="hide" value="0" data-am-ucheck> 禁用
+                                        </label>
+                                    </div>
+                                    <if condition="$catInfo['display'] eq 1 or $catInfo['display'] eq ''">
+                                        <script>
+                                            $('#display').attr('checked','true');
+                                        </script>
+                                        <else/>
+                                        <script>
+                                            $('#hide').attr('checked','true');
+                                        </script>
+                                    </if>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <div class="am-u-sm-9 am-u-sm-push-3">
+                                    <input id="user_id" type="hidden" name="id" value="{$info['user_id']}">
+
+                                    <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success">提交</button>
+                                    <button type="button" class="am-btn am-btn-primary am-btn-warning " onclick="goback();">返回</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <!--上传图片-->
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload/ajaxupload.js?v=1.0"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload/imgupload.js?v=1.0"></script>
+    <script type="text/javascript">
+        ajaxUpload('#btnUpload0', $("#img0"), 'User', 0);
+    </script>
+    <!--省市区表联动-->
+    <script type="text/javascript" charset="utf-8" src="__STATIC__/js/address.js?v=1.0"></script>
+    <script type="text/javascript">
+
+    </script>
+</block>

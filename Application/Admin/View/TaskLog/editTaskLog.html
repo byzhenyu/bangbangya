@@ -1,7 +1,21 @@
 <extend name="Common/base"/>
 
 <block name="style">
-
+    <style>
+        .text-box {
+            height: 20px;
+            width: 100%;
+        }
+        .img-box {
+            width: 100px;
+            display: inline-block;
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+        .img-box img {
+            width: 100%;
+        }
+    </style>
 </block>
 
 <block name="body">
@@ -9,167 +23,193 @@
         <div class="row">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                 <div class="widget am-cf">
-                    <div class="widget-head am-cf">
-                        <div class="widget-title am-fl">{$info['id'] ? '编辑' : '添加'}店铺</div>
-                    </div>
+                 <!--    <div class="widget-head am-cf">
+                        <div class="widget-title am-fl">{$info['id'] ? '编辑' : '添加'}任务表</div>
+                    </div> -->
                     <div class="widget-body am-fr">
                         <form action="__ACTION__" method="post" class="ajaxForm am-form tpl-form-border-form tpl-form-border-br">
-
-
+                             <div class="am-form-group">
+                                <label class="am-u-sm-3 am-form-label">所属分类 <span class="tpl-form-line-small-title must-input">*</span></label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    {$info.category_name}
+                                </div>
+                            </div>
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
-                                    店铺名称
+                                    发布人名称
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    {$info['shop_name']}
+                                    {$info['user_name']}
                                     <small></small>
                                 </div>
                             </div>
-
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
-                                    头像
+                                    任务标题
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <img width="50px" src="{$info['shop_img']}">
+                                    {$info['title']}
                                     <small></small>
                                 </div>
                             </div>
-
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
-                                    保证金
+                                    支持设备
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    {$info['shop_accounts']|fen_to_yuan}
+                                    {$info['mobile_type']}
+
                                     <small></small>
                                 </div>
                             </div>
-
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
-                                    置顶截止时间
+                                    任务截止时间
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    {:time_format($info['top_time'])}
-                                    <small></small>
-                                </div>
-                            </div>
-
-                            <div class="am-form-group">
-                                <label class="am-u-sm-3 am-form-label">
-                                    合作商类型
-                                    <span class="tpl-form-line-small-title must-input">*</span>
-                                </label>
-                                <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <if condition="$info['shop_type'] gt 0">
-                                        {:C('VIP_LEVEL')[$info['shop_type']]}
-                                        <else />
-                                        非合作商
-                                    </if>
-
+                                    {$info['end_time']|time_format}
                                     <small></small>
                                 </div>
                             </div>
 
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
-                                    合作商截止时间
+                                    出价金额
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    {:time_format($info['partner_time'])}
+                                    {:fen_to_yuan($info['price'])}
                                     <small></small>
                                 </div>
                             </div>
 
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
-                                    发任务量
+                                    任务数量
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                         {$info['task_count']}
+                                    {$info['task_num']}
+                                    <small></small>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label class="am-u-sm-3 am-form-label">
+                                    总金额
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    {$info['total_price']}
+                                    <small></small>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label class="am-u-sm-3 am-form-label">
+                                    链接地址
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    {$info['link_url']}
+                                    <small></small>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label class="am-u-sm-3 am-form-label">
+                                    验证文字内容
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    {$info['validate_words']}
                                     <small></small>
                                 </div>
                             </div>
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
-                                    接任务
+                                    验证图片
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    {$info['take_task']}
-                                    <small></small>
+                                    <notempty name="info['checkInfo']">
+                                        <volist name="info['checkInfo']" id="v">
+                                            <div class="img-box">
+                                                <img src="{$v['step_img']}" />
+                                            </div>
+                                        </volist>
+                                    </notempty>
                                 </div>
                             </div>
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
-                                    总发单
+                                    任务记录
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    {$info['task_count']}
-                                    <small></small>
+                                    <notempty name="info['valid_img']">
+                                        <volist name="info['valid_img']" id="v" key="k">
+                                            <div class="text-box">{$k}</div>
+                                            <div class="img-box">
+                                                <img src="{$v}" />
+                                            </div>
+
+                                        </volist>
+                                    </notempty>
                                 </div>
                             </div>
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
-                                    总成交
+                                    备注
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                   {$info['vol']}
+                                    {$info['remark']}
+                                    <small></small>
+                                </div>
+                            </div>
+
+
+                            <div class="am-form-group">
+                                <label class="am-u-sm-3 am-form-label">
+                                     审核状态
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                <div >
+                                    <select  id="audit" name="valid_status" data-am-selected="">
+                                        <option >请选择审核状态</option>
+                                        <option value="1">待审核</option>
+                                        <option value="2">不合格</option>
+                                        <option value="3">已完成</option>
+                                        <option value="4">已放弃</option>
+                                    </select>
+                                     <script>
+                                       $('#audit').val("{$info['valid_status']}");
+                                     </script>
+                                </div>
                                     <small></small>
                                 </div>
                             </div>
                             <div class="am-form-group">
-                                <label class="am-u-sm-3 am-form-label">
-                                    申诉
+                                <label for="valid_text" class="am-u-sm-3 am-form-label">
+                                    审核理由说明
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                   {$info['appeal_num']}
-                                    <small></small>
-                                </div>
-                            </div>
-                            <div class="am-form-group">
-                                <label class="am-u-sm-3 am-form-label">
-                                    被申诉
-                                    <span class="tpl-form-line-small-title must-input">*</span>
-                                </label>
-                                <div class="am-u-sm-7 am-u-sm-pull-2">
-                                  {$info['be_appeal_num']}
-                                    <small></small>
-                                </div>
-                            </div>
-                            <div class="am-form-group">
-                                <label class="am-u-sm-3 am-form-label">
-                                    投诉
-                                    <span class="tpl-form-line-small-title must-input">*</span>
-                                </label>
-                                <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    {$info['complain_num']}
-                                    <small></small>
-                                </div>
-                            </div>
-                            <div class="am-form-group">
-                                <label class="am-u-sm-3 am-form-label">
-                                    被投诉
-                                    <span class="tpl-form-line-small-title must-input">*</span>
-                                </label>
-                                <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    {$info['be_complain_num']}
+                                    <input type="text" id="valid_text" name="valid_text" value="{$info['valid_text']}"
+                                           placeholder="请输入审核理由说明">
                                     <small></small>
                                 </div>
                             </div>
                             <div class="am-form-group">
                                 <div class="am-u-sm-9 am-u-sm-push-3">
-
+                                    <input type="hidden" name="id" value="{$info['id']}">
+                                    <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success">提交</button>
                                     <button type="button" class="am-btn am-btn-primary am-btn-warning" onclick="goback();">返回</button>
                                 </div>
                             </div>
@@ -182,5 +222,8 @@
 </block>
 
 <block name="script">
+<script type="text/javascript">
+
+</script>
 
 </block>

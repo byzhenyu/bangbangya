@@ -6,9 +6,9 @@ namespace Admin\Model;
 use Think\Model;
 use Common\Tools\Emchat;
 class UserModel extends Model{
-    protected $insertFields = array('user_name','password','mobile','head_pic','nick_name', 'task_money', 'bonus_money', 'total_money', 'alipay_num', 'alipay_name', 'invitation_code', 'invitation_uid', 'open_id', 'disabled', 'register_time','status');
-    protected $selectFields = array('user_id','user_name','password','mobile','head_pic','nick_name', 'task_money', 'bonus_money', 'total_money', 'alipay_num', 'alipay_name', 'invitation_code', 'invitation_uid', 'open_id', 'disabled', 'register_time','status');
-    protected $findFileds = array('user_id','user_name','password','mobile','head_pic','nick_name', 'task_money', 'bonus_money', 'total_money', 'alipay_num', 'alipay_name', 'invitation_code', 'invitation_uid', 'open_id', 'disabled', 'register_time','status');
+    protected $insertFields = array('user_name','password','mobile','head_pic','nick_name', 'task_money', 'bonus_money', 'total_money', 'alipay_num', 'alipay_name', 'invitation_code', 'invitation_uid', 'open_id', 'disabled', 'register_time','status','invitation_num');
+    protected $selectFields = array('user_id','user_name','password','mobile','head_pic','nick_name', 'task_money', 'bonus_money', 'total_money', 'alipay_num', 'alipay_name', 'invitation_code', 'invitation_uid', 'open_id', 'disabled', 'register_time','status','invitation_num');
+    protected $findFileds = array('user_id','user_name','password','mobile','head_pic','nick_name', 'task_money', 'bonus_money', 'total_money', 'alipay_num', 'alipay_name', 'invitation_code', 'invitation_uid', 'open_id', 'disabled', 'register_time','status','invitation_num');
     protected $_validate = array(
         array('valid_info', 'require', '验证信息不能为空！', 1, 'regex', 3),
         array('mobile','isMobile','不是有效的手机号码',1,'function', 3),
@@ -41,19 +41,6 @@ class UserModel extends Model{
         );
 
 
-    }
-    public function getUsersList($where, $field = false, $sort = 'u.register_time desc'){
-        if(is_null($field)){
-            $field = $this->selectFields;
-        }
-        $where['u.status'] = array('eq', 1);
-        $count = $this->alias('u')->join('__TEACHER__ as t on u.teacher_id = t.id', 'LEFT')->where($where)->count();
-        $page = get_page($count);
-        $userslist = $this->alias('u')->join('__TEACHER__ as t on u.teacher_id = t.id', 'LEFT')->field($field)->where($where)->limit($page['limit'])->order($sort)->select();
-        return array(
-            'userslist'=>$userslist,
-            'page'=>$page['page']
-        );
     }
 
 

@@ -1,0 +1,106 @@
+<extend name="Common/base"/>
+
+<block name="style">
+
+</block>
+
+<block name="body">
+	<div class="row-content am-cf">
+		<div class="row">
+			<div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+				<div class="widget am-cf">
+					<div class="widget-head am-cf">
+						<div class="widget-title am-cf">合作商列表</div>
+					</div>
+					<div class="widget-body am-fr">
+						<div class="am-u-sm-12 am-u-md-3 am-u-lg-3">
+							<div class="am-form-group">
+								<div class="am-btn-toolbar">
+									<div class="am-btn-group am-btn-group-xs">
+										<a type="button" class="am-btn am-btn-default am-btn-success"
+										   href="{:U('editVipLevel')}">
+											<span class="am-icon-plus"></span> 新增
+										</a>
+										<!--<button type="button" class="am-btn am-btn-default am-btn-danger"-->
+												<!--onclick="javascript:recycle('chkbId', '确认删除?! 删除后无法恢复!')">-->
+											<!--<span class="am-icon-trash-o"></span> 批量删除-->
+										<!--</button>-->
+									</div>
+								</div>
+							</div>
+						</div>
+						<form action="__SELF__" method="get">
+
+                            <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+
+                            </div>
+                        </form>
+						<div class="am-u-sm-12">
+							<table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black">
+								<thead>
+								<tr>
+									<th width="50"><input class="check-all" type="checkbox"></th>
+									<th width="50">序号</th>
+									<th>合作商级别</th>
+									<th width="10%">购买金额</th>
+									<th width="8%">类型</th>
+									<th width="10%">交易手续费</th>
+									<th width="10%">提现手续费</th>
+									<th width="12%">添加时间</th>
+									<th width="20%">操作</th>
+								</tr>
+								</thead>
+								<tbody>
+								<foreach name="list" item="v">
+									<tr class="gradeX">
+										<td><input class="ids" type="checkbox" name="chkbId" value="{$v['id']}"></td>
+										<td>{$v['id']}</td>
+										<td>
+                                            {:C('VIP_LEVEL')[$v['type']]}
+                                        </td>
+										<td>{:fen_to_yuan($v['vip_price'])}</td>
+										<td>
+                                            {:C('VIP_TIME')[$v['vip_type']]}
+										</td>
+                                        <td>{$v['order_fee']}%</td>
+                                        <td>{$v['withdraw_fee']}%</td>
+                                        <td>{$v['add_time']|time_format}</td>
+										<td class="f-14">
+											<div class="tpl-table-black-operation">
+												<a href="{:U('editVipLevel', array('id' => $v['id']))}">
+													<i class="am-icon-pencil"></i> 编辑
+												</a>
+												<a href="javascript:void(0);"
+												   onclick="javascript:recycle({$v['id']}, '确认删除?')"
+												   class="tpl-table-black-operation-del">
+													<i class="am-icon-trash"></i> 删除
+												</a>
+											</div>
+										</td>
+									</tr>
+								</foreach>
+								</tbody>
+							</table>
+							<empty name="list">
+								<h4>aOh! 没有相关内容!</h4>
+							</empty>
+						</div>
+						<div class="am-u-lg-12 am-cf">
+							<div class="am-fr">
+								<div class="am-pagination tpl-pagination">
+									{$page}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+
+	</script>
+</block>

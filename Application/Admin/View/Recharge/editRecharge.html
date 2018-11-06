@@ -1,0 +1,132 @@
+<extend name="Common/base"/>
+
+<block name="style">
+
+</block>
+
+<block name="body">
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title am-fl">{$info['id'] ? '编辑' : '添加'}充值记录表</div>
+                    </div>
+                    <div class="widget-body am-fr">
+                        <form action="__ACTION__" method="post" class="ajaxForm am-form tpl-form-border-form tpl-form-border-br">
+                            
+                            <div class="am-form-group">
+                                <label for="user_id" class="am-u-sm-3 am-form-label">
+                                    用户id
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    <input type="number" id="user_id" name="user_id" value="{$info['user_id']}"
+                                           placeholder="请输入用户id">
+                                    <small></small>
+                                </div>
+                            </div>
+            
+                            <div class="am-form-group">
+                                <label for="recharge_money" class="am-u-sm-3 am-form-label">
+                                    充值金额
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    <input type="number" id="recharge_money" name="recharge_money" value="{$info['recharge_money']}"
+                                           placeholder="请输入充值金额">
+                                    <small></small>
+                                </div>
+                            </div>
+            
+                            <div class="am-form-group">
+                                <label for="recharge_type" class="am-u-sm-3 am-form-label">
+                                    0余额充值 1保证金充值
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    <input type="number" id="recharge_type" name="recharge_type" value="{$info['recharge_type']}"
+                                           placeholder="请输入0余额充值 1保证金充值">
+                                    <small></small>
+                                </div>
+                            </div>
+            
+                            <div class="am-form-group">
+                                <label for="add_time" class="am-u-sm-3 am-form-label">
+                                    添加时间
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    <input type="number" id="add_time" name="add_time" value="{$info['add_time']}"
+                                           placeholder="请输入添加时间">
+                                    <small></small>
+                                </div>
+                            </div>
+            
+                            <div class="am-form-group">
+                                <label for="pay_status" class="am-u-sm-3 am-form-label">
+                                    0未支付 1支付成功 2支付失败
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    <input type="number" id="pay_status" name="pay_status" value="{$info['pay_status']}"
+                                           placeholder="请输入0未支付 1支付成功 2支付失败">
+                                    <small></small>
+                                </div>
+                            </div>
+            
+                            <div class="am-form-group">
+                                <label for="order_sn" class="am-u-sm-3 am-form-label">
+                                    充值单号
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    <input type="text" id="order_sn" name="order_sn" value="{$info['order_sn']}"
+                                           placeholder="请输入充值单号">
+                                    <small></small>
+                                </div>
+                            </div>
+            
+                            <div class="am-form-group">
+                                <label for="trade_no" class="am-u-sm-3 am-form-label">
+                                    支付回执
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    <input type="text" id="trade_no" name="trade_no" value="{$info['trade_no']}"
+                                           placeholder="请输入支付回执">
+                                    <small></small>
+                                </div>
+                            </div>
+            
+                            <div class="am-form-group">
+                                <label for="status" class="am-u-sm-3 am-form-label">
+                                    1正常 0删除
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    <input type="number" id="status" name="status" value="{$info['status']}"
+                                           placeholder="请输入1正常 0删除">
+                                    <small></small>
+                                </div>
+                            </div>
+            
+                            <div class="am-form-group">
+                                <div class="am-u-sm-9 am-u-sm-push-3">
+                                    <input type="hidden" name="id" value="{$info['id']}">
+                                    <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success">提交</button>
+                                    <button type="button" class="am-btn am-btn-primary am-btn-warning" onclick="goback();">返回</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+
+</block>
+        
