@@ -21,17 +21,29 @@
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
                                     <input type="text" id="category_name" name="category_name" value="{$info['category_name']}"
+                                           placeholder="2-3个字">
+                                    <small></small>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="limit_money" class="am-u-sm-3 am-form-label">
+                                    最低金额（元）
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    <input type="text" id="limit_money" name="limit_money" value="{$info['limit_money']}"
                                            placeholder="请输入">
                                     <small></small>
                                 </div>
                             </div>
                             <div class="am-form-group">
-                                <label for="category_explain" class="am-u-sm-3 am-form-label">
-                                    类别说明
+                                <label for="limit_num" class="am-u-sm-3 am-form-label">
+                                    最少单数（单）
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    <input type="text" id="category_name" name="category_explain" value="{$info['category_explain']}"
+                                    <input type="text" id="limit_num" name="limit_num" value="{$info['limit_num']}"
                                            placeholder="请输入">
                                     <small></small>
                                 </div>
@@ -62,7 +74,17 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="am-form-group">
+                                <label for="category_explain" class="am-u-sm-3 am-form-label">
+                                    类别说明
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    <input type="text" id="category_explain" name="category_explain" value="{$info['category_explain']}"
+                                           placeholder="请输入">
+                                    <small></small>
+                                </div>
+                            </div>
                             <div class="am-form-group">
                                 <div class="am-u-sm-9 am-u-sm-push-3">
                                     <input type="hidden" name="id" value="{$info['id']}">

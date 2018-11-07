@@ -15,12 +15,14 @@ use Think\Model;
  * 任务类型模型
  */
 class TaskCategoryModel extends Model {
-    protected $insertFields = array('id', 'category_name', 'category_img', 'status','category_explain');
-    protected $updateFields = array('id', 'category_name', 'category_img', 'status','category_explain');
-    protected $selectFields = array('id', 'category_name', 'category_img', 'status','category_explain');
+    protected $insertFields = array('id', 'category_name', 'category_img', 'status','category_explain','limit_money','limit_num');
+    protected $updateFields = array('id', 'category_name', 'category_img', 'status','category_explain','limit_money','limit_num');
+    protected $selectFields = array('id', 'category_name', 'category_img', 'status','category_explain','limit_money','limit_num');
     protected $_validate = array(
         array('category_name', 'require', '请输入分类名称 ', 1, 'regex', 3),
-        array('category_name', '0,10', '您输入的分类名称过长，超过了10个字符数限制', 1, 'length', 3),
+        array('category_name', '0,5', '您输入的分类名称过长，超过了5个字符数限制', 1, 'length', 3),
+        array('limit_money', 'require', '请填写最小发单金额', 1, 'regex', 3),
+        array('limit_num', 'require', '请填写最小发单数量', 1, 'regex', 3),
         array('category_img', 'require', '请上传分类图片 ', 1, 'regex', 3),
         array('category_explain', 'require', '请输出类别说明 ', 1, 'regex', 3),
     );
