@@ -55,7 +55,6 @@
                 if (e.index == 1) {
                     mui.ajax(url + 'Mobile/Pay/alipay',{
                         data:{
-                            user_id:{$user_id},
                             recharge_money:money * 100,
                             recharge_type: 0
                         },
@@ -64,11 +63,11 @@
                         timeout:10000,//超时时间设置为10秒；
                         success:function(data){
                             mui.toast(data['info']);
-                            alert(JSON.stringify(data));
+                            // alert(JSON.stringify(data));
                             if(data['status'] == 1){
                                 setTimeout(function(){
                                     mui.openWindow({
-                                        url:  url + 'Mobile/Pay/myWallet/user_id/' + data['data']
+                                        url:  url + 'Mobile/Pay/myWallet'
                                     });
                                 }, 1500);
                             }
