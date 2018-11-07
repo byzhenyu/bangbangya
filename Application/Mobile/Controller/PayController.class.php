@@ -12,6 +12,9 @@
 namespace Mobile\Controller;
 use Common\Controller\CommonController;
 class PayController  extends CommonController{
+    public function _initialize() {
+        $this->user = D("Home/User");
+    }
     /**
      * @desc 我的钱包
      * @param uid
@@ -44,4 +47,43 @@ class PayController  extends CommonController{
       {
           $this->display();
       }
+    /**
+     * @desc 绑定支付宝
+     * @param
+     * @return mixed
+     */
+      public function bindAlipay(){
+        $user_id = I('user_id', 0, 'intval');
+        if(IS_POST){
+            $data = I('post.', 3);
+            $result = $this->user->where('user_id = '.$data['user_id'])->save($data);
+            if($result){
+                $this->ajaxReturn(V(1, '绑定成功',$data['user_id']));
+            }else{
+                $this->ajaxReturn(V(0, $this->user->getError()));
+            }
+        }
+        $alipay = $this->user->field('alipay_num, alipay_name')->where('user_id ='.$user_id)->find();
+        $this->assign('user_id',$user_id);
+        $this->assign('alipay',$alipay);
+        $this->display();
+       }
+    /**
+     * @desc 收入分红
+     * @param UID
+     * @return mixed
+     */
+       public function incomeDividends(){
+        $user_id = I('user_id', 0, 'intval');
+        $bonus_money = $this->user->where('user_id = '.$user_id)->getField('bonus_money');
+        $this->assign('bonus_money',$bonus_money);
+        $this->assign('user_id',$user_id);
+        $this->display();
+      }
+      /**
+      * @desc  提现
+      * @param  $user_id
+      * @param  money
+      * @return mixed
+      */
 }

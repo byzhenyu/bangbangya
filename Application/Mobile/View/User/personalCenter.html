@@ -109,7 +109,7 @@
             </div>
         </a>
 
-        <a class="personal-center-item" href="income-dividends.html">
+        <a class="personal-center-item" href="{:U('Pay/incomeDividends',array('user_id' => $userList['user_id']))}">
             <div class="center-item-info">
                 <div class="center-item-basic">
                     <img src="__PUBLIC__/mobile/images/my_icon_income.png" style="width: .42rem; height: .40rem;">
@@ -121,7 +121,7 @@
             </div>
         </a>
 
-        <a class="personal-center-item" href="{:U('User/bindAlipay',array('user_id' => $userList['user_id']))}">
+        <a class="personal-center-item" href="{:U('Pay/bindAlipay',array('user_id' => $userList['user_id']))}">
             <div class="center-item-info">
                 <div class="center-item-basic">
                     <img src="__PUBLIC__/mobile/images/my_icon_zhifubao.png" style="width: .42rem; height: .32rem;">

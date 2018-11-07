@@ -79,7 +79,7 @@ class ShopModel extends Model{
         }else{
               $changeTime = $shopTopTime + $data['top_time'];
         }
-        account_log($data['user_id'], $data['zong'], 6, '您置顶了店铺消费了'.data['zong'].'元','');
+        account_log($data['user_id'], $data['zong'], 6, '置顶店铺','');
         $shopRes = $this->where('user_id = '.$data['user_id'])->save(array('top_time' => $changeTime));
         if($userRes && $shopRes){
              M()->commit();

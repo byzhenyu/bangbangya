@@ -22,14 +22,13 @@ class ShopController extends CommonController {
         $ShopModel = D('Home/Shop');
         $field= 'u.head_pic,u.user_id,u.total_money,u.nick_name,shop_accounts, s.top_time,s.shop_name,s.take_task,s.task_count,s.task_num,s.vol,s.appeal_num,s.be_appeal_num,s.complain_num,s.be_complain_num,s.top_time';
         $ShopInfo = $ShopModel->getShopInfo($user_id, '', $field);
-        P($ShopInfo);
+        $taskModel = D('Home/Task');
         $where['t.user_id']  =  $user_id;
         $where['t.end_time']  =  array('gt', NOW_TIME);
         $taskField = 't.id, t.price, t.task_num, t.title, c.category_name , c.category_img';
-        $taskInfo = D('Home/Task')->getTaskList($where, $taskField);
+        $taskInfo = $taskModel->getTaskList($where, $taskField);
         $where['t.end_time'] =  array(array('gt',NOW_TIME - 172800),array('lt',NOW_TIME)) ;
-        $last_taskInfo = D('Home/Task')->getTaskList($where, $taskField);
-        p($last_taskInfo);
+        $last_taskInfo = $taskModel->getTaskList($where, $taskField);
         $this->assign('ShopInfo', $ShopInfo);
         $this->assign('last_taskInfo', $last_taskInfo['list']);
         $this->assign('taskInfo', $taskInfo['list']);
@@ -55,7 +54,7 @@ class ShopController extends CommonController {
             $data['user_id'] = UID;
             $res = $this->shop->topShop($data);
             if($res){
-                $this->ajaxReturn(V(1, '置顶成功'));
+                $this->ajaxReturn(V(1, '置顶成功',$data['user_id']));
             }else{
                 $this->ajaxReturn(V(1, '置顶失败'));
             }
