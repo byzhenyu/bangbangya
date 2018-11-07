@@ -17,7 +17,7 @@ class LoginController extends CommonController {
      **/
     public function login(){
         if(is_login()) {
-            $this->redirect('Mobile/user/personalCenter');
+            $this->redirect('Mobile/User/personalCenter');
         } else{
             $this->display();
         }

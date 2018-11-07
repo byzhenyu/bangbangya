@@ -50,7 +50,6 @@ class PayController  extends CommonController{
         $payRecord = getAccount($where);
         $where['change_type'] = array('IN','1,3,6');
         $expendRecord = getAccount($where);
-        $this->assign('user_id', $where['user_id']);
         $this->assign('total_money', $total_money);
         $this->assign('payRecord',$payRecord);
         $this->assign('expendRecord',$expendRecord);
@@ -86,7 +85,7 @@ class PayController  extends CommonController{
         $user_id = UID;
         if(IS_POST){
             $data = I('post.', 2);
-            $result = $this->user->where('user_id = '.$data['user_id'])->save($data);
+            $result = $this->user->where('user_id = '.UID)->save($data);
             if($result){
                 $this->ajaxReturn(V(1, '绑定成功',$data['user_id']));
             }else{
@@ -94,7 +93,13 @@ class PayController  extends CommonController{
             }
         }
         $alipay = $this->user->field('alipay_num, alipay_name')->where('user_id ='.$user_id)->find();
+        if($alipay['alipay_num'] == '' || $alipay['alipay_name'] == ''){
+            $is_bind = 0;
+        }else{
+            $is_bind = 1;
+        }
         $this->assign('alipay',$alipay);
+        $this->assign('is_bind',$is_bind);
         $this->display();
        }
     /**
