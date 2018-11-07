@@ -17,7 +17,7 @@
     <div class="top-ups">
         <div class="top-ups-money">
             <p>充值金额</p>
-            <input type="number">
+            <input type="number" name="money" id="money" placeholder="请充值你的余额,充值为整数">
             <p>元</p>
         </div>
         <div class="top-ups-method">
@@ -28,7 +28,7 @@
     </div>
 
     <div class="top-ups-sure">
-        <button>充值</button>
+        <button onclick="pay()">充值</button>
     </div>
 
     <div class="top-ups-info">
@@ -41,10 +41,58 @@
     </div>
 
 </body>
-<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
-<script type="text/javascript" charset="utf-8">
-    mui.init();
-</script>
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/url.js"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+
+    function pay(){
+        var money = $('#money').val();
+        if((/^(\+|-)?\d+$/.test( money ))&&money>0){
+            mui.confirm('是否充值'+money+'元', '提示', '', function(e) {
+                if (e.index == 1) {
+                    mui.ajax(url + 'Mobile/Pay/alipay',{
+                        data:{
+                            user_id:{$user_id},
+                            recharge_money:money * 100,
+                            recharge_type: 0
+                        },
+                        dataType:'json',//服务器返回json格式数据
+                        type:'post',//HTTP请求类型
+                        timeout:10000,//超时时间设置为10秒；
+                        success:function(data){
+                            mui.toast(data['info']);
+                            alert(JSON.stringify(data));
+                            if(data['status'] == 1){
+                                setTimeout(function(){
+                                    mui.openWindow({
+                                        url:  url + 'Mobile/Pay/myWallet/user_id/' + data['data']
+                                    });
+                                }, 1500);
+                            }
+                        },
+                        error:function(xhr,type,errorThrown){
+                            //异常处理；
+                            console.log(type);
+                        }
+                    });
+                }else{
+                    mui.toast('您取消了操作');
+                }
+            })
+        }else {
+            mui.alert("请输入整数充值");
+            return;
+        }
+    }
+    $("#money").blur(function(){
+            var value = $(this).val();
+            if((/^(\+|-)?\d+$/.test( value ))&&value>0){
+            }else{
+                mui.alert("请输入整数充值");;
+            }
+        });
+</script>
 </html>

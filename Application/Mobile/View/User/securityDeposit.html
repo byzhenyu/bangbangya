@@ -16,7 +16,7 @@
     <div class="security-deposit-top">
         <div class="security-deposit-info">
             <span>保证金金额</span>
-            <p>￥<span>{$shop_accounts}</span></p>
+            <p>￥<span>{:fen_to_yuan($shop_accounts)}</span></p>
             <div class="security-deposit-btn">
                 <input type="button" onclick="pay()" value="充值">
                 <if condition = "$unfreeze  eq 1">

@@ -70,17 +70,22 @@ class ShopModel extends Model{
     * @return mixed
     */
     public  function  topShop($data){
+        $where['user_id'] = $data['user_id'];
         /*开启事务*/
         M() ->startTrans();
-        $userRes =  D('Home/User')->where('user_id = '.$data['user_id'])->setDec('total_money',$data['zong']);
-        $shopTopTime = $this->where('user_id = '.$data['user_id'])->getField('top_time');
+        $user_total = $userModel->getUserField($where , 'total_money');
+        if($user_total < $money){
+            return false;
+        }
+        $userRes =  D('Home/User')->where($where)->setDec('total_money',$data['zong']);
+        $shopTopTime = $this->where($where)->getField('top_time');
         if($shopTopTime < NOW_TIME){
               $changeTime = NOW_TIME + $data['top_time'];
         }else{
               $changeTime = $shopTopTime + $data['top_time'];
         }
         account_log($data['user_id'], $data['zong'], 6, '置顶店铺','');
-        $shopRes = $this->where('user_id = '.$data['user_id'])->save(array('top_time' => $changeTime));
+        $shopRes = $this->where($where)->save(array('top_time' => $changeTime));
         if($userRes && $shopRes){
              M()->commit();
              return true;
@@ -89,4 +94,50 @@ class ShopModel extends Model{
              return false;
         }
     }
+    /**
+     * @desc  开通合作商
+     * @param $user_id
+     * @param type  合作商类型  1 普通  2 黄金  3 白金
+     * @param money  money   分
+     * @param time  增加的时间   1  月卡 2 年卡
+     * @return mixed
+     */
+    public function getVip($user_id, $type , $money ,$time){
+        $where['user_id'] = $user_id;
+        $update = [];
+        /*时间换算*/
+        if($time == 1){
+            $update['partner_time'] = strtotime("+1months");
+        }else{
+            $update['partner_time'] = strtotime("next year");
+        }
+        $shopInfo = $this->field('shop_type , partner_time ')->where('user_id = '.$user_id)->find();
+        //开启事务
+        M()->startTrans();
+        if($type  == $shopInfo['shop_type']){
+              if($shopInfo['partner_time'] > NOW_TIME){
+                  $update['partner_time'] = $update['partner_time'] + $shopInfo['partner_time'] - NOW_TIME;
+              }
+        }else{
+              $update['shop_type'] = $type;
+        }
+        $shopRes  = $this->where('user_id = '.$user_id)->save($update);
+        $userModel = D('Home/User');
+        $user_total = $userModel->getUserField($where , 'total_money');
+        if($user_total < $money){
+            M()->rollback();
+            return false;
+        }
+        $userRes =  D('Home/User')->where('user_id = '.$user_id)->setDec('total_money',$money);
+        account_log($user_id, $money, 7, '申请'.C(VIP_LEVEL)[$type],'');
+        if($shopRes && $userRes){
+            M()->commit();
+            return true;
+        }else{
+            M()->rollback();
+            return false;
+        }
+
+
+   }
 }

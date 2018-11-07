@@ -18,7 +18,7 @@ class ShopController extends CommonController {
     /*获取我的店铺信息*/
     public function myShopInfo()
     {
-    	$user_id = I('user_id', 0 ,'intval');
+    	$user_id = UID;
         $ShopModel = D('Home/Shop');
         $field= 'u.head_pic,u.user_id,u.total_money,u.nick_name,shop_accounts, s.top_time,s.shop_name,s.take_task,s.task_count,s.task_num,s.vol,s.appeal_num,s.be_appeal_num,s.complain_num,s.be_complain_num,s.top_time';
         $ShopInfo = $ShopModel->getShopInfo($user_id, '', $field);
@@ -61,5 +61,23 @@ class ShopController extends CommonController {
         }
         $this->assign('total_money', $total_money);
         $this->display();
+    }
+    /**
+     * @desc  开通合作商
+     * @param user_id  用户ID
+     * @param type   开通类型  1 普通  2 金牌  3白金
+     * @param money    fen
+     * @param time 时间    1 月卡  2 年卡
+     * @return mixed
+     */
+    public function vip(){
+        if(IS_POST){
+            $data = I('post.', 3);
+            $res = $this->shop->getVip(UID, $data['type'], $data['money'] , $data['time']);
+            if($res){
+                $this->ajaxReturn(V(1, '恭喜您,'.C(	VIP_LEVEL)[$data['type']].'开通成功'));
+            }
+        }
+            $this->ajaxReturn(V(2, $this->shop->getError()));
     }
 }

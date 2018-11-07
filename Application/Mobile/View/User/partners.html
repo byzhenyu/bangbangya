@@ -15,9 +15,7 @@
     </header>
 
     <div class="partners-my-level">
-        <if condition="$shop_type eq 0">
-            <p>小主，您的级别是非合作商</p>
-        </if>
+            <p>小主，您的级别是<if condition="$shop_type eq 0">非合作商<else />{:C(VIP_LEVEL)[$shop_type]}</if></p>
     </div>
 
     <div class="partners-level-intro">
@@ -29,27 +27,16 @@
 
         <div class="partners-level-info">
             <p>非合作商</p>
-            <span>12%</span>
-            <span>15%</span>
+            <span>{:C(BASE_WITHDRAW_FEE)}%</span>
+            <span>{:C(BASE_ORDER_FEE)}%</span>
         </div>
-
-        <div class="partners-level-info">
-            <p>普通合作商</p>
-            <span>10%</span>
-            <span>10%</span>
-        </div>
-
-        <div class="partners-level-info">
-            <p>金牌合作商</p>
-            <span>8%</span>
-            <span>8%</span>
-        </div>
-
-        <div class="partners-level-info">
-            <p>白金合作商</p>
-            <span>5%</span>
-            <span>5%</span>
-        </div>
+        <foreach name="vip['cost']" item="v">
+            <div class="partners-level-info">
+                <p>{:C('VIP_LEVEL')[$v['type']]}</p>
+                <span>{$v['order_fee']}%</span>
+                <span>{$v['withdraw_fee']}%</span>
+            </div>
+        </foreach>
     </div>
 
     <div class="app-partners">
@@ -58,51 +45,26 @@
             <span>月卡</span>
             <span>年卡</span>
         </div>
-
-        <div class="app-partners-info">
-            <div class="partners-level-name">
-                <img src="__PUBLIC__/mobile/images/my_cooperate_icon_putong.png">
-                <span>普通合作商</span>
+        <foreach name="vip['money']" item="v" key="k">
+            <div class="app-partners-info">
+                <div class="partners-level-name">
+                    <if condition=" $k eq 1">
+                        <img src="__PUBLIC__/mobile/images/my_cooperate_icon_putong.png">
+                        <elseif condition="$k eq 2"/><img src="__PUBLIC__/mobile/images/my_cooperate_icon_gold.png">
+                        <else /> <img src="__PUBLIC__/mobile/images/my_cooperate_icon_baijin.png">
+                    </if>
+                    <span>{:C('VIP_LEVEL')[$k]}</span>
+                </div>
+                <div class="partners-month">
+                    <p>￥{:fen_to_yuan($v[0]['vip_price'])}</p>
+                    <button onclick="buy({$v[0]['vip_price']},{$k}, 1)">购买</button>
+                </div>
+                <div class="partners-year">
+                    <p>￥{:fen_to_yuan($v[1]['vip_price'])}</p>
+                    <button onclick="buy({$v[1]['vip_price']}, {$k}, 2)">购买</button>
+                </div>
             </div>
-            <div class="partners-month">
-                <p>￥40</p>
-                <button>购买</button>
-            </div>
-            <div class="partners-year">
-                <p>￥400</p>
-                <button>购买</button>
-            </div>
-        </div>
-
-        <div class="app-partners-info">
-            <div class="partners-level-name">
-                <img src="__PUBLIC__/mobile/images/my_cooperate_icon_gold.png">
-                <span>金牌合作商</span>
-            </div>
-            <div class="partners-month">
-                <p>￥100</p>
-                <button>购买</button>
-            </div>
-            <div class="partners-year">
-                <p>￥800</p>
-                <button>购买</button>
-            </div>
-        </div>
-
-        <div class="app-partners-info">
-            <div class="partners-level-name">
-                <img src="__PUBLIC__/mobile/images/my_cooperate_icon_baijin.png">
-                <span>白金合作商</span>
-            </div>
-            <div class="partners-month">
-                <p>￥200</p>
-                <button>购买</button>
-            </div>
-            <div class="partners-year">
-                <p>￥1500</p>
-                <button>购买</button>
-            </div>
-        </div>
+        </foreach>
     </div>
 
     <div class="partners-interests-intro">
@@ -116,8 +78,52 @@
 
 </body>
 <script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/url.js"></script>
 <script type="text/javascript" charset="utf-8">
     mui.init();
+    function buy(money,type,time){
+              mui.confirm('是否成为合作商', '提示', '', function(e) {
+                  if (e.index == 1) {
+                      mui.ajax(url + 'Mobile/Shop/vip',{
+                          data:{
+                              money:money,
+                              type:type,
+                              time : time
+                          },
+                          dataType:'json',//服务器返回json格式数据
+                          type:'post',//HTTP请求类型
+                          timeout:10000,//超时时间设置为10秒；
+                          success:function(data){
+                              mui.toast(data['info']);
+                              // alert(JSON.stringify(data));
+                              if(data['status'] == 1){
+                                  setTimeout(function(){
+                                      mui.openWindow({
+                                          url:  url + 'Mobile/User/partners'
+                                      });
+                                  }, 1500);
+                              }else{
+                                  mui.confirm('您的余额不足,是否去充值?', '提示', '', function(e) {
+                                      if (e.index == 1) {
+                                              mui.openWindow({
+                                                  url:  url + 'Mobile/Pay/topUpsPage'
+                                              });
+                                      }else{
+                                          mui.toast('您取消了操作');
+                                      }
+                                  });
+                              }
+                          },
+                          error:function(xhr,type,errorThrown){
+                              //异常处理；
+                              console.log(type);
+                          }
+                      });
+                  }else{
+                      mui.toast('您取消了操作');
+                  }
+              })
+    }
 </script>
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>

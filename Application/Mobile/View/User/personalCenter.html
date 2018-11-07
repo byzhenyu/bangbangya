@@ -49,18 +49,18 @@
             <div class="center-column-line"></div>
             <div class="center-data-details">
                 <span>余额</span>
-                <p>￥<span>{$userList.total_money}</span></p>
+                <p>￥<span>{:fen_to_yuan($userList['total_money'])}</span></p>
             </div>
             <div class="center-column-line"></div>
             <div class="center-data-details">
                 <span>收入</span>
-                <p>￥<span>{$userList.zong}</span></p>
+                <p>￥<span>{:fen_to_yuan($userList['zong'])}</span></p>
             </div>
         </div>
     </div>
 
     <div class="personal-center-middle">
-      <a class="personal-center-item" href="partners.html">
+      <a class="personal-center-item" href="{:U('User/partners')}">
           <div class="center-item-info">
               <div class="center-item-basic">
                   <img src="__PUBLIC__/mobile/images/my_icon_cooperate.png">
@@ -68,12 +68,12 @@
               </div>
           </div>
           <div class="center-item-right">
-              <p onclick="apply({$userList['shop_type']})">申请</p>
+              <p href="{:U('User/partners')}">申请</p>
               <img src="__PUBLIC__/mobile/images/common_icon_more.png">
           </div>
       </a>
 
-        <a class="personal-center-item" href="{:U('Shop/myShopInfo',array('user_id' => $userList['user_id']))}">
+        <a class="personal-center-item" href="{:U('Shop/myShopInfo')}">
             <div class="center-item-info">
                 <div class="center-item-basic">
                     <img src="__PUBLIC__/mobile/images/my_icon_myshop.png" style="width: .44rem; height: .4rem;">
@@ -85,7 +85,7 @@
             </div>
         </a>
 
-        <a class="personal-center-item" href="{:U('Fans/myFans',array('user_id' => $userList['user_id']))}">
+        <a class="personal-center-item" href="{:U('Fans/myFans')}">
             <div class="center-item-info">
                 <div class="center-item-basic">
                     <img src="__PUBLIC__/mobile/images/my_icon_fans.png" style="width: .44rem; height: .38rem;">
@@ -97,7 +97,7 @@
             </div>
         </a>
 
-        <a class="personal-center-item" href="{:U('Pay/myWallet',array('user_id' => $userList['user_id']))}">
+        <a class="personal-center-item" href="{:U('Pay/myWallet')}">
             <div class="center-item-info">
                 <div class="center-item-basic">
                     <img src="__PUBLIC__/mobile/images/my_icon_mywallet.png" style="width: .42rem; height: .38rem;">
@@ -109,7 +109,7 @@
             </div>
         </a>
 
-        <a class="personal-center-item" href="{:U('Pay/incomeDividends',array('user_id' => $userList['user_id']))}">
+        <a class="personal-center-item" href="{:U('Pay/incomeDividends')}">
             <div class="center-item-info">
                 <div class="center-item-basic">
                     <img src="__PUBLIC__/mobile/images/my_icon_income.png" style="width: .42rem; height: .40rem;">
@@ -121,7 +121,7 @@
             </div>
         </a>
 
-        <a class="personal-center-item" href="{:U('Pay/bindAlipay',array('user_id' => $userList['user_id']))}">
+        <a class="personal-center-item" href="{:U('Pay/bindAlipay')}">
             <div class="center-item-info">
                 <div class="center-item-basic">
                     <img src="__PUBLIC__/mobile/images/my_icon_zhifubao.png" style="width: .42rem; height: .32rem;">
@@ -274,11 +274,6 @@
     {
          mui.openWindow({
             url:url + 'mobile/user/securityDeposit/shop_accounts/' + $shop_accounts,
-        });
-    }
-    function apply($shop_type){
-        mui.openWindow({
-            url:url + 'mobile/user/partners/shop_type/' + $shop_type,
         });
     }
 </script>

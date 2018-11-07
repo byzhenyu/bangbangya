@@ -20,7 +20,7 @@ class FansController extends CommonController {
      */
     public function myFans()
     {
-        $user_id = I('user_id', 0 ,'intval');
+        $user_id = UID;
     	$where['f.fans_user_id']  =  $user_id;
     	$field = 'f.user_id,u.head_pic,u.nick_name,f.add_time';
         /*我的粉丝*/
@@ -29,8 +29,6 @@ class FansController extends CommonController {
         unset($where);
         $where['f.user_id']  =  $user_id;
         $focuslist = $this->Fans->getFansList($where, $field, '', 1);
-        p($fanslist);
-        p($focuslist);
         $this->assign('userInfo', $this->userInfo);
         $this->assign('fanslist',$fanslist);
         $this->assign('focuslist',$focuslist);

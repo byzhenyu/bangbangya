@@ -1066,3 +1066,68 @@ function getAccount($where = [], $field = null ,$sort = 'change_time DESC'){
      $result = M('AccountLog')->where($where)->order($sort)->select();
      return $result;
 }
+/**
+* @desc  查看合作商信息
+* @param  $id
+* @return mixed
+*/
+function getVip($where = []){
+    $vip = [];
+    $VipTable = M('vip_level');
+    for($i = 1; $i  <= 3; $i ++){
+        $vip['cost'][$i] = $VipTable->field('order_fee, withdraw_fee, type')->where('type = '.$i)->find();
+        $vip['money'][$i] = $VipTable->field('vip_price, vip_type, type')->where('type = '.$i)->select();
+    }
+    return $vip;
+}
+/**
+* @desc 判断是否有邀请人
+* @param
+* @return mixed
+*/
+function is_inviter($user_id){
+    $userModel = D('Home/User');
+    $invitation_uid  = $userModel->where('user_id = '.$user_id)->getField('invitation_uid');
+    if($invitation_uid !== 0){
+        return $invitation_uid;
+    }else{
+        return false;
+    }
+
+}
+/**
+* @desc  分红给邀请人
+* @param user_id
+* @param $i_user_id 邀请人ID
+* @param money
+* @param $type  0 充值 1提现
+* @return mixed
+*/
+function inviterBonus($user_id, $i_user_id, $money ,$type = 0){
+    $radio = M('ratio')->find();
+    if ($type == 0){
+         $money =  $radio['pay'] /100 * $money;
+    }else{
+         $money =  $radio['deposit'] /100  * $money;
+    }
+    $money  = round($money,2);
+    if($money == 0){
+        $money = 1;
+    }
+    $userModel = D('Home/User');
+    $userMoney = array(
+          'total_money'  => array('exp','total_money + '.$money),
+          'bonus_money' => array('exp','bonus_money + '.$money)
+     );
+    $userModel->where('user_id = '.$i_user_id)->save($userMoney);
+    account_log($i_user_id, $money, 2, '分红',$user_id);
+}
+//生成订单编号
+function makeOrderSn($user_id){
+    $Year = substr(date('Y',time()),2,4);
+    $MonthDay = date('md',time());
+    $midStr = str_pad(substr(UID,-4),4,'0',STR_PAD_LEFT);
+    $randNum = substr(microtime(),2,5);
+    $orderSn = $Year.$MonthDay.$randNum.$midStr;
+    return $orderSn.'_'.$user_id;
+}

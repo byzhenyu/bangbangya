@@ -22,7 +22,8 @@ class UserController extends CommonController {
     * @return mixed
     */
     public function personalCenter(){
-          $where['u.user_id'] = UID;
+          $user_id = UID;
+          $where['u.user_id'] = $user_id;
           $field = 'u.head_pic, u.nick_name, u.total_money,u.bonus_money,s.shop_type, u.task_suc_money,u.user_id, s.shop_accounts,s.take_task';
           $userList = $this->user->getUserInfo($where, $field);
           $this->assign('userList',$userList);
@@ -56,9 +57,6 @@ class UserController extends CommonController {
     	$field = 'head_pic,nick_name';
     	$code = $userModel->createCode(UID);  /*创建邀请码*/
     	$userInfo = $userModel->getUserInfo($where, $field);
-    	P($code);
-    	p($userInfo);
-    	exit;
     	$this->assign('code', $code);
     	$this->assign('userInfo', $userInfo);
     	$this->display();
@@ -78,13 +76,26 @@ class UserController extends CommonController {
         $this->display();
     }
     /**
-    * @desc 查看我的合作商等级
-    * @param uid
+    * @desc 合作商查看
+    * @param  $user_id
+    * @param  $shop_type
     * @return mixed
     */
-    public function getVip(){
-         $shop_type = I('shop_type');
+     public  function partners(){
+         $vip = getVip();
+         $user_id = UID;
+         $where['u.user_id'] = $user_id;
+         $field = 's.shop_type, s.partner_time ';
+         $shopInfo  = $this->user->getUserInfo($where, $field);
+         if($shopInfo['shop_type']  == 0){
+                  $shop_type = 0;
+         }elseif($shopInfo['partner_time']  < NOW_TIME){
+                  $shop_type = 0;
+         }else{
+                  $shop_type = $shopInfo['shop_type'];
+         }
          $this->assign('shop_type', $shop_type);
+         $this->assign('vip', $vip);
          $this->display();
-    }
+      }
 }

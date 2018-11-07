@@ -16,12 +16,12 @@
 
     <div class="my-wallet-top">
         <span>余额</span>
-        <p>￥<span>{$userInfo['total_money']}</span></p>
+        <p>￥<span>{:fen_to_yuan($total_money)}</span></p>
         <div class="my-wallet-btns">
-            <a href="{:U('Pay/topUpsPage',array('user_id' => $userList['user_id']))}">
+            <a href="{:U('Pay/topUpsPage',array('user_id' => $user_id))}">
                 <input type="button" value="充值">
             </a>
-            <a href="{:U('Pay/withdraw',array('user_id' => $userList['user_id']))}">
+            <a href="{:U('Pay/withdraw',array('user_id' => $user_id))}">
                 <input type="button" value="提现">
             </a>
         </div>
@@ -55,7 +55,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <p class="my-cz-money">+<span>{$v.user_money}</span></p>
+                                            <p class="my-cz-money">+<span>{:fen_to_yuan($v['user_money'])}</span></p>
                                         </div>
                                     </a>
                                 </li>
@@ -83,7 +83,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="my-cz-money">-<span>{$v.user_money}</span></p>
+                                    <p class="my-cz-money">-<span>{:fen_to_yuan($v['user_money'])}</span></p>
                                 </div>
                             </a>
                         </li>

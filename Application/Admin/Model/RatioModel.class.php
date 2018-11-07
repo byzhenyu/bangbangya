@@ -16,7 +16,7 @@ use Think\Model;
  */
 class RatioModel extends Model {
     protected $insertFields = array('pay', 'depoist', 'change_time');
-    protected $updateFields = array('id', 'pay', 'depoist');
+    protected $updateFields = array('id', 'pay', 'deposit');
 
     protected $_validate = array(
         array('pay', 'require', '请输入充值比例', 1, 'regex', 3),

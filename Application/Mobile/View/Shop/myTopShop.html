@@ -122,7 +122,7 @@
                         mui.toast('请您选择置顶时间');
                         return;
                     }
-                    mui.ajax(url + 'mobile/shop/myTopShop',{
+                    mui.ajax(url + 'Mobile/Shop/myTopShop',{
                         data:{
                             top_time:top_time,
                             zong:zong
@@ -136,7 +136,7 @@
                             if(data['status'] == 1){
                                 setTimeout(function(){
                                     mui.openWindow({
-                                        url:  url + '/mobile/shop/myShopInfo/user_id/' + data['data']
+                                        url:  url + 'Mobile/Shop/myShopInfo/user_id/' + data['data']
                                     });
                                 }, 1500);
                             }
