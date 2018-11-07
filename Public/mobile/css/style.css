@@ -650,12 +650,14 @@ input[type="checkbox"]:checked + i {
     align-items: center;
     justify-content: space-between;
     margin-bottom: .32rem;
+    flex-wrap:wrap;
 }
 
 .task-type-single {
     display: flex;
     align-items: center;
     /*margin-left: .71rem;*/
+    width:25%;
 }
 
 .task-type-single label {
