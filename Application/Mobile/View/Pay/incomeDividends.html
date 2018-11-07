@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>收入分红</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body style="background: #f6f6f6;">
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <p class="mui-title">收入分红</p>
+        <a></a>
+    </header>
+
+    <div class="my-wallet-top" style="background-image: url('__PUBLIC__/mobile/images/my_income_bg_income.png')">
+        <span>收入分红</span>
+        <p>￥<span>{:fen_to_yuan($bonus_money)}</span></p>
+        <div class="my-wallet-btns">
+            <a href="{:U('Pay/bindAlipay')}" style="margin-right: 0">
+                <input type="button"  value="提现">
+            </a>
+        </div>
+    </div>
+
+    <div class="mui-content" id="top-shop-content">
+        <div id="my-fans-info" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary top-shop-choose my-fans-attention" >
+            <a class="mui-control-item mui-active my-fans" href="#item1">
+                <p>分红记录</p>
+            </a>
+            <a class="mui-control-item my-attention" href="#item2">
+                <p>提现记录</p>
+            </a>
+        </div>
+
+        <div>
+            <div id="item1" class="mui-control-content mui-active">
+                <div class="mui-scroll-content">
+                    <div class="mui-scroll">
+                        <ul class="mui-table-view my-fans-view">
+                            <li class="mui-table-view-cell my-fans-li">
+                                <a class="my-fans-item">
+                                    <div class="my-fans-user">
+                                        <div class="my-wallet-left">
+                                            <img src="__PUBLIC__/mobile/images/my_wallet_icon_in.png">
+                                            <div class="fans-user-info">
+                                                <p>任务获得</p>
+                                                <div>
+                                                    <span>2018-10-18</span>
+                                                    <span>15:00:48</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="my-cz-money">+<span>0.1</span></p>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="mui-table-view-cell my-fans-li">
+                                <a class="my-fans-item">
+                                    <div class="my-fans-user">
+                                        <div class="my-wallet-left">
+                                            <img src="__PUBLIC__/mobile/images/my_wallet_icon_in.png">
+                                            <div class="fans-user-info">
+                                                <p>任务获得</p>
+                                                <div>
+                                                    <span>2018-10-18</span>
+                                                    <span>15:00:48</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="my-cz-money">+<span>0.1</span></p>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="mui-table-view-cell my-fans-li">
+                                <a class="my-fans-item">
+                                    <div class="my-fans-user">
+                                        <div class="my-wallet-left">
+                                            <img src="__PUBLIC__/mobile/images/my_wallet_icon_in.png">
+                                            <div class="fans-user-info">
+                                                <p>任务获得</p>
+                                                <div>
+                                                    <span>2018-10-18</span>
+                                                    <span>15:00:48</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="my-cz-money">+<span>0.1</span></p>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="mui-table-view-cell my-fans-li">
+                                <a class="my-fans-item">
+                                    <div class="my-fans-user">
+                                        <div class="my-wallet-left">
+                                            <img src="__PUBLIC__/mobile/images/my_wallet_icon_in.png">
+                                            <div class="fans-user-info">
+                                                <p>任务获得</p>
+                                                <div>
+                                                    <span>2018-10-18</span>
+                                                    <span>15:00:48</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="my-cz-money">+<span>0.1</span></p>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="mui-table-view-cell my-fans-li">
+                                <a class="my-fans-item">
+                                    <div class="my-fans-user">
+                                        <div class="my-wallet-left">
+                                            <img src="__PUBLIC__/mobile/images/my_wallet_icon_in.png">
+                                            <div class="fans-user-info">
+                                                <p>任务获得</p>
+                                                <div>
+                                                    <span>2018-10-18</span>
+                                                    <span>15:00:48</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="my-cz-money">+<span>0.1</span></p>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="mui-table-view-cell my-fans-li">
+                                <a class="my-fans-item">
+                                    <div class="my-fans-user">
+                                        <div class="my-wallet-left">
+                                            <img src="__PUBLIC__/mobile/images/my_wallet_icon_in.png">
+                                            <div class="fans-user-info">
+                                                <p>任务获得</p>
+                                                <div>
+                                                    <span>2018-10-18</span>
+                                                    <span>15:00:48</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="my-cz-money">+<span>0.1</span></p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mui-scrollbar mui-scrollbar-vertical">
+                        <div class="mui-scrollbar-indicator"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="item2" class="mui-control-content">
+                <ul class="mui-table-view my-fans-view">
+                    <li class="mui-table-view-cell my-fans-li">
+                        <a class="my-fans-item">
+                            <div class="my-fans-user">
+                                <div class="my-wallet-left">
+                                    <img src="__PUBLIC__/mobile/images/my_wallet_icon_out.png">
+                                    <div class="fans-user-info">
+                                        <p>提现</p>
+                                        <div>
+                                            <span>2018-10-18</span>
+                                            <span>15:00:48</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="my-cz-money">-<span>100.0</span></p>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="mui-table-view-cell my-fans-li">
+                        <a class="my-fans-item">
+                            <div class="my-fans-user">
+                                <div class="my-wallet-left">
+                                    <img src="__PUBLIC__/mobile/images/my_wallet_icon_out.png">
+                                    <div class="fans-user-info">
+                                        <p>提现</p>
+                                        <div>
+                                            <span>2018-10-18</span>
+                                            <span>15:00:48</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="my-cz-money">-<span>100.0</span></p>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="mui-table-view-cell my-fans-li">
+                        <a class="my-fans-item">
+                            <div class="my-fans-user">
+                                <div class="my-wallet-left">
+                                    <img src="__PUBLIC__/mobile/images/my_wallet_icon_out.png">
+                                    <div class="fans-user-info">
+                                        <p>提现</p>
+                                        <div>
+                                            <span>2018-10-18</span>
+                                            <span>15:00:48</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="my-cz-money">-<span>100.0</span></p>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="mui-table-view-cell my-fans-li">
+                        <a class="my-fans-item">
+                            <div class="my-fans-user">
+                                <div class="my-wallet-left">
+                                    <img src="__PUBLIC__/mobile/images/my_wallet_icon_out.png">
+                                    <div class="fans-user-info">
+                                        <p>提现</p>
+                                        <div>
+                                            <span>2018-10-18</span>
+                                            <span>15:00:48</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="my-cz-money">-<span>100.0</span></p>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="mui-table-view-cell my-fans-li">
+                        <a class="my-fans-item">
+                            <div class="my-fans-user">
+                                <div class="my-wallet-left">
+                                    <img src="__PUBLIC__/mobile/images/my_wallet_icon_out.png">
+                                    <div class="fans-user-info">
+                                        <p>提现</p>
+                                        <div>
+                                            <span>2018-10-18</span>
+                                            <span>15:00:48</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="my-cz-money">-<span>100.0</span></p>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="mui-table-view-cell my-fans-li">
+                        <a class="my-fans-item">
+                            <div class="my-fans-user">
+                                <div class="my-wallet-left">
+                                    <img src="__PUBLIC__/mobile/images/my_wallet_icon_out.png">
+                                    <div class="fans-user-info">
+                                        <p>提现</p>
+                                        <div>
+                                            <span>2018-10-18</span>
+                                            <span>15:00:48</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="my-cz-money">-<span>100.0</span></p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <div class="mui-scrollbar mui-scrollbar-vertical">
+                    <div class="mui-scrollbar-indicator"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+</script>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+</html>
