@@ -63,10 +63,7 @@ class TaskController extends CommonController {
         $shopWhere['s.top_time'] = array('gt', NOW_TIME);
         $shopField = 's.user_id, s.shop_img, s.shop_name';
         $topShop = D('Home/Shop')->getAllShop($shopWhere, $shopField);
-        p($taskInfo);
-        p($taskCategory);
-        p($topShop);
-//        exit;
+
         $this->assign('topShop',$topShop['shopList']);
         $this->assign('taskCategory',$taskCategory);
         $this->assign('taskInfo', $taskInfo['list']);
