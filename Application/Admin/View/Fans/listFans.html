@@ -1,0 +1,78 @@
+<extend name="Common/base"/>
+
+<block name="style">
+
+</block>
+
+<block name="body">
+	<div class="row-content am-cf">
+		<div class="row">
+			<div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+				<div class="widget am-cf">
+					<div class="widget-head am-cf">
+						<div class="widget-title am-cf">粉丝列表</div>
+					</div>
+					<div class="widget-body am-fr">
+						<div class="am-u-sm-12 am-u-md-3 am-u-lg-3">
+							<div class="am-form-group">
+								<div class="am-btn-toolbar">
+									<div class="am-btn-group am-btn-group-xs">
+
+									</div>
+								</div>
+							</div>
+						</div>
+						<form action="__SELF__" method="get">
+
+                            <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+
+                            </div>
+                        </form>
+						<div class="am-u-sm-12">
+							<table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black">
+								<thead>
+								<tr>
+									<th width="50"><input class="check-all" type="checkbox"></th>
+									<th width="20%">序号</th>
+									<th>昵称</th>
+									<th width="25%">添加时间</th>
+								</tr>
+								</thead>
+								<tbody>
+								<foreach name="list" item="v">
+									<tr class="gradeX">
+										<td><input class="ids" type="checkbox" name="chkbId" value="{$v['id']}"></td>
+										<td>{$v['id']}</td>
+										<td>
+                                            {:$v['nick_name']}
+                                        </td>
+
+                                        <td>{$v['add_time']|time_format}</td>
+
+									</tr>
+								</foreach>
+								</tbody>
+							</table>
+							<empty name="list">
+								<h4>aOh! 没有相关内容!</h4>
+							</empty>
+						</div>
+						<div class="am-u-lg-12 am-cf">
+							<div class="am-fr">
+								<div class="am-pagination tpl-pagination">
+									{$page}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+
+	</script>
+</block>
