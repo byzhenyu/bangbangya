@@ -29,7 +29,9 @@ class TaskCategoryController extends CommonController {
         $id = I('id');
         $taskCategoryModel = D('Admin/TaskCategory');       
         if (IS_POST) {
-            if ($taskCategoryModel->create() === false) {
+            $data = I('post.', '');
+            $data['limit_money'] = yuan_to_fen($data['limit_money']);
+            if ($taskCategoryModel->create($data) === false) {
                 $this->ajaxReturn(V(0, $taskCategoryModel->getError()));
             }
             if ($id) {
