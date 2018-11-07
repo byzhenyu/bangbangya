@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>余额提现</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body style="background: #f6f6f6">
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <p class="mui-title">余额提现</p>
+        <a></a>
+    </header>
+
+    <div class="withdrawals-row partners-level">
+        <p>合作商级别</p>
+        <p>非合作商</p>
+    </div>
+
+    <div class="withdrawals-row">
+        <p>账户余额</p>
+        <p><span>1000.0</span>元</p>
+    </div>
+
+    <div class="withdrawals-money">
+        <p>提现金额</p>
+        <div>
+            <input type="number" placeholder="请输入提现金额">
+            <p>元</p>
+        </div>
+    </div>
+
+    <div class="withdrawals-method">
+        <p>提现方式</p>
+        <img src="__PUBLIC__/mobile/images/common_icon_singlebox_s.png">
+        <p>支付宝</p>
+    </div>
+
+    <div class="top-ups-sure">
+        <button id="withdrawals-bind-zfb">提现</button>
+    </div>
+
+    <div class="top-ups-info">
+        <span>提现说明</span>
+        <p>
+            1、提现金额限制在1.0元-200元，账户余额不能低于1.2元，提现时间为工作日的早9:00-17:00。 <br>
+            2、提现手续费：非合作商15%；普通合作商10%；金牌合作商8%；白金合作商5%。<br>
+            3、合作商每天可以提现三次；非合作商7天内只能提现一次，需要审核，审核时间1个工作日内。<br>
+            4、提现有时因网络原因会有几秒到几分钟的延时，注意查收红包。
+        </p>
+    </div>
+
+</body>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+</script>
+<script>
+    //mui初始化
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+    document.getElementById("withdrawals-bind-zfb").addEventListener('tap', function() {
+        var delArray = ['取消','确定'];
+        mui.confirm('提现需绑定支付宝账号，您确定绑定吗', '提示', delArray, function(e) {
+            if (e.index == 0) {
+                // 点击了取消
+            } else {
+                // 点击了确定
+            }
+        })
+    });
+</script>
+</html>
