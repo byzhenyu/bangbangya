@@ -43,7 +43,7 @@
     function dologin()
     {
 
-        mui.ajax(url + 'mobile/login/dologin',{
+        mui.ajax(url + 'Mobile/Login/dologin',{
             data:{
                 open_id:'123456'
             },
@@ -57,7 +57,7 @@
                 if(data['data'] == 1){
                     setTimeout(function(){
                         mui.openWindow({
-                            url:  url + '/mobile/user/personalCenter'
+                            url:  url + '/Mobile/User/personalCenter'
                         });
                     }, 1500);
                 }
