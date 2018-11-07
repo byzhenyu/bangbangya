@@ -1106,8 +1106,10 @@ function is_inviter($user_id){
 function inviterBonus($user_id, $i_user_id, $money ,$type = 0){
     $radio = M('ratio')->find();
     if ($type == 0){
+         $change_desc = '充值分红';
          $money =  $radio['pay'] /100 * $money;
     }else{
+         $change_desc = '提现分红';
          $money =  $radio['deposit'] /100  * $money;
     }
     $money  = round($money,2);
@@ -1120,14 +1122,27 @@ function inviterBonus($user_id, $i_user_id, $money ,$type = 0){
           'bonus_money' => array('exp','bonus_money + '.$money)
      );
     $userModel->where('user_id = '.$i_user_id)->save($userMoney);
-    account_log($i_user_id, $money, 2, '分红',$user_id);
+    account_log($i_user_id, $money, 2, $change_desc,$user_id);
 }
 //生成订单编号
 function makeOrderSn($user_id){
-    $Year = substr(date('Y',time()),2,4);
-    $MonthDay = date('md',time());
-    $midStr = str_pad(substr(UID,-4),4,'0',STR_PAD_LEFT);
-    $randNum = substr(microtime(),2,5);
-    $orderSn = $Year.$MonthDay.$randNum.$midStr;
-    return $orderSn.'_'.$user_id;
+    $Year = substr(date('Y', time()), 2, 4);
+    $MonthDay = date('md', time());
+    $midStr = str_pad(substr(UID, -4), 4, '0', STR_PAD_LEFT);
+    $randNum = substr(microtime(), 2, 5);
+    $orderSn = $Year . $MonthDay . $randNum . $midStr;
+    return $orderSn . '_' . $user_id;
+}
+/**
+* @desc     判断是否绑定支付宝
+* @param     UIDs
+* @return   mixed
+*/
+function is_bind($where){
+    $alipay = D('Home/User')->field('alipay_num, alipay_name')->where($where)->find();
+    if($alipay['alipay_num'] == '' || $alipay['alipay_name'] == ''){
+        return false;
+    }else{
+        return true;
+    }
 }

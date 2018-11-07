@@ -18,6 +18,7 @@ class ShopModel extends Model{
      * @param  $user_id   user_id
      * @param  $shop_id shop.userid
      * @param  $[isOwnShop] 是否是自己的店铺 1 是  0 不是
+     * @param  $[is_top] 是否是置顶 1 是  0 不是
      * @return arr
      */
     public function getShopInfo($user_id = '',$shop_id = '' ,$field = '')

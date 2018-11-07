@@ -72,9 +72,19 @@ class PayController  extends CommonController{
       */
       public  function withdraw()
       {
-          $user_id = I('user_id', 0 , 'intval');
-          $this->assign('user_id', $user_id);
-          $this->display();
+          $where['user_id'] = UID;
+          $is_bind = is_bind($where);
+          if($is_bind){
+              $field = 'u.total_money, s.shop_type, s.partner_time';
+              $shopInfo = D('Home/Shop')->getShopInfo(UID,'',$field);
+              if($shopInfo['partner_time'] < NOW_TIME){
+                  $shopInfo['shop_type'] = 0;
+              }
+              $this->assign('shopInfo',$shopInfo);
+              $this->display();
+          }else{
+              $this->display('Pay/bindAlipay');
+          }
       }
     /**
      * @desc 绑定支付宝
@@ -92,12 +102,9 @@ class PayController  extends CommonController{
                 $this->ajaxReturn(V(0, $this->user->getError()));
             }
         }
+        $where['user_id'] = $user_id;
+        $is_bind = is_bind($where);
         $alipay = $this->user->field('alipay_num, alipay_name')->where('user_id ='.$user_id)->find();
-        if($alipay['alipay_num'] == '' || $alipay['alipay_name'] == ''){
-            $is_bind = 0;
-        }else{
-            $is_bind = 1;
-        }
         $this->assign('alipay',$alipay);
         $this->assign('is_bind',$is_bind);
         $this->display();
@@ -110,7 +117,12 @@ class PayController  extends CommonController{
        public function incomeDividends(){
         $user_id = UID;
         $bonus_money = $this->user->where('user_id = '.$user_id)->getField('bonus_money');
+        $where['user_id'] = $user_id;
+        $where['change_type']  = 2;
+        $pmoney = getAccount($where);
+        p($pmoney);
         $this->assign('bonus_money',$bonus_money);
+        $this->assign('pmoney',$pmoney);
         $this->display();
       }
       /**
