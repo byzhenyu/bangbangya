@@ -90,9 +90,7 @@ class TaskController extends CommonController {
         if($userInfo['shop_type'] != 0 && $userInfo['top_time'] > NOW_TIME){
             $userInfo['shop_type'] = 0;
         }
-        p($userInfo);
-        p($userInfo['shop_type']);
-        die;
+
         $id = I('id', 0 ,'intval');
         $taskModel = D('Home/Task');
         $taskStepModel = D('Home/TaskStep');
