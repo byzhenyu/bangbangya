@@ -65,7 +65,7 @@ class UserController extends CommonController {
         $field = 'user_id,head_pic,user_name, task_suc_money';
         $rankList = $this->user->getRankList('', $field);
         p($rankList);
-        exit;
+//        exit;
         $this->assign('randList', $rankList);
         $this->display();
     }
