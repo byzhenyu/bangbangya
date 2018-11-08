@@ -49,7 +49,6 @@ class ComplaintController extends CommonController {
                           M() ->startTrans();
                           /*更新用户数据*/
                           $userData = array(
-                              'task_money'  => array('exp','task_money +'.$taskInfo['price']),
                                'total_money' => array('exp','total_money +'.$taskInfo['price'])
                           );
                           $userRes = D('Admin/User')->updateUserInfo($ComplaintInfo['user_id'],$userData);

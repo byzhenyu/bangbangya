@@ -52,12 +52,7 @@ class UserController extends CommonController {
      */
     public function friendQequest()
     {
-    	$userModel = D('Home/User');
-    	$where['user_id'] = UID;
-    	$field = 'head_pic,nick_name';
-    	$code = $userModel->createCode(UID);  /*创建邀请码*/
-    	$userInfo = $userModel->getUserInfo($where, $field);
-    	$this->assign('code', $code);
+    	$userInfo = $this->user->field('head_pic, nick_name, invitation_code')->find();
     	$this->assign('userInfo', $userInfo);
     	$this->display();
     }
@@ -67,9 +62,8 @@ class UserController extends CommonController {
      */
     public function getRankList()
     {
-        $userModel = D('Home/User');
         $field = 'user_id,head_pic,user_name, task_suc_money';
-        $rankList = $userModel->getRankList('', $field);
+        $rankList = $this->user->getRankList('', $field);
         p($rankList);
         exit;
         $this->assign('randList', $rankList);

@@ -18,7 +18,7 @@ class TaskLogModel extends  Model{
         array('valid_time', 'require', '任务有效日期不能为空', 1, 'regex', 3),
         array('valid_info','require','验证信息不能为空',1,'regex', 3)
     );
-    public function getTaskLog($where = [], $field = '', $sort = 'add_time DESC'){
+    public function getTaskLog($where = [], $field = '', $sort = 'l.add_time DESC'){
         $where['l.status'] = 1;
         $count = $this->alias('l')
                  ->join('__TASK__ as t on t.id = l.task_id', 'LEFT')
@@ -35,13 +35,12 @@ class TaskLogModel extends  Model{
                 ->limit($page['limit'])
                 ->order($sort)
                 ->select();
-        /*判断任务是否失效  is_past 1正常  0已经过期*/
+        /*判断任务是否失效 过期改变valid_status 2 不合格*/
         foreach($list as $key=>$value){
             if($value['valid_status'] == 0){
-                if($value['valid_time'] > NOW_TIME){
-                    $list[$key]['is_past'] = 1;
-                }else{
-                    $list[$key]['is_past'] = 0;
+                if($value['valid_time'] < NOW_TIME){
+                   $this->where('id = '.$value['id'])->save(array('valid_status' => 2));
+                   $list[$key]['valid_status'] =  2;
                 }
             }
             unset($value['valid_time']);
@@ -78,24 +77,35 @@ class TaskLogModel extends  Model{
     }
     /**
     * @desc  丢弃任务
-    * @param $task_id
+    * @param $taskLog 主键
     * @return mixed
     */
     public  function delTaskLog($id)
     {
-          $taskLogDel = $this->where(array('user_id' => UID,'task_id' => $id))->save(array('status' => 0));
-          $taskInfo   = D('Home/Task')->where('id = '.$id)->find();
+          $taskInfo = $this->alias('l')
+                       ->join('__TASK__ as t on t.id = l.task_id','LEFT')
+                       ->field('l.valid_status, l.task_id,l.user_id,t.discard_id')
+                       ->where('l.id = '.$id)
+                       ->find();
+           M()->startTrans();
+          $taskLogDel = $this->where('id = '.$id)->save(array('status' => 0));
           if($taskLogDel) {
-              /*task 更新的数据*/
-              $where['task_num'] = array('exp', ' task_num + 1');
-              $where['discard_id'] = $taskInfo['discard_id'].UID.',';
-          }else{
-              $where['discard_id'] = $taskInfo['discard_id'].UID.',';
+              /*task 更新的数据  如果是没有做的任务,更新任务数量*/
+              if($taskLogInfo['valid_status']  == 0){
+                  $where['task_num'] = array('exp', ' task_num + 1');
+              }
+              if($taskInfo !== ',' || strpos($taskInfo, ','.$taskInfo['user_id'].',')  === false){
+                  $where['discard_id'] = $taskInfo['discard_id'].UID.',';
+                  $result  = D('Home/Task')->where('id = '.$taskInfo['task_id'])->save($where);
+              }else{
+                  $result = true;
+              }
           }
-          $result  = D('Home/Task')->where('id = '.$id)->save($where);
-          if($result) {
+          if($result && $taskLogDel) {
+              M()->commit();
               return true;
           }else{
+              M()->rollback();
               return false;
           }
     }
@@ -140,7 +150,6 @@ class TaskLogModel extends  Model{
              $userModel = D('Home/User');
              /*更新接单用户数据*/
              $userData = array(
-                 'task_money'  => array('exp','task_money +'.$taskInfo['task_price']),
                  'task_money'  => array('exp','task_suc_money +'.$taskInfo['task_price']),
                  'total_money' => array('exp','total_money +'.$taskInfo['task_price'])
              );

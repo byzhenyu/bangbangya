@@ -60,7 +60,7 @@
     </div>
 
     <div class="personal-center-middle">
-      <a class="personal-center-item" href="C">
+      <a class="personal-center-item" href="{:U('User/partners')}">
           <div class="center-item-info">
               <div class="center-item-basic">
                   <img src="__PUBLIC__/mobile/images/my_icon_cooperate.png">
@@ -133,7 +133,7 @@
             </div>
         </a>
 
-        <a class="personal-center-item" href="my-task.html">
+        <a class="personal-center-item" href="{:U('TaskLog/getTaskLog')}">
             <div class="center-item-info">
                 <div class="center-item-basic">
                     <img src="__PUBLIC__/mobile/images/my_icon_my%20task.png" style="width: .42rem; height: .42rem;">
@@ -145,7 +145,7 @@
             </div>
         </a>
 
-        <a class="personal-center-item" href="my-release.html">
+        <a class="personal-center-item" href="{:U('Task/myTask')}">
             <div class="center-item-info">
                 <div class="center-item-basic">
                     <img src="__PUBLIC__/mobile/images/my_icon_mypublish.png" style="width: .40rem; height: .42rem;">
@@ -157,7 +157,7 @@
             </div>
         </a>
 
-        <a class="personal-center-item" href="friends-invit.html">
+        <a class="personal-center-item" href="{:U('User/friendQequest')}">
             <div class="center-item-info">
                 <div class="center-item-basic">
                     <img src="__PUBLIC__/mobile/images/my_icon_invite%20friends.png" style="width: .44rem; height: .42rem;">
@@ -169,7 +169,7 @@
             </div>
         </a>
 
-        <a class="personal-center-item" href="common-problem.html">
+        <a class="personal-center-item" href="{:U('Help/questionList')}">
             <div class="center-item-info">
                 <div class="center-item-basic">
                     <img src="__PUBLIC__/mobile/images/my_icon_question.png" style="width: .44rem; height: .44rem;">
@@ -181,7 +181,7 @@
             </div>
         </a>
 
-        <a class="personal-center-item" href="use-help.html">
+        <a class="personal-center-item" href="{:U('Help/questionList',array('type' => 1))}">
             <div class="center-item-info">
                 <div class="center-item-basic">
                     <img src="__PUBLIC__/mobile/images/my_icon_help.png" style="width: .44rem; height: .44rem;">
@@ -193,7 +193,7 @@
             </div>
         </a>
 
-        <a class="personal-center-item" href="user-feedback.html">
+        <a class="personal-center-item" href="{:U('Feedback/feedback')}">
             <div class="center-item-info">
                 <div class="center-item-basic">
                     <img src="__PUBLIC__/mobile/images/my_icon_opinion.png" style="width: .42rem; height: .38rem;">
@@ -244,7 +244,7 @@
     {
         mui.confirm('您是否退出登录?', '提示', '', function(e) {
             if (e.index == 1) {
-                mui.ajax(url + 'mobile/login/logOut',{
+                mui.ajax(url + 'Mobile/Login/logOut',{
                     dataType:'json',//服务器返回json格式数据
                     type:'get',//HTTP请求类型
                     timeout:10000,//超时时间设置为10秒；
@@ -255,7 +255,7 @@
                         if(data['status'] == 1){
                             setTimeout(function(){
                                 mui.openWindow({
-                                    url:  url + '/mobile/login/login'
+                                    url:  url + '/Mobile/Login/login'
                                 });
                             }, 1500);
                         }
@@ -274,7 +274,7 @@
     function securityDeposit($shop_accounts)
     {
          mui.openWindow({
-            url:url + 'mobile/user/securityDeposit/shop_accounts/' + $shop_accounts,
+            url:url + 'Mobile/User/securityDeposit/shop_accounts/' + $shop_accounts,
         });
     }
 </script>

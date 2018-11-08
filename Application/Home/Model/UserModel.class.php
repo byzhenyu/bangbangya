@@ -13,7 +13,7 @@ use Think\Model;
 use Common\Tools\Emchat;
 class UserModel extends Model
 {
-    protected $findFields = array('user_id', 'user_name','mobile','head_pic','nick_name','task_money','frozen_money','bonus_money','total_money','alipay_num','alipay_name','invitation_code','invitation_uid','open_id');
+    protected $findFields = array('user_id', 'user_name','mobile','head_pic','nick_name','frozen_money','bonus_money','total_money','alipay_num','alipay_name','invitation_code','invitation_uid','open_id');
     //登录时表单验证的规则
     public $_login_validate = array(
         array('open_id', 'require', '微信未授权登录!',1,'regex',3),

@@ -23,7 +23,10 @@
 
     <div class="withdrawals-row">
         <p>账户余额</p>
-        <p><span id="total_money">{:fen_to_yuan($shopInfo['total_money'])}</span>元</p>
+        <if condition="$shopInfo['type'] eq 0">
+            <p><span id="total_money">{:fen_to_yuan($shopInfo['total_money'])}</span>元</p>
+            <else /> <p><span id="total_money">{:fen_to_yuan($shopInfo['bonus_money'])}</span>元</p>
+        </if>
     </div>
 
     <div class="withdrawals-money">
@@ -33,7 +36,6 @@
             <p>元</p>
         </div>
     </div>
-
     <div class="withdrawals-method">
         <p>提现方式</p>
         <img src="__PUBLIC__/mobile/images/common_icon_singlebox_s.png">
@@ -61,33 +63,9 @@
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
     mui.init();
-</script>
-<script>
     //mui初始化
     mui.init({
         swipeBack: true //启用右滑关闭功能
-    });
-    document.getElementById("withdrawals-bind-zfb").addEventListener('tap', function() {
-        var delArray = ['取消','确定'];
-        var total_money =  Number($('#total_money').text());
-        var money = $('#money').val();
-        alert(total_money);
-        alert(money);
-        if(money < 1.2 ){
-            mui.toast('您的余额太低,无法提现');
-            return
-        }
-        if(total_money < money){
-            mui.toast('余额不足');
-            return
-        }
-        mui.confirm('您是否提现'+money+'元', '提示', delArray, function(e) {
-            if (e.index == 0) {
-                // 点击了取消
-            } else {
-                // 点击了确定
-            }
-        })
     });
     /*判断只能输入两位小数*/
     function num(obj){
@@ -97,5 +75,55 @@
         obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
         obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'); //只能输入两个小数
     }
+    document.getElementById("withdrawals-bind-zfb").addEventListener('tap', function() {
+        var total_money = Number($('#total_money').text());
+        var money = $('#money').val();
+        if (money < 1.2) {
+            mui.toast('您的余额太低,无法提现');
+            return
+        }
+        if (total_money < money) {
+            mui.toast('余额不足');
+            return
+        }
+        mui.confirm('您是否提现' + money + '元', '提示', '', function (e) {
+            if (e.index == 1){
+                mui.ajax(url + 'Mobile/Pay/withdraw', {
+                    data: {
+                        money: money,
+                        type: {$shopInfo['type']}
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'post',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success: function (data) {
+                        mui.toast(data['info']);
+                        // alert(JSON.stringify(data));
+                        if (data['status'] == 0) {
+                            if(data['data']  == 0) {
+                                setTimeout(function(){
+                                    mui.openWindow({
+                                        url:  url + 'Mobile/Pay/myWallet'
+                                    });
+                                }, 1500);
+                            }else{
+                                setTimeout(function(){
+                                    mui.openWindow({
+                                        url:  url + 'Mobile/Pay/incomeDividends'
+                                    });
+                                }, 1500);
+                            }
+                        }
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        //异常处理；
+                        console.log(type);
+                    }
+                });
+            }else{
+                mui.toast('您取消了操作!')
+            }
+        });
+    })
 </script>
 </html>

@@ -1118,11 +1118,15 @@ function inviterBonus($user_id, $i_user_id, $money ,$type = 0){
     }
     $userModel = D('Home/User');
     $userMoney = array(
-          'total_money'  => array('exp','total_money + '.$money),
           'bonus_money' => array('exp','bonus_money + '.$money)
      );
-    $userModel->where('user_id = '.$i_user_id)->save($userMoney);
+    $inviterBonus = $userModel->where('user_id = '.$i_user_id)->save($userMoney);
     account_log($i_user_id, $money, 2, $change_desc,$user_id);
+    if($inviterBonus){
+        return true;
+    }else{
+        return false;
+    }
 }
 //生成订单编号
 function makeOrderSn($user_id){

@@ -64,8 +64,8 @@ class TaskLogController extends CommonController {
      */
      public function getTaskLog()
      {
-          /*where 接任务条件查找  0待提交 1待审核 2不合格 3已完成 default全部 */
-          $type = I('type', 4, 'intval');
+          /*where 接任务条件查找  0待提交 1审核中 2不合格 3已完成 default全部 */
+          $type = I('type', 5, 'intval');
           switch ($type) {
              case '0':
                  $where['l.valid_status'] = 0;
@@ -79,21 +79,24 @@ class TaskLogController extends CommonController {
              case '3':
                  $where['l.valid_status'] = 3;
                  break;
+              case '4':
+                  unset($where);
+                  break;
              default:
                  break;
           }
           $where['l.user_id'] = UID;
-          $field = 'l.task_id, l.task_name,l.valid_time, l.valid_status, t.price, c.category_name, c.category_img';
+          $field = 'l.id, l.task_id, l.task_name,l.valid_time, l.valid_status, t.price, c.category_name, c.category_img';
           $taskLogModel = D('Home/TaskLog');
           $taskLogInfo = $taskLogModel->getTaskLog($where,$field);
-          p($taskLogInfo);
-//          exit;
+//          p($taskLogInfo);
+          $this->assign('type', $type);
           $this->assign('taskLogInfo', $taskLogInfo);
           $this->display();
      }
      /**
      * @desc 丢弃任务
-     * @param $task_id
+     * @param $id  taskLog 主键
      * @return mixed
      */
      public  function delTaskLog()
@@ -102,7 +105,7 @@ class TaskLogController extends CommonController {
          $result  = $this->TaskLogModel->delTaskLog($id);
          if($result)
          {
-             $this->ajaxReturn(V(1,'上传验证成功'));
+             $this->ajaxReturn(V(1,'删除成功'));
          }else{
              $this->ajaxReturn(V(0, $this->TaskLogModel->getDbError()));
          }

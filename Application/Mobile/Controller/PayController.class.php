@@ -72,13 +72,24 @@ class PayController  extends CommonController{
       */
       public  function withdraw()
       {
+          /*判断是余额提现  还是分红提现  type 0 余额提现 1分红提现*/
+          $type = I('type', 0, 'intval');
           $where['user_id'] = UID;
           $is_bind = is_bind($where);
           if($is_bind){
-              $field = 'u.total_money, s.shop_type, s.partner_time';
+              $field = 'bonus_money, u.total_money, s.shop_type, s.partner_time';
               $shopInfo = D('Home/Shop')->getShopInfo(UID,'',$field);
               if($shopInfo['partner_time'] < NOW_TIME){
                   $shopInfo['shop_type'] = 0;
+              }
+              $shopInfo['type'] = $type;
+              if(IS_POST){
+                  $data = I('post.', 2);
+                  $data['money'] = yuan_to_fen($data['money']);
+                  $data['user_id'] = UID;
+                  $userAccountModel = D('Home/UserAccount');
+                  $drawRes = $userAccountModel ->withdraw($data);
+                  $this->ajaxReturn($drawRes);
               }
               $this->assign('shopInfo',$shopInfo);
               $this->display();
@@ -120,15 +131,11 @@ class PayController  extends CommonController{
         $where['user_id'] = $user_id;
         $where['change_type']  = 2;
         $pmoney = getAccount($where);
-        p($pmoney);
+        $where['change_type']  = 8;
+        $tmoney = getAccount($where);
         $this->assign('bonus_money',$bonus_money);
+        $this->assign('tmoney',$tmoney);
         $this->assign('pmoney',$pmoney);
         $this->display();
       }
-      /**
-      * @desc  提现
-      * @param  $user_id
-      * @param  money
-      * @return mixed
-      */
 }

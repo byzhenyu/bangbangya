@@ -11,8 +11,10 @@
  */
 namespace Mobile\Controller;
 use Think\Controller;
-class HelpController extends Controller
-{
+class HelpController extends Controller{
+    public function _initialize() {
+        $this->Help = D("Home/Help");
+    }
     /**
     * @ 常见问题列表
     * @param  $[keyword] [<关键字>]
@@ -26,14 +28,9 @@ class HelpController extends Controller
         }else{
         	$where['type'] = $type;
         }
-        $HelpModel = D('Home/Help');
         $field = 'id, title';
-        $data = $HelpModel->getHelpList($where,$field);
+        $data = $this->Help->getHelpList($where,$field);
         $this->assign('list', $data['Helplist']);
-        $this->assign('page', $data['page']);
-        $this->assign('type', $type);
-        p($data);
-        exit;
         $this->display();
     }
     /**
@@ -44,10 +41,8 @@ class HelpController extends Controller
     public function getQuestionDetail()
     {
          $id = I('id', 0, 'intval');
-         $helpModel = D('Home/Help');
-         $field = 'title, content';
-         $questionInfo =  $helpModel -> getQuestionDetail($id, $field);
-         P($questionInfo);
+         $field = 'title, content, add_time';
+         $questionInfo =  $this->Help-> getQuestionDetail($id, $field);
          $this->assign('questionInfo', $questionInfo);
          $this->display();
     }

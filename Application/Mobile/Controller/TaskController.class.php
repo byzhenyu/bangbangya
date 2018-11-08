@@ -138,8 +138,11 @@ class TaskController extends CommonController {
         $this->display();
     }
     /**
-    * @desc  图片上传
-    * @param
+    * @desc  我的发布
+    * @param UID
     * @return mixed
     */
+    public function myTask(){
+        $this->display();
+    }
 }
