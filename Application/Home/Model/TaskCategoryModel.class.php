@@ -12,7 +12,7 @@
 namespace Home\Model;
 use Think\Model;
 class TaskCategoryModel extends Model{
-    protected $selectFields = array('id','category_name','category_img', 'category_explain');
+    protected $selectFields = array('id','category_name','category_img', 'category_explain','limit_money','limit_num');
     /**
      * 任务类型
      * @param $where
@@ -22,11 +22,13 @@ class TaskCategoryModel extends Model{
         if(is_null($field)){
              $field = $this->selectFields;
         }
-        $where = array('status' => 1);
         $list = $this->field($field)
             ->where($where)
             ->order($order)
             ->select();
+        foreach ($list as $k=>$v) {
+            $list[$k]['limit_money'] = fen_to_yuan($list[$k]['limit_money']);
+        }
         return $list;
     }
     /**

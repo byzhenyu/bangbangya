@@ -9,8 +9,9 @@
  * @CreateBy       PhpStorm
  */
 namespace Mobile\Controller;
-use Think\Controller;
-class IndexController extends Controller{
+use Common\Controller\UserCommonController;
+
+class IndexController extends UserCommonController {
       public function index(){
 
           $bannerList = D('Home/Banner')->getBanner(array('type = 1'));

@@ -193,4 +193,17 @@ class UserModel extends Model
             'page'=>$page['page']
         );
    }
+
+   public function getUserInfoWithShop($where=[],$field='') {
+        if ($field =='') {
+            $field = 'u.*,s.*';
+        }
+        $info = $this->alias('u')
+            ->join('__SHOP__ s on s.user_id = u.user_id')
+            ->field($field)
+            ->where($where)
+            ->find();
+
+        return $info;
+   }
 }

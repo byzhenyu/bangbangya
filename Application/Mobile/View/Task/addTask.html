@@ -5,6 +5,50 @@
     <title>发布任务</title>
     <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+    <style type="text/css">
+        .weui-uploader__bd{width: 100%;}
+        .weui-uploader__files{  overflow: hidden;  width: 98%;  margin: auto;  text-align: center;  }
+        .weui-uploader__file{  float: left;  width: 33%;  text-align: center;  position: relative;  }
+        .weui-uploader__file img{  width: 100px;  height:100px;  }
+        .weui-uploader__file .file-del{  position: absolute;  top:1px;  right: 0;  }
+        .weui-uploader__file .file-del a{  color: #fff;  background-color: rgba(0,0,0,.3);  padding: 2px 7px;  border-radius: 15px;cursor:pointer  }
+        .weui-uploader__input-box{ position: relative;
+            overflow: hidden; float: left;}
+        #upload{
+            border: none;
+            z-index: 99;
+            position: absolute;
+            overflow: hidden;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            width: 100px;
+            height: 100px;
+            top: 0;
+            left: 0;
+        }
+        .task-submit-detail textarea{
+            background: #fff;
+            padding: .2rem .3rem;
+            width: 100%;
+            height: 3.4rem;
+            border: none;
+        }
+        .uploader-img {
+            border: none;
+            z-index: 99;
+            position: absolute;
+            overflow: hidden;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            left: 1.5rem;
+            width: 1.1rem;
+            height: 1.1rem;
+            margin-right: .24rem;
+        }
+        .step-text {
+            border: none;
+        }
+    </style>
 </head>
 <body style="background: #f6f6f6">
     <header class="mui-bar mui-bar-nav help-duck-head">
@@ -12,248 +56,174 @@
         <p class="mui-title">发布任务</p>
         <a href="my-task.html">我的任务</a>
     </header>
+    <form action="{:U('addTask')}" method="post" class="ajaxFrom">
 
-    <div class="task-type-title">
-        <span>选择类型</span>
-        <a href="task-type-explain.html"><p>类别说明</p></a>
-    </div>
 
-    <div class="task-type-list">
-        <div class="task-type-row">
-        <foreach name="taskCategoryInfo" item="v" key="k">
-            <div class="task-type-single">
-                <input name="category_id" type="radio" {$k == 0 ? 'checked':''} value="{$v.id}">
-                <label>{$v.category_name}</label>
-            </div>
-        </foreach>
-        </div>
-        <!--<div class="task-type-row">-->
-            <!--<div class="task-type-single">-->
-                <!--<input name="task-type" type="radio"  value="注册">-->
-                <!--<label>注册</label>-->
-            <!--</div>-->
-
-            <!--<div class="task-type-single">-->
-                <!--<input name="task-type" type="radio" value="投票">-->
-                <!--<label>投票</label>-->
-            <!--</div>-->
-
-            <!--<div class="task-type-single">-->
-                <!--<input name="task-type" type="radio" value="关注">-->
-                <!--<label>关注</label>-->
-            <!--</div>-->
-
-            <!--<div class="task-type-single">-->
-                <!--<input name="task-type" type="radio" value="浏览">-->
-                <!--<label>浏览</label>-->
-            <!--</div>-->
-        <!--</div>-->
-
-       <!--<div class="task-type-row">-->
-           <!--<div class="task-type-single">-->
-               <!--<input name="task-type" type="radio" value="加粉">-->
-               <!--<label>加粉</label>-->
-           <!--</div>-->
-
-           <!--<div class="task-type-single">-->
-               <!--<input name="task-type" type="radio" value="转发">-->
-               <!--<label>转发</label>-->
-           <!--</div>-->
-
-           <!--<div class="task-type-single">-->
-               <!--<input name="task-type" type="radio" value="发帖">-->
-               <!--<label>发帖</label>-->
-           <!--</div>-->
-
-           <!--<div class="task-type-single">-->
-               <!--<input name="task-type" type="radio" value="评论">-->
-               <!--<label>评论</label>-->
-           <!--</div>-->
-       <!--</div>-->
-
-        <!--<div class="task-type-row">-->
-            <!--<div class="task-type-single">-->
-                <!--<input name="task-type" type="radio" value="高价">-->
-                <!--<label>高价</label>-->
-            <!--</div>-->
-
-            <!--<div class="task-type-single">-->
-                <!--<input name="task-type" type="radio" value="特单">-->
-                <!--<label>特单</label>-->
-            <!--</div>-->
-
-            <!--<div class="task-type-single">-->
-                <!--<input name="task-type" type="radio" value="长单">-->
-                <!--<label>长单</label>-->
-            <!--</div>-->
-
-            <!--<div class="task-type-single">-->
-                <!--<input name="task-type" type="radio" value="电商">-->
-                <!--<label>电商</label>-->
-            <!--</div>-->
-        <!--</div>-->
-
-        <!--<div class="task-type-row">-->
-            <!--<div class="task-type-single">-->
-                <!--<input name="task-type" type="radio" value="其他">-->
-                <!--<label>其他</label>-->
-            <!--</div>-->
-        <!--</div>-->
-
-    </div>
-
-    <div class="task-type-info">
-        <div class="task-choose-system">
-            <p>支持设备</p>
-            <div class="phone-sysytem">
-                <div>
-                    <input type="radio" name="mobile_type" value="全部" checked>
-                    <label>全部</label>
-                </div>
-                <div>
-                    <input type="radio" name="mobile_type" value="安卓">
-                    <label>安卓</label>
-                </div>
-                <div>
-                    <input type="radio" name="mobile_type" value="苹果">
-                    <label>苹果</label>
-                </div>
-            </div>
+        <div class="task-type-title">
+            <span>选择类型</span>
+            <a href="task-type-explain.html"><p>类别说明</p></a>
         </div>
 
-        <div class="task-type-basic">
-            <div class="task-basic-row">
-                <div>
-                    <span>标题</span>
-                    <input type="text"  name="title" placeholder="请您输入任务标题" style="padding-left: .24rem;width: 7rem;">
+        <div class="task-type-list">
+            <div class="task-type-row">
+            <foreach name="taskCategoryInfo" item="v" key="k">
+                <div class="task-type-single">
+                    <input data-money="{$v.limit_money}" data-num="{$v.limit_num}" name="task[category_id]" type="radio" {$k == 0 ? 'checked':''} value="{$v.id}">
+                    <label>{$v.category_name}</label>
+                </div>
+            </foreach>
+            </div>
+        </div>
+        <div class="task-type-info">
+            <div class="task-choose-system">
+                <p>支持设备</p>
+                <div class="phone-sysytem">
+                    <div>
+                        <input type="radio" name="task[mobile_type]" value="全部" checked>
+                        <label>全部</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="task[mobile_type]" value="安卓">
+                        <label>安卓</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="task[mobile_type]" value="苹果">
+                        <label>苹果</label>
+                    </div>
                 </div>
             </div>
+            <div class="task-type-basic">
+                <div class="task-basic-row">
+                    <div>
+                        <span>标题</span>
+                        <input type="text"  name="task[title]" placeholder="请您输入任务标题" style="padding-left: .24rem;width: 7rem;">
+                    </div>
+                </div>
 
-            <a  class="task-basic-row">
-               <div>
-                   <span>截止时间</span>
-                   <input type="text"    id="end_time" name="end_time"  onclick="laydate({format:'YYYY-MM-DD hh:mm:ss',festival: true})" >
-               </div>
-                <img src="__PUBLIC__/mobile/images/common_icon_more.png">
-            </a>
-
-            <div class="task-basic-row">
-               <div class="task-min">
+                <a  class="task-basic-row">
                    <div>
-                       <p>出价</p>
-                       <span>最低出价<i>0.5</i>元</span>
+                       <span>截止时间</span>
+                       <input type="text" id="end_time" name="task[end_time]" placeholder="请选择结束时间" readonly>
                    </div>
-               </div>
-                <div>
-                    <input type="number" name="price" id="price">
-                    <p>元</p>
-                </div>
-            </div>
+                    <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+                </a>
 
-            <div class="task-basic-row">
-                <div class="task-min">
+                <div class="task-basic-row">
+                   <div class="task-min">
+                       <div>
+                           <p>出价</p>
+                           <span>最低出价<i id="limit_money">0.5</i>元</span>
+                       </div>
+                   </div>
                     <div>
-                        <p>数量</p>
-                        <span>最少50单</span>
+                        <input type="number" name="task[price]" id="price">
+                        <p>元</p>
                     </div>
                 </div>
-                <div>
-                    <input type="number" name="task_num" id="task_num">
-                    <p>单</p>
-                </div>
-            </div>
 
-            <div class="task-basic-row">
-                <div class="task-min">
+                <div class="task-basic-row">
+                    <div class="task-min">
+                        <div>
+                            <p>数量</p>
+                            <span>最少<i id="limit_num">50</i>单</span>
+                        </div>
+                    </div>
                     <div>
-                        <p>合计</p>
-                        <span>服务费：成交额12%，最低1元</span>
+                        <input type="number" name="task[task_num]" id="task_num">
+                        <p>单</p>
                     </div>
                 </div>
-                <div>
-                    <input disabled="disabled" type="number" name="total_price" id="total_price">
-                    <p>元</p>
+
+                <div class="task-basic-row">
+                    <div class="task-min">
+                        <div>
+                            <p>合计</p>
+                            <span>服务费：成交额{$orderFee}%，最低1元</span>
+                        </div>
+                    </div>
+                    <div>
+                        <input disabled="disabled" type="number" name="total_price" id="total_price">
+                        <p>元</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="task-audit-imgs">
-        <p>审核图样</p>
-        <span>上传验证图样例，<i>最多可上传5张</i></span>
-    </div>
-
-    <div id="img" class="task-audit-imgs-add">
-        <div>
-            <img  src="__PUBLIC__/mobile/images/home_jdzq_icon_fans.png">
-            <input type="hidden" value="" name="category_img" id="img" />
-            <img class="del-img" src="__PUBLIC__/mobile/images/common_icon_closebox.png">
+        <div class="task-audit-imgs">
+            <p>审核图样</p>
+            <span>上传验证图样例，<i>最多可上传5张</i></span>
         </div>
 
-        <div>
-            <img src="__PUBLIC__/mobile/images/home_jdzq_icon_fans.png">
-            <img class="del-img" src="__PUBLIC__/mobile/images/common_icon_closebox.png">
+        <div class="weui-uploader__bd task-audit-imgs-add">
+            <ul class="weui-uploader__files" id="uploaderFiles">
+                <li class="weui-uploader__input-box" >
+                    <img src="__PUBLIC__/mobile/images/common_icon_addpicture.png">
+                    <input id="upload" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                </li>
+            </ul>
         </div>
+        <div class="mui-table-view-cell mui-collapse task-operation-explain">
+            <a class="mui-navigate-right">操作说明</a>
+            <div class="mui-collapse-content">
+                <div class="step-content">
+                    <!--<div class="task-operation-row1">-->
+                        <!--<div>-->
+                            <!--<p>1</p>-->
+                            <!--<p>删除</p>-->
+                        <!--</div>-->
+                        <!--<img src="__PUBLIC__/mobile/images/home_jdzq_icon_fans.png">-->
+                        <!--<p>首先请下载该APP，然后登录，选择第三方就可以，去个人中心点击领取福利进入该页面，然后输入身份证号和姓名点领取</p>-->
+                    <!--</div>-->
 
-        <img    src="__PUBLIC__/mobile/images/common_icon_addpicture.png">
-    </div>
-
-    <div class="mui-table-view-cell mui-collapse task-operation-explain">
-        <a class="mui-navigate-right">操作说明</a>
-        <div class="mui-collapse-content">
-            <div class="task-operation-row1">
-                <div>
-                    <p>1</p>
-                    <p>删除</p>
+                    <div class="task-operation-row1">
+                        <div>
+                            <p>1</p>
+                            <p class="del-item" data-num="1" id="del_1">删除</p>
+                        </div>
+                        <img id="step_img_1" src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">
+                        <input class="uploader-img" type="file" accept="image/*">
+                        <input id="step_hid_1" type="hidden" name="step[1][0][step_img]" value="">
+                        <textarea name="step[1][0][step_text]" class="step-text" placeholder="请填写步骤" id="step_text_1"></textarea>
+                    </div>
                 </div>
-                <img src="__PUBLIC__/mobile/images/home_jdzq_icon_fans.png">
-                <p>首先请下载该APP，然后登录，选择第三方就可以，去个人中心点击领取福利进入该页面，然后输入身份证号和姓名点领取</p>
-            </div>
-            <div class="task-operation-row2">
-                <div>
-                    <p>2</p>
-                    <p>删除</p>
+
+                <div class="task-operation-row3">
+                    <button type="button" id="add-step-btn">添加步骤</button>
                 </div>
-                <img src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">
-                <p>请输入文字说明</p>
-            </div>
-            <div class="task-operation-row3">
-                <button>添加步骤</button>
             </div>
         </div>
-    </div>
 
-    <div class="task-type-other">
-        <div class="type-other-link">
-            <span>链接</span>
-            <input type="text" placeholder="请输入准确链接地址，如无链接可不填">
+        <div class="task-type-other">
+            <div class="type-other-link">
+                <span>链接</span>
+                <input name="task[link_url]" type="text" placeholder="请输入准确链接地址，如无链接可不填">
+            </div>
+
+            <div class="type-other-row">
+                <div class="mui-input-row">
+                    <p>文字验证</p>
+                    <textarea name="task[validate_words]" rows="3" placeholder="如需接单者提供文字信息，请在此输入内容，如不需要可不填"></textarea>
+                </div>
+                <div class="mui-input-row">
+                    <p>备注</p>
+                    <textarea name="task[remark]" rows="3" placeholder="200字以内"></textarea>
+                </div>
+            </div>
         </div>
 
-        <div class="type-other-row">
-            <div class="mui-input-row">
-                <p>文字验证</p>
-                <textarea rows="3" placeholder="如需接单者提供文字信息，请在此输入内容，如不需要可不填"></textarea>
-            </div>
-            <div class="mui-input-row">
-                <p>备注</p>
-                <textarea rows="3" placeholder="200字以内"></textarea>
-            </div>
+        <div class="release-task-agree">
+            <label class="release-task-check">
+                <input class="check-task" type="checkbox" checked>
+                <i></i>
+                <span>我已阅读、理解并同意<i>《发布规则》</i>的全部内容</span>
+            </label>
         </div>
-    </div>
 
-    <div class="release-task-agree">
-        <label class="release-task-check">
-            <input class="check-task" type="checkbox" checked>
-            <i></i>
-            <span>我已阅读、理解并同意<i>《发布规则》</i>的全部内容</span>
-        </label>
-    </div>
-
-    <div class="release-task-btns">
-        <button>保存</button>
-        <button id="balance-insufficient">发布</button>
-    </div>
-
+        <div class="release-task-btns">
+            <button>保存</button>
+            <button type="submit" id="balance-insufficient">发布</button>
+        </div>
+    </form>
     <p class="release-task-tip">提示！平台禁止发布黄赌毒及涉政等一切法律所禁止的内容，另外与本平台又同类性质功能的软件或平台禁止在本平台发布推广任务，如发现将查封账户，余款不退，敬请周知。</p>
 
 
@@ -262,6 +232,11 @@
 <script src="__PUBLIC__/mobile/js/mui.min.js"></script>
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="__ADMIN__/layDate-v5.0.9/laydate/laydate.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload/ajaxupload.js?v=1.0"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload/imgupload.js?v=1.0"></script>
+<script type="text/javascript" src="__PUBLIC__/fileupload/js/vendor/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.fileupload.js"></script>
 <script type="text/javascript" charset="utf-8">
     mui.init();
     laydate.render({
@@ -272,13 +247,70 @@
         elem: '#end_time',
         type: 'datetime'
     });
-    _NEED_REFRESH = true;
-</script>
-<script>
-    //mui初始化
-    mui.init({
-        swipeBack: true //启用右滑关闭功能
+    $('#end_time').on('click', function () {
+        laydate({format:'YYYY-MM-DD hh:mm:ss',festival: true});
     });
+    _NEED_REFRESH = true;
+    var count = 0;
+    //单图上传
+    $('#upload').fileupload({
+        url: "{:U('Task/uploadImg')}",
+        dataType: 'json',
+        done: function (e, data) {
+
+            $('#uploaderFiles').prepend('<li class="weui-uploader__file" ><img src="'+data.result.data.nameosspath+'"><div class="file-del"><a href="javascript:void(0)" onclick="delPic(this)">X</a></div>'+
+                '<input type="hidden" name="step[0][][step_img]" value="'+data.result.data.nameosspath+'">'+
+                '</li>');
+            count++;
+            if(count>4){
+                $('.weui-uploader__input-box').hide();
+            }
+        }
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+    function delPic(obj) {
+        var obj = obj;
+        var img_src = $(obj).parent().next('input').val();
+        $.post("{:U('oss_delet_object')}",{'img_src':img_src}, function (data) {
+            layer.msg(data.info);
+            if (data.status == 1) {
+                $(obj).parent().parent().remove();
+            }
+        })
+
+    }
+    //操作步骤计数
+    var base = 1;
+
+    $("#add-step-btn").on('click', function () {
+
+        var n  = base +1;
+        $(".step-content").append(
+        '<div class="task-operation-row1">'+
+            '<div>'+
+            '<p>'+n+'</p>'+
+            '<p class="del-item" data-num="'+n+'" id="del_'+n+'">删除</p>'+
+            '</div>'+
+            '<img id="step_img_'+n+'" src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">'+
+            '<input class="uploader-img" type="file" accept="image/*">'+
+            '<input id="step_hid_'+n+'" type="hidden" name="step[1]['+base+'][step_img]" value="">'+
+            '<textarea name="step[1]['+base+'][step_text]" class="step-text" placeholder="请填写步骤" id="step_text_'+n+'"></textarea>'+
+            '</div>'
+        );
+        $("#del_"+base).css('display','none');
+        base++;
+    });
+
+    $(".step-content").on('click', '.del-item', function () {
+
+        $(this).parents('.task-operation-row1').remove();
+        base--;
+        $('#del_'+base).css('display','block');
+
+    });
+</script>
+<script type="text/javascript">
     document.getElementById("balance-insufficient").addEventListener('tap', function() {
         var delArray = ['确定'];
         mui.confirm('您账户余额不足，请到个人中心充值后再发布', '提示', delArray, function(e) {
@@ -288,13 +320,13 @@
 
         })
     });
-    var charge = 0.12;
-    var all = 1 + charge;
+    var charge = {$orderFee};
+    var all = 1 + (charge/100);
     /*判断任务价钱*/
     $("#task_num").focusout(function() {
         var price = $('#price').val();
         var task_num = $('#task_num').val();
-        if($('#price').val() != null && $('#task_num').val() != null)
+        if(price && task_num)
         {
              var zong =  (price * task_num *  all).toFixed(2);
             $('#total_price').val(zong);
@@ -303,12 +335,19 @@
     $("#price").focusout(function() {
         var price = $('#price').val();
         var task_num = $('#task_num').val();
-        if($('#price').val() != null && $('#task_num').val() != null)
+        if(price && task_num)
         {
             var zong = (price * task_num *  all).toFixed(2);
             $('#total_price').val(zong);
         }
     });
+    $('.task-type-row').on('click', 'input', function () {
+        var limitmoney =  $(this).data('money');
+        var limitnum =  $(this).data('num');
+
+        $('#limit_money').html(limitmoney);
+        $('#limit_num').html(limitnum);
+    })
 </script>
 
 </html>

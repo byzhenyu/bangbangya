@@ -68,5 +68,10 @@ class VipLevelModel extends Model {
         $info = $this->where(array('id'=>$id))->find();
         return $info;
     }
+    //获取vip手续费
+    public function getVipLevelFee($where=[]) {
+        $info = $this->where($where)->find();
+        return $info;
+    }
 
 }
