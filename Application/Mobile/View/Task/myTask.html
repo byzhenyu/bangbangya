@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>我的发布</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+</head>
+<body style="background: #fff;">
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <p class="mui-title">我的发布</p>
+        <a></a>
+    </header>
+
+    <div id="grap-order-gray" class="">
+        <div class="recommend-time" id="recommend-time">
+           <div class="recommend-time-top">
+               <div class="recommend-time-title">
+                   <p>推荐时长</p>
+               </div>
+               <input type="number" placeholder="请输入整数">
+               <div class="recommend-time-total">
+                   <span>合计</span>
+                   <p><span></span>元</p>
+               </div>
+               <div class="recommend-time-tip">
+                   <span>收费标准为￥5/小时</span>
+                   <span>当前余额￥1000.0</span>
+               </div>
+           </div>
+            <div class="recommend-time-btns">
+                <p id="recommend-time-cel">取消</p>
+                <p id="recommend-time-sure">确定</p>
+            </div>
+        </div>
+
+        <div class="recommend-time top-time" id="top-time">
+            <div class="recommend-time-top top-time-top">
+                <div class="recommend-time-title top-time-title">
+                    <p>置顶时长</p>
+                </div>
+                <input type="number" placeholder="请输入整数">
+                <div class="recommend-time-total top-time-total">
+                    <span>合计</span>
+                    <p><span></span>元</p>
+                </div>
+                <div class="recommend-time-tip top-time-tip">
+                    <span>收费标准为￥15/小时</span>
+                    <span>当前余额￥1000.0</span>
+                </div>
+            </div>
+            <div class="recommend-time-btns">
+                <p id="top-time-cel">取消</p>
+                <p id="top-time-sure">确定</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="my-release-list">
+        <div class="my-release-item">
+            <div class="my-release-left">
+                <div class="my-release-name">
+                    <p>注册</p>
+                    <span class="my-release-no">编号：<span>74006</span></span>
+                    <span>天天快报一秒完成</span>
+                </div>
+                <div class="my-release-data">
+                    <div>
+                        <p>单价：￥<span>0.1</span></p>
+                        <p>剩余：<span>100</span></p>
+                    </div>
+                    <div>
+                        <p>总量：<span>100</span></p>
+                        <p>已完成：<span>0</span></p>
+                    </div>
+                    <div>
+                        <p>进行中：<span>0</span></p>
+                        <p>待审核：<span>0</span></p>
+                    </div>
+                </div>
+                <div class="my-release-btns">
+                    <input id="del-btn" type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn" value="删除" />
+                    <a href="modify-release.html"><input type="button" class="mui-btn mui-btn-outlined my-release-btn modify-btn" value="修改"/></a>
+                    <input type="button" class="mui-btn mui-btn-outlined my-release-btn release-btn" value="发布"/>
+                </div>
+            </div>
+            <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+        </div>
+
+        <div class="my-release-item">
+            <div class="my-release-left">
+                <div class="my-release-name">
+                    <p>投票</p>
+                    <span class="my-release-no">编号：<span>74006</span></span>
+                    <span>天天快报一秒完成</span>
+                </div>
+                <div class="my-release-data">
+                    <div>
+                        <p>单价：￥<span>0.1</span></p>
+                        <p>剩余：<span>100</span></p>
+                    </div>
+                    <div>
+                        <p>总量：<span>100</span></p>
+                        <p>已完成：<span>0</span></p>
+                    </div>
+                    <div>
+                        <p>进行中：<span>0</span></p>
+                        <p>待审核：<span>0</span></p>
+                    </div>
+                </div>
+                <div class="my-release-btns">
+                    <input type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn" value="删除">
+                    <p class="my-release-btn release-audit-ing">审核中</p>
+                </div>
+            </div>
+            <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+        </div>
+
+        <div class="my-release-item">
+            <div class="my-release-left">
+                <div class="my-release-name">
+                    <p>投票</p>
+                    <span class="my-release-no">编号：<span>74006</span></span>
+                    <span>天天快报一秒完成</span>
+                </div>
+                <div class="my-release-data">
+                    <div>
+                        <p>单价：￥<span>0.1</span></p>
+                        <p>剩余：<span>100</span></p>
+                    </div>
+                    <div>
+                        <p>总量：<span>100</span></p>
+                        <p>已完成：<span>0</span></p>
+                    </div>
+                    <div>
+                        <p>进行中：<span>0</span></p>
+                        <p>待审核：<span>0</span></p>
+                    </div>
+                </div>
+                <div class="my-release-btns">
+                    <input type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn" value="删除">
+                    <p class="my-release-btn release-finished">已结束</p>
+                </div>
+            </div>
+            <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+        </div>
+
+        <div class="my-release-item">
+            <div class="my-release-left">
+                <div class="my-release-name">
+                    <p>投票</p>
+                    <span class="my-release-no">编号：<span>74006</span></span>
+                    <span>天天快报一秒完成</span>
+                </div>
+                <div class="my-release-data">
+                    <div>
+                        <p>单价：￥<span>0.1</span></p>
+                        <p>剩余：<span>100</span></p>
+                    </div>
+                    <div>
+                        <p>总量：<span>100</span></p>
+                        <p>已完成：<span>0</span></p>
+                    </div>
+                    <div>
+                        <p>进行中：<span>0</span></p>
+                        <p>待审核：<span>0</span></p>
+                    </div>
+                </div>
+                <div class="my-release-btns">
+                    <input type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn" value="删除">
+                    <a href="modify-release.html"><input type="button" class="mui-btn mui-btn-outlined my-release-btn modify-btn" value="修改"/></a>
+                    <p class="my-release-btn release-audit-fail">审核失败</p>
+                </div>
+                <p class="task-details-font">失败原因：<span>验证图不明确</span></p>
+            </div>
+            <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+        </div>
+
+        <div class="my-release-item">
+            <div class="my-release-left">
+                <div class="my-release-name">
+                    <p>投票</p>
+                    <span class="my-release-no">编号：<span>74006</span></span>
+                    <span>天天快报一秒完成</span>
+                </div>
+                <div class="my-release-data">
+                    <div>
+                        <p>单价：￥<span>0.1</span></p>
+                        <p>剩余：<span>100</span></p>
+                    </div>
+                    <div>
+                        <p>总量：<span>100</span></p>
+                        <p>已完成：<span>0</span></p>
+                    </div>
+                    <div>
+                        <p>进行中：<span>0</span></p>
+                        <p>待审核：<span>0</span></p>
+                    </div>
+                    <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+                </div>
+                <div class="my-release-btns">
+                    <input type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn" value="删除">
+                    <a><input type="button" class="mui-btn mui-btn-outlined my-release-btn modify-btn" value="修改"/></a>
+                    <p class="my-release-btn release-do-ing">进行中</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="my-release-item">
+            <div class="my-release-left">
+                <div class="my-release-name">
+                    <p>高价</p>
+                    <span class="my-release-no">编号：<span>335897</span></span>
+                    <span>注册APP账号</span>
+                </div>
+                <div class="my-release-data">
+                    <div>
+                        <p>单价：￥<span>10</span></p>
+                        <p>剩余：<span>97</span></p>
+                    </div>
+                    <div>
+                        <p>总量：<span>100</span></p>
+                        <p>已完成：<span>2</span></p>
+                    </div>
+                    <div>
+                        <p>进行中：<span>1</span></p>
+                        <p>待审核：<span>1</span></p>
+                    </div>
+                </div>
+                <div class="my-release-btns release-high-price">
+                    <div>
+                        <a>
+                            <input type="button" value="审核">
+                        </a>
+                        <input id="my-release-pause" type="button" value="暂停">
+                        <input id="add-num-btn" type="button" value="追加数量">
+                        <input id="add-price-btn" type="button" value="上调出价">
+                    </div>
+
+                    <div>
+                        <input id="cancel-release-btn" type="button" value="下架">
+                        <input id="flush-release-btn" type="button" value="刷新">
+                        <input id="recommend-release-btn" type="button" value="推荐">
+                        <input id="top-btn" type="button" value="置顶">
+                    </div>
+                </div>
+                <div class="task-details-box">
+                    <p class="high-price-font">发布：<span>2018-10-31 12:00</span></p>
+                    <p class="high-price-font">截止：<span>2018-10-31 12:00</span></p>
+                </div>
+
+            </div>
+            <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+        </div>
+    </div>
+
+    <div class="add-price-pause" id="add-price-pause">
+        <div>
+            <span>上调出价之前</span>
+            <span>请先暂停任务</span>
+        </div>
+    </div>
+
+    <div class="add-price-pause" id="add-num-pause">
+        <div>
+            <span>追加数量之前</span>
+            <span>请先暂停任务</span>
+        </div>
+    </div>
+
+    <div class="add-price-pause" id="cancel-release-pause">
+        <div>
+            <span>下架之前</span>
+            <span>请先暂停任务</span>
+        </div>
+    </div>
+
+    <div class="add-price-pause flush-num" id="flush-num-pause">
+        <div>
+            <span>刷新次数已用完</span>
+            <span>请明天再来</span>
+        </div>
+    </div>
+
+</body>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+</script>
+<script>
+    //mui初始化
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+
+    //发布任务界面的删除
+    document.getElementById("del-btn").addEventListener('tap', function() {
+        var delArray = ['取消', '确定'];
+        mui.confirm('确定要删除该任务吗', '提示', delArray, function(e) {
+            if (e.index == 0) {
+                // 点击了取消
+            } else {
+                // 点击了确定
+            }
+        })
+    });
+
+    //发布任务界面的刷新
+    document.getElementById("flush-release-btn").addEventListener('tap', function() {
+        var delArray = ['取消', '确定'];
+        mui.confirm('确定要刷新该任务吗', '提示', delArray, function(e) {
+            if (e.index == 0) {
+                // 点击了取消
+            } else {
+                // 点击了确定
+            }
+        })
+    });
+
+    //发布任务界面的发布
+    document.getElementsByClassName("release-btn")[0].addEventListener('tap', function() {
+        var releaseArray = ['取消', '确定'];
+        mui.confirm('确定要发布该任务吗', '提示', releaseArray, function(e) {
+            if (e.index == 0) {
+                // 点击了取消
+            } else {
+                // 点击了确定
+            }
+        })
+    });
+
+    //发布任务界面的暂停
+    document.getElementById("my-release-pause").addEventListener('tap', function() {
+        var pauseArray = ['取消', '确定'];
+        mui.confirm('确定要暂停该任务吗', '提示', pauseArray, function(e) {
+            if (e.index == 0) {
+                // 点击了取消
+            } else {
+                // 点击了确定
+            }
+        })
+    });
+</script>
+<script>
+
+    //发布任务界面的推荐
+    $("#recommend-release-btn").on('tap', function () {
+        $("#grap-order-gray").addClass('mui-popup-backdrop mui-active');
+        $("#recommend-time").css('display', 'block');
+    });
+
+    //发布任务界面的推荐 ———— 取消按钮
+    $("#recommend-time-cel").on('tap', function () {
+        $("#grap-order-gray").removeClass('mui-popup-backdrop mui-active');
+        $("#recommend-time").css('display', 'none');
+    });
+
+    //发布任务界面的推荐 ———— 确定按钮
+    $("#recommend-time-sure").on('tap', function () {
+        
+    });
+
+    //发布任务界面的置顶
+    $("#top-btn").on('tap', function () {
+        $("#grap-order-gray").addClass('mui-popup-backdrop mui-active');
+        $("#top-time").css('display', 'block');
+    });
+
+    //发布任务界面的置顶 ———— 取消按钮
+    $("#top-time-cel").on('tap', function () {
+        $("#grap-order-gray").removeClass('mui-popup-' +
+            'backdrop mui-active');
+        $("#top-time").css('display', 'none');
+    });
+
+    //发布任务界面的置顶 ———— 确定按钮
+    $("#top-time-sure").on('tap', function () {
+
+    });
+
+    //上调价格先暂停
+    $("#add-price-btn").on('tap', function () {
+        $("#add-price-pause").css('display', 'flex');
+        setTimeout(function () {
+            $("#add-price-pause").fadeOut(300);
+        },1000);
+    });
+
+    //追加数量之前先暂停
+    $("#add-num-btn").on('tap', function () {
+        $("#add-num-pause").css('display', 'flex');
+        setTimeout(function () {
+            $("#add-num-pause").fadeOut(300);
+        },1000);
+    });
+
+    //下架之前先暂停
+    $("#cancel-release-btn").on('tap', function () {
+        $("#cancel-release-pause").css('display', 'flex');
+        setTimeout(function () {
+            $("#cancel-release-pause").fadeOut(300);
+        },1000);
+    });
+
+
+    //刷新次数用尽
+    // $("#flush-release-btn").on('tap', function () {
+    //     $("#flush-num-pause").css('display', 'block');
+    //     setTimeout(function () {
+    //         $("#flush-num-pause").fadeOut(300);
+    //     },1000);
+    // })
+</script>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>好友邀请</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body style="background: #f6f6f6">
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <p class="mui-title">好友邀请</p>
+    </header>
+
+    <div class="friends-invit-box">
+        <div class="friends-invit-bg">
+            <img src="{$userInfo['head_pic']}">
+            <div class="friends-invit-id">
+                <label>{$userInfo['nick_name']}</label>
+                <p>您的邀请码（ID）</p>
+                <span>{$userInfo['invitation_code']}</span>
+                <button>复制</button>
+            </div>
+            <div class="friends-invit-qr">
+                <img src="__PUBLIC__/mobile/images/QR-code.png">
+                <span>扫码下载帮帮鸭</span>
+                <a href="#invit-friends" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">邀请好友</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="invit-friends" class="mui-popover mui-popover-action mui-popover-bottom">
+        <ul class="mui-table-view invit-friends">
+            <li class="mui-table-view-cell invit-friends-li">
+                <a>
+                    <img src="__PUBLIC__/mobile/images/commom_icon_wechat.png">
+                    <span>微信好友</span>
+                </a>
+                <a>
+                    <img src="__PUBLIC__/mobile/images/commom_icon_cincle.png">
+                    <span>微信朋友圈</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="mui-table-view invit-friends">
+            <li class="mui-table-view-cell invit-friends-li">
+                <a href="#invit-friends"><span>取消</span></a>
+            </li>
+        </ul>
+    </div>
+
+
+</body>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+</script>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>发布任务</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body>
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <p class="mui-title">我的任务</p>
+        <a href="{:U('Task/listTask')}">接单赚钱</a>
+    </header>
+
+    <div class="mui-content">
+        <div id="makemoney-none" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary make-money-choose-none" >
+            <a id="task-order-get" class="mui-control-item <if condition="$type eq 5">mui-active</if>  make-money" onclick="task(5)">
+                <p>接单任务</p>
+            </a>
+            <a id="task-order-records" class="mui-control-item  <if condition="$type eq 4">mui-active</if>  make-money" onclick="task(4)">
+                <p>接单记录</p>
+            </a>
+        </div>
+    </div>
+
+    <div>
+        <div id="makemoney-item1" class="mui-control-content mui-active">
+            <div id="makemoney-info" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary make-money-info-none" >
+                <a class="mui-control-item  <if condition="$type eq 5">mui-active</if> make-money-info" onclick="task(5)" >
+                    全部
+                </a>
+                <a class="mui-control-item  <if condition="$type eq 0">mui-active</if>   make-money-info-none" onclick="task(0)" >
+                    待提交
+                </a>
+                <a class="mui-control-item  <if condition="$type eq 1">mui-active</if>   make-money-info-none" onclick="task(1)">
+                    审核中
+                </a>
+                <a class="mui-control-item  <if condition="$type eq 2">mui-active</if>   make-money-info-none" onclick="task(2)">
+                    不合格
+                </a>
+                <a class="mui-control-item <if condition="$type eq 3">mui-active</if>   make-money-info-none" onclick="task(3)">
+                    已完成
+                </a>
+            </div>
+        </div>
+
+        <div id="makemoney-item2" class="mui-control-content">
+            <ul class="mui-table-view make-money-info task-order-record">
+                <!--<foreach name="taskLogAll['list']" item="v">-->
+                    <!--<li class="mui-table-view-cell make-money-info-li">-->
+                        <!--<div class="task-info-left">-->
+                            <!--<img src="{$v['category_img']}">-->
+                            <!--<div class="task-info-basic">-->
+                                <!--<div class="task-basic-top">-->
+                                    <!--<p>{$v['category_name']}</p>-->
+                                    <!--<span>{$v['task_name']}</span>-->
+                                <!--</div>-->
+                                <!--<div class="task-basic-bottom">-->
+                                    <!--<span>编号：<i>{$v['task_id']}</i></span>-->
+                                    <!--<span>单价：￥<i>{:fen_to_yuan($v['price'])}</i></span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<input class="order-task-del" type="button" value="删除">-->
+                    <!--</li>-->
+                <!--</foreach>-->
+            </ul>
+            <div class="mui-scrollbar mui-scrollbar-vertical">
+                <div class="mui-scrollbar-indicator"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="task-hiden">
+        <div id="makemoney-info-item1" class="mui-control-content mui-active">
+            <div class="mui-scroll-content">
+                <div class="mui-scroll">
+                    <ul class="mui-table-view make-money-info">
+                        <foreach name="taskLogInfo['list']" item="v">
+                            <li class="mui-table-view-cell make-money-info-li">
+                                <div class="task-info-left">
+                                    <img src="{$v['category_img']}">
+                                    <div class="task-info-basic">
+                                        <div class="task-basic-top">
+                                            <p>{$v['category_name']}</p>
+                                            <span>{$v['task_name']}</span>
+                                        </div>
+                                        <div class="task-basic-bottom">
+                                            <span>编号：<i>{$v['task_id']}</i></span>
+                                            <span>单价：<i>￥{:fen_to_yuan($v['price'])}</i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <if condition="$type eq 4">
+                                    <input class="order-task-del" type="button" value="删除" onclick="del({$v['id']})">
+                                    <else /><if condition="$v['valid_status'] eq 0">
+                                    <label name="caozuo" class="upload-verification" onclick="verify({$v['id']})">上传验证</label>
+                                    <elseif condition="$v['valid_status'] eq 1"/><label  name="caozuo"  class="audit-ing">审核中</label>
+                                    <elseif condition="$v['valid_status'] eq 2"/><label  name="caozuo" class="no-qualified">不合格</label>
+                                    <else /><label name="caozuo"   class="task-finshed">已完成</label>
+                                </if>
+                                </if>
+
+                            </li>
+                        </foreach>
+                    </ul>
+                </div>
+                <div class="mui-scrollbar mui-scrollbar-vertical">
+                    <div class="mui-scrollbar-indicator"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/url.js"></script>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+    $(function () {
+        $('#task-order-records').on('tap', function () {
+           $("#task-hiden").css("display","none");
+        });
+
+        $('#task-order-get').on('tap', function () {
+            $("#task-hiden").css("display","block");
+        })
+    })
+    /*跳转链接*/
+    function task(num){
+         if(num == 5){
+             mui.openWindow({
+                 url:url + 'Mobile/TaskLog/getTaskLog'
+             });
+         }else{
+             mui.openWindow({
+                 url:url + 'Mobile/TaskLog/getTaskLog/type/' + num
+             });
+         }
+    }
+    if({$type} == 4){
+        $('#makemoney-item1').hide();
+    }
+    /*删除操作*/
+    function del(id){
+        mui.confirm('您是否要删除该条任务?', '提示', '', function(e) {
+            if (e.index == 1) {
+                mui.ajax(url + 'Mobile/TaskLog/delTaskLog/id/' + id,{
+                    dataType:'json',//服务器返回json格式数据
+                    type:'get',//HTTP请求类型
+                    timeout:10000,//超时时间设置为10秒；
+                    headers:{'Content-Type':'application/json'},
+                    success:function(data){
+                        mui.toast(data['info']);
+                        // alert(JSON.stringify(data));
+                        if(data['status'] == 1){
+                            setTimeout(function(){
+                                mui.openWindow({
+                                    url:  url + 'Mobile/TaskLog/getTaskLog/type/4'
+                                });
+                            }, 1000);
+                        }
+                    },
+                    error:function(xhr,type,errorThrown){
+                        //异常处理；
+                        console.log(type);
+                    }
+                });
+            }else{
+                mui.alert('您取消了操作');
+            }
+
+        })
+    }
+    /*上传验证*/
+    function verify(id){
+        alert(id);
+    }
+</script>
+</html>

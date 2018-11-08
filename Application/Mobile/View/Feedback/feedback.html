@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>意见反馈</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body style="background: #f6f6f6">
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <p class="mui-title">意见反馈</p>
+    </header>
+
+    <div class="user-feedback-content">
+        <textarea placeholder="请输入反馈内容" name="comment" id="comment" rows="7"></textarea>
+        <!--<img src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">-->
+    </div>
+
+    <div class="user-feedback-btn">
+        <button onclick="btn()">提交</button>
+    </div>
+
+</body>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/url.js"></script>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+    function btn(){
+         var comment = $('#comment').val();
+         var length = comment.length;
+         if(comment == ''){
+             mui.toast('请出入内容');
+             return
+         }
+         if(length  > 255){
+             mui.toast('您输入的字符太长!');
+             return
+         }
+        mui.confirm('您是否提交反馈?', '提示', '', function(e) {
+            if (e.index == 1) {
+                mui.ajax(url + 'Mobile/Feedback/feedback',{
+                    data: {
+                        comment: comment,
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'post',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success:function(data){
+                        mui.toast(data['info']);
+                        alert(JSON.stringify(data));
+                        if(data['status'] == 1){
+                            setTimeout(function(){
+                                mui.openWindow({
+                                    url:  url + '/Mobile/User/personalCenter'
+                                });
+                            }, 1500);
+                        }
+                    },
+                    error:function(xhr,type,errorThrown){
+                        //异常处理；
+                        console.log(type);
+                    }
+                });
+            }else{
+                mui.toast('您取消了操作');
+            }
+        })
+    }
+</script>
+</html>
