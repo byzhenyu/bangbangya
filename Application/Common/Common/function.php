@@ -1150,3 +1150,16 @@ function is_bind($where){
         return true;
     }
 }
+/**
+* @desc  验证用户的钱
+* @param UID
+* @return mixed
+*/
+function user_money($user_id, $money, $field = 'total_money'){
+    $user_money = D('Home/User')->where('user_id = '.$user_id)->getField($field);
+    if($user_money > $money){
+        return  true;
+    }else{
+        return false;
+    }
+}

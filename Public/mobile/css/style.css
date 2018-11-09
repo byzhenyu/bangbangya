@@ -588,16 +588,18 @@ input[type="checkbox"]:checked + i {
 }
 
 .get-order-li .orders-details-info div img {
-    width: .24rem;
-    height: .28rem;
-    margin-left: .24rem;
+    width: .26rem;
+    height: .26rem;
     margin-right: .08rem;
 }
 
-.get-order-li .orders-details-info div img:last-child {
+.get-order-li .orders-details-info div img:nth-child(3) {
     width: .24rem;
     height: .28rem;
-    margin: 0;
+}
+
+.get-order-li .orders-details-info div img:nth-child(2) {
+    margin-left: .24rem;
 }
 
 .get-order-li .orders-details img {
@@ -650,14 +652,12 @@ input[type="checkbox"]:checked + i {
     align-items: center;
     justify-content: space-between;
     margin-bottom: .32rem;
-    flex-wrap:wrap;
 }
 
 .task-type-single {
     display: flex;
     align-items: center;
     /*margin-left: .71rem;*/
-    width:25%;
 }
 
 .task-type-single label {
@@ -1022,7 +1022,7 @@ input[type="checkbox"]:checked + i {
 }
 
 .task-basic-row div input {
-    width: 3.5rem;
+    width: 3rem;
     padding: 0;
 }
 
@@ -1992,7 +1992,7 @@ input[type="checkbox"]:checked + i {
 }
 
 .top-shop-num {
-    padding: .16rem .3rem .32rem .3rem;
+    padding: .16rem .3rem .08rem .3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -2003,12 +2003,9 @@ input[type="checkbox"]:checked + i {
     flex-direction: column;
 }
 
-.top-shop-num .top-shop-column div:first-child {
-    margin-bottom: .16rem;
-}
-
 .top-shop-num .top-shop-column div {
     display: flex;
+    margin-bottom: .16rem;
 }
 
 .top-shop-num .top-shop-column div p {
@@ -2023,7 +2020,7 @@ input[type="checkbox"]:checked + i {
     color: #fff;
 }
 
-.top-shop-num .top-shop-column:nth-child(2) div:nth-child(2) p {
+.top-shop-num .top-shop-column .top-shop-short {
     margin-right: .36rem;
 }
 
@@ -3413,22 +3410,6 @@ input[type="checkbox"]:checked + i {
     width: 2.25rem;
 }
 
-/*.my-release-data div p:last-child {*/
-    /*margin-top: .04rem;*/
-/*}*/
-
-/*.my-release-data div:first-child  {*/
-    /*width: 2.31rem;*/
-/*}*/
-
-/*.my-release-data div:nth-child(2) p {*/
-    /*width: 2.15rem;*/
-/*}*/
-
-/*.my-release-data:last-child p {*/
-    /*width: 2.15rem;*/
-/*}*/
-
 .my-release-item {
     border-bottom: 1px solid #e5e5e5;
 }
@@ -3442,7 +3423,6 @@ input[type="checkbox"]:checked + i {
     display: flex;
     align-items: center;
 }
-
 
 .my-release-btns .my-release-btn {
     width: 1.27rem;
@@ -3482,6 +3462,214 @@ input[type="checkbox"]:checked + i {
     border: none;
     color: #ffbf77;
 }
+
+.task-details-font {
+    font-size: .22rem;
+    color: #666;
+    padding: 0;
+    margin: 0;
+    margin-top: .24rem;
+}
+
+.high-price-font {
+    font-size: .24rem;
+    color: #999;
+    padding: 0;
+    margin: 0;
+    margin-top: .24rem;
+}
+
+
+.task-details-box {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.release-high-price {
+    display: flex;
+    flex-direction: column;
+}
+
+.release-high-price div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 5.98rem;
+}
+
+.release-high-price div a {
+}
+
+.release-high-price div:first-child {
+    margin-bottom: .24rem;
+}
+
+.my-release-left .release-high-price div input {
+    border: 1px solid #6f75ef;
+    font-size: .28rem;
+    color: #6f75ef;
+    width: 1.27rem;
+    height: .5rem;
+    padding: 0;
+    text-align: center;
+    line-height: .5rem;
+    border-radius: .1rem;
+}
+
+.recommend-time {
+    width: 6rem;
+    background: #fff;
+    border-radius: .14rem;
+    display: none;
+    position: fixed;
+    top: 30%;
+    left: 10.4%;
+}
+
+.top-time {
+    display: none;
+}
+
+.recommend-time .recommend-time-top {
+    padding: .37rem .4rem 0 .4rem;
+}
+
+.recommend-time .recommend-time-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.recommend-time .recommend-time-title p {
+    font-size: .3rem;
+    color: #333;
+    margin-bottom: .24rem;
+}
+
+#grap-order-gray .recommend-time input {
+    border-radius: 0;
+    border: 1px solid #e5e5e5;
+    padding: .29rem .12rem;
+}
+
+.recommend-time input::placeholder {
+    font-size: .24rem;
+    color: #999;
+}
+
+.recommend-time .recommend-time-total {
+    border: 1px solid #e5e5e5;
+    padding: .24rem .12rem;
+    margin-top: .2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: .24rem;
+    color: #333;
+}
+
+.recommend-time .recommend-time-total p {
+    font-size: .24rem;
+    color: #333;
+}
+
+.recommend-time .recommend-time-tip {
+    margin-top: .24rem;
+    font-size: .24rem;
+    color: #b7bafe;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.recommend-time-btns {
+    margin-top: .42rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #e5e5e5;
+}
+
+.recommend-time-btns p {
+    font-size: .3rem;
+    color: #666;
+    margin: 0;
+    height: 100%;
+    text-align: center;
+    line-height: 1rem;
+}
+
+.recommend-time-btns #recommend-time-cel {
+    width: 2.79rem;
+    border-right: 1px solid #e5e5e5;
+}
+
+.recommend-time-btns #recommend-time-sure {
+    color: #6f75ef;
+    width: 2.8rem;
+}
+
+.recommend-time-btns #top-time-cel {
+    width: 2.79rem;
+    border-right: 1px solid #e5e5e5;
+}
+
+.recommend-time-btns #top-time-sure {
+    color: #6f75ef;
+    width: 2.8rem;
+}
+
+.add-price-pause {
+    width: 2.48rem;
+    height: 1.46rem;
+    background: #111;
+    opacity: .7;
+    border-radius: .1rem;
+    /*padding: .32rem .4rem;*/
+    position: fixed;
+    top: 43.1%;
+    left: 33.4%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-price-pause div {
+    font-size: .28rem;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.flush-num {
+    padding: .32rem .26rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*=================常见问题==================*/
 
@@ -3618,9 +3806,240 @@ input[type="checkbox"]:checked + i {
     border-radius: .1rem;
 }
 
+/*=================审核（无交流）==================*/
+
+.release-audi-num {
+    background: #fff;
+    margin-top: .88rem;
+    padding: .25rem 1.86rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #f6f6f6;
+}
+
+.release-audi-num p {
+    font-size: .28rem;
+    color: #333;
+}
+
+.unqualified-content {
+    padding: .3rem .4rem 0 .4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.unqualified-content img {
+    width: .4rem;
+    height: .71rem;
+}
+
+.unqualified-reson {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.unqualified-user-info {
+    display: flex;
+    align-items: center;
+}
+
+.unqualified-user-info img {
+    width: .84rem;
+    height: .84rem;
+    border-radius: 50%;
+}
+
+.unqualified-user-info div {
+    display: flex;
+    flex-direction: column;
+    margin-left: .24rem;
+}
+
+.unqualified-user-info div span {
+    font-size: .28rem;
+    color: #666;
+}
+
+.unqualified-user-info div p {
+    font-size: .24rem;
+    color: #666;
+    margin: 0;
+    margin-top: .08rem;
+}
+
+.unqualified-img {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: .36rem;
+}
+
+.unqualified-img img {
+    width: 3.08rem;
+    height: 5.46rem;
+}
+
+.unqualified-img p {
+    font-size: .24rem;
+    color: #b7bafe;
+    margin: 0;
+    margin-top: .24rem;
+}
+
+.unqualified-btns {
+    width: 100%;
+    margin-top: .92rem;
+    padding: 0 1.21rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.unqualified-btns button {
+    width: 2rem;
+    height: .6rem;
+    color: #fff;
+    line-height: .6rem;
+    text-align: center;
+    border-radius: .1rem;
+    background: #999;
+    font-size: .3rem;
+    padding: 0;
+}
+
+.unqualified-btns button:last-child {
+    background: #6f75ef;
+}
 
 
+/*=================审核（有交流）==================*/
 
+.unqualified-reply {
+    margin-top: .08rem;
+    background: #fff;
+    padding: .32rem .3rem .4rem .3rem;
+}
+
+.unqualified-info-talk {
+    display: flex;
+    align-items: center;
+    font-size: .24rem;
+    color: #999;
+}
+
+.unqualified-info-talk p {
+    font-size: .28rem;
+    color: #333;
+    margin-right: .12rem;
+    margin: 0;
+}
+
+.unqualified-system-reply {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    font-size: .24rem;
+    color: #999;
+    margin-top: .16rem;
+}
+
+.unqualified-user-reply {
+    padding-left: 1.4rem;
+    font-size: .24rem;
+    color: #999;
+    margin-top: .16rem;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.unqualified-window-boom {
+    width: 5.6rem;
+    background: #fff;
+    padding: .37rem 0 0 0;
+    border-radius: .14rem;
+    display: none;
+    position: fixed;
+    top: 29.4%;
+    left: 12.7%;
+}
+
+.unqualified-window-boom .unqualified-boom-title {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.unqualified-boom-title p {
+    font-size: .3rem;
+    color: #333;
+    margin: 0;
+}
+
+.unqualified-boom-reason {
+    margin: .24rem 0 .54rem 0;
+    margin-left: .4rem;
+    margin-right: .4rem;
+}
+
+.unqualified-boom-reason textarea {
+    width: 100%;
+    height: 1.19rem;
+    padding: .12rem;
+    margin: 0;
+}
+
+.unqualified-boom-reason textarea::placeholder {
+    font-size: .24rem;
+    color: #999;
+}
+
+.unqualified-boom-addimg {
+    display: flex;
+    flex-direction: column;
+    margin-left: .4rem;
+}
+
+.unqualified-boom-addimg img {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+.unqualified-boom-addimg p {
+    font-size: .24rem;
+    color: #999;
+    margin-top: .16rem;
+}
+
+.unqualified-boom-btns {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.unqualified-boom-btns p {
+    margin: 0;
+    height: 100%;
+    text-align: center;
+    line-height: 1rem;
+}
+
+.unqualified-boom-btns #unqualified-window-cel {
+    width: 2.79rem;
+    border-top: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+}
+.unqualified-boom-btns #unqualified-window-sure {
+    width: 2.8rem;
+    border-top: 1px solid #e5e5e5;
+    color: #6f75ef;
+}
 
 
 

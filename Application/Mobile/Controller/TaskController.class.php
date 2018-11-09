@@ -10,10 +10,11 @@
  * @CreateBy       PhpStorm
  */
 namespace Mobile\Controller;
-
 use Common\Controller\UserCommonController;
-
 class TaskController extends UserCommonController {
+    public function _initialize() {
+        $this->Task = D("Home/Task");
+    }
     /**
      * 首页接单信息页面
      * @param $UID 
@@ -75,7 +76,7 @@ class TaskController extends UserCommonController {
     /**
     * @desc 发布任务
     * @param $POST['data']
-    * @return mixed
+    * @return mixed       发布任务只需要判断用户现在的余额  不冻结资金 改动   用户审批一个扣一个的钱
     */
     public function addTask(){
         $where['user_id'] = UID;
@@ -84,12 +85,11 @@ class TaskController extends UserCommonController {
         /*任务分类信息*/
         $taskCategoryInfo = $taskCategoryModel->getTaskCategory('', $taskCategoryField);
         /*用户总金额金额*/
-        $userInfo  = session('user_auth');
+        $userInfo  = D('Home/User')->field('shop_type, total_money')->where('id = '.UID)->find();
         $userMoney = $userInfo['total_money'];
         if($userInfo['shop_type'] != 0 && $userInfo['top_time'] > NOW_TIME){
             $userInfo['shop_type'] = 0;
         }
-
         $id = I('id', 0 ,'intval');
         $taskModel = D('Home/Task');
         $taskStepModel = D('Home/TaskStep');
@@ -188,10 +188,8 @@ class TaskController extends UserCommonController {
         // 实例化oss类
         $files = I('img_src', '','trim');
         $object = explode('com/',$files)[1];
-
         vendor('Alioss.autoload');
         $config=C('ALIOSS_CONFIG');
-
         $oss=new \OSS\OssClient($config['KEY_ID'],$config['KEY_SECRET'],$config['END_POINT']);
         $bucket=$config['BUCKET'];
         // p($object);die();
@@ -201,9 +199,170 @@ class TaskController extends UserCommonController {
     /**
      * @desc  我的发布
      * @param UID
-     * @return mixed
+     * @return array
      */
     public function myTask(){
+        $where['t.user_id'] = UID;
+        $field = 't.id,t.end_time, t.top,t.title, t.audit_info,t.price,t.task_zong, t.task_num, t.total_price, t.audit_status, t.is_show, t.add_time, c.category_name ';
+        $taskList = $this->Task->getMyTask($where, $field);
+        p($taskList);
+        $total_money = D('Home/User')->where('user_id = '.UID)->getField('total_money');
+        $this->assign('taskList', $taskList);
+        $this->assign('total_money', $total_money);
         $this->display();
+    }
+    /**
+     * @desc  我的发布
+     * @param UID
+     * @return json
+     */
+    public function del(){
+        $where['id'] = I('id', 0, 'intval');
+        $taskDel = $this->Task->where('id = '.$where['id'])->save(array('status' => 0));
+        if($taskDel){
+            $this->ajaxReturn(V(1, '删除成功'));
+        }
+        $this->ajaxReturn(V(0, $this->Task->getError()));
+    }
+    /**
+    * @desc 暂停任务
+    * @param  id
+    * @param  audit_status
+    * @return json
+    */
+    public function pause(){
+        $data = I('post.', 2);
+        $taskPause = $this->Task->where('id = '.$data['id'])->save($data);
+        if($taskPause){
+            $this->ajaxReturn(V(1, $data['audit_status'] == 1 ? '开启成功':'暂停成功'));
+        }
+        $this->ajaxReturn(V(0, $this->Task->getError()));
+    }
+    /**
+    * @desc  追加数量
+    * @param $task_id    primary key
+    * @param $money   fen
+    * @param $num   task_num
+    * @return json
+    */
+    public function addTaskNum(){
+        $data = I('post.', 3);
+        $res  =  user_money(UID, $data['money']);
+        if(!$res){
+            $this->ajaxReturn(V(2, '余额不足'));
+        }else{
+            M()->startTrans();
+            $taskData = array(
+                'task_num' => array('exp','task_num + '.$data['num']),
+                'task_zong' => array('exp','task_zong + '.$data['num']),
+                'total_price' => array('exp','total_price + '.$data['money']),
+            );
+            $taskRes = $this->Task->where('id = '.$data['id'])->save($taskData);
+            if($taskRes){
+                M()->commit();
+                $this->ajaxReturn(V(1, '追加成功'));
+            }else{
+                M()->rollback();
+                $this->ajaxReturn(V(2, '追加失败'));
+            }
+            $this->ajaxReturn(V(0, $this->Task->getError()));
+        }
+    }
+    public function addTaskPrice(){
+        $data = I('post.', 3);
+        $res  =  user_money(UID, $data['money']);
+        if(!$res){
+            $this->ajaxReturn(V(2, '余额不足'));
+        }else{
+            M()->startTrans();
+            $taskRes = $this->Task->where('id = '.$data['id'])->save($data);
+            if($taskRes){
+                M()->commit();
+                $this->ajaxReturn(V(1, '上调成功'));
+            }else{
+                M()->rollback();
+                $this->ajaxReturn(V(2, '上调失败'));
+            }
+            $this->ajaxReturn(V(0, $this->Task->getError()));
+        }
+    }
+    /**
+    * @desc 任务下架
+    * @param  $task_id
+    * @return mixed
+    */
+    public function taskSold(){
+        $taskLogModel = D('Home/TaskLog');
+        $where['task_id'] = I('id', 0 ,'intval');
+        $where['valid_status']  = array('in','1,2');
+        /*计算正在进行时  和未审核的 钱数*/
+        $taskLogInfo = $taskLogModel->field('task_price,user_id, task_id')->where($where)->select();
+        $money = 0;
+        foreach ($taskLogInfo as $key=>$value){
+            $money += $value['task_price'];
+        }
+//        p($money);
+        $res  = user_money(UID,$money);
+        if(!$res){
+            $this->ajaxReturn(V(2, '您的余额余额不足,下架失败'));
+        }else{
+             //开启事务
+              M()->startTrans();
+              $userModel = D('Home/User');
+              $userRes  = $userModel->where('user_id = '.UID)->setDec('total_money',$money);
+              account_log(UID, $money, 3,'任务结算',$where['task_id']);
+              foreach ($taskLogInfo as $key=>$value){
+                       $userMoney = array(
+                              'task_suc_money' => array('exp','task_suc_money + '.$value['task_price']),
+                              'total_money' => array('exp','total_money + '.$value['task_price'])
+                       );
+                       $userModel ->where('user_id = '.$value['user_id'])->save($userMoney);
+                       account_log( $value['user_id'], $value['task_price'], 4,'完成任务',$where['task_id']);
+                       $taskLogModel->where('task_id = '.$value['task_id'])->save(array('valid_status' => 3));
+              }
+              $taskRes = $this->Task->where('id = '.$where['task_id'])->save(array('audit_status' => 3));
+              if($userRes && $taskRes){
+                  M()->commit();
+                  $this->ajaxReturn(V(1, '下架成功'));
+              }else{
+                  M()->rollback();
+                  $this->ajaxReturn(V(2, '下架失败'));
+              }
+        }
+    }
+    /**
+    * @desc  推荐置顶
+    * @param  $task_id
+    * @return mixed
+    */
+    public function topTask(){
+        $data = I('post.', 4);
+        if($data['top'] == 1){
+            $type = 9;
+            $desc = '任务推荐';
+        }else{
+            $type = 10;
+            $desc = '任务置顶';
+        }
+        $res  =  user_money(UID, $data['money']);
+        if(!$res){
+            $this->ajaxReturn(V(2, '余额不足'));
+        }else{
+            M()->startTrans();
+            $userModel = D('Home/User');
+            $userRes  = $userModel->where('user_id = '.UID)->setDec('total_money',$data['money']);
+            account_log(UID, $data['money'], $type, $desc, $data['id']);
+            $taskData['top_time'] = $data['topNum'] * 3600  + NOW_TIME;
+            $taskData['top'] = $data['top'];
+            $taskRes = $this->Task->where('id = '.$data['id'])->save($taskData);
+            if($taskRes  && $userRes){
+                M()->commit();
+                $this->ajaxReturn(V(1, $desc.'成功'));
+            }else{
+                M()->rollback();
+                $this->ajaxReturn(V(2, $desc.'失败'));
+            }
+            $this->ajaxReturn(V(0, $this->Task->getError()));
+        }
     }
 }
