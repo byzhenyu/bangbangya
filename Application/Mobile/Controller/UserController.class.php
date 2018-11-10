@@ -62,10 +62,9 @@ class UserController extends CommonController {
      */
     public function getRankList()
     {
-        $field = 'user_id,head_pic,user_name, task_suc_money';
-        $rankList = $this->user->getRankList('', $field);
-        p($rankList);
-//        exit;
+        $where['task_suc_money']  = array('neq', 0);
+        $field = 'user_id, head_pic, nick_name, task_suc_money';
+        $rankList = $this->user->getRankList($where, $field);
         $this->assign('randList', $rankList);
         $this->display();
     }

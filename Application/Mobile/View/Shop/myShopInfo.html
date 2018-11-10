@@ -116,7 +116,7 @@
                                                     </div>
                                                     <div class="top-task-no">
                                                         <span>编号：{$v.id}</span>
-                                                        <span>单价：￥{$v.price}</span>
+                                                        <span>单价：￥{:fen_to_yuan($v['price'])}</span>
                                                     </div>
                                                     <div class="top-task-surplus">
                                                         <span>剩余单数：{$v.task_num}</span>
@@ -152,7 +152,7 @@
                                         </div>
                                         <div class="top-task-no">
                                             <span>编号：{$v.id}</span>
-                                            <span>单价：￥{$v.price}</span>
+                                            <span>单价：￥{:fen_to_yuan($v['price'])}</span>
                                         </div>
                                         <div class="top-task-surplus">
                                             <span>剩余单数：{$v.task_num}</span>

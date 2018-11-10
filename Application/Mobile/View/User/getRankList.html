@@ -23,37 +23,37 @@
         <div class="rank-week-top3-users">
             <div class="rank-top3-user">
                 <div class="rank-top3-headimg">
-                    <img class="top3-user-headimg" src="__PUBLIC__/mobile/images/commom_btn_giveup.png">
+                    <img class="top3-user-headimg" src="{$randList[1]['head_pic']}">
                     <img class="top3-border" src="__PUBLIC__/mobile/images/common_img_no2.png">
                 </div>
                 <div class="top3-user-info">
-                    <p>没有腹肌的IT</p>
-                    <span>ID：1264195</span>
-                    <p>￥1119</p>
+                    <p>{$randList[1]['nick_name']}</p>
+                    <span>ID：{$randList[1]['user_id']}</span>
+                    <p>￥{:fen_to_yuan($randList[1]['task_suc_money'])}</p>
                 </div>
             </div>
 
             <div class="rank-top3-user">
                 <div class="rank-top3-headimg">
-                    <img class="top3-user-headimg" src="__PUBLIC__/mobile/images/commom_btn_grab.png">
+                    <img class="top3-user-headimg" src="{$randList[0]['head_pic']}">
                     <img class="top3-border" src="__PUBLIC__/mobile/images/common_img_no1.png">
                 </div>
                 <div class="top3-user-info">
-                    <p>哈哈</p>
-                    <span>ID：1264195</span>
-                    <p>￥1119</p>
+                    <p>{$randList[0]['nick_name']}</p>
+                    <span>ID：{$randList[0]['user_id']}</span>
+                    <p>￥{:fen_to_yuan($randList[0]['task_suc_money'])}</p>
                 </div>
             </div>
 
             <div class="rank-top3-user">
                 <div class="rank-top3-headimg">
-                    <img class="top3-user-headimg" src="__PUBLIC__/mobile/images/commom_btn_upload.png">
+                    <img class="top3-user-headimg" src="{$randList[2]['head_pic']}">
                     <img class="top3-border" src="__PUBLIC__/mobile/images/common_img_no3.png">
                 </div>
                 <div class="top3-user-info">
-                    <p>汪汪屋</p>
-                    <span>ID：1264195</span>
-                    <p>￥1119</p>
+                    <p>{$randList[2]['nick_name']}</p>
+                    <span>ID：{$randList[2]['user_id']}</span>
+                    <p>￥{:fen_to_yuan($randList[2]['task_suc_money'])}</p>
                 </div>
             </div>
         </div>
@@ -65,84 +65,19 @@
     </div>
 
     <div class="top-user-list">
-        <div class="top-user-item">
-            <div class="top-user-left">
-                <p>4</p>
-                <img src="__PUBLIC__/mobile/images/home_jdzq_btn_rank.png">
-                <p>星光灿烂</p>
-                <p>ID：985110</p>
-            </div>
-            <p>￥924</p>
-        </div>
-
-        <div class="top-user-item">
-            <div class="top-user-left">
-                <p>5</p>
-                <img src="__PUBLIC__/mobile/images/home_jdzq_btn_rank.png">
-                <p>梦里无她</p>
-                <p>ID：136589</p>
-            </div>
-            <p>￥869</p>
-        </div>
-
-        <div class="top-user-item">
-            <div class="top-user-left">
-                <p>6</p>
-                <img src="__PUBLIC__/mobile/images/home_jdzq_btn_rank.png">
-                <p>无法无天</p>
-                <p>ID：963349</p>
-            </div>
-            <p>￥818</p>
-        </div>
-
-        <div class="top-user-item">
-            <div class="top-user-left">
-                <p>7</p>
-                <img src="__PUBLIC__/mobile/images/home_jdzq_btn_rank.png">
-                <p>夜色微凉</p>
-                <p>ID：123544</p>
-            </div>
-            <p>￥801</p>
-        </div>
-
-        <div class="top-user-item">
-            <div class="top-user-left">
-                <p>8</p>
-                <img src="__PUBLIC__/mobile/images/home_jdzq_btn_rank.png">
-                <p>追忆少年</p>
-                <p>ID：119119</p>
-            </div>
-            <p>￥787</p>
-        </div>
-        <div class="top-user-item">
-            <div class="top-user-left">
-                <p>9</p>
-                <img src="__PUBLIC__/mobile/images/home_jdzq_btn_rank.png">
-                <p>小球球</p>
-                <p>ID：100633</p>
-            </div>
-            <p>￥767</p>
-        </div>
-
-        <div class="top-user-item user-top10">
-            <div class="top-user-left">
-                <p>10</p>
-                <img src="__PUBLIC__/mobile/images/home_jdzq_btn_rank.png">
-                <p>小球球球球球</p>
-                <p>ID：100633</p>
-            </div>
-            <p>￥767</p>
-        </div>
-
-        <div class="top-user-item user-top100">
-            <div class="top-user-left">
-                <p>100</p>
-                <img src="__PUBLIC__/mobile/images/home_jdzq_btn_rank.png">
-                <p>小球球球球球</p>
-                <p>ID：100633</p>
-            </div>
-            <p>￥767</p>
-        </div>
+       <foreach name="randList" item="v" key="k">
+           <if condition="$k gt 2 ">
+               <div class="top-user-item">
+                   <div class="top-user-left">
+                       <p>{$k + 1}</p>
+                       <img src="{$v['head_pic']}">
+                       <p>{$v.nick_name}</p>
+                       <p>ID：{$v.id}</p>
+                   </div>
+                   <p>￥{:fen_to_yuan($v['task_suc_money'])}</p>
+               </div>
+           </if>
+       </foreach>
     </div>
 
     <footer class="mui-bar mui-bar-tab help-duck-foot">
@@ -164,7 +99,7 @@
                 <span style="color: #6f75ef">排行榜</span>
             </div>
         </a>
-        <a href="personal-center.html">
+        <a href="{:U('Mobile/User/personalCenter')}">
             <div>
                 <img src="__PUBLIC__/mobile/images/tab_icon_my_n.png">
                 <span>我的</span>

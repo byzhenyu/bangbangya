@@ -186,12 +186,9 @@ class UserModel extends Model
    public function getRankList($where = [],$field = "", $sort = ' task_suc_money DESC'){
        if(is_null($field))  $field = $this->findFields;
        $count = $this->where($where)->count();
-       $page = get_page($count, 10);
+       $page = get_page($count, 100);
        $ranklist = $this->field($field)->where($where)->limit($page['limit'])->order($sort)->select();
-        return array(
-            'ranklist'=>$ranklist,
-            'page'=>$page['page']
-        );
+       return $ranklist;
    }
 
    public function getUserInfoWithShop($where=[],$field='') {
