@@ -203,7 +203,7 @@ class TaskController extends UserCommonController {
      */
     public function myTask(){
         $where['t.user_id'] = UID;
-        $field = 't.id,t.end_time, t.top,t.title, t.audit_info,t.price,t.task_zong, t.task_num, t.total_price, t.audit_status, t.is_show, t.add_time, c.category_name ';
+        $field = 't.id,t.end_time, t.top,t.top_time , t.recommend, t.re_time, t.title, t.audit_info,t.price,t.task_zong, t.task_num, t.total_price, t.audit_status, t.is_show, t.add_time, c.category_name ';
         $taskList = $this->Task->getMyTask($where, $field);
         p($taskList);
         $total_money = D('Home/User')->where('user_id = '.UID)->getField('total_money');
@@ -309,7 +309,11 @@ class TaskController extends UserCommonController {
              //开启事务
               M()->startTrans();
               $userModel = D('Home/User');
-              $userRes  = $userModel->where('user_id = '.UID)->setDec('total_money',$money);
+              if($moeny != 0){
+                  $userRes  = $userModel->where('user_id = '.UID)->fetchSql(true)->setDec('total_money',$money);
+              }else{
+                  $userRes = true;
+              }
               account_log(UID, $money, 3,'任务结算',$where['task_id']);
               foreach ($taskLogInfo as $key=>$value){
                        $userMoney = array(
@@ -320,7 +324,7 @@ class TaskController extends UserCommonController {
                        account_log( $value['user_id'], $value['task_price'], 4,'完成任务',$where['task_id']);
                        $taskLogModel->where('task_id = '.$value['task_id'])->save(array('valid_status' => 3));
               }
-              $taskRes = $this->Task->where('id = '.$where['task_id'])->save(array('audit_status' => 3));
+              $taskRes = $this->Task->where('id = '.$where['task_id'])->save(array('audit_status' => 3,'end_time' => NOW_TIME));
               if($userRes && $taskRes){
                   M()->commit();
                   $this->ajaxReturn(V(1, '下架成功'));
@@ -337,13 +341,6 @@ class TaskController extends UserCommonController {
     */
     public function topTask(){
         $data = I('post.', 4);
-        if($data['top'] == 1){
-            $type = 9;
-            $desc = '任务推荐';
-        }else{
-            $type = 10;
-            $desc = '任务置顶';
-        }
         $res  =  user_money(UID, $data['money']);
         if(!$res){
             $this->ajaxReturn(V(2, '余额不足'));
@@ -351,9 +348,18 @@ class TaskController extends UserCommonController {
             M()->startTrans();
             $userModel = D('Home/User');
             $userRes  = $userModel->where('user_id = '.UID)->setDec('total_money',$data['money']);
+            if($data['top'] == 1){
+                $type = 10;
+                $desc = '任务置顶';
+                $taskData['top_time'] = $data['topNum'] * 3600  + NOW_TIME;
+                $taskData['top'] = 1;
+            }else{
+                $type = 9;
+                $desc = '任务推荐';
+                $taskData['recommend'] = 1;
+                $taskData['re_time'] = $data['topNum'] * 3600  + NOW_TIME;
+            }
             account_log(UID, $data['money'], $type, $desc, $data['id']);
-            $taskData['top_time'] = $data['topNum'] * 3600  + NOW_TIME;
-            $taskData['top'] = $data['top'];
             $taskRes = $this->Task->where('id = '.$data['id'])->save($taskData);
             if($taskRes  && $userRes){
                 M()->commit();

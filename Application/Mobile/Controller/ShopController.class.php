@@ -28,6 +28,7 @@ class ShopController extends CommonController {
         $taskField = 't.id, t.price, t.task_num, t.title, c.category_name , c.category_img';
         $taskInfo = $taskModel->getTaskList($where, $taskField);
         $where['t.end_time'] =  array(array('gt',NOW_TIME - 172800),array('lt',NOW_TIME)) ;
+        $where['t.audit_status'] =  3;
         $last_taskInfo = $taskModel->getTaskList($where, $taskField);
         $this->assign('ShopInfo', $ShopInfo);
         $this->assign('last_taskInfo', $last_taskInfo['list']);

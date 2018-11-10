@@ -32,7 +32,7 @@ class TaskModel extends Model{
      */
     public function getTaskList($where = [], $field = '', $order = 't.end_time desc ') {
         /*任务状态查询条件*/
-        $where[] = array('t.status'=> 1,'t.audit_status' =>1,'t.is_show' =>1);
+        $where[] = array('t.status'=> 1,'t.is_show' =>1);
         $count = $this->alias('t')
               ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')
               ->join('__SHOP__ as s on s.user_id = t.user_id')
@@ -46,7 +46,9 @@ class TaskModel extends Model{
               ->where($where)
               ->limit($page['limit'])
               ->order($order)
+//              ->fetchSql(true)
               ->select();
+//        return $list;
         /*判断是否丢失任务*/
         foreach ($list  as  $key=> $value) {
             if (strpos($value['discard_id'], ',' . UID . ',') !== false) {
@@ -126,9 +128,17 @@ class TaskModel extends Model{
           if(!empty($taskInfo)){
               $taskLogModel = D('Home/TaskLog');
               foreach ($taskInfo as $key=>$value){
-                  if($value['end_time'] < NOW_TIME  && $value['audit_status']  !== 4){
+                  if($value['end_time'] < NOW_TIME  && $value['audit_status']  == 1 ){
                       $taskInfo[$key]['audit_status']  = 4;
                       $this->where('id = '.$value['id'])->save(array('audit_status' => 4));
+                  }
+                  if($value['top_time'] < NOW_TIME ){
+                      $taskInfo[$key]['top']  = 0;
+                      $this->where('id = '.$value['id'])->save(array('top' => 0));
+                  }
+                  if($value['re_time'] < NOW_TIME ){
+                      $taskInfo[$key]['recommend']  = 0;
+                      $this->where('id = '.$value['id'])->save(array('recommend' => 0));
                   }
                   if($value['audit_status'] !== 0){
                       $taskInfo[$key]['beginNum'] = $taskLogModel ->where('task_id = '.$value['id'].' and valid_status  != 2 and  valid_status  != 4')->count();
