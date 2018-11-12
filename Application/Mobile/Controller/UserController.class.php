@@ -149,12 +149,11 @@ class UserController extends CommonController {
                 $oss_path = trim($path, './');
                 $local_path = trim($path, '.');
                 $oss->uploadFile($bucket,$oss_path,$path);
-
-                //unlink($path);
+                unlink($path);
                 $data['nameosspath'] ='http://'.$bucket.'.'.$config['END_POINT'].'/'.$oss_path;
                 $data['name'] =$local_path;
-
             }
+            $this->user->where('user_id = '.UID)->save(array('head_pic'=>$data['nameosspath']));
             $this->ajaxReturn(V(1, '更换头像成功', $data));
         }
       }
