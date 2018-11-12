@@ -12,9 +12,9 @@
 namespace Mobile\Controller;
 use Common\Controller\UserCommonController;
 class TaskController extends UserCommonController {
-    public function _initialize() {
-        $this->Task = D("Home/Task");
-    }
+//    public function _initialize() {
+//        $this->Task = D("Home/Task");
+//    }
     /**
      * 首页接单信息页面
      * @param $UID 
@@ -79,44 +79,81 @@ class TaskController extends UserCommonController {
     * @return mixed       发布任务只需要判断用户现在的余额  不冻结资金 改动   用户审批一个扣一个的钱
     */
     public function addTask(){
-        $where['user_id'] = UID;
-        $taskCategoryModel = D('Home/TaskCategory');
-        $taskCategoryField = 'id, category_name';
-        /*任务分类信息*/
-        $taskCategoryInfo = $taskCategoryModel->getTaskCategory('', $taskCategoryField);
-        /*用户总金额金额*/
-        $userInfo  = D('Home/User')->field('shop_type, total_money')->where('id = '.UID)->find();
-        $userMoney = $userInfo['total_money'];
-        if($userInfo['shop_type'] != 0 && $userInfo['top_time'] > NOW_TIME){
-            $userInfo['shop_type'] = 0;
-        }
         $id = I('id', 0 ,'intval');
+        $where['user_id'] = UID;
         $taskModel = D('Home/Task');
         $taskStepModel = D('Home/TaskStep');
-        if($id >0) {
-            $taskInfo = $taskModel->getMyTaskDetail($id);
-        }else{
-            $taskInfo = [];
+        $taskCategoryModel = D('Home/TaskCategory');
+        $taskCategoryField = 'id, category_name, limit_num, limit_money';
+        /*任务分类信息*/
+        $taskCategoryInfo = $taskCategoryModel->getTaskCategory(array('status'=>1), $taskCategoryField);
+
+        /*用户总金额金额*/
+        $userInfo  = D('Home/User')->getUserInfoWithShop(array('u.user_id'=>UID), 'shop_type,partner_time, total_money');
+        $userMoney = $userInfo['total_money'];
+        //手续费
+        $orderFee = C('BASE_ORDER_FEE');
+        if ($userInfo['shop_type'] != 0 && $userInfo['partner_time'] > NOW_TIME) {
+            $orderFee = M('VipLevel')->where(array('type'=>$userInfo['shop_type']))->getField('order_fee');
         }
+
         if (IS_POST) {
-            $data = json_decode(I('data', '', 'strip_tags'),true);
-            if ($id) {
-                if ($taskModel->save() !== false) {
-                    $this->ajaxReturn(V(1, '编辑成功'));
-                }
-            } else {
-                $createTask = $taskModel->addTask($data, $where);
-                if($createTask)
-                {
-                    $this->ajaxReturn(V(1, '添加成功'));
-                }
+            $data = I('post.', '');
+            //p($data);die();
+            $taskData = $data['task']; //任务
+            $step0Data = $data['task'][0]; //验证图
+            $step1Data = $data['task'][1]; //步骤
+            if ($taskModel->create($taskData) ===false) {
+                $this->ajaxReturn(V(0, $taskModel->getError()));
             }
-            $this->ajaxReturn(V(0, $taskModel->getDbError()));
+            M()->startTrans();
+            if ($id > 0) {
+                $res = $taskModel->save($taskData);
+                //删除旧的图片
+                if ($res === false) {
+                    M()->rollback();
+                    $this->ajaxReturn(V(0, '任务保存失败'));
+                }
+                $taskStepModel->where(array('task_id'=>$id))->delete();
+                //处理步骤表数据
+                $task_id = $id;
+            } else {
+                $task_id = $taskModel->add();
+                if (!$task_id) {
+                    M()->rollback();
+                    $this->ajaxReturn(V(0, '任务添加失败'));
+                }
+
+            }
+            foreach ($step0Data as &$val) {
+                $val['task_id'] = $task_id;
+                $val['step_text'] = '';
+                $val['type'] = 2;
+            }
+            foreach ($step1Data as &$val) {
+                $val['task_id'] = $task_id;
+                $val['type'] = 1;
+
+            }
+            if ($taskStepModel->create($step0Data) ===false) {
+                M()->rollback();
+                $this->ajaxReturn(V(0, $taskStepModel->getError()));
+            }
+            $step0Res = $taskStepModel->add($step0Data);
+            if ($taskStepModel->create($step1Data, 4) ===false) {
+                M()->rollback();
+                $this->ajaxReturn(V(0, $taskStepModel->getError()));
+            }
+            $step1Res = $taskStepModel->add($step1Data);
+            if ($step0Res ===false || $step1Res ===false) {
+                M()->rollback();
+                $this->ajaxReturn(V(0, '验证图及步骤保存失败'));
+            }
+
         }
-//        P($userMoney);
-//        p($taskCategoryInfo);
-//        p($taskInfo);
-//        exit;
+
+        $taskInfo = $taskModel->getMyTaskDetail($id);
+        $this->assign('orderFee',$orderFee);
         $this->assign('taskInfo', $taskInfo);
         $this->assign('userMoney', $userMoney);
         $this->assign('taskCategoryInfo', $taskCategoryInfo);
@@ -144,6 +181,7 @@ class TaskController extends UserCommonController {
     */
     // 上传图片
     public function uploadImg(){
+
         //$this->_uploadImg();  //调用父类的方法
         $config = array(
             'rootPath' => '.'.C('UPLOAD_URL').'Task/',
@@ -171,7 +209,7 @@ class TaskController extends UserCommonController {
                 $local_path = trim($path, '.');
                 $oss->uploadFile($bucket,$oss_path,$path);
 
-                unlink($path);
+                //unlink($path);
                 $data['nameosspath'] ='http://'.$bucket.'.'.$config['END_POINT'].'/'.$oss_path;
                 $data['name'] =$local_path;
 
@@ -186,14 +224,14 @@ class TaskController extends UserCommonController {
     public function oss_delet_object(){
 
         // 实例化oss类
-        $files = I('img_src', '','trim');
-        $object = explode('com/',$files)[1];
-        vendor('Alioss.autoload');
-        $config=C('ALIOSS_CONFIG');
-        $oss=new \OSS\OssClient($config['KEY_ID'],$config['KEY_SECRET'],$config['END_POINT']);
-        $bucket=$config['BUCKET'];
-        // p($object);die();
-        $test=$oss->deleteObject($bucket,$object);
+//        $files = I('img_src', '','trim');
+//        $object = explode('com/',$files)[1];
+//        vendor('Alioss.autoload');
+//        $config=C('ALIOSS_CONFIG');
+//        $oss=new \OSS\OssClient($config['KEY_ID'],$config['KEY_SECRET'],$config['END_POINT']);
+//        $bucket=$config['BUCKET'];
+//        // p($object);die();
+//        $test=$oss->deleteObject($bucket,$object);
         $this->ajaxReturn(V(1, '删除成功'));
     }
     /**
