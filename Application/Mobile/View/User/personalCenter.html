@@ -12,13 +12,23 @@
         <p class="mui-title">个人中心</p>
         <a onclick="logOut()">退出</a>
     </header>
+
     <div class="personal-center-top">
         <div class="personal-center-info">
             <div class="personal-center-left">
                 <div class="personal-head-img">
                     <img id="head_pic" src="{$userList.head_pic}">
-                    <img onclick="uploadsImg()" src="__PUBLIC__/mobile/images/my_icon_edit.png">
-                    <!--<input type="file" id="upload_file" style="display: none;" accept="image/jpeg, image/gif" />-->
+                    <img src="__PUBLIC__/mobile/images/my_icon_edit.png">
+                    <input type="file" id="upload" style="border: none;
+            z-index: 99;
+            position: absolute;
+            overflow: hidden;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            width: 100px;
+            height: 100px;
+            top: 0;
+            left: 0;" accept="image/jpeg, image/gif" />
                 </div>
                 <div class="persoanl-name-id">
                     <p>{$userList.nick_name}</p>
@@ -238,9 +248,11 @@
 </footer>
 <script src="__PUBLIC__/mobile/js/mui.min.js"></script>
 <script src="__PUBLIC__/mobile/js/url.js"></script>
-<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload/ajaxupload.js?v=1.0"></script>
-<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload/imgupload.js?v=1.0"></script>
+
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="__PUBLIC__/fileupload/js/vendor/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.fileupload.js"></script>
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
     mui.init();
@@ -275,5 +287,17 @@
 
         })
     }
+
+    $('#upload').fileupload({
+        url: "{:U('Task/uploadImg')}",
+        dataType: 'json',
+        done: function (e, data) {
+           console.log(data.result.data.nameosspath);
+        }
+    });
+
+
+
+
 </script>
 </html>
