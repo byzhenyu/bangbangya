@@ -72,6 +72,7 @@ class ShopModel extends Model{
     */
     public  function  topShop($data){
         $where['user_id'] = $data['user_id'];
+        $userModel = D('Home/User');
         /*开启事务*/
         M() ->startTrans();
         $user_total = $userModel->getUserField($where , 'total_money');

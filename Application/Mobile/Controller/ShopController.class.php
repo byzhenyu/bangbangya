@@ -49,15 +49,20 @@ class ShopController extends CommonController {
     * @return mixed
     */
     public function myTopShop(){
-        $total_money = I('total_money', 0, 'intval');
+        $total_money = D('Home/User')->where('user_id = '.UID)->getField('total_money');
         if(IS_POST){
             $data = I('post.', '', 'strip_tags');
-            $data['user_id'] = UID;
-            $res = $this->shop->topShop($data);
-            if($res){
-                $this->ajaxReturn(V(1, '置顶成功',$data['user_id']));
+            $res  =  user_money(UID, $data['zong']);
+            if(!$res){
+                $this->ajaxReturn(V(2, '余额不足'));
             }else{
-                $this->ajaxReturn(V(1, '置顶失败'));
+                $data['user_id'] = UID;
+                $res = $this->shop->topShop($data);
+                if($res){
+                    $this->ajaxReturn(V(1, '置顶成功',$data['user_id']));
+                }else{
+                    $this->ajaxReturn(V(1, '置顶失败'));
+                }
             }
         }
         $this->assign('total_money', $total_money);

@@ -11,6 +11,9 @@
 namespace Mobile\Controller;
 use Think\Controller;
 class MessageController extends Controller{
-     
+     public function getMessage(){
+          echo '正在开发中...';
+          exit;
+     }
 
 }

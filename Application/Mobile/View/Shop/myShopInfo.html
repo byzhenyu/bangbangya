@@ -37,8 +37,8 @@
             </div>
             <div class="top-shop-btn">
                 <if condition="$ShopInfo['is_top'] eq 0">
-                    <a style="width: auto" onclick="topShop({$ShopInfo['total_money']})"><button class="my-shop-top">置顶店铺</button></a>
-                    <else /><a style="width: auto" ><button onclick="topShop({$ShopInfo['total_money']})" class="my-shop-top">已置顶</button></a>
+                    <a style="width: auto" onclick="topShop()"><button class="my-shop-top">置顶店铺</button></a>
+                    <else /><a style="width: auto" ><button onclick="topShop()" class="my-shop-top">已置顶</button></a>
                 </if>
                 <if condition="$ShopInfo['isOwnShop'] eq 0">
                     <button onclick="fans({$ShopInfo['user_id']})">+关注</button>
@@ -179,9 +179,9 @@
 <script src="__PUBLIC__/mobile/js/url.js"></script>
 <script type="text/javascript" charset="utf-8">
     mui.init();
-    function topShop($total_money){
+    function topShop(){
         mui.openWindow({
-            url:url + 'mobile/shop/myTopShop/total_money/' + $total_money,
+            url:url + 'mobile/shop/myTopShop',
         });
     }
 </script>
