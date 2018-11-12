@@ -48,6 +48,14 @@
         .step-text {
             border: none;
         }
+        .task-type-list .task-type-row {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: .32rem;
+        }
     </style>
 </head>
 <body style="background: #f6f6f6">
@@ -96,7 +104,7 @@
                 <div class="task-basic-row">
                     <div>
                         <span>标题</span>
-                        <input type="text"  name="task[title]" placeholder="请您输入任务标题" style="padding-left: .24rem;width: 7rem;">
+                        <input id="task_title" type="text"  name="task[title]" placeholder="请您输入任务标题" style="padding-left: .24rem;width: 7rem;">
                     </div>
                 </div>
 
@@ -112,11 +120,11 @@
                    <div class="task-min">
                        <div>
                            <p>出价</p>
-                           <span>最低出价<i id="limit_money">0.5</i>元</span>
+                           <span>最低出价<i id="limit_money">{$taskCategoryInfo[0]['limit_money']}</i>元</span>
                        </div>
                    </div>
                     <div>
-                        <input type="number" name="task[price]" id="price">
+                        <input type="text" name="task[price]" id="price">
                         <p>元</p>
                     </div>
                 </div>
@@ -125,7 +133,7 @@
                     <div class="task-min">
                         <div>
                             <p>数量</p>
-                            <span>最少<i id="limit_num">50</i>单</span>
+                            <span>最少<i id="limit_num">{$taskCategoryInfo[0]['limit_num']}</i>单</span>
                         </div>
                     </div>
                     <div>
@@ -158,7 +166,7 @@
             <ul class="weui-uploader__files" id="uploaderFiles">
                 <li class="weui-uploader__input-box" >
                     <img src="__PUBLIC__/mobile/images/common_icon_addpicture.png">
-                    <input id="upload" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                    <input id="upload" name="photo" class="weui-uploader__input" type="file" accept="image/*" multiple="">
                 </li>
             </ul>
         </div>
@@ -175,16 +183,16 @@
                         <!--<p>首先请下载该APP，然后登录，选择第三方就可以，去个人中心点击领取福利进入该页面，然后输入身份证号和姓名点领取</p>-->
                     <!--</div>-->
 
-                    <div class="task-operation-row1">
-                        <div>
-                            <p>1</p>
-                            <p class="del-item" data-num="1" id="del_1">删除</p>
-                        </div>
-                        <img id="step_img_1" src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">
-                        <input class="uploader-img" type="file" accept="image/*">
-                        <input id="step_hid_1" type="hidden" name="step[1][0][step_img]" value="">
-                        <textarea name="step[1][0][step_text]" class="step-text" placeholder="请填写步骤" id="step_text_1"></textarea>
-                    </div>
+                    <!--<div class="task-operation-row1">-->
+                        <!--<div>-->
+                            <!--<p>1</p>-->
+                            <!--<p class="del-item" data-num="1" id="del_1">删除</p>-->
+                        <!--</div>-->
+                        <!--<img id="step_img_1" src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">-->
+                        <!--<input class="uploader-img" type="file" accept="image/*">-->
+                        <!--<input id="step_hid_1" type="hidden" name="step[1][0][step_img]" value="">-->
+                        <!--<textarea name="step[1][0][step_text]" class="step-text" placeholder="请填写步骤" id="step_text_1"></textarea>-->
+                    <!--</div>-->
                 </div>
 
                 <div class="task-operation-row3">
@@ -213,7 +221,7 @@
 
         <div class="release-task-agree">
             <label class="release-task-check">
-                <input class="check-task" type="checkbox" checked>
+                <input name="task[agree]" class="check-task" type="checkbox" checked>
                 <i></i>
                 <span>我已阅读、理解并同意<i>《发布规则》</i>的全部内容</span>
             </label>
@@ -231,6 +239,8 @@
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="__PUBLIC__/mobile/js/mui.min.js"></script>
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+<script type="text/javascript" src="__ADMIN__/js/common.js?v=1.01"></script>
 <script type="text/javascript" src="__ADMIN__/layDate-v5.0.9/laydate/laydate.js"></script>
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload/ajaxupload.js?v=1.0"></script>
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload/imgupload.js?v=1.0"></script>
@@ -238,17 +248,20 @@
 <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.iframe-transport.js"></script>
 <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.fileupload.js"></script>
 <script type="text/javascript" charset="utf-8">
+    UPLOAD_IMG_URL = "{:U('uploadImg')}";
     mui.init();
     laydate.render({
-        elem: '#start_time',
-        type: 'datetime'
-    });
-    laydate.render({
         elem: '#end_time',
-        type: 'datetime'
+        type: 'datetime',
+        min:minDate()
     });
+    // 设置最小可选的日期
+    function minDate() {
+        var now = new Date();
+        return now.getFullYear()+"-" + (now.getMonth()+1) + "-" + now.getDate() +" "+ now.getHours() + " " + now.getMinutes();
+    }
     $('#end_time').on('click', function () {
-        laydate({format:'YYYY-MM-DD hh:mm:ss',festival: true});
+        laydate({format:'YYYY-MM-DD hh:mm',festival: true});
     });
     _NEED_REFRESH = true;
     var count = 0;
@@ -257,50 +270,66 @@
         url: "{:U('Task/uploadImg')}",
         dataType: 'json',
         done: function (e, data) {
-
+            console.log(data);
             $('#uploaderFiles').prepend('<li class="weui-uploader__file" ><img src="'+data.result.data.nameosspath+'"><div class="file-del"><a href="javascript:void(0)" onclick="delPic(this)">X</a></div>'+
                 '<input type="hidden" name="step[0][][step_img]" value="'+data.result.data.nameosspath+'">'+
                 '</li>');
+
             count++;
-            if(count>4){
-                $('.weui-uploader__input-box').hide();
+            if (count>4) {
+
+                $('#upload').attr('disabled','disabled');
             }
         }
     }).prop('disabled', !$.support.fileInput)
         .parent().addClass($.support.fileInput ? undefined : 'disabled');
 
+
     function delPic(obj) {
         var obj = obj;
         var img_src = $(obj).parent().next('input').val();
         $.post("{:U('oss_delet_object')}",{'img_src':img_src}, function (data) {
-            layer.msg(data.info);
+
             if (data.status == 1) {
                 $(obj).parent().parent().remove();
+                $('#upload').attr('disabled',false);
             }
         })
 
     }
     //操作步骤计数
-    var base = 1;
+    var base = 0;
 
     $("#add-step-btn").on('click', function () {
 
         var n  = base +1;
+        if (base > 0) {
+            var text_n = $('#step_text_'+base).val();
+            var img_n = $('#img'+base).val();
+            if (text_n == '' && img_n == '') {
+                layer.msg('步骤不能为空');
+                return false;
+            }
+        }
+
         $(".step-content").append(
         '<div class="task-operation-row1">'+
             '<div>'+
             '<p>'+n+'</p>'+
             '<p class="del-item" data-num="'+n+'" id="del_'+n+'">删除</p>'+
             '</div>'+
-            '<img id="step_img_'+n+'" src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">'+
-            '<input class="uploader-img" type="file" accept="image/*">'+
-            '<input id="step_hid_'+n+'" type="hidden" name="step[1]['+base+'][step_img]" value="">'+
+            '<img id="img_'+base+'" src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">'+
+            '<button id="btnUpload_'+base+'" class="uploader-img" type="button" ></button>'+
+            '<input id="img'+n+'" type="hidden" name="step[1]['+base+'][step_img]" value="">'+
             '<textarea name="step[1]['+base+'][step_text]" class="step-text" placeholder="请填写步骤" id="step_text_'+n+'"></textarea>'+
             '</div>'
         );
         $("#del_"+base).css('display','none');
+        ajaxUpload('#btnUpload_'+base, $("#img_"+base), 'Task', base);
         base++;
     });
+
+
 
     $(".step-content").on('click', '.del-item', function () {
 
@@ -311,21 +340,28 @@
     });
 </script>
 <script type="text/javascript">
-    document.getElementById("balance-insufficient").addEventListener('tap', function() {
-        var delArray = ['确定'];
-        mui.confirm('您账户余额不足，请到个人中心充值后再发布', '提示', delArray, function(e) {
-            if (e.index == 0) {
-                // 点击了确定
-            }
-
-        })
-    });
-    var charge = {$orderFee};
+//    document.getElementById("balance-insufficient").addEventListener('tap', function() {
+//        var delArray = ['确定'];
+//        mui.confirm('您账户余额不足，请到个人中心充值后再发布', '提示', delArray, function(e) {
+//            if (e.index == 0) {
+//                // 点击了确定
+//            }
+//
+//        })
+//    });
+    var charge = "{$orderFee}";
     var all = 1 + (charge/100);
+    var limit_num = "{{$taskCategoryInfo[0]['limit_num']}}";
+    var limit_money = "{{$taskCategoryInfo[0]['limit_money']}}";
     /*判断任务价钱*/
     $("#task_num").focusout(function() {
         var price = $('#price').val();
         var task_num = $('#task_num').val();
+        if (task_num < limit_num) {
+            toastr('最小数量为'+limit_num);
+            $('#task_num').val('');
+            return false;
+        }
         if(price && task_num)
         {
              var zong =  (price * task_num *  all).toFixed(2);
@@ -335,6 +371,11 @@
     $("#price").focusout(function() {
         var price = $('#price').val();
         var task_num = $('#task_num').val();
+        if (price < limit_money) {
+            toastr('最小金额为'+limit_money);
+            $('#price').val('');
+            return false;
+        }
         if(price && task_num)
         {
             var zong = (price * task_num *  all).toFixed(2);
@@ -342,12 +383,24 @@
         }
     });
     $('.task-type-row').on('click', 'input', function () {
-        var limitmoney =  $(this).data('money');
-        var limitnum =  $(this).data('num');
+        limit_money =  $(this).data('money');
+        limit_num =  $(this).data('num');
 
-        $('#limit_money').html(limitmoney);
-        $('#limit_num').html(limitnum);
-    })
+        $('#limit_money').html(limit_money);
+        $('#limit_num').html(limit_num);
+    });
+    
+    function validate() {
+        var task_title = $('#task_title').val();
+        if (task_title == '') {
+            toastr('标题不能为空');
+            return false;
+        }
+        if ($('#end_time').val() == '') {
+            toastr('请选择结束时间');
+            return false;
+        }
+    }
 </script>
 
 </html>
