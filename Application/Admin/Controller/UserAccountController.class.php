@@ -17,11 +17,10 @@ class UserAccountController extends CommonController {
         }
 
         //查询列表
-        $where['ua.type'] = 1;
+//        $where['ua.type'] = 1;
         $where['ua.status'] = 1;
-        $field = 'ua.*, u.user_name, u.nick_name, u.alipay_num, u.alipay_name,u.bonus_money,u.task_money,u.total_money';
+        $field = 'ua.*, u.user_name, u.nick_name, u.alipay_num, u.alipay_name,u.bonus_money,u.total_money';
         $list = D('Admin/UserAccount')->getUserAccountList($where, $field);
-
         $this->list = $list['list'];
         $this->page = $list['page'];
         $this->display();

@@ -82,6 +82,7 @@ class UserAccountModel extends Model{
         $insData['money'] = $data['money'] * (1 - $serviceCharge);
         $insData['brank_no'] = $userInfo['alipay_num'];
         $insData['brank_user_name'] = $userInfo['alipay_name'];
+        $insData['type'] = $data['type'];
         $insRes = $this->add($insData);
         /*查看分红比例 以及添加分红*/
         $inviter   =  is_inviter($data['user_id']);
