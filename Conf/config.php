@@ -86,5 +86,10 @@
         'SMS_USERID' => '233',
         'SMS_USERNAME' => 'ln_yqbdc',
         'SMS_PASSWORD' => 'lnkj123',
-
+        'ALIOSS_CONFIG' => [
+            'KEY_ID'=>'LTAIMbNQwSz9x52y',
+            'KEY_SECRET'=>'AwCIf43aeBhoZojudtMvfi0fVBOPbF',
+            'END_POINT'=>'oss-cn-shanghai.aliyuncs.com',
+            'BUCKET'=>'wangzhenyu'
+        ]
     );
