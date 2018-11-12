@@ -55,7 +55,7 @@ class UserAccountModel extends Model{
             if($userInfo['total_money'] < $data['money']){
                 return V('2','余额不足!');
             }
-            $changeDesc = '余额提现';
+            $changeDesc = '余额提现(待审核)';
             $type = 1;
             $saveData['total_money'] = array('exp', "total_money - ".$data['money']);
             $saveData['frozen_money'] = array('exp', "frozen_money +".$data['money']);
@@ -64,7 +64,7 @@ class UserAccountModel extends Model{
                 return V('2','余额不足!');
             }
             $type = 8;
-            $changeDesc = '分红提现';
+            $changeDesc = '分红提现(待审核)';
             $saveData['bonus_money'] = array('exp', "bonus_money - ".$data['money']);
             $saveData['frozen_money'] = array('exp', "frozen_money +".$data['money']);
         }
@@ -79,6 +79,8 @@ class UserAccountModel extends Model{
         }
         /*添加提现信息*/
         $insData['user_id'] = $data['user_id'];
+        $insData['drawmoney'] = $data['money'];
+        $insData['account_fee'] = $serviceCharge;
         $insData['money'] = $data['money'] * (1 - $serviceCharge);
         $insData['brank_no'] = $userInfo['alipay_num'];
         $insData['brank_user_name'] = $userInfo['alipay_name'];

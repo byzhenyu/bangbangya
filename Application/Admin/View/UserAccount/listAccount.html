@@ -39,16 +39,13 @@
                             <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
                                 <thead>
                                 <tr>
-                                    <th><input class="check-all" type="checkbox"></th>
-                                    <th width="50">ID</th>
-                                    <th width="10%">申请人</th>
-                                    <th width="10%">类型</th>
-                                    <th width="10%">金额</th>
-                                    <th width="12%">支付宝</th>
-                                    <th width="8%">真实姓名</th>
-                                    <th width="8%">处理人</th>
-                                    <th width="10%">处理时间</th>
-                                    <th width="10%">添加时间</th>
+                                    <th width="5%"><input class="check-all" type="checkbox"></th>
+                                    <th width="5%">ID</th>
+                                    <th width="10%" >类型</th>
+                                    <th width="10%">用户名称</th>
+                                    <th width="10%">打款金额</th>
+                                    <th width="10%">手续费</th>
+                                    <th width="10%">提现金额</th>
                                     <th width="8%">审核状态</th>
                                     <th width="20%">操作</th>
                                 </tr>
@@ -68,18 +65,8 @@
                                             </if>
                                         </td>
                                         <td>{:fen_to_yuan($v['money'])}</td>
-                                        <td>{$v['alipay_num']}</td>
-                                        <td>{$v['alipay_name']}</td>
-                                        <td>{$v['admin_user']}</td>
-                                        <td>
-                                            <if condition="$v['admin_time'] eq '0'">
-                                                <else/>
-                                                {:time_format($v['admin_time'])}
-                                            </if>
-                                        </td>
-                                        <td class="center">
-                                            {:time_format($v['create_time'])}
-                                        </td>
+                                        <td>{$v['account_fee']}</td>
+                                        <td>{:fen_to_yuan($v['drawmoney'])}</td>
                                         <td>
                                             <switch name="v['state']">
                                                 <case value="0">待处理</case>

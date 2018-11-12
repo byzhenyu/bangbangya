@@ -34,26 +34,25 @@
                                 <td>{$userInfo['user_name']}</td>
                             </tr>
                             <tr>
-                                <td><div align="right"><strong>金额：</strong></div></td>
+                                <td><div align="right"><strong>打款金额：</strong></div></td>
                                 <td>{:fen_to_yuan($userInfo['money'])}</td>
                             </tr>
                             <tr>
-                                <td><div align="right"><strong>提现账号：</strong></div></td>
+                                <td><div align="right"><strong>手续费：</strong></div></td>
+                                <td>{$userInfo['account_fee']}</td>
+                            </tr>
+                            <tr>
+                                <td><div align="right"><strong>提现金额：</strong></div></td>
+                                <td>{:fen_to_yuan($userInfo['drawmoney'])}</td>
+                            </tr>
+                            <tr>
+                                <td><div align="right"><strong>支付宝账号：</strong></div></td>
                                 <td>{$userInfo['brank_no']}</td>
                             </tr>
                             <tr>
-                                <td><div align="right"><strong>开户行：</strong></div></td>
-                                <td>{$userInfo['brank_name']}</td>
-                            </tr>
-                            <tr>
-                                <td><div align="right"><strong>持卡人姓名：</strong></div></td>
+                                <td><div align="right"><strong>支付宝姓名：</strong></div></td>
                                 <td>{$userInfo['brank_user_name']}</td>
                             </tr>
-                            <tr>
-                                <td><div align="right"><strong>用户备注：</strong></div></td>
-                                <td>{$userInfo['user_note']}</td>
-                            </tr>
-
                             <if condition="$userInfo['state'] eq '0'">
                                 <else/>
                                 <tr>
@@ -75,11 +74,6 @@
                                     </td>
                                 </tr>
                             </if>
-
-                            <tr>
-                                <td><div align="right"><strong>支付流水号：</strong></div></td>
-                                <td>{$userInfo['trade_no']}</td>
-                            </tr>
                             <tr>
                                 <td><div align="right"><strong>审核状态：</strong></div></td>
                                 <td>
@@ -91,7 +85,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><div align="right"><strong>添加时间：</strong></div></td>
+                                <td><div align="right"><strong>申请时间：</strong></div></td>
                                 <td>{:time_format($userInfo['add_time'])}</td>
                             </tr>
 

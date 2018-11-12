@@ -48,7 +48,7 @@ class PayController  extends CommonController{
         $total_money = $userModel->getUserField($where, 'total_money');
         $where['change_type'] = 0;
         $payRecord = getAccount($where);
-        $where['change_type'] = array('IN','1,3,6');
+        $where['change_type'] = array('IN','1,3,5,6,7,9,10');
         $expendRecord = getAccount($where);
         $this->assign('total_money', $total_money);
         $this->assign('payRecord',$payRecord);

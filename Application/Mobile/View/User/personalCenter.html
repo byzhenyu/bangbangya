@@ -12,13 +12,13 @@
         <p class="mui-title">个人中心</p>
         <a onclick="logOut()">退出</a>
     </header>
-
     <div class="personal-center-top">
         <div class="personal-center-info">
             <div class="personal-center-left">
                 <div class="personal-head-img">
-                    <img src="__PUBLIC__/mobile/images/QR-code.png">
-                    <img src="__PUBLIC__/mobile/images/my_icon_edit.png">
+                    <img id="head_pic" src="{$userList.head_pic}">
+                    <img onclick="uploadsImg()" src="__PUBLIC__/mobile/images/my_icon_edit.png">
+                    <!--<input type="file" id="upload_file" style="display: none;" accept="image/jpeg, image/gif" />-->
                 </div>
                 <div class="persoanl-name-id">
                     <p>{$userList.nick_name}</p>
@@ -26,13 +26,13 @@
                 </div>
             </div>
             <if condition="$userList['is_accounts'] eq  0 ">
-                <a onclick="securityDeposit({$userList['shop_accounts']})">
+                <a  href="{:U('User/securityDeposit')}">
                     <div class="personal-application-protect">
                         <p>申请</p>
                     </div>
                 </a>
                 <else />
-                <a onclick="securityDeposit({$userList['shop_accounts']})">
+                <a  href="{:U('User/securityDeposit')}">
                     <div class="personal-application-protect">
                         <p>保障金</p>
                     </div>
@@ -238,6 +238,10 @@
 </footer>
 <script src="__PUBLIC__/mobile/js/mui.min.js"></script>
 <script src="__PUBLIC__/mobile/js/url.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload/ajaxupload.js?v=1.0"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload/imgupload.js?v=1.0"></script>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
     mui.init();
     function logOut()
@@ -271,13 +275,5 @@
 
         })
     }
-    function securityDeposit($shop_accounts)
-    {
-         mui.openWindow({
-            url:url + 'Mobile/User/securityDeposit/shop_accounts/' + $shop_accounts,
-        });
-    }
 </script>
-<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
 </html>

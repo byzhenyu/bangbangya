@@ -4,20 +4,25 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>首页</title>
     <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link href="__PUBLIC__/mobile/css/swiper.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
 </head>
 <body style="background: #f6f6f6">
     <header class="mui-bar mui-bar-nav help-duck-head">
         <a></a>
-        <p class="mui-title">帮帮鸭</p>
+        <p class="mui-title" >帮帮鸭</p>
         <a></a>
     </header>
     <div class="index-top">
-    <foreach name="bannerList" item="v">
-        <a href="$v.jump_url">
-                <img src="{$v.img_url}">
-        </a>
-    </foreach>
+        <div class="swiper-container swiper-slide-imgs ">
+            <div class="swiper-wrapper">
+                <foreach name="bannerList" item="v">
+                    <div    class="swiper-slide swiper-slide-img">
+                    <img src="{$v.img_url}">
+                    </div>
+                </foreach>
+            </div>
+        </div>
     </div>
     <div class="index-content">
         <a class="index-content-single" href="{:U('Task/listTask')}">
@@ -82,8 +87,16 @@
 
 </body>
 <script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/swiper.min.js"></script>
 <script type="text/javascript" charset="utf-8">
     mui.init();
+    var mySwiper = new Swiper('.swiper-container', {
+        autoplay: {
+            disableOnInteraction: false,
+        },
+        loop: true,
+        // disableOnInteraction:flase,
+    })
 </script>
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>

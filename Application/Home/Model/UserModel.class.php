@@ -92,7 +92,7 @@ class UserModel extends Model
      * @param $user_id
      * @return   str
      */
-    function createCode($user_id){
+    public function createCode($user_id){
 
         static $source_string = 'E5FCDG3HQA4B1NOPIJ2RSTUV67MWX89KLYZ';
 
@@ -122,7 +122,7 @@ class UserModel extends Model
      * @param $code  
      * @return   user_id
      */
-    function decode($code) {
+   public function decode($code) {
 
     static $source_string = 'E5FCDG3HQA4B1NOPIJ2RSTUV67MWX89KLYZ';
 

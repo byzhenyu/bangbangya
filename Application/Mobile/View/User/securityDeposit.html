@@ -8,7 +8,7 @@
 </head>
 <body style="background: #f6f6f6;">
     <header class="mui-bar mui-bar-nav help-duck-head">
-        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <a class=" mui-icon mui-icon-left-nav mui-pull-left" href="{:U('User/personalCenter')}"></a>
         <p class="mui-title">保证金</p>
         <a></a>
     </header>
@@ -25,7 +25,6 @@
             </div>
         </div>
     </div>
-
     <div class="security-deposit-content">
         <span>保证金说明</span>
        <p>
@@ -49,8 +48,9 @@
 <script type="text/javascript" charset="utf-8">
        function pay(){
            mui.openWindow({
-               url:url + '/mobile/pay/topUpsPage',
+               url:url + '/mobile/User/accountsUpsPage',
            });
        }
+
 </script>
 </html>

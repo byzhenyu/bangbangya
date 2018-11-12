@@ -86,6 +86,10 @@
             mui.toast('余额不足');
             return
         }
+        if (money  > 200) {
+            mui.toast('提现最大额度200元');
+            return
+        }
         mui.confirm('您是否提现' + money + '元', '提示', '', function (e) {
             if (e.index == 1){
                 mui.ajax(url + 'Mobile/Pay/withdraw', {

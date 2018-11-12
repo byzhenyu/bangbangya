@@ -35,7 +35,7 @@ class UserController extends CommonController {
     * @return mixed
     */
     public function securityDeposit(){
-        $shop_accounts = I('shop_accounts');
+        $shop_accounts = D('Home/Shop')->where('user_id = '.UID)->getField('shop_accounts');
         /*是否解冻*/
         if($shop_accounts > 0){
             $unfreeze = 1;
@@ -44,6 +44,34 @@ class UserController extends CommonController {
         }
         $this->assign('unfreeze',$unfreeze);
         $this->assign('shop_accounts',$shop_accounts);
+        $this->display();
+    }
+    /**
+    * @desc  充值保证金
+    * @param  UID
+    * @return mixed
+    */
+    public function accountsUpsPage(){
+        $shopModel = D('Home/Shop');
+        if(IS_POST){
+            $data = I('post.', 1);
+            $res  =  user_money(UID, $data['shop_accounts']);
+            if(!$res){
+                $this->ajaxReturn(V(2, '余额不足'));
+            }else{
+                M()->startTrans();
+                $userRes = $this->user->where('user_id = '.UID)->setDec('total_money',$data['shop_accounts']);
+                $shopRes = $shopModel->where('user_id = '.UID)->setInc('shop_accounts',$data['shop_accounts']);
+                if($userRes && $shopRes){
+                    account_log( UID, $data['shop_accounts'], 5 , '缴纳保证金',UID);
+                    M()->commit();
+                    $this->ajaxReturn(V(1, '保证金缴纳成功'));
+                }else{
+                    M()->rollback();
+                    $this->ajaxReturn(V(0, $this->user->getError()));
+                }
+            }
+        }
         $this->display();
     }
     /**
@@ -90,5 +118,44 @@ class UserController extends CommonController {
          $this->assign('shop_type', $shop_type);
          $this->assign('vip', $vip);
          $this->display();
+      }
+      /**
+      * @desc  上传用户头像  OSS
+      * @return url
+      */
+      public function uploadImg(){
+        $config = array(
+            'rootPath' => '.'.C('UPLOAD_URL').'head_pic/',
+            'savePath' => '',
+            'maxSize' => C('UPLOAD_SIZE'),
+            'exts' => 'jpg,jpeg,png,gif',
+        );
+
+        $Upload = new \Think\Upload($config);
+        $info = $Upload->upload();
+
+        if ($info === false) {
+            $this->ajaxReturn(V(0, $Upload->getError()));
+        } else {
+            vendor('Alioss.autoload');
+            $config = C('ALIOSS_CONFIG');
+
+            $oss=new \OSS\OssClient($config['KEY_ID'],$config['KEY_SECRET'],$config['END_POINT']);
+            $bucket=$config['BUCKET'];
+
+            // 返回成功信息
+            foreach($info as $file){
+                $path = '.'.C('UPLOAD_URL').'head_pic/'.$file['savepath'].$file['savename'];
+                $oss_path = trim($path, './');
+                $local_path = trim($path, '.');
+                $oss->uploadFile($bucket,$oss_path,$path);
+
+                //unlink($path);
+                $data['nameosspath'] ='http://'.$bucket.'.'.$config['END_POINT'].'/'.$oss_path;
+                $data['name'] =$local_path;
+
+            }
+            $this->ajaxReturn(V(1, '更换头像成功', $data));
+        }
       }
 }
