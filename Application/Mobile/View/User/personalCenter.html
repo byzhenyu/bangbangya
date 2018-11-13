@@ -5,6 +5,26 @@
     <title>个人中心</title>
     <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+    <style type="text/css">
+        #upload{
+            border: none;
+            z-index: 99;
+            position: absolute;
+            overflow: hidden;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            width: 100px;
+            height: 100px;
+            top: 0;
+            left: 0;
+        }
+        #small_pic{
+            position: absolute;
+            top: 50px;
+            width: 20px;
+            left: 50px;
+        }
+    </style>
 </head>
 <body>
     <header class="mui-bar mui-bar-nav help-duck-head">
@@ -18,17 +38,8 @@
             <div class="personal-center-left">
                 <div class="personal-head-img">
                     <img id="head_pic" src="{$userList.head_pic}">
-                    <img src="__PUBLIC__/mobile/images/my_icon_edit.png">
-                    <input type="file" id="upload" style="border: none;
-            z-index: 99;
-            position: absolute;
-            overflow: hidden;
-            opacity: 0;
-            -ms-filter: 'alpha(opacity=0)';
-            width: 100px;
-            height: 100px;
-            top: 0;
-            left: 0;" accept="image/jpeg, image/gif" />
+                    <img id="small_pic" src="__PUBLIC__/mobile/images/my_icon_edit.png">
+                    <input type="file" id="upload" accept="image/jpeg, image/gif" />
                 </div>
                 <div class="persoanl-name-id">
                     <p>{$userList.nick_name}</p>
@@ -287,17 +298,13 @@
 
         })
     }
-
     $('#upload').fileupload({
-        url: "{:U('Task/uploadImg')}",
+        url: "{:U('User/uploadImg')}",
         dataType: 'json',
         done: function (e, data) {
-           console.log(data.result.data.nameosspath);
+            $('#head_pic').attr('src',data.result.data.nameosspath);
+            mui.toast('更换成功');
         }
     });
-
-
-
-
 </script>
 </html>
