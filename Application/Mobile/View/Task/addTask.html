@@ -59,6 +59,7 @@
     </style>
     <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload/ajaxupload.js?v=1.0"></script>
+
     <script type="text/javascript" src="__PUBLIC__/fileupload/js/vendor/jquery.ui.widget.js"></script>
     <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.iframe-transport.js"></script>
     <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.fileupload.js"></script>
@@ -112,10 +113,9 @@
     </header>
     <form action="{:U('addTask')}" method="post" class="ajaxFrom">
 
-
         <div class="task-type-title">
             <span>选择类型</span>
-            <a href="task-type-explain.html"><p>类别说明</p></a>
+            <a href="{:U('Article/articleDetail',array('id'=>2))}"><p>类别说明</p></a>
         </div>
 
         <div class="task-type-list">
@@ -221,7 +221,7 @@
                 </volist>
             </ul>
         </div>
-        <div class="mui-table-view-cell mui-collapse task-operation-explain">
+        <div class="mui-table-view-cell mui-collapse task-operation-explain <if condition='$id neq 0'> mui-active <else/> </if>">
             <a class="mui-navigate-right">操作说明</a>
             <div class="mui-collapse-content">
                 <div class="step-content">
@@ -272,9 +272,9 @@
 
         <div class="release-task-agree">
             <label class="release-task-check">
-                <input name="task[agree]" class="check-task" type="checkbox" checked>
+                <input name="task[agree]" class="check-task" type="checkbox" id="agree" checked>
                 <i></i>
-                <span>我已阅读、理解并同意<i>《发布规则》</i>的全部内容</span>
+                <span>我已阅读、理解并同意<a href="{:U('Article/articleDetail',array('id'=>3))}">《发布规则》</a>的全部内容</span>
             </label>
         </div>
 
@@ -291,8 +291,7 @@
 
 <script src="__PUBLIC__/mobile/js/mui.min.js"></script>
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
-<script type="text/javascript" src="__ADMIN__/js/common.js?v=1.01"></script>
+<script type="text/javascript" src="__STATIC__/js/ajaxForm.js"></script>
 <script type="text/javascript" src="__ADMIN__/layDate-v5.0.9/laydate/laydate.js"></script>
 
 <script type="text/javascript" charset="utf-8">
@@ -366,7 +365,7 @@
             var img_n = $('#img'+(base-1)).val();
             console.log(text_n + '--------'+ img_n);
             if (text_n == '' && img_n == '') {
-                layer.msg('步骤不能为空');
+                mui.toast('步骤不能为空');
                 return false;
             }
         }
@@ -417,7 +416,7 @@
         var price =  +$('#price').val();
         var task_num = +$('#task_num').val();
         if (task_num < limit_num) {
-            toastr('最小数量为'+limit_num);
+            mui.toast('最小数量为'+limit_num);
             $('#task_num').val('');
             return false;
         }
@@ -432,7 +431,7 @@
         var task_num = $('#task_num').val();
 
         if (price < limit_money) {
-            toastr('最小金额为'+limit_money+ '元');
+            mui.toast('最小金额为'+limit_money+ '元');
             $('#price').val('');
             return false;
         }
@@ -449,15 +448,20 @@
         $('#limit_money').html(limit_money);
         $('#limit_num').html(limit_num);
     });
-    
+
     function validate() {
         var task_title = $('#task_title').val();
         if (task_title == '') {
-            toastr('标题不能为空');
+            mui.toast('标题不能为空');
             return false;
         }
         if ($('#end_time').val() == '') {
-            toastr('请选择结束时间');
+            mui.toast('请选择结束时间');
+            return false;
+        }
+        var agree = $("#agree").attr('checked');
+        if (!agree) {
+            mui.toast('请勾选发布协议');
             return false;
         }
 

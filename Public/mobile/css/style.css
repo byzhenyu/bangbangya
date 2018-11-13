@@ -1026,7 +1026,7 @@ input[type="checkbox"]:checked + i {
 }
 
 .task-basic-row div input {
-    width: 3rem;
+    width: 3.5rem;
     padding: 0;
 }
 

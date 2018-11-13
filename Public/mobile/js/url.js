@@ -1,1 +1,1 @@
-var url = 'http://bangbangya.com/';
+var url = 'http://www.bby.com/';

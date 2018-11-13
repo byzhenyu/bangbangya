@@ -231,14 +231,14 @@ class TaskController extends UserCommonController {
     public function oss_delet_object(){
 
         // 实例化oss类
-//        $files = I('img_src', '','trim');
-//        $object = explode('com/',$files)[1];
-//        vendor('Alioss.autoload');
-//        $config=C('ALIOSS_CONFIG');
-//        $oss=new \OSS\OssClient($config['KEY_ID'],$config['KEY_SECRET'],$config['END_POINT']);
-//        $bucket=$config['BUCKET'];
-//        // p($object);die();
-//        $test=$oss->deleteObject($bucket,$object);
+        $files = I('img_src', '','trim');
+        $object = explode('com/',$files)[1];
+        vendor('Alioss.autoload');
+        $config=C('ALIOSS_CONFIG');
+        $oss=new \OSS\OssClient($config['KEY_ID'],$config['KEY_SECRET'],$config['END_POINT']);
+        $bucket=$config['BUCKET'];
+        // p($object);die();
+        $test=$oss->deleteObject($bucket,$object);
         $this->ajaxReturn(V(1, '删除成功'));
     }
     /**
@@ -258,12 +258,21 @@ class TaskController extends UserCommonController {
     }
 
     public function del(){
-        $where['id'] = I('id', 0, 'intval');
-        $taskDel = $this->Task->where('id = '.$where['id'])->save(array('status' => 0));
-        if($taskDel){
+        $id = I('id', 0 , 'intval');
+        $taskDel = M('Task')->where(array('id'=>$id))->save(array('status' => 0));
+        if ($taskDel !== false) {
             $this->ajaxReturn(V(1, '删除成功'));
         }
-        $this->ajaxReturn(V(0, $this->Task->getError()));
+        $this->ajaxReturn(V(0, '删除失败'));
+    }
+    //发布
+    public function changeShowStatus() {
+        $id = I('id', 0, 'intval');
+        $where['id'] = array('eq', $id);
+        $taskModel = M('Task');
+        $is_show = $taskModel->where($where)->getField('is_show');
+        //$taskModel->where($where)->setField('',$is)
+
     }
     /**
     * @desc 暂停任务
