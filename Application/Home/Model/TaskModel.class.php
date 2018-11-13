@@ -17,14 +17,20 @@ class TaskModel extends Model{
     protected $_validate = array(
         array('title', 'require', '标题不能为空！', 1, 'regex', 3),
         array('title', 'checkTitleLength', '标题不能超过30个字！', 2, 'callback', 3),
-        array('title', 'checkTitle', '标题重复！', 1, 'callback', 3),
-        array('category_id', 'require', '任务分类不能为空！', 1, 'regex', 3),
+        array('category_id', 'number', '任务分类不能为空！', 1, 'regex', 3),
         array('mobile_type', 'require', '支持设备不能为空！', 1, 'regex', 3),
         array('end_time', 'require', '任务截止时间不能为空！', 1, 'regex', 3),
-        array('price', 'number', '任务价格必须是一个数字！', 1, 'regex', 3),
+        array('price', 'require', '任务价格不能为空！', 1, 'regex', 3),
         array('task_num', 'number', '任务数量必须是一个数字！', 1, 'regex', 3),
-        array('total_price', 'number', '任务总金额不能为空！', 1, 'regex', 3)
     );
+
+    protected function checkTitleLength($data) {
+        $length = mb_strlen($data, 'utf-8');
+        if ($length > 30) {
+            return false;
+        }
+        return true;
+    }
     /**
      * 接单赚钱_任务列表
      * @param $where
@@ -69,14 +75,29 @@ class TaskModel extends Model{
         if(is_null($field)){
             $field = $this->findFields;
         }
-        $info = $this->field($field)->where(array('id = '.$id))->find();
-        $info['taskStep'] = D('Home/TaskStep')->where('task_id = '.$id)->select();
+        $info = $this->field($field)->where(array('id'=>$id))->find();
+        $taskStep = D('Home/TaskStep')->where(array('task_id'=>$id))->select();
+        $j = 0;
+        $i = 0;
+        foreach ($taskStep as $k=>$v) {
+            if ($v['type'] == 2) {
+
+                $info['check_info'][$j] = $v['step_img'];
+                $j++;
+            } else if($v['type'] == 1) {
+
+                $info['step_info'][$i]['step_img'] = $v['step_img'];
+                $info['step_info'][$i]['step_text'] = $v['step_text'];
+                $i++;
+            }
+        }
         return $info;
     }
     //添加操作前的钩子操作
     protected function _before_insert(&$data, $option){
         $data['audit_status'] = 0;
         $data['add_time'] = NOW_TIME;
+
     }
     /**
     * @desc 接单_任务详情

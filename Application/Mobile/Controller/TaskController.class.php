@@ -99,26 +99,32 @@ class TaskController extends UserCommonController {
 
         if (IS_POST) {
             $data = I('post.', '');
-            //p($data);die();
+
             $taskData = $data['task']; //任务
-            $step0Data = $data['task'][0]; //验证图
-            $step1Data = $data['task'][1]; //步骤
+            $step0Data = $data['step'][0]; //验证图
+            $step1Data = $data['step'][1]; //步骤
+            $taskData['end_time'] = strtotime($taskData['end_time']);
+            $taskData['price'] = yuan_to_fen($taskData['price']);
+
+            $taskData['total_price'] = ($taskData['price'] * $taskData['task_num'] * (1 + ($orderFee/100)));
+            $taskData['task_zong'] = $taskData['task_num'];
             if ($taskModel->create($taskData) ===false) {
                 $this->ajaxReturn(V(0, $taskModel->getError()));
             }
             M()->startTrans();
+            $task_id = $id;
             if ($id > 0) {
-                $res = $taskModel->save($taskData);
-                //删除旧的图片
+                $res = $taskModel->where(array('id'=>$id))->save($taskData);
+
                 if ($res === false) {
                     M()->rollback();
                     $this->ajaxReturn(V(0, '任务保存失败'));
                 }
                 $taskStepModel->where(array('task_id'=>$id))->delete();
                 //处理步骤表数据
-                $task_id = $id;
+
             } else {
-                $task_id = $taskModel->add();
+                $task_id = $taskModel->add($taskData);
                 if (!$task_id) {
                     M()->rollback();
                     $this->ajaxReturn(V(0, '任务添加失败'));
@@ -129,30 +135,31 @@ class TaskController extends UserCommonController {
                 $val['task_id'] = $task_id;
                 $val['step_text'] = '';
                 $val['type'] = 2;
+
             }
             foreach ($step1Data as &$val) {
                 $val['task_id'] = $task_id;
                 $val['type'] = 1;
+            }
+            $step0Res = $taskStepModel->addAll($step0Data);
 
-            }
-            if ($taskStepModel->create($step0Data) ===false) {
-                M()->rollback();
-                $this->ajaxReturn(V(0, $taskStepModel->getError()));
-            }
-            $step0Res = $taskStepModel->add($step0Data);
-            if ($taskStepModel->create($step1Data, 4) ===false) {
-                M()->rollback();
-                $this->ajaxReturn(V(0, $taskStepModel->getError()));
-            }
-            $step1Res = $taskStepModel->add($step1Data);
-            if ($step0Res ===false || $step1Res ===false) {
+            $step1Res = $taskStepModel->addAll($step1Data);
+            if ($step0Res === false || $step1Res === false) {
                 M()->rollback();
                 $this->ajaxReturn(V(0, '验证图及步骤保存失败'));
             }
+            M()->commit();
+            $this->ajaxReturn(V(1, '操作成功'));
 
         }
 
         $taskInfo = $taskModel->getMyTaskDetail($id);
+
+        $base = $taskInfo['step_info'] ? count($taskInfo['step_info']) : 0;
+        $this->count = $taskInfo['check_info'] ? count($taskInfo['check_info']) : 0;
+
+        $this->base = $base;
+        $this->assign('id', $id);
         $this->assign('orderFee',$orderFee);
         $this->assign('taskInfo', $taskInfo);
         $this->assign('userMoney', $userMoney);
@@ -209,7 +216,7 @@ class TaskController extends UserCommonController {
                 $local_path = trim($path, '.');
                 $oss->uploadFile($bucket,$oss_path,$path);
 
-                //unlink($path);
+                unlink($path);
                 $data['nameosspath'] ='http://'.$bucket.'.'.$config['END_POINT'].'/'.$oss_path;
                 $data['name'] =$local_path;
 
@@ -239,20 +246,17 @@ class TaskController extends UserCommonController {
      * @param UID
      * @return array
      */
-    public function myTask(){
+    public function myTask() {
         $where['t.user_id'] = UID;
         $field = 't.id,t.end_time, t.top,t.top_time , t.recommend, t.re_time, t.title, t.audit_info,t.price,t.task_zong, t.task_num, t.total_price, t.audit_status, t.is_show, t.add_time, c.category_name ';
-        $taskList = $this->Task->getMyTask($where, $field);
+        $taskList = D('Home/Task')->getMyTask($where, $field);
         $total_money = D('Home/User')->where('user_id = '.UID)->getField('total_money');
+
         $this->assign('taskList', $taskList);
         $this->assign('total_money', $total_money);
         $this->display();
     }
-    /**
-     * @desc  我的发布
-     * @param UID
-     * @return json
-     */
+
     public function del(){
         $where['id'] = I('id', 0, 'intval');
         $taskDel = $this->Task->where('id = '.$where['id'])->save(array('status' => 0));
@@ -408,4 +412,5 @@ class TaskController extends UserCommonController {
             $this->ajaxReturn(V(0, $this->Task->getError()));
         }
     }
+
 }

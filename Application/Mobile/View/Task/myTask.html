@@ -83,7 +83,7 @@
                 <if condition="$v['is_show'] eq 0">
                     <div class="my-release-btns">
                         <input id="del-btn" type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn" onclick="del({$v['id']})" value="删除" />
-                        <a href="modify-release.html"><input type="button" class="mui-btn mui-btn-outlined my-release-btn modify-btn" value="修改"/></a>
+                        <a href="{:U('addTask', array('id'=>$v['id']))}"><input type="button" class="mui-btn mui-btn-outlined my-release-btn modify-btn" value="修改"/></a>
                         <input type="button" class="mui-btn mui-btn-outlined my-release-btn release-btn" onclick="fabu({$v['id']})" value="发布"/>
                     </div>
                       <else />
