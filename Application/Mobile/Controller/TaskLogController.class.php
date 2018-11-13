@@ -143,20 +143,15 @@ class TaskLogController extends CommonController {
          $where['task_id'] = $task_id;
          $field =  'u.user_id, u.head_pic, u.nick_name, t.task_id,t.id as tid, t.valid_info, t.valid_img, t.valid_status  ';
          $taskLogInfo = $this->TaskLogModel->auditTask($where, $field);
-         if(count($taskLogInfo['list']) == 0){
-                 $none = 1;
-         }else{
-                 $none = 0;
-         }
          var_dump($none);
          p($taskLogInfo);
          $taskAudit = $this->TaskLogModel->taskAudit($task_id);
          p($taskAudit);
+         p($taskLogInfo['count']);
          p($p);
          $this->assign('taskAudit',$taskAudit);
          $this->assign('task_id',$task_id);
          $this->assign('p',$p);
-         $this->assign('none',$none);
          $this->assign('taskLogInfo',$taskLogInfo);
          $this->display();
      }

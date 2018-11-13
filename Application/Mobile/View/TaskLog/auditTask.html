@@ -36,7 +36,6 @@
 <div class="release-audi-num">
     <p>已审核：<span>{$taskAudit[is_audit]}</span></p>
     <p>未审核：<span>{$taskAudit[no_audit]}</span></p>
-    <p>未审核：<span>{$taskLogInfo['page']}</span></p>
 </div>
 <if condition="$taskLogInfo['list'][0]['valid_status'] eq 2">
     <div class="unqualified-reply">
@@ -66,8 +65,9 @@
                     <p>ID <span>{$taskLogInfo['list'][0]['user_id']}</span></p>
                 </div>
             </div>
-            <if condition="$none neq 1">
+            <if condition="$p lt $taskLogInfo['count']">
                 <a href="{:U('TaskLog/auditTask',array('task_id' => $taskLogInfo['list'][0]['task_id'],'p' => $p + 1 ))}"><img src="__PUBLIC__/mobile/images/mypublish_check_icon_next.png"></a>
+                <else /> <a onclick="none()"><img src="__PUBLIC__/mobile/images/mypublish_check_icon_next.png"></a>
             </if>
         </div>
         <div class="unqualified-img">
@@ -83,7 +83,7 @@
 </div>
 <if condition="$taskLogInfo['list'][0]['valid_status'] eq 1">
     <div class="unqualified-btns">
-        <button id="unqualified-boom-btn" onclick="" >不合格</button>
+        <button id="unqualified-boom-btn" onclick="fail({$taskLogInfo['list'][0]['tid']})" >不合格</button>
         <button id="qualified-boom-btn" onclick="pass({$taskLogInfo['list'][0]['tid']})">合格</button>
     </div>
 </if>
@@ -174,6 +174,9 @@
                 mui.toast('您取消了操作');
             }
         })
+    }
+    function none(){
+        mui.toast('没有数据了!');
     }
 </script>
 </html>

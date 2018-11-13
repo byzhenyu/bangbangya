@@ -199,13 +199,14 @@ class TaskLogModel extends  Model{
               if(strpos($value['valid_img'],',')  !== false ){
                     $list[$key]['valid_img']   =   explode(',',$value['valid_img']);
               }else{
-                    $list[$key]['valid_img'][0]  = $value['valid_img'];
+                    $list[$key]['valid_img']  = array($value['valid_img']);
               }
               $list[$key]['message'] = $chatModel ->where('user_id = '.$value['user_id'].' and task_user_id = '.UID)->select();
         }
         return array(
             'list' => $list,
-            'page' => $page['page']
+            'page' => $page['page'],
+            'count'=> $count
         );
     }
     /**
