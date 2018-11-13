@@ -36,6 +36,7 @@
 <div class="release-audi-num">
     <p>已审核：<span>{$taskAudit[is_audit]}</span></p>
     <p>未审核：<span>{$taskAudit[no_audit]}</span></p>
+    <p>未审核：<span>{$taskLogInfo['page']}</span></p>
 </div>
 <if condition="$taskLogInfo['list'][0]['valid_status'] eq 2">
     <div class="unqualified-reply">
