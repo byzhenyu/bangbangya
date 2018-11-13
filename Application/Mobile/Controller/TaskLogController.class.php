@@ -129,5 +129,60 @@ class TaskLogController extends CommonController {
             $this->ajaxReturn(V(0, $this->TaskLogModel->getDbError()));
         }
      }
+     /**
+     * @desc  任务审核
+     * @param  task_id
+     * @return mixed
+     */
+     public function auditTask(){
+         $task_id = I('task_id', 0, 'intval');
+         $p = I('p', 1, 'intval');
+         $where['task_id'] = $task_id;
+         $field =  'u.user_id, u.head_pic, u.nick_name, t.task_id,t.id as tid, t.valid_info, t.valid_img, t.valid_status  ';
+         $taskLogInfo = $this->TaskLogModel->auditTask($where, $field);
+         p($taskLogInfo);
+         $taskAudit = $this->TaskLogModel->taskAudit($task_id);
+         p($taskAudit);
+         $this->assign('taskAudit',$taskAudit);
+         $this->assign('task_id',$task_id);
+         $this->assign('p',1);
+         $this->assign('taskLogInfo',$taskLogInfo);
+         $this->display();
+     }
+     /**
+     * @desc  任务通过
+     * @param  tasklog_id
+     * @return mixed
+     */
+     public function pass(){
+         $tasklog_id = I('id', 0, 'intval');
+         $tasklogInfo = $this->TaskLogModel->where('id = '.$tasklog_id)->find();
+         $res = user_money( UID, $tasklogInfo['task_price']);
+         if(!$res){
+             $this->ajaxReturn(V(2, '您的余额不足,请充值审核!'));
+         }else{
+             $userModel = D('Home/User');
+             $ShopModel = D('Home/Shop');
+             M()->startTrans();
+             $userModel->where('user_id = '.UID)->setDec('total_money',$tasklogInfo['task_price']);
+             account_log( UID,$tasklogInfo['task_price'],3,'任务结算',$tasklog_id);
+             $ShopModel->where('user_id = '.UID)->setInc('vol');
+             $taskUser = array(
+                 'task_suc_money' => array('exp','task_suc_money + '.$tasklogInfo['task_price']),
+                 'task_zong' => array('exp','task_zong + '.$tasklogInfo['task_price']),
+             );
+             $userModel->where('user_id = '.$tasklogInfo['user_id'])->save($taskUser);
+             account_log($tasklogInfo['user_id'], $tasklogInfo['task_price'], 4,'完成任务', $tasklog_id);
+             $tasklogRes = $this->TaskLogModel->where('id = '.$tasklog_id)->save(array('valid_status' => 3));
+             if($tasklogRes){
+                 M()->commit();
+                 $this->ajaxReturn(V(1, '完成'));
+             }else{
+                 M()->rollback();
+                 $this->ajaxReturn(V(2, '失败'));
+             }
+             $this->ajaxReturn(V(0, $this->TaskLogModel->getError()));
+         }
+     }
 }
 

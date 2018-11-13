@@ -175,4 +175,50 @@ class TaskLogModel extends  Model{
          }
 
     }
+    /**
+     * @desc  任务审核详情
+     * @param  task_id
+     * @return mixed
+     */
+    public  function auditTask($where = [], $field = null, $sort = ''){
+        $where['t.valid_status']  = array('neq',0);
+        $count =  $this->alias('t')
+            ->join('__USER__ as u on u.user_id = t.user_id','LEFT')
+            ->where($where)
+            ->count();
+        $page = get_page($count, 1);
+        $list = $this->alias('t')
+            ->join('__USER__ as u on u.user_id = t.user_id','LEFT')
+            ->field($field)
+            ->where($where)
+            ->limit($page['limit'])
+            ->order($sort)
+            ->select();
+        $chatModel = D('Home/Chat');
+        foreach ($list as $key => $value){
+              if(strpos($value['valid_img'],',')  !== false ){
+                    $list[$key]['valid_img']   =   explode(',',$value['valid_img']);
+              }else{
+                    $list[$key]['valid_img'][0]  = $value['valid_img'];
+              }
+              $list[$key]['message'] = $chatModel ->where('user_id = '.$value['user_id'].' and task_user_id = '.UID)->select();
+        }
+        return array(
+            'list' => $list,
+            'page' => $page['page']
+        );
+    }
+    /**
+    * @desc  任务的审核的数量
+    * @param  $task_id
+    * @return mixed
+    */
+    public function taskAudit($task_id){
+        $where['task_id'] = $task_id;
+        $where['valid_status'] = array('in' ,'2,3');
+        $taskAudit['is_audit'] = $this->where($where)->count();
+        $where['valid_status'] = 1 ;
+        $taskAudit['no_audit'] = $this->where($where)->count();
+        return $taskAudit;
+    }
 }

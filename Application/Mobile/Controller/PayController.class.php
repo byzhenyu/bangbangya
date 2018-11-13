@@ -48,7 +48,7 @@ class PayController  extends CommonController{
         $total_money = $userModel->getUserField($where, 'total_money');
         $where['change_type'] = 0;
         $payRecord = getAccount($where);
-        $where['change_type'] = array('IN','1,3,5,6,7,9,10');
+        $where['change_type'] = array('IN','1,3,5,6,7,9,10,12');
         $expendRecord = getAccount($where);
         $this->assign('total_money', $total_money);
         $this->assign('payRecord',$payRecord);
@@ -137,5 +137,39 @@ class PayController  extends CommonController{
         $this->assign('tmoney',$tmoney);
         $this->assign('pmoney',$pmoney);
         $this->display();
+      }
+      /**
+      * @desc 保证金解冻
+      * @param  shop_accounts 保证金额
+      * @return mixed
+      */
+      public function unfreeze(){
+          $shop_accounts = I('shop_accounts', 0 , 'intval');
+          M()->startTrans();
+          $shopRes = D('Home/Shop')->where('user_id  = '.UID)->setDec('shop_accounts',$shop_accounts);
+          account_log(UID, $shop_accounts, 12 , '解冻保证金(待审核)',UID);
+          if(!$shopRes){
+              $this->ajaxReturn(V(2, '保证金不足'));
+          }
+          $userInfo = D('Home/User')->field('alipay_num, alipay_name')->where('user_id = '.UID)->find();
+          if($userInfo['alipay_num'] == ''  || $userInfo ['alipay_name'] == ''){
+              $this->ajaxReturn(V(3, '请绑定支付宝提现!'));
+          }
+          /*添加提现信息*/
+          $insData['user_id'] = UID;
+          $insData['drawmoney'] = $shop_accounts;
+          $insData['account_fee'] = 0.01;
+          $insData['money'] = $shop_accounts * 0.99;
+          $insData['brank_no'] = $userInfo['alipay_num'];
+          $insData['brank_user_name'] = $userInfo['alipay_name'];
+          $insData['type'] = 3;
+          $insRes = D('Home/UserAccount')->add($insData);
+          if($shopRes && $insRes){
+              M()->commit();
+              $this->ajaxReturn(V(1, '解冻成功'));
+          }else{
+              M()->rollback();
+              $this->ajaxReturn(V(2, '解冻失败'));
+          }
       }
 }

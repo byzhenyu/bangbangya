@@ -12,9 +12,9 @@
 namespace Mobile\Controller;
 use Common\Controller\UserCommonController;
 class TaskController extends UserCommonController {
-//    public function _initialize() {
-//        $this->Task = D("Home/Task");
-//    }
+    public function _initialize() {
+        $this->Task = D("Home/Task");
+    }
     /**
      * 首页接单信息页面
      * @param $UID 

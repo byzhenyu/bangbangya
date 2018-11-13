@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>审核</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+</head>
+<body>
+<header class="mui-bar mui-bar-nav help-duck-head">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <p class="mui-title">审核</p>
+    <a id="complaints-btn">投诉</a>
+</header>
+
+<div id="grap-order-gray" class="">
+    <div class="unqualified-window-boom" id="unqualified-window">
+        <div class="unqualified-boom-title">
+            <p>不合格原因</p>
+        </div>
+        <div class="unqualified-boom-reason">
+            <textarea rows="3" name="" placeholder="请输入不合格的原因"></textarea>
+        </div>
+        <div class="unqualified-boom-addimg">
+            <img  src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">
+            <p>上传相关截图说明</p>
+        </div>
+        <div class="unqualified-boom-btns">
+            <p id="unqualified-window-cel">取消</p>
+            <p id="unqualified-window-sure">确定</p>
+        </div>
+    </div>
+</div>
+
+<div class="release-audi-num">
+    <p>已审核：<span>{$taskAudit[is_audit]}</span></p>
+    <p>未审核：<span>{$taskAudit[no_audit]}</span></p>
+</div>
+<if condition="$taskLogInfo['list'][0]['valid_status'] eq 2">
+    <div class="unqualified-reply">
+        <div class="unqualified-info-talk">
+            <p>信息交流：</p>
+            <span>没有阅读详情</span>
+        </div>
+        <div class="unqualified-system-reply">
+            <span>阅读详情具体的界面是什么样的</span>
+        </div>
+        <div class="unqualified-user-reply">
+            <span>看我上传的截图</span>
+        </div>
+        <div class="unqualified-system-reply">
+            <span>可是我刷不出来这一页的内容</span>
+        </div>
+    </div>
+</if>
+<div class="unqualified-content">
+    <div class="unqualified-reson">
+        <div class="unqualified-user-info">
+            <a href="{:U('TaskLog/auditTask',array('task_id' => $taskLogInfo['list'][0]['task_id'],'p' => $p - 1 ))}"><img src="__PUBLIC__/mobile/images/mypublish_check_icon_previous.png"></a>
+            <div class="unqualified-user-center">
+                <img src="{$taskLogInfo['list'][0]['head_pic']}">
+                <div>
+                    <span>{$taskLogInfo['list'][0]['nick_name']}</span>
+                    <p>ID <span>{$taskLogInfo['list'][0]['user_id']}</span></p>
+                </div>
+            </div>
+            <a href="{:U('TaskLog/auditTask',array('task_id' => $taskLogInfo['list'][0]['task_id'],'p' => $p + 1 ))}"><img src="__PUBLIC__/mobile/images/mypublish_check_icon_next.png"></a>
+        </div>
+        <div class="unqualified-img">
+            <p class="font-audit">{$taskLogInfo['list'][0]['valid_info']}</p>
+            <foreach name="taskLogInfo['list'][0]['valid_img']" item="v">
+                   <img src="{$v}">
+            </foreach>
+            <php> $valid_status = ['待提交','待审核','不合格','已完成','已放弃']</php>
+            <p>{$valid_status[$taskLogInfo['list'][0]['valid_status']]}</p>
+        </div>
+    </div>
+
+</div>
+<if condition="$taskLogInfo['list'][0]['valid_status'] eq 1">
+    <div class="unqualified-btns">
+        <button id="unqualified-boom-btn" onclick="" >不合格</button>
+        <button id="qualified-boom-btn" onclick="pass({$taskLogInfo['list'][0]['tid']})">合格</button>
+    </div>
+</if>
+<!--<div class="unqualified-btns">-->
+    <!--<button id="unqualified-boom-btn">不合格</button>-->
+    <!--<button id="qualified-boom-btn">合格</button>-->
+<!--</div>-->
+
+</body>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/url.js"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+</script>
+<script>
+    //mui初始化
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+    document.getElementById("complaints-btn").addEventListener('tap', function(e) {
+        e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+        var btnArray = ['取消', '确定'];
+        mui.prompt('', '请输入投诉理由和内容', '投诉', btnArray, function(e) {
+            if (e.index == 0) {
+                // 点击了取消按钮
+            } else {
+                // 点击了确定按钮
+            }
+        })
+    });
+</script>
+<script>
+    function fail(task_id){
+        $("#unqualified-boom-btn").attr('name',task_id);
+        $("#grap-order-gray").addClass("mui-popup-backdrop mui-active");
+        $("#unqualified-window").css("display","block");
+    }
+    // $("#unqualified-boom-btn").on('tap', function () {
+    //     $("#grap-order-gray").addClass("mui-popup-backdrop mui-active");
+    //     $("#unqualified-window").css("display","block");
+    // })
+
+    $("#unqualified-window-cel").on('tap', function () {
+        $("#grap-order-gray").removeClass("mui-popup-backdrop mui-active");
+        $("#unqualified-window").css("display","none");
+    })
+
+    $("#unqualified-window-sure").on('tap', function () {
+        alert(2);
+    })
+    function pass(tid){
+       mui.confirm('是否通过这个任务', '提示', '', function(e) {
+            if (e.index == 1) {
+                mui.ajax(url + 'Mobile/TaskLog/pass',{
+                    data:{
+                          id : tid
+                    },
+                    dataType:'json',//服务器返回json格式数据
+                    type:'post',//HTTP请求类型
+                    timeout:10000,//超时时间设置为10秒；
+                    success:function(data){
+                        mui.toast(data['info']);
+                        // alert(JSON.stringify(data));
+                        if(data['status'] == 1){
+                            setTimeout(function(){
+                                window.location.reload()
+                            }, 500);
+                        }else if(data['status'] == 2){
+                            mui.confirm('您的余额不足,是否去充值?', '提示', '', function(e) {
+                                if (e.index == 1) {
+                                    mui.openWindow({
+                                        url:  url + 'Mobile/Pay/topUpsPage'
+                                    });
+                                }else{
+                                    mui.toast('您取消了操作');
+                                }
+                            });
+                        }
+                    },
+                    error:function(xhr,type,errorThrown){
+                        //异常处理；
+                        console.log(type);
+                    }
+                });
+            }else{
+                mui.toast('您取消了操作');
+            }
+        })
+    }
+</script>
+</html>

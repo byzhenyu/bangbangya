@@ -46,9 +46,7 @@ class TaskModel extends Model{
               ->where($where)
               ->limit($page['limit'])
               ->order($order)
-//              ->fetchSql(true)
               ->select();
-//        return $list;
         /*判断是否丢失任务*/
         foreach ($list  as  $key=> $value) {
             if (strpos($value['discard_id'], ',' . UID . ',') !== false) {

@@ -3840,6 +3840,7 @@ input[type="checkbox"]:checked + i {
 }
 
 .unqualified-reson {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3847,17 +3848,29 @@ input[type="checkbox"]:checked + i {
 }
 
 .unqualified-user-info {
+    width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
-.unqualified-user-info img {
+.unqualified-user-info a img {
+    width: .4rem;
+    height: .71rem;
+}
+
+.unqualified-user-center img {
     width: .84rem;
     height: .84rem;
     border-radius: 50%;
 }
 
-.unqualified-user-info div {
+.unqualified-user-center {
+    display: flex;
+    align-items: center;
+}
+
+.unqualified-user-center div {
     display: flex;
     flex-direction: column;
     margin-left: .24rem;
@@ -3919,6 +3932,14 @@ input[type="checkbox"]:checked + i {
 
 .unqualified-btns button:last-child {
     background: #6f75ef;
+}
+
+.unqualified-img .font-audit {
+    font-size: .28rem;
+    color: #666;
+    width: 3.08rem;
+    text-indent: 2em;
+    margin-bottom: .2rem;
 }
 
 

@@ -61,7 +61,7 @@
                         timeout:10000,//超时时间设置为10秒；
                         success:function(data){
                             mui.toast(data['info']);
-                            alert(JSON.stringify(data));
+                            // alert(JSON.stringify(data));
                             if(data['status'] == 1){
                                 setTimeout(function(){
                                     mui.openWindow({

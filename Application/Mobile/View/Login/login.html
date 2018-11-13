@@ -21,7 +21,7 @@
 
     <div class="login-index-agree">
         <label class="login-index-check">
-            <input class="check-login" name="user_agreement" type="checkbox">
+            <input checked="checked" class="check-login" name="user_agreement" type="checkbox">
             <i></i>
             <span>同意《帮帮鸭用户协议》</span>
         </label>
@@ -42,7 +42,6 @@
     mui.init();
     function dologin()
     {
-
         mui.ajax(url + 'Mobile/Login/dologin',{
             data:{
                 open_id:'123456'
