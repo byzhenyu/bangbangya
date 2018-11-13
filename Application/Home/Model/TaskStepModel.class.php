@@ -14,8 +14,17 @@ use Think\Model;
 class TaskStepModel extends  Model {
     protected $selectFields = array('id','type', 'task_id','step_img', 'step_text');
     protected $_validate = array(
-        array('task_id', 'require', '任务Id不能为空！', 1, 'regex', 3)
+        array('task_id', 'require', '任务Id不能为空！', 1, 'regex', 3),
+        array('step_img,step_text', 'checkStep', '任务步骤不能为空', 1, 'callback', 4),
     );
+
+    protected function checkStep($data) {
+        if (empty($data['step_img']) && empty($data['step_text'])) {
+            return false;
+        } else {
+            return true;
+        }
+    }
     public function getTaskStep($task_id = '',$field = null , $sort = 'add_time DESC' ){
         if($task_id == '') return false;
         if(is_null($field)){
