@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>详情</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+    <style type="text/css">
+
+        .unqualified-reply {
+            margin-top: .08rem;
+            background: #fff;
+            padding: .32rem .3rem .4rem .3rem;
+        }
+
+        .unqualified-reply .unqualified-reply-title p {
+            font-size: .28rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .unqualified-reply-box {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .unqualified-system-reply p,
+        .unqualified-user-reply p {
+            font-size: .24rem;
+            color: #999;
+            margin-top: .65rem;
+            width: 3.4rem;
+        }
+
+        .unqualified-system-reply p:first-child,
+        .unqualified-user-reply p:first-child {
+            margin-top: .1rem;
+        }
+
+        .unqualified-system-reply {
+            padding-left: .3rem;
+        }
+
+        .unqualified-user-reply {
+            padding-top: .4rem;
+        }
+    </style>
+</head>
+<body style="background: #f6f6f6">
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <p class="mui-title">详情</p>
+        <a id="task-complaint" onclick="appeal({$taskLogInfo[user_id]},{$taskLogInfo[task_id]})">申诉</a>
+    </header>
+    <div class="unqualified-reply">
+        <div class="unqualified-reply-title">
+            <p>信息交流:</p>
+        </div>
+        <div class="unqualified-reply-box">
+            <div class="unqualified-system-reply">
+                    <foreach  name="taskLogInfo['userChat']"  item="v">
+                        <p>{$v.content}</p>
+                    </foreach>
+            </div>
+            <div class="unqualified-user-reply">
+                    <foreach  name="taskLogInfo['taskChat']"  item="v">
+                        <p>{$v.content}</p>
+                    </foreach>
+            </div>
+        </div>
+    </div>
+    <div class="unqualified-details-img">
+        <foreach name="taskLogInfo['valid_pic']" item="v">
+            <img src="{$v}">
+        </foreach>
+        <div class="unqualified-details-btns">
+            <button class="give-up-task" onclick="giveUp({$taskLogInfo[id]},{$taskLogInfo[task_id]})">放弃</button>
+            <button class="redo-task">重做</button>
+        </div>
+    </div>
+</body>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/url.js"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+</script>
+<script>
+    //mui初始化
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+    function appeal(user_id, task_id) {
+           alert(user_id);
+           alert(task_id);
+        var btnArray = ['取消', '确定'];
+        mui.prompt('', '请输入申诉理由和内容', '申诉', btnArray, function(e) {
+            if (e.index == 1) {
+                var information = e.value;
+                if(information == ''){
+                    mui.toast('请输入投诉内容');
+                    return
+                }
+                mui.ajax(url + 'Mobile/Complaint/appeal',{
+                    data:{
+                        user_id : user_id,
+                        task_id: task_id,
+                        information : information,
+                        type : 1
+                    },
+                    dataType:'json',//服务器返回json格式数据
+                    type:'post',//HTTP请求类型
+                    timeout:10000,//超时时间设置为10秒；
+                    success:function(data){
+                        mui.toast(data['info']);
+                        // alert(JSON.stringify(data));
+                        if(data['status'] == 1){
+                            setTimeout(function(){
+                                window.location.reload()
+                            }, 1000);
+                        }
+                    },
+                    error:function(xhr,type,errorThrown){
+                        //异常处理；
+                        console.log(type);
+                    }
+                });
+            } else {
+                // 点击了确定按钮
+            }
+        })
+    }
+    function giveUp(user_id,task_id){
+        alert(user_id);
+        alert(task_id);
+        mui.confirm('您是否要放弃该任务?', '提示', '', function(e) {
+            if (e.index == 1) {
+                mui.ajax(url + 'Mobile/TaskLog/giveUpTask', {
+                    data: {
+                        user_id: tasklog_id,
+                        task_id: task_id
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'post',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success: function (data) {
+                        mui.toast(data['info']);
+                        // alert(JSON.stringify(data));
+                        if (data['status'] == 1) {
+                            setTimeout(function () {
+                                mui.openWindow({
+                                    url: url + 'Mobile/TaskLog/getTaskLog'
+                                });
+                            }, 1000);
+                        }
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        //异常处理；
+                        console.log(type);
+                    }
+                });
+            }else{
+                mui.toast('您取消了操作');
+            }
+        });
+    }
+</script>
+</html>
