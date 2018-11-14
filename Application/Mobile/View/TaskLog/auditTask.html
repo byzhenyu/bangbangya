@@ -184,7 +184,7 @@
         done: function (e, data) {
             console.log(data);
             $('.unqualified-boom-addimg').prepend('<span><img src="'+data.result.data.nameosspath+'"><div class="file-del"><a href="javascript:void(0)" onclick="delPic(this)">X</a></div>'+
-                '<input type="hidden" name="step[0][][step_img]" value="'+data.result.data.nameosspath+'"></span>');
+                '<input type="hidden" name="text_img[]" value="'+data.result.data.nameosspath+'"></span>');
 
             count++;
             if (count>2) {
