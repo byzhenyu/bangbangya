@@ -289,5 +289,26 @@ class TaskLogController extends CommonController {
         $this->assign('taskLogInfo',$taskLogInfo);
         $this->display();
     }
+    /**
+    * @desc  放弃任务
+    * @param tasklog_id
+    * @return mixed
+    */
+    public function giveUpTask(){
+        $taskLog_id = I('id', 0, 'intval');
+        $task_id = I('task_id', 0, 'intval');
+        $taskModel = D('Home/Task');
+        M()->startTrans();
+        $taskLogRes = $this->TaskLogModel->where('id = '.$taskLog_id)->save(array('valid_status' => 4));
+        /*放弃任务 释放单子 数*/
+        $taskRes = $taskModel->where('id = '.$task_id)->setInc('task_num');
+        if($taskLogRes && $taskRes){
+            M()->commit();
+            $this->ajaxReturn(V(1, '成功'));
+        }else{
+            M()->rollback();
+            $this->ajaxReturn(V(0, '失败'));
+        }
+    }
 }
 
