@@ -6,6 +6,62 @@
     <title>审核</title>
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
     <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="__PUBLIC__/fileupload/js/vendor/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.iframe-transport.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.fileupload.js"></script>
+    <style type="text/css">
+        .weui-uploader__bd{width: 100%;}
+        .weui-uploader__files{  overflow: hidden;  width: 98%;  margin: auto;  text-align: center;  }
+        .weui-uploader__file{  float: left;  width: 33%;  text-align: center;  position: relative;  }
+        .weui-uploader__file img{  width: 2rem;  height:2rem;  }
+        .weui-uploader__file .file-del{  position: absolute;  top:1px;  right: 0;  }
+        .weui-uploader__file .file-del a{  color: #fff;  background-color: rgba(0,0,0,.3);  padding: 2px 7px;  border-radius: 15px;cursor:pointer  }
+        .weui-uploader__input-box{ position: relative;
+            overflow: hidden; float: left;}
+        #upload{
+            border: none;
+            z-index: 99;
+            position: absolute;
+            overflow: hidden;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            width: 100px;
+            height: 100px;
+            top: 0;
+            left: 0;
+        }
+        .task-submit-detail textarea{
+            background: #fff;
+            padding: .2rem .3rem;
+            width: 100%;
+            height: 3.4rem;
+            border: none;
+        }
+        .uploader-img {
+            border: none;
+            z-index: 99;
+            position: absolute;
+            overflow: hidden;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            left: 1.5rem;
+            width: 1.1rem;
+            height: 1.1rem;
+            margin-right: .24rem;
+        }
+        .step-text {
+            border: none;
+        }
+        .task-type-list .task-type-row {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: .32rem;
+        }
+    </style>
 </head>
 <body>
 <header class="mui-bar mui-bar-nav help-duck-head">
@@ -24,6 +80,7 @@
         </div>
         <div class="unqualified-boom-addimg">
             <img  src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">
+            <input id="upload" class="weui-uploader__input" type="file" accept="image/*" multiple="">
             <p>上传相关截图说明</p>
         </div>
         <div class="unqualified-boom-btns">
@@ -96,7 +153,7 @@
 <!--</div>-->
 
 </body>
-<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+
 <script src="__PUBLIC__/mobile/js/mui.min.js"></script>
 <script src="__PUBLIC__/mobile/js/url.js"></script>
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
@@ -119,6 +176,37 @@
             }
         })
     });
+    var count = 0;
+    //单图上传
+    $('#upload').fileupload({
+        url: "{:U('TaskLog/uploadImg')}",
+        dataType: 'json',
+        done: function (e, data) {
+            console.log(data);
+            $('.unqualified-boom-addimg').prepend('<span><img src="'+data.result.data.nameosspath+'"><div class="file-del"><a href="javascript:void(0)" onclick="delPic(this)">X</a></div>'+
+                '<input type="hidden" name="step[0][][step_img]" value="'+data.result.data.nameosspath+'"></span>');
+
+            count++;
+            if (count>2) {
+
+                $('#upload').attr('disabled','disabled');
+            }
+        }
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+    function delPic(obj) {
+        var obj = obj;
+        var img_src = $(obj).parent().next('input').val();
+        $.post("{:U('oss_delet_object')}",{'img_src':img_src}, function (data) {
+
+            if (data.status == 1) {
+                $(obj).parent().parent().remove();
+                $('#upload').attr('disabled',false);
+            }
+        })
+
+    }
 </script>
 <script>
     function fail(task_id){
