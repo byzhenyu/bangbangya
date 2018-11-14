@@ -98,7 +98,7 @@
                                     <else /><if condition="$v['valid_status'] eq 0">
                                     <label name="caozuo" class="upload-verification" onclick="verify({$v['id']})">上传验证</label>
                                     <elseif condition="$v['valid_status'] eq 1"/><label  name="caozuo"  class="audit-ing">审核中</label>
-                                    <elseif condition="$v['valid_status'] eq 2"/><label  name="caozuo" class="no-qualified">不合格</label>
+                                    <elseif condition="$v['valid_status'] eq 2"/><label  name="caozuo" onclick="fail({$v[id]})" class="no-qualified">不合格</label>
                                     <else /><label name="caozuo"   class="task-finshed">已完成</label>
                                 </if>
                                 </if>
@@ -177,6 +177,12 @@
     /*上传验证*/
     function verify(id){
         alert(id);
+    }
+    /*不合格*/
+    function fail(id){
+        mui.openWindow({
+            url:  url + 'Mobile/TaskLog/taskLogFail/id/' + id
+        });
     }
 </script>
 </html>

@@ -11,65 +11,55 @@
     <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.iframe-transport.js"></script>
     <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.fileupload.js"></script>
     <style type="text/css">
-        .weui-uploader__bd{width: 100%;}
-        .weui-uploader__files{  overflow: hidden;  width: 98%;  margin: auto;  text-align: center;  }
-        .weui-uploader__file{  float: left;  width: 33%;  text-align: center;  position: relative;  }
-        .weui-uploader__file img{  width: 2rem;  height:2rem;  }
-        .weui-uploader__file .file-del{  position: absolute;  top:1px;  right: 0;  }
-        .weui-uploader__file .file-del a{  color: #fff;  background-color: rgba(0,0,0,.3);  padding: 2px 7px;  border-radius: 15px;cursor:pointer  }
-        .weui-uploader__input-box{ position: relative;
-            overflow: hidden; float: left;}
-        #upload{
-            border: none;
-            z-index: 99;
-            position: absolute;
-            overflow: hidden;
-            opacity: 0;
-            -ms-filter: 'alpha(opacity=0)';
-            width: 100px;
-            height: 100px;
-            top: 0;
-            left: 0;
-        }
-        .task-submit-detail textarea{
+
+        .unqualified-reply {
+            margin-top: .08rem;
             background: #fff;
-            padding: .2rem .3rem;
-            width: 100%;
-            height: 3.4rem;
-            border: none;
+            padding: .32rem .3rem .4rem .3rem;
         }
-        .uploader-img {
-            border: none;
-            z-index: 99;
-            position: absolute;
-            overflow: hidden;
-            opacity: 0;
-            -ms-filter: 'alpha(opacity=0)';
-            left: 1.5rem;
-            width: 1.1rem;
-            height: 1.1rem;
-            margin-right: .24rem;
+
+        .unqualified-reply .unqualified-reply-title p {
+            font-size: .28rem;
+            color: #333;
+            font-weight: 500;
         }
-        .step-text {
-            border: none;
-        }
-        .task-type-list .task-type-row {
+
+        .unqualified-reply-box {
             width: 100%;
             display: flex;
-            flex-wrap: wrap;
-            align-items: center;
             justify-content: space-between;
-            margin-bottom: .32rem;
         }
+
+        .unqualified-system-reply p,
+        .unqualified-user-reply p {
+            font-size: .24rem;
+            color: #999;
+            margin-top: .65rem;
+            width: 3.4rem;
+        }
+
+        .unqualified-system-reply p:first-child,
+        .unqualified-user-reply p:first-child {
+            margin-top: .1rem;
+        }
+
+        .unqualified-system-reply {
+            padding-left: .3rem;
+        }
+
+        .unqualified-user-reply {
+            padding-top: .4rem;
+        }
+
+
     </style>
 </head>
 <body>
 <header class="mui-bar mui-bar-nav help-duck-head">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <p class="mui-title">审核</p>
-    <a id="complaints-btn">投诉</a>
+    <a id="complaints-btn" name="{$taskLogInfo['list'][0]['tid']}">投诉</a>
 </header>
-
 <div id="grap-order-gray" class="">
     <div class="unqualified-window-boom" id="unqualified-window">
         <div class="unqualified-boom-title">
@@ -79,8 +69,21 @@
             <textarea rows="3" id="valid_text" placeholder="请输入不合格的原因"></textarea>
         </div>
         <div class="unqualified-boom-addimg">
-            <img  src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">
-            <input id="upload" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+            <div class="upload-img-add">
+                <!--<div class="user-upload-imgs">-->
+                    <!--<img class="user-upload-img"  src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">-->
+                    <!--<img class="user-upload-del" src="__PUBLIC__/mobile/images/common_icon_closebox.png">-->
+                <!--</div>-->
+                <!--<div class="user-upload-imgs">-->
+                    <!--<img class="user-upload-img"  src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">-->
+                    <!--<img class="user-upload-del" src="__PUBLIC__/mobile/images/common_icon_closebox.png">-->
+                <!--</div>-->
+                <span>
+                    <img onclick="uploadImg()" src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">
+                    <input id="upload" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                </span>
+            </div>
+
             <p>上传相关截图说明</p>
         </div>
         <div class="unqualified-boom-btns">
@@ -96,18 +99,26 @@
 </div>
 <if condition="$taskLogInfo['list'][0]['valid_status'] eq 2">
     <div class="unqualified-reply">
-        <div class="unqualified-info-talk">
-            <p>信息交流：</p>
-            <span>没有阅读详情</span>
+        <div class="unqualified-reply-title">
+            <p>信息交流:</p>
         </div>
-        <div class="unqualified-system-reply">
-            <span>阅读详情具体的界面是什么样的</span>
-        </div>
-        <div class="unqualified-user-reply">
-            <span>看我上传的截图</span>
-        </div>
-        <div class="unqualified-system-reply">
-            <span>可是我刷不出来这一页的内容</span>
+
+        <div class="unqualified-reply-box">
+            <div class="unqualified-system-reply">
+                <if condition="count($taskLogInfo['list'][0]['message'][taskChat])  neq 0  ">
+                            <foreach  name="taskLogInfo['list'][0]['message'][taskChat]"  item="v">
+                                     <p>{$v.content}</p>
+                            </foreach>
+                </if>
+            </div>
+
+            <div class="unqualified-user-reply">
+                <if condition="count($taskLogInfo['list'][0]['message'][userChat])  neq 0  ">
+                    <foreach  name="taskLogInfo['list'][0]['message'][userChat]"  item="v">
+                        <p>{$v.content}</p>
+                    </foreach>
+                </if>
+            </div>
         </div>
     </div>
 </if>
@@ -169,26 +180,54 @@
         e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
         var btnArray = ['取消', '确定'];
         mui.prompt('', '请输入投诉理由和内容', '投诉', btnArray, function(e) {
-            if (e.index == 0) {
-                // 点击了取消按钮
+            if (e.index == 1) {
+                var tid  = $('#complaints-btn').attr('name');
+                var information = e.value;
+                if(information == ''){
+                    mui.toast('请输入投诉内容');
+                    return
+                }
+                mui.ajax(url + 'Mobile/Complaint/addComplaint',{
+                    data:{
+                        tid : tid,
+                        information: information,
+                        type : 0
+                    },
+                    dataType:'json',//服务器返回json格式数据
+                    type:'post',//HTTP请求类型
+                    timeout:10000,//超时时间设置为10秒；
+                    success:function(data){
+                        mui.toast(data['info']);
+                        // alert(JSON.stringify(data));
+                        if(data['status'] == 1){
+                            setTimeout(function(){
+                                window.location.reload()
+                            }, 1000);
+                        }
+                    },
+                    error:function(xhr,type,errorThrown){
+                        //异常处理；
+                        console.log(type);
+                    }
+                });
             } else {
                 // 点击了确定按钮
             }
         })
     });
-    var count = 0;
+    function uploadImg(){
+        $('#upload').click();
+    }
+    var count = 1;
     //单图上传
     $('#upload').fileupload({
         url: "{:U('TaskLog/uploadImg')}",
         dataType: 'json',
         done: function (e, data) {
-            console.log(data);
-            $('.unqualified-boom-addimg').prepend('<span><img src="'+data.result.data.nameosspath+'"><div class="file-del"><a href="javascript:void(0)" onclick="delPic(this)">X</a></div>'+
-                '<input type="hidden" name="text_img[]" value="'+data.result.data.nameosspath+'"></span>');
-
+            $('.upload-img-add').prepend('<div class="user-upload-imgs"><img class="user-upload-img"src="'+data.result.data.nameosspath+'"><img class="user-upload-del"src="__PUBLIC__/mobile/images/common_icon_closebox.png" onclick="delPic(this)"><input  type="hidden" name="valid_img[]" value="'+data.result.data.nameosspath+'"></div>');
             count++;
             if (count>2) {
-
+                mui.toast('只能添加两张图片!');
                 $('#upload').attr('disabled','disabled');
             }
         }
@@ -197,16 +236,16 @@
 
     function delPic(obj) {
         var obj = obj;
-        var img_src = $(obj).parent().next('input').val();
+        var img_src = $(obj).next('input').val();
         $.post("{:U('oss_delet_object')}",{'img_src':img_src}, function (data) {
-
             if (data.status == 1) {
-                $(obj).parent().parent().remove();
+                count-- ;
+                $(obj).parent().remove();
                 $('#upload').attr('disabled',false);
             }
         })
-
     }
+
 </script>
 <script>
     function fail(task_id){
@@ -214,27 +253,66 @@
         $("#grap-order-gray").addClass("mui-popup-backdrop mui-active");
         $("#unqualified-window").css("display","block");
     }
-    // $("#unqualified-boom-btn").on('tap', function () {
-    //     $("#grap-order-gray").addClass("mui-popup-backdrop mui-active");
-    //     $("#unqualified-window").css("display","block");
-    // })
-
     $("#unqualified-window-cel").on('tap', function () {
         $("#grap-order-gray").removeClass("mui-popup-backdrop mui-active");
         $("#unqualified-window").css("display","none");
     })
 
     $("#unqualified-window-sure").on('tap', function () {
-        var task_id = $("#unqualified-boom-btn").attr('name');
+        var tid = $("#unqualified-boom-btn").attr('name');
         var valid_text = $("#valid_text").val();
+        var valid_img = $(" input[ name='valid_img[]']");
+        var img = '';
+        for(var i = 0; i < valid_img.length; i++){
+                img += valid_img[i].defaultValue + ',';
+        }
         if(valid_text.length == 0 ){
             mui.toast('请您输入字符!');
+            return
         }else if(valid_text.length  > 255){
             mui.toast('您输入的字符太多!');
+            return
         }
-        alert(valid_text);
-        alert(task_id);
+        mui.confirm('这个任务是否不合格?', '提示', '', function(e) {
+            if (e.index == 1) {
+                mui.ajax(url + 'Mobile/TaskLog/fail',{
+                    data:{
+                        id : tid,
+                        valid_text : valid_text,
+                        valid_pic : img
 
+                    },
+                    dataType:'json',//服务器返回json格式数据
+                    type:'post',//HTTP请求类型
+                    timeout:10000,//超时时间设置为10秒；
+                    success:function(data){
+                        mui.toast(data['info']);
+                        // alert(JSON.stringify(data));
+                        if(data['status'] == 1){
+                            setTimeout(function(){
+                                window.location.reload()
+                            }, 500);
+                        }else if(data['status'] == 2){
+                            mui.confirm('您的余额不足,是否去充值?', '提示', '', function(e) {
+                                if (e.index == 1) {
+                                    mui.openWindow({
+                                        url:  url + 'Mobile/Pay/topUpsPage'
+                                    });
+                                }else{
+                                    mui.toast('您取消了操作');
+                                }
+                            });
+                        }
+                    },
+                    error:function(xhr,type,errorThrown){
+                        //异常处理；
+                        console.log(type);
+                    }
+                });
+            }else{
+                mui.toast('您取消了操作');
+            }
+        })
     })
     function pass(tid){
         mui.confirm('是否通过这个任务', '提示', '', function(e) {

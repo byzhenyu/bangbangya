@@ -180,7 +180,7 @@ class TaskLogModel extends  Model{
      * @param  task_id
      * @return mixed
      */
-    public  function auditTask($where = [], $field = null, $sort = ''){
+    public  function auditTask($where = [], $field = null, $sort = ' t.finish_time DESC'){
         $where['t.valid_status']  = array('neq',0);
         $count =  $this->alias('t')
             ->join('__USER__ as u on u.user_id = t.user_id','LEFT')
@@ -201,7 +201,11 @@ class TaskLogModel extends  Model{
               }else{
                     $list[$key]['valid_img']  = array($value['valid_img']);
               }
-              $list[$key]['message'] = $chatModel ->where('user_id = '.$value['user_id'].' and task_user_id = '.UID)->select();
+              if($value['valid_status']  == 2){
+                  /* taskChat 发任务的   userChat 接单人user_id*/
+                  $list[$key]['message']['taskChat'] = $chatModel ->field('content')->where('task_user_id = '.UID.' and  task_id =  '.$where['task_id'])->select();
+                  $list[$key]['message']['userChat'] = $chatModel ->field('content')->where('user_id = '.UID.' and task_id =  '.$where['task_id'])->select();
+              }
         }
         return array(
             'list' => $list,

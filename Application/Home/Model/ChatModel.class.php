@@ -11,7 +11,7 @@
 
 namespace Home\Model;
 use  Think\Model;
-class ChatMessageModel extends  Model{
+class ChatModel extends  Model{
     protected $insertFields = array('user_id', 'task_user_id', 'task_id', 'content','status','sort');
     protected $updateFields = array('id','user_id', 'task_user_id', 'task_id', 'content','status','sort');
     protected $selectFields = array('id','user_id', 'task_user_id', 'task_id', 'content','status','sort');

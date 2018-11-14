@@ -143,12 +143,9 @@ class TaskLogController extends CommonController {
          $where['task_id'] = $task_id;
          $field =  'u.user_id, u.head_pic, u.nick_name, t.task_id,t.id as tid, t.valid_info, t.valid_img, t.valid_status  ';
          $taskLogInfo = $this->TaskLogModel->auditTask($where, $field);
-         var_dump($none);
          p($taskLogInfo);
          $taskAudit = $this->TaskLogModel->taskAudit($task_id);
-         p($taskAudit);
-         p($taskLogInfo['count']);
-         p($p);
+//         p($taskLogInfo['count']);
          $this->assign('taskAudit',$taskAudit);
          $this->assign('task_id',$task_id);
          $this->assign('p',$p);
@@ -190,11 +187,40 @@ class TaskLogController extends CommonController {
              $this->ajaxReturn(V(0, $this->TaskLogModel->getError()));
          }
      }
+     /**
+     * @desc 任务审核不通过
+     * @param  taskLog id
+     * @param  valid_text 审核备注
+     * @param  valid_pic 审核图片
+     * @return mixed
+     */
+     public function fail(){
+             $data  = I('post.', 3);
+             $data['valid_status']  = 2;
+             $data['valid_pic']  = rtrim($data['valid_pic'], ',');
+             $tasklogInfo = $this->TaskLogModel->field('task_id, user_id')->where('id = '.$data['id'])->find();
+             M()->startTrans();
+             $tasklogRes = $this->TaskLogModel->where('id = '.$data['id'])->save($data);
+             $ChatModel = D('Home/Chat');
+             $CharData['user_id'] = $tasklogInfo['user_id'];
+             $CharData['task_user_id'] = UID;
+             $CharData['task_id'] = $tasklogInfo['task_id'];
+             $CharData['content'] = $data['valid_text'];
+             $chatRes = $ChatModel->add($CharData);
+             if($tasklogRes  && $chatRes ){
+                 M()->commit();
+                 $this->ajaxReturn(V(1, '完成'));
+             }else{
+                 M()->rollback();
+                 $this->ajaxReturn(V(0, '失败'));
+             }
+             $this->ajaxReturn(V(0, $this->TaskLogModel->getError()));
+     }
     /**
      * @desc  上传审核头像  OSS
      * @return url
      */
-    public function uploadImg(){
+     public function uploadImg(){
         $config = array(
             'rootPath' => '.'.C('UPLOAD_URL').'task_log/',
             'savePath' => '',
@@ -239,9 +265,29 @@ class TaskLogController extends CommonController {
         $config=C('ALIOSS_CONFIG');
         $oss=new \OSS\OssClient($config['KEY_ID'],$config['KEY_SECRET'],$config['END_POINT']);
         $bucket=$config['BUCKET'];
-        // p($object);die();
         $test=$oss->deleteObject($bucket,$object);
         $this->ajaxReturn(V(1, '删除成功'));
+    }
+    /**
+     * @desc  任务不合格详情
+     * @param  tasklog_id
+     * @return mixed
+     */
+    public function taskLogFail(){
+        $taskLog_id = I('id', 0, 'intval');
+        $taskLogInfo = $this->TaskLogModel->field('id, user_id, task_id, valid_pic')->where('id = '.$taskLog_id)->find();
+        $chatModel = D('Home/Chat');
+        $taskLogInfo['userChat']  = $chatModel ->field('content')->where('user_id  = '.$taskLogInfo['user_id'].'  and task_id =  '.$taskLogInfo['task_id'])->select();
+        $taskLogInfo['taskChat']  = $chatModel ->field('content')->where('task_user_id = '.$taskLogInfo['user_id'].'  and  task_id =  '.$taskLogInfo['task_id'])->select();
+        if(strpos($taskLogInfo['valid_pic'], ',')  !== false){
+            $taskLogInfo['valid_pic']   =   explode(',',$taskLogInfo['valid_pic']);
+        }else{
+            $taskLogInfo['valid_pic']   =    array($taskLogInfo['valid_pic']);
+        }
+        p($taskLogInfo);
+        p($taskLogInfo['userChat']);
+        $this->assign('taskLogInfo',$taskLogInfo);
+        $this->display();
     }
 }
 
