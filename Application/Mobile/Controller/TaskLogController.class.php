@@ -190,5 +190,58 @@ class TaskLogController extends CommonController {
              $this->ajaxReturn(V(0, $this->TaskLogModel->getError()));
          }
      }
+    /**
+     * @desc  上传审核头像  OSS
+     * @return url
+     */
+    public function uploadImg(){
+        $config = array(
+            'rootPath' => '.'.C('UPLOAD_URL').'task_log/',
+            'savePath' => '',
+            'maxSize' => C('UPLOAD_SIZE'),
+            'exts' => 'jpg,jpeg,png,gif',
+        );
+
+        $Upload = new \Think\Upload($config);
+        $info = $Upload->upload();
+
+        if ($info === false) {
+            $this->ajaxReturn(V(0, $Upload->getError()));
+        } else {
+            vendor('Alioss.autoload');
+            $config = C('ALIOSS_CONFIG');
+
+            $oss=new \OSS\OssClient($config['KEY_ID'],$config['KEY_SECRET'],$config['END_POINT']);
+            $bucket=$config['BUCKET'];
+            // 返回成功信息
+            foreach($info as $file){
+                $path = '.'.C('UPLOAD_URL').'task_log/'.$file['savepath'].$file['savename'];
+                $oss_path = trim($path, './');
+                $local_path = trim($path, '.');
+                $oss->uploadFile($bucket,$oss_path,$path);
+                unlink($path);
+                $data['nameosspath'] ='http://'.$bucket.'.'.$config['END_POINT'].'/'.$oss_path;
+                $data['name'] =$local_path;
+            }
+            $this->ajaxReturn(V(1, '上传成功', $data));
+        }
+    }
+    /**
+     * 删除oss上指定文件
+     * @param  string $object 文件路径 例如删除 /Public/README.md文件  传Public/README.md 即可
+     */
+    public function oss_delet_object(){
+
+        // 实例化oss类
+        $files = I('img_src', '','trim');
+        $object = explode('com/',$files)[1];
+        vendor('Alioss.autoload');
+        $config=C('ALIOSS_CONFIG');
+        $oss=new \OSS\OssClient($config['KEY_ID'],$config['KEY_SECRET'],$config['END_POINT']);
+        $bucket=$config['BUCKET'];
+        // p($object);die();
+        $test=$oss->deleteObject($bucket,$object);
+        $this->ajaxReturn(V(1, '删除成功'));
+    }
 }
 

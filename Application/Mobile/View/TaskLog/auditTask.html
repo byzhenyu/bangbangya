@@ -20,7 +20,7 @@
             <p>不合格原因</p>
         </div>
         <div class="unqualified-boom-reason">
-            <textarea rows="3" name="" placeholder="请输入不合格的原因"></textarea>
+            <textarea rows="3" id="valid_text" placeholder="请输入不合格的原因"></textarea>
         </div>
         <div class="unqualified-boom-addimg">
             <img  src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">
@@ -57,7 +57,10 @@
 <div class="unqualified-content">
     <div class="unqualified-reson">
         <div class="unqualified-user-info">
-                <a href="{:U('TaskLog/auditTask',array('task_id' => $taskLogInfo['list'][0]['task_id'],'p' => $p - 1 ))}"><img src="__PUBLIC__/mobile/images/mypublish_check_icon_previous.png"></a>
+            <if condition="$p elt 0">
+                <a onclick="none()"><img src="__PUBLIC__/mobile/images/mypublish_check_icon_previous.png"></a>
+                <else />  <a href="{:U('TaskLog/auditTask',array('task_id' => $taskLogInfo['list'][0]['task_id'],'p' => $p - 1 ))}"><img src="__PUBLIC__/mobile/images/mypublish_check_icon_previous.png"></a>
+            </if>
             <div class="unqualified-user-center">
                 <img src="{$taskLogInfo['list'][0]['head_pic']}">
                 <div>
@@ -73,7 +76,7 @@
         <div class="unqualified-img">
             <p class="font-audit">{$taskLogInfo['list'][0]['valid_info']}</p>
             <foreach name="taskLogInfo['list'][0]['valid_img']" item="v">
-                   <img src="{$v}">
+                <img src="{$v}">
             </foreach>
             <php> $valid_status = ['待提交','待审核','不合格','已完成','已放弃']</php>
             <p>{$valid_status[$taskLogInfo['list'][0]['valid_status']]}</p>
@@ -88,8 +91,8 @@
     </div>
 </if>
 <!--<div class="unqualified-btns">-->
-    <!--<button id="unqualified-boom-btn">不合格</button>-->
-    <!--<button id="qualified-boom-btn">合格</button>-->
+<!--<button id="unqualified-boom-btn">不合格</button>-->
+<!--<button id="qualified-boom-btn">合格</button>-->
 <!--</div>-->
 
 </body>
@@ -134,14 +137,23 @@
     })
 
     $("#unqualified-window-sure").on('tap', function () {
-        alert(2);
+        var task_id = $("#unqualified-boom-btn").attr('name');
+        var valid_text = $("#valid_text").val();
+        if(valid_text.length == 0 ){
+            mui.toast('请您输入字符!');
+        }else if(valid_text.length  > 255){
+            mui.toast('您输入的字符太多!');
+        }
+        alert(valid_text);
+        alert(task_id);
+
     })
     function pass(tid){
-       mui.confirm('是否通过这个任务', '提示', '', function(e) {
+        mui.confirm('是否通过这个任务', '提示', '', function(e) {
             if (e.index == 1) {
                 mui.ajax(url + 'Mobile/TaskLog/pass',{
                     data:{
-                          id : tid
+                        id : tid
                     },
                     dataType:'json',//服务器返回json格式数据
                     type:'post',//HTTP请求类型

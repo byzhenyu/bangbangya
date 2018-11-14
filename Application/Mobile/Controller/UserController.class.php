@@ -153,6 +153,12 @@ class UserController extends CommonController {
                 $data['nameosspath'] ='http://'.$bucket.'.'.$config['END_POINT'].'/'.$oss_path;
                 $data['name'] =$local_path;
             }
+            $user_pic = $this->user->where('user_id = '.UID)->getField('head_pic');
+            /*删除OSS文件*/
+            if($user_pic != '/Uploads/default.jpg' || $user_pic  != '') {
+                 $object = $object = explode('com/',$user_pic)[1];
+                 $oss->deleteObject($bucket,$object);
+            }
             $this->user->where('user_id = '.UID)->save(array('head_pic'=>$data['nameosspath']));
             $this->ajaxReturn(V(1, '更换头像成功', $data));
         }
