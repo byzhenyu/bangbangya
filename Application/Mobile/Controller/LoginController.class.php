@@ -55,7 +55,7 @@ class LoginController extends CommonController {
     public function dologin(){
         $code = $_GET['code'];
         $weiChatData = $this->getWeiChat($code);
-//        $data = $this->getWeiChat($weiChatData['access_token'],$weiChatData['openid']);
+        $data = $this->getWeiChat($weiChatData['access_token'],$weiChatData['openid']);
         p($weiChatData);
         exit;
         $userModel = D('Home/User');
