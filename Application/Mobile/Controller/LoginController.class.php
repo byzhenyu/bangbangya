@@ -59,49 +59,36 @@ class LoginController extends CommonController {
 //        p($weiChatData);
 //        exit;
         $userModel = D('Home/User');
-        if($userModel->validate($userModel->_login_validate)->create($weiChatData)){
-          p($weiChatData);exit;
-                $userInfo = $userModel->doLogin($weiChatData['openid']);
-                if($userInfo){
-                    if( $userInfo['status'] == 1 ){ //登录成功
-                        if($userInfo['data']['disabled'] == 0){
-                            V(3, '您的账号已被停用');
-                        }
-                        /* 存入session */
-                        session('user_auth',$userInfo['data']);
-                        define('UID',session('user_auth')['user_id']);
-                        V(1, '登录成功',session('user_auth')['user_id']);
-                    } else {
-                        V(1, '登录失败');
-                    }
-                }else{
-                      $userData = array(
-                          'head_pic' => $weiChatData['headimgurl'],
-                          'nick_name' => $weiChatData['nickname'],
-                          'head_pic' => $weiChatData['headimgurl'],
-                          'open_id' => $weiChatData['openid'],
-                          'open_id' => $weiChatData['openid'],
-                          'register_time' => NOW_TIME
-                      );
-                      $userid = $userModel->add($userData);
-                      if($user){
-                            $shopDate = array(
-                                  'user_id' => $userid,
-                                  'shop_name' => $weiChatData['nickname'].'的店铺',
-                                  'shop_img' => $weiChatData['headimgurl'],
-                                  'add_time' => NOW_TIME
-                            );
-                           D('Home/Shop')->add($shopDate);
-                          session('user_auth',$userInfo['data']);
-                          define('UID',session('user_auth')['user_id']);
-                          V(1, '登录成功');
-                      }
-                     V(0, '登录失败');
+        $userInfo = $userInfo->dologin($weiChatData['openid']);
+        if( $userInfo['status'] == 1 ) { //登录成功
+                if ($userInfo['data']['disabled'] == 0) {
+                    V(3, '您的账号已被停用');
                 }
+                /* 存入session */
+                session('user_auth', $userInfo['data']);
+                define('UID',session('user_auth')['user_id']);
         }else{
-            V(0, $userModel->getError());
+            $userData = array(
+                'head_pic' => $weiChatData['headimgurl'],
+                'nick_name' => $weiChatData['nickname'],
+                'head_pic' => $weiChatData['headimgurl'],
+                'open_id' => $weiChatData['openid'],
+                'open_id' => $weiChatData['openid'],
+                'register_time' => NOW_TIME
+            );
+            $userid = $userModel->add($userData);
+            if($user){
+                $shopDate = array(
+                    'user_id' => $userid,
+                    'shop_name' => $weiChatData['nickname'].'的店铺',
+                    'shop_img' => $weiChatData['headimgurl'],
+                    'add_time' => NOW_TIME
+                );
+                D('Home/Shop')->add($shopDate);
+                session('user_auth',$userInfo['data']);
+                define('UID',session('user_auth')['user_id']);
         }
-//        $this->redirect('Mobile/User/personalCenter');
+        $this->redirect('Mobile/User/personalCenter');
     }
     /**
      * 退出登录
