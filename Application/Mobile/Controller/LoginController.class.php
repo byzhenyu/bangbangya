@@ -77,6 +77,7 @@ class LoginController extends CommonController {
                 'open_id' => $weiChatData['openid'],
                 'register_time' => NOW_TIME
             );
+            echo '2';
             $userid = $userModel->add($userData);
             if ($user) {
                 $shopDate = array(
