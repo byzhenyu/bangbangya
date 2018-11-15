@@ -65,6 +65,7 @@ class LoginController extends CommonController {
             if ($userInfo['data']['disabled'] == 0) {
                 V(3, '您的账号已被停用');
             }
+            echo '1';
             /* 存入session */
             session('user_auth', $userInfo['data']);
             define('UID', session('user_auth')['user_id']);
