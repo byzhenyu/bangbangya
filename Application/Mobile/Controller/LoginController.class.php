@@ -63,6 +63,7 @@ class LoginController extends CommonController {
             }
         }
         echo UID;
+        die;
         $this->redirect('Mobile/User/personalCenter');
     }
     /**
