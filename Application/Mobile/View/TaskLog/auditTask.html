@@ -102,16 +102,7 @@
         <div class="unqualified-reply-title">
             <p>信息交流:</p>
         </div>
-
         <div class="unqualified-reply-box">
-            <div class="unqualified-system-reply">
-                <if condition="count($taskLogInfo['list'][0]['message'][taskChat])  neq 0  ">
-                            <foreach  name="taskLogInfo['list'][0]['message'][taskChat]"  item="v">
-                                     <p>{$v.content}</p>
-                            </foreach>
-                </if>
-            </div>
-
             <div class="unqualified-user-reply">
                 <if condition="count($taskLogInfo['list'][0]['message'][userChat])  neq 0  ">
                     <foreach  name="taskLogInfo['list'][0]['message'][userChat]"  item="v">
@@ -119,6 +110,16 @@
                     </foreach>
                 </if>
             </div>
+            <div class="unqualified-system-reply">
+                <if condition="count($taskLogInfo['list'][0]['message'][taskChat])  neq 0  ">
+                            <foreach  name="taskLogInfo['list'][0]['message'][taskChat]"  item="v">
+                                     <p>{$v.content}</p>
+                            </foreach>
+                </if>
+            </div>
+        </div>
+        <div class="task-unqualified-relpy">
+            <button onclick="reply({$taskLogInfo['list'][0]['user_id']},{$taskLogInfo['list'][0]['task_id']})">回复</button>
         </div>
     </div>
 </if>
@@ -355,6 +356,44 @@
     }
     function none(){
         mui.toast('没有数据了!');
+    }
+    function  reply(user_id,task_id) {
+        var btnArray = ['取消', '确定'];
+        mui.prompt('', '请输入回复的信息', '信息交流', btnArray, function (e) {
+            if (e.index == 1) {
+                var content = e.value;
+                if (content == '') {
+                    mui.toast('请输入回复内容');
+                    return
+                }
+                mui.ajax(url + 'Mobile/Chat/addChat', {
+                    data: {
+                        user_id: user_id,
+                        task_id: task_id,
+                        content: content,
+                        type : 1
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'post',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success: function (data) {
+                        mui.toast(data['info']);
+                        // alert(JSON.stringify(data));
+                        if (data['status'] == 1) {
+                            setTimeout(function () {
+                                window.location.reload()
+                            }, 1000);
+                        }
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        //异常处理；
+                        console.log(type);
+                    }
+                });
+            } else {
+                // 点击了确定按钮
+            }
+        })
     }
 </script>
 </html>

@@ -69,6 +69,9 @@
                     </foreach>
             </div>
         </div>
+        <div class="task-unqualified-relpy">
+            <button onclick="reply({$taskLogInfo['user_id']},{$taskLogInfo['task_id']})">回复</button>
+        </div>
     </div>
     <div class="unqualified-details-img">
         <foreach name="taskLogInfo['valid_pic']" item="v">
@@ -165,6 +168,44 @@
                 mui.toast('您取消了操作');
             }
         });
+    }
+    function  reply(task_user_id,task_id) {
+        var btnArray = ['取消', '确定'];
+        mui.prompt('', '请输入回复的信息', '信息交流', btnArray, function (e) {
+            if (e.index == 1) {
+                var content = e.value;
+                if (content == '') {
+                    mui.toast('请输入回复内容');
+                    return
+                }
+                mui.ajax(url + 'Mobile/Chat/addChat', {
+                    data: {
+                        task_user_id: task_user_id,
+                        task_id: task_id,
+                        content: content,
+                        type : 0
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'post',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success: function (data) {
+                        mui.toast(data['info']);
+                        // alert(JSON.stringify(data));
+                        if (data['status'] == 1) {
+                            setTimeout(function () {
+                                window.location.reload()
+                            }, 1000);
+                        }
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        //异常处理；
+                        console.log(type);
+                    }
+                });
+            } else {
+                // 点击了确定按钮
+            }
+        })
     }
 </script>
 </html>

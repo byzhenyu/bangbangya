@@ -22,7 +22,9 @@ class LoginController extends CommonController {
             $this->display();
         }
     }
-
+    public function weixin_login(){
+            $this->display();
+    }
     /**
      * 登录
      * @param open_id    微信授权码
