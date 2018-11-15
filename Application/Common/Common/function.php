@@ -1163,3 +1163,23 @@ function user_money($user_id, $money, $field = 'total_money'){
         return false;
     }
 }
+
+/**
+ * 提现类型
+ * 余额提现0 分红提现1  2解冻保证金',
+ */
+function showAccountType($type) {
+switch ($type) {
+    case '0':
+        return '余额提现';
+        break;
+    case '1':
+        return '分红提现';
+        break;
+    case '2':
+        return '解冻保证金';
+        break;
+    default:
+        return '未知类型';
+}
+}
