@@ -30,6 +30,10 @@ class LoginController extends CommonController {
      * @param open_id    微信授权码
      **/
     public function dologin(){
+        $data = I('post.');
+        print_r($data);
+        echo '2222222';
+        die;
         $UserModel = D('Home/User');
         $data = I('post.');
         if($UserModel->validate($UserModel->_login_validate)->create($data)){
