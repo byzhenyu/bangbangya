@@ -25,33 +25,6 @@ class LoginController extends CommonController {
     public function weixin_login(){
             $this->display();
     }
-    /**
-     * 登录
-     * @param open_id    微信授权码
-     **/
-//    public function dologin(){
-//        $data = $_GET['code'];
-//        print_r($data);
-//        echo '2222';
-//        die;
-//        $UserModel = D('Home/User');
-//        $data = I('post.');
-//        if($UserModel->validate($UserModel->_login_validate)->create($data)){
-//            $userInfo = $UserModel->doLogin($data['open_id']);
-//            if( $userInfo['status'] == 1 ){ //登录成功
-//                unset($userInfo['data']['password']);
-//                if($userInfo['data']['disabled'] == 0){
-//                    $this->ajaxReturn(V(3, '您的账号已被停用'));
-//                }
-//                /* 存入session */
-//                session('user_auth',$userInfo['data']);
-//                $this->ajaxReturn(V(1, '登录成功',session('user_auth')['user_id']));
-//            } else {
-//                $this->ajaxReturn(V(2, $userInfo['info']));
-//            }
-//        }
-//        $this->ajaxReturn(V(0, $UserModel->getError()));
-//    }
     public function dologin()
     {
         $code = $_GET['code'];
@@ -89,9 +62,7 @@ class LoginController extends CommonController {
                 define('UID', session('user_auth')['user_id']);
             }
         }
-        echo    UID;
-//        $this->login();
-//        $this->redirect('Mobile/User/personalCenter');
+        $this->redirect('Mobile/User/personalCenter');
     }
     /**
      * 退出登录
