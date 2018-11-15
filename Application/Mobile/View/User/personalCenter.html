@@ -32,7 +32,6 @@
         <p class="mui-title">个人中心</p>
         <a onclick="logOut()">退出</a>
     </header>
-
     <div class="personal-center-top">
         <div class="personal-center-info">
             <div class="personal-center-left">
@@ -306,5 +305,9 @@
             mui.toast('更换成功');
         }
     });
+    var login  = {$login};
+    if(login == 1){
+        mui.toast('登录成功');
+    }
 </script>
 </html>

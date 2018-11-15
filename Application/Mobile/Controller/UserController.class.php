@@ -22,11 +22,13 @@ class UserController extends CommonController {
     * @return mixed
     */
     public function personalCenter(){
+          $login  = I('login', 0, 'intval');
           $user_id = UID;
           $where['u.user_id'] = $user_id;
           $field = 'u.head_pic, u.nick_name, u.total_money,u.bonus_money,s.shop_type, u.task_suc_money,u.user_id, s.shop_accounts,s.take_task';
           $userList = $this->user->getUserInfo($where, $field);
           $this->assign('userList',$userList);
+          $this->assign('login',$login);
           $this->display();
     }
     /**
