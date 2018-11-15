@@ -41,8 +41,8 @@
                                 <tr>
                                     <th width="5%"><input class="check-all" type="checkbox"></th>
                                     <th width="5%">ID</th>
-                                    <th width="10%" >类型</th>
                                     <th width="10%">用户名称</th>
+                                    <th width="10%" >类型</th>
                                     <th width="10%">打款金额</th>
                                     <th width="10%">手续费</th>
                                     <th width="10%">提现金额</th>
@@ -56,13 +56,9 @@
                                     <tr class="gradeX" title="{$v['id']}">
                                         <td><input class="ids" type="checkbox" name="chkbId" value="{$v['id']}"></td>
                                         <td>{$v['id']}</td>
-                                        <td>{$v['user_name']}</td>
+                                        <td>{$v['nick_name']}</td>
                                         <td>
-                                            <if condition="$v['type'] eq 1">
-                                                分红提现
-                                                <else/>
-                                                余额提现
-                                            </if>
+                                            {:showAccountType($v['type'])}
                                         </td>
                                         <td>{:fen_to_yuan($v['money'])}</td>
                                         <td>{$v['account_fee']}</td>

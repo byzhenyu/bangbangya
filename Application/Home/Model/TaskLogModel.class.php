@@ -13,13 +13,18 @@ use Think\Model;
 class TaskLogModel extends  Model{
     protected $insertFields = array('user_id','task_id', 'task_name', 'valid_time','valid_info','valid_img','valid_text','valid_status','status','finish_time','add_time');
     protected $updateFields = array('task_id', 'task_name', 'valid_time','valid_info','valid_img','valid_text','valid_status','status','finish_time','add_time');
-    protected $selectFields = array('task_id', 'task_name', 'valid_status');
+    protected $selectFields = array('id','task_id', 'user_id', 'task_name', 'task_price', 'valid_time', 'valid_info', 'valid_img', 'valid_pic', 'valid_text', 'valid_status', 'finish_time','add_time');
     protected $_validate = array(
-        array('valid_time', 'require', '任务有效日期不能为空', 1, 'regex', 3),
-        array('valid_info','require','验证信息不能为空',1,'regex', 3)
+        array('user_id', 'require', '用户id缺失', 1, 'regex', 1),
+        array('task_id','require','任务id缺失',1,'regex', 1),
+        array('valid_time', 'require', '任务有效日期不能为空', 1, 'regex', 2),
+        array('valid_info','require','验证信息不能为空',1,'regex', 2)
+
     );
     public function getTaskLog($where = [], $field = '', $sort = 'l.add_time DESC'){
-        $where['l.status'] = 1;
+        $map['l.status'] = array('eq', 1);
+        $map['l.status'] = array('eq', 1);
+
         $count = $this->alias('l')
                  ->join('__TASK__ as t on t.id = l.task_id', 'LEFT')
                  ->join('__TASK_CATEGORY__ as c on c.id = t.category_id')
@@ -67,13 +72,23 @@ class TaskLogModel extends  Model{
          return $taskInfo;
     }
     protected function _before_insert(&$data, $option){
-        $data['valid_time'] = NOW_TIME  + 1200;
+        $data['valid_time'] = NOW_TIME  + C('TASK_LIMIT_TIME');
         $data['valid_status'] = 0;
-        $data['status'] = 1;
         $data['add_time'] = NOW_TIME;
     }
     protected function _before_update(&$data, $option){
         $data['finish_time'] = NOW_TIME;
+    }
+    //接单减库存
+    protected function _after_insert(&$data, $option) {
+        $res = M('Task')->where(array('id'=>$data['task_id']))->setDec('task_num');
+        if ($res) {
+            return true;
+        } else {
+            $this->error = '任务减库存失败';
+            return false;
+        }
+
     }
     /**
     * @desc  丢弃任务
@@ -119,16 +134,18 @@ class TaskLogModel extends  Model{
     {
           $where['user_id'] = $user_id;
           $where['task_id'] = $task_id;
-          $where['audit_status'] = 0;
+          $where['valid_status'] = 0;
+          $where['valid_time'] = array('gt', NOW_TIME);
           $result  = $this->where($where)->find();
           if($result)
           {
                $this->where($where)->save(array('end_time' => NOW_TIME + 1200));
                return true;
-          }else{
+          } else {
                return false;
           }
     }
+
     /**
      * @desc 改变接单状态
      * @param $task_id
