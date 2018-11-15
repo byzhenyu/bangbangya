@@ -22,10 +22,10 @@ class TaskLogController extends CommonController {
      public function takeTask(){
          $id =  I('id', 0, 'intval');
          $TaskLogModel = D('Home/TaskLog');
-         if($id >0) {
+         if ($id >0) {
              $where['l.id'] = $id;
              $TaskLogInfo = $TaskLogModel->getTaskLogDetail($where);
-         }else{
+         } else {
              $TaskLogInfo = [];
          }
          if (IS_POST) {
@@ -33,18 +33,18 @@ class TaskLogController extends CommonController {
              $data['user_id'] = UID;
              if ($id > 0 ) {
                  if ($TaskLogModel->save() !== false) {
-                     $this->ajaxReturn(V(2, '修改成功'));
+                     $this->ajaxReturn(V(1, '修改成功'));
                  }
              } else {
                  /*判断是否重新激活订单*/
                   $result  = activateTask(UID, $id);
-                  if($result){
+                  if ($result) {
                       $this->ajaxReturn(V(1, '订单重新激活成功'));
                   }
                  /*判断任务数量*/
                  $task_num = taskNum($data['task_id']);
                  if(!$task_num){
-                     $this->ajaxReturn(V(3, '任务数量已经空了!请稍后再试!'));
+                     $this->ajaxReturn(V(0, '任务数量已经空了!请稍后再试!'));
                  }
                  if($TaskLogModel->add($data) !== false)
                  {
@@ -57,6 +57,39 @@ class TaskLogController extends CommonController {
          $this->assign('$TaskLogInfo',$TaskLogInfo);
          $this->display();
      }
+     //接单
+    public function getTask() {
+        $task_id = I('id', 0, 'intval');
+        $where['t.id'] = array('eq', $task_id);
+
+        $taskInfo = D('Home/Task')->getTaskDetail($where);
+
+        if (empty($taskInfo)) {
+            $this->ajaxReturn(V(0, '任务不存在，或被删除'));
+        }
+        $TaskLogModel = D('Home/TaskLog');
+        $logStatus = $TaskLogModel->activateTask(UID, $task_id);
+        if ($logStatus) {
+            $this->ajaxReturn(V(0, '存在未完成任务,请勿重复接单'));
+        }
+
+        $data['user_id'] = UID;
+        $data['task_id'] = $taskInfo['id'];
+        $data['task_name'] = $taskInfo['title'];
+        $data['task_price'] = $taskInfo['price'];
+
+        if ($TaskLogModel->create($data, 1) ===false) {
+            $this->ajaxReturn(V(0, $TaskLogModel->getError()));
+        }
+        $taskLogId = $TaskLogModel->add();
+        if ($taskLogId) {
+            $this->ajaxReturn(V(1, '接单成功', $taskLogId));
+        } else {
+            $this->ajaxReturn(V(0, '操作失败请重试'));
+        }
+
+    }
+
      /**
      * @desc 获取接单信息
      * @param  $user_id
@@ -67,22 +100,14 @@ class TaskLogController extends CommonController {
           /*where 接任务条件查找  0待提交 1审核中 2不合格 3已完成 default全部 */
           $type = I('type', 5, 'intval');
           switch ($type) {
-             case '0':
-                 $where['l.valid_status'] = 0;
+             case 0:
+             case 1:
+             case 2:
+             case 3:
+                 $where['l.valid_status'] = array('eq', $type);
                  break;
-             case '1':
-                 $where['l.valid_status'] = 1;
-                 break;
-             case '2':
-                 $where['l.valid_status'] = 2;
-                 break;
-             case '3':
-                 $where['l.valid_status'] = 3;
-                 break;
-              case '4':
-                  unset($where);
-                  break;
              default:
+                 $where['l.valid_status'] = array('neq', 4);
                  break;
           }
           $where['l.user_id'] = UID;

@@ -22,31 +22,33 @@ class TaskController extends UserCommonController {
      * @return
      */
     public function listTask(){
+
         $keyword = I('keyword', '');
         /* order 接单赚钱的条件查询 */
         $typeOrder = I('typeOrder',0,'intval');
-        if ($typeOrder){
+
             switch ($typeOrder) {
-                case '1':
-                    $order = 't.add_time DESC';
+                case 1:
+                    $order = 't.top_time DESC,t.re_time DESC,t.add_time DESC';
                     break;
-                 case '2':
-                    $order = 't.end_time DESC';
+                case 2:
+                    $order = 't.top_time DESC, re_time DESC, t.end_time DESC';
                     break;
-                case '3':
-                    $where['s.top_time|s.partner_time'] = array('gt',NOW_TIME);
+                case 3:
+                    $order = 't.top_time DESC,t.re_time DESC,s.top_time DESC, s.partner_time DESC, t.add_time ASC';
                     break;
-                case '4':
+                case 4:
                     $order = 't.look_num DESC';
                     break;
-                case '5':
-                    $where['t.type'] = '苹果';
+                case 5:
+                    $where['t.mobile_type'] = '苹果';
+                    $order = 't.top_time DESC,t.re_time DESC,t.add_time DESC';
                     break;
                 default:
-                    $order = 't.add_time DESC';
+                    $order = 't.top_time DESC, t.re_time DESC, t.add_time DESC';
                     break;
             }
-        }
+
         /*选择任务类型*/
         $taskCategoryId = I('taskCategoryId', 0, 'intval');
         if($taskCategoryId)
@@ -58,18 +60,35 @@ class TaskController extends UserCommonController {
             $where['t.title|t.id'] = array('like', '%'.$keyword.'%');
         }
         $where['t.user_id'] = array('NEQ',UID);
-        /*任务类别*/
-        $taskCategory = D('Home/TaskCategory')->getTaskCategory();
+
         /*任务信息*/
+
         $taskInfo = D('Home/Task')->getTaskList($where, '', $order);
+        $list = $taskInfo['list'];
+        if (!empty($list)) {
+            foreach ($list as $k=>$v) {
+                $list[$k]['price'] = fen_to_yuan($v['price']);
+                if ($list[$k]['top_time'] > NOW_TIME) {
+                    $list[$k]['top'] = 1;
+                }
+                if ($list[$k]['re_time'] > NOW_TIME) { //推荐 暂时缺少图片未判断
+                    $list[$k]['ret'] = 1;
+                }
+            }
+        }
+        if(IS_POST) {
+
+            $this->ajaxReturn(V(1, '任务列表', $list));
+        }
         /*置顶店铺*/
         $shopWhere['s.top_time'] = array('gt', NOW_TIME);
         $shopField = 's.user_id, s.shop_img, s.shop_name';
         $topShop = D('Home/Shop')->getAllShop($shopWhere, $shopField);
-
+        /*任务类别*/
+        $taskCategory = D('Home/TaskCategory')->getTaskCategory();
         $this->assign('topShop',$topShop['shopList']);
         $this->assign('taskCategory',$taskCategory);
-        $this->assign('taskInfo', $taskInfo['list']);
+        $this->assign('taskInfo', $list);
         $this->assign('page', $taskInfo['page']);
         $this->display();
     }
@@ -175,11 +194,10 @@ class TaskController extends UserCommonController {
      public  function taskDetail(){
         $id = I('id', 0, 'intval');
         $where['t.id'] = $id;
-        $field = 'u.nick_name, u.head_pic, s.shop_accounts, s.top_time,s.user_id, t.id, c.category_name, t.price, t.validate_words, t.link_url, t.remark, t.end_time ';
         $taskModel = D('Home/Task');
-        $taskDetail = $taskModel->getTaskDetail($where, $field);
-        p($taskDetail);
-//        exit;
+        $taskDetail = $taskModel->getTaskDetail($where);
+
+        $this->assign('id', $id);
         $this->assign('taskDetail', $taskDetail);
         $this->display();
     }
@@ -187,7 +205,7 @@ class TaskController extends UserCommonController {
     * @desc  上传图片
     */
     // 上传图片
-    public function uploadImg(){
+    public function uploadImg() {
 
         //$this->_uploadImg();  //调用父类的方法
         $config = array(
@@ -251,11 +269,13 @@ class TaskController extends UserCommonController {
         $field = 't.id,t.end_time, t.top,t.top_time , t.recommend, t.re_time, t.title, t.audit_info,t.price,t.task_zong, t.task_num, t.total_price, t.audit_status, t.is_show, t.add_time, c.category_name ';
         $taskList = D('Home/Task')->getMyTask($where, $field);
         $total_money = D('Home/User')->where('user_id = '.UID)->getField('total_money');
-        p($taskList);
+
         $this->assign('taskList', $taskList);
         $this->assign('total_money', $total_money);
         $this->display();
     }
+
+
 
     public function del(){
         $id = I('id', 0 , 'intval');
@@ -271,8 +291,19 @@ class TaskController extends UserCommonController {
         $where['id'] = array('eq', $id);
         $taskModel = M('Task');
         $is_show = $taskModel->where($where)->getField('is_show');
-        //$taskModel->where($where)->setField('',$is)
 
+        if ($is_show == 0) {
+            $data['is_show'] = 1;
+            $data['audit_status'] = 0;
+        } else {
+            $data['is_show'] = 0;
+        }
+        $res = $taskModel->where($where)->save($data);
+        if ($res === false) {
+            $this->ajaxReturn(V(0, '操作失败'));
+        } else {
+            $this->ajaxReturn(V(1, '操作成功'));
+        }
     }
     /**
     * @desc 暂停任务
@@ -280,10 +311,10 @@ class TaskController extends UserCommonController {
     * @param  audit_status
     * @return json
     */
-    public function pause(){
+    public function pause() {
         $data = I('post.', 2);
         $taskPause = $this->Task->where('id = '.$data['id'])->save($data);
-        if($taskPause){
+        if ($taskPause) {
             $this->ajaxReturn(V(1, $data['audit_status'] == 1 ? '开启成功':'暂停成功'));
         }
         $this->ajaxReturn(V(0, $this->Task->getError()));
@@ -295,7 +326,7 @@ class TaskController extends UserCommonController {
     * @param $num   task_num
     * @return json
     */
-    public function addTaskNum(){
+    public function addTaskNum() {
         $data = I('post.', 3);
         $res  =  user_money(UID, $data['money']);
         if(!$res){
@@ -359,7 +390,7 @@ class TaskController extends UserCommonController {
              //开启事务
               M()->startTrans();
               $userModel = D('Home/User');
-              if($moeny != 0){
+              if($money != 0){
                   $userRes  = $userModel->where('user_id = '.UID)->fetchSql(true)->setDec('total_money',$money);
               }else{
                   $userRes = true;
@@ -420,6 +451,14 @@ class TaskController extends UserCommonController {
             }
             $this->ajaxReturn(V(0, $this->Task->getError()));
         }
+    }
+
+    //丢弃任务
+    public function discardTask() {
+        $id = I('id', 0, 'intval');
+
+        $res = D('Home/Task')->discardTask($id);
+        $this->ajaxReturn($res);
     }
 
 }
