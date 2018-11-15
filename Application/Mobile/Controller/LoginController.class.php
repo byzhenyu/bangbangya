@@ -62,7 +62,7 @@ class LoginController extends CommonController {
                 define('UID', session('user_auth')['user_id']);
             }
         }
-        $this->redirect('Mobile/User/personalCenter');
+        header('Location:http://bby.host5.liuniukeji.com/Mobile/User/personalCenter');
     }
     /**
      * 退出登录
