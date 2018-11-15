@@ -263,17 +263,12 @@ function randCode($length = 5, $type = 0) {
  * * @param string $pushType 信息类型
  * @return mixed
  */
-function jPush( $alert, $userId = null, $msg = '', $type='message', $pushType, $order_sn) {
+function jPush( $alert, $userId = null, $msg = '', $type='message', $order_sn) {
     require_once ('./Plugins/JPush/JPush.php');
 
     try {
-        if ($pushType == 1) {
-            //商家端极光key和secret
-            $client = new \JPush( '94b0b753ead3913b62885955', 'bd7f75bc12a3b6d4cb429722' );
-        } elseif($pushType == 2) {
-            //用户端极光key和secret
-            $client = new \JPush( '5a79011d04d1e484acaea257', '6237da327b3dbca89eeec233' );
-        }
+        //极光key和secret
+         $client = new \JPush( '94b0b753ead3913b62885955', 'bd7f75bc12a3b6d4cb429722' );
 
         $extras = array (
             'type' => $type,
