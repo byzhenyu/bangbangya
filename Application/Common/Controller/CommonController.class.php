@@ -101,8 +101,8 @@ class CommonController extends Controller
     * @param openid  https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID
     * @return mixed
     */
-    function getWeiChatInfo($openid){
-        $url = 'https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid='.$openid;
+    function getWeiChatInfo($access_token,$openid){
+        $url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$access_token.'&openid='.$openid;
         $data = json_decode($this->curl($url), true);//调取function.php封装的CURL函数  return array
         return $data;
     }
