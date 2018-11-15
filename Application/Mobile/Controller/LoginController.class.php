@@ -60,7 +60,7 @@ class LoginController extends CommonController {
 //        exit;
         $userModel = D('Home/User');
         if($userModel->validate($userModel->_login_validate)->create($weiChatData)){
-                $userInfo = $UserModel->doLogin($weiChatData['openid']);
+                $userInfo = $userModel->doLogin($weiChatData['openid']);
                 if($userInfo){
                     if( $userInfo['status'] == 1 ){ //登录成功
                         if($userInfo['data']['disabled'] == 0){
@@ -82,7 +82,7 @@ class LoginController extends CommonController {
                           'open_id' => $weiChatData['openid'],
                           'register_time' => NOW_TIME
                       );
-                      $userid = $UserModel->add($userData);
+                      $userid = $userModel->add($userData);
                       if($user){
                             $shopDate = array(
                                   'user_id' => $userid,
@@ -98,7 +98,7 @@ class LoginController extends CommonController {
                      V(0, '登录失败');
                 }
         }else{
-            V(0, $UserModel->getError());
+            V(0, $userModel->getError());
         }
         $this->redirect('Mobile/User/personalCenter');
     }
