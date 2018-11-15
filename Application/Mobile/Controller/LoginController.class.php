@@ -57,10 +57,8 @@ class LoginController extends CommonController {
         $code = $_GET['code'];
         $weiChat_token = $this->getWeiChat($code);
         $weiChatData = $this->getWeiChatInfo($weiChat_token['access_token'], $weiChat_token['openid']);
-//        p($weiChatData);
         $userModel = D('Home/User');
         $userInfo = $userModel->doLogin($weiChatData['openid']);
-        var_dump($userInfo);
         if ($userInfo['status'] == 1) { //登录成功
             if ($userInfo['data']['disabled'] == 0) {
                 V(3, '您的账号已被停用');
@@ -86,11 +84,12 @@ class LoginController extends CommonController {
                     'add_time' => NOW_TIME
                 );
                 D('Home/Shop')->add($shopDate);
+                $userInfo = $userModel->doLogin($weiChatData['openid']);
                 session('user_auth', $userInfo['data']);
                 define('UID', session('user_auth')['user_id']);
             }
-            $this->redirect('Mobile/User/personalCenter');
         }
+        $this->redirect('Mobile/User/personalCenter');
     }
     /**
      * 退出登录
