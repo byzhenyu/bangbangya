@@ -56,7 +56,7 @@ class LoginController extends CommonController {
         $code = $_GET['code'];
         $weiChatData = $this->getWeiChat($code);
         $data = $this->getWeiChat($weiChatData['access_token'],$weiChatData['openid']);
-        p($weiChatData);
+        p($data);
         exit;
         $userModel = D('Home/User');
         $userInfo = $userModel->where('openid = '.$weiChatData['openid'])->find();
