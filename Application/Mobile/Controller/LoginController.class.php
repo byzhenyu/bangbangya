@@ -60,6 +60,7 @@ class LoginController extends CommonController {
 //        exit;
         $userModel = D('Home/User');
         if($userModel->validate($userModel->_login_validate)->create($weiChatData)){
+          p($weiChatData);exit;
                 $userInfo = $userModel->doLogin($weiChatData['openid']);
                 if($userInfo){
                     if( $userInfo['status'] == 1 ){ //登录成功
@@ -100,7 +101,7 @@ class LoginController extends CommonController {
         }else{
             V(0, $userModel->getError());
         }
-        $this->redirect('Mobile/User/personalCenter');
+//        $this->redirect('Mobile/User/personalCenter');
     }
     /**
      * 退出登录
