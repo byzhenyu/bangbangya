@@ -32,6 +32,7 @@ class LoginController extends CommonController {
     public function dologin(){
         $data = $_GET['code'];
         print_r($data);
+        echo '2222';
         die;
         $UserModel = D('Home/User');
         $data = I('post.');
