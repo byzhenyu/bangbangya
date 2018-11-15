@@ -30,7 +30,7 @@ class UserModel extends Model
              ->field($field)
              ->where($where)
              ->find();
-        if(is_array($user)){
+        if(!empty($user)){
                 if ($user['disabled'] != 1) {
                     return V(0, '用户账号已经被禁用');
                 }
