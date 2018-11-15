@@ -62,8 +62,6 @@ class LoginController extends CommonController {
                 define('UID', session('user_auth')['user_id']);
             }
         }
-        echo UID;
-        die;
         $this->redirect('Mobile/User/personalCenter');
     }
     /**
