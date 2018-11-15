@@ -21,7 +21,7 @@ class UserModel extends Model
 
     // 用户登录
     public function doLogin($open_id,$where=[], $field=null){
-        if ($open_id == '') return V(0, '参数错误');
+        if ($open_id == '') return false;
         $where['u.status'] = 1; // 用户未被逻辑删除
         $where['u.open_id'] = $open_id; // 用户未被逻辑删除
         /* 获取用户数据 */
