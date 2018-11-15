@@ -53,48 +53,10 @@ class LoginController extends CommonController {
 //        $this->ajaxReturn(V(0, $UserModel->getError()));
 //    }
     public function dologin(){
-        $appId = 'wxabfa47477f012987';
-        $appSecret = '3c1823358a4f46931da2fccb229985c8'; //appsecret,微信公众号基本设置里面找
-        $code = $_GET['code']; //接收上面url返回code，5分钟有效期，code直接$_GET['code']接收，vdump($code);die();
-
-        //通过下面url获取access_t和 openid，具体看代码
-        $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.$appId.'&secret='.$appSecret.'&code='.$code.'&grant_type=authorization_code';
-        $data = json_decode($this->curl($url));//调取function.php封装的CURL函数
-        p($data);
+        $code = $_GET['code'];
+        $weiChatData = $this->getWeiChat($code);
+        p($weiChatData);
         die;
-        //存取session
-        session('openId',$data->openid);
-        $arr = array(
-            'access_token'=>$data->access_token,
-            'openid' =>$data->openid,
-            'createtime'=> date('Y-m-d H:i:s',time())
-        );
-
-        //添加到数据库
-        $wx = M('wxinfo');
-        $list = M('wxinfo')->where("openid='".$data->openid."'")->find();
-        if(!empty($list)){
-            $wx->access_token = $data->access_token;
-            $wx->openid = $data->openid;
-            $wx->updatetime = date("Y-m-d H:i;s",time());
-            $wx->where("openid='".$data->openid."'")->save();
-        }else{
-            $wx->add($arr);
-        }
-
-        header('Location:http://www.xd666.com/Tui');
-
-
-    }
-
-    public function curl($url){
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        $data = curl_exec($curl);
-        curl_close($curl);
-        return $data;
     }
     /**
      * 退出登录
