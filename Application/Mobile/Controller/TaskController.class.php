@@ -127,6 +127,7 @@ class TaskController extends UserCommonController {
 
             $taskData['total_price'] = ($taskData['price'] * $taskData['task_num'] * (1 + ($orderFee/100)));
             $taskData['task_zong'] = $taskData['task_num'];
+            $taskData['audit_status'] = 0;
             if ($taskModel->create($taskData) ===false) {
                 $this->ajaxReturn(V(0, $taskModel->getError()));
             }
@@ -150,22 +151,29 @@ class TaskController extends UserCommonController {
                 }
 
             }
-            foreach ($step0Data as &$val) {
-                $val['task_id'] = $task_id;
-                $val['step_text'] = '';
-                $val['type'] = 2;
+            if (!empty($step0Data)) {
+                foreach ($step0Data as &$val) {
+                    $val['task_id'] = $task_id;
+                    $val['step_text'] = '';
+                    $val['type'] = 2;
 
+                }
+                $step0Res = $taskStepModel->addAll($step0Data);
+                if ($step0Res === false ) {
+                    M()->rollback();
+                    $this->ajaxReturn(V(0, '验证图保存失败'));
+                }
             }
-            foreach ($step1Data as &$val) {
-                $val['task_id'] = $task_id;
-                $val['type'] = 1;
-            }
-            $step0Res = $taskStepModel->addAll($step0Data);
-
-            $step1Res = $taskStepModel->addAll($step1Data);
-            if ($step0Res === false || $step1Res === false) {
-                M()->rollback();
-                $this->ajaxReturn(V(0, '验证图及步骤保存失败'));
+            if (!empty($step1Data)) {
+                foreach ($step1Data as &$val) {
+                    $val['task_id'] = $task_id;
+                    $val['type'] = 1;
+                }
+                $step1Res = $taskStepModel->addAll($step1Data);
+                if ($step1Res === false) {
+                    M()->rollback();
+                    $this->ajaxReturn(V(0, '步骤保存失败'));
+                }
             }
             M()->commit();
             $this->ajaxReturn(V(1, '操作成功'));
@@ -192,6 +200,17 @@ class TaskController extends UserCommonController {
     * @return mixed
     */
      public  function taskDetail(){
+        $id = I('id', 0, 'intval');
+        $where['t.id'] = $id;
+        $taskModel = D('Home/Task');
+        $taskDetail = $taskModel->getTaskDetail($where);
+
+        $this->assign('id', $id);
+        $this->assign('taskDetail', $taskDetail);
+        $this->display();
+    }
+    //我的任务详情
+    public function myTaskDetail() {
         $id = I('id', 0, 'intval');
         $where['t.id'] = $id;
         $taskModel = D('Home/Task');
