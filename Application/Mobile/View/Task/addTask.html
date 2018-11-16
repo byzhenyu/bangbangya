@@ -109,7 +109,7 @@
     <header class="mui-bar mui-bar-nav help-duck-head">
         <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
         <p class="mui-title">发布任务</p>
-        <a href="{:U('myTask')}">我的任务</a>
+        <a href="{:U('Article/articleDetail')}">发布规则</a>
     </header>
     <form action="{:U('addTask')}" method="post" class="ajaxFrom">
 
@@ -339,6 +339,7 @@
 
             if (data.status == 1) {
                 $(obj).parent().parent().remove();
+                count--;
                 $('#upload').attr('disabled',false);
             }
         })
@@ -405,6 +406,7 @@
     var all = 1 + (charge/100);
     var limit_num = "{$taskCategoryInfo[0]['limit_num']}";
     var limit_money = "{$taskCategoryInfo[0]['limit_money']}";
+    var user_total = $('#total_money').val();
     /*判断任务价钱*/
     $("#task_num").focusout(function() {
         var price =  +$('#price').val();
@@ -444,6 +446,11 @@
     });
 
     function validate() {
+        var agree = $("#agree").prop('checked');
+        if (!agree) {
+            mui.toast('请阅读并勾选发布协议');
+            return false;
+        }
         var task_title = $('#task_title').val();
         if (task_title == '') {
             mui.toast('标题不能为空');
@@ -459,9 +466,8 @@
             return false;
         }
 
-        var agree = $("#agree").attr('checked');
-        if (!agree) {
-            mui.toast('请勾选发布协议');
+        if (count ==0) {
+            mui.toast('请上传验证图');
             return false;
         }
 
@@ -472,7 +478,18 @@
     })
 $('#balance-insufficient').on('click', function() {
     $('#is_show').val('1');
-    //表单提交
+    var zong = $('#total_price').val();
+    if (zong > (user_total/100)) {
+        var delArray = ['确定'];
+        mui.confirm('您账户余额不足，请到个人中心充值后再发布', '提示', delArray, function(e) {
+            if (e.index == 0) {
+                // 点击了确定
+                window.location.href = "{:U('Pay/topUpsPage')}";
+            }
+
+        });
+        return false;
+    }
     submitForm();
 });
     function submitForm() {
