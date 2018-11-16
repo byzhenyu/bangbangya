@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>每周排名</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body style="background: #f6f6f6">
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a></a>
+        <p class="mui-title">消息</p>
+        <a></a>
+    </header>
+
+    <div class="message-list">
+         <foreach name="pushList['list']" item="v">
+             <div class="message-item">
+                 <div class="message-item-title">
+                     <p>{$v.title}</p>
+                     <div>
+                         <span>{:time_format($v[add_time])}</span>
+                     </div>
+                 </div>
+                 <p>{$v.content1}</p>
+                 <p>{$v.content2}</p>
+                 <p>{$v.content3}</p>
+                 <p>{$v.content4}</p>
+             </div>
+         </foreach>
+    </div>
+
+    <footer class="mui-bar mui-bar-tab help-duck-foot">
+        <a href="{:U('Index/index')}">
+            <div>
+                <img src="__PUBLIC__/mobile/images/tab_icon_home_n.png">
+                <span>首页</span>
+            </div>
+        </a>
+        <a href="{:U('Push/getPush')}">
+            <div>
+                <img src="__PUBLIC__/mobile/images/tab_icon_message_s.png">
+                <span style="color: #6f75ef">消息</span>
+            </div>
+        </a>
+        <a href="{:U('User/getRankList')}">
+            <div>
+                <img src="__PUBLIC__/mobile/images/tab_icon_rank_n.png">
+                <span>排行榜</span>
+            </div>
+        </a>
+        <a href="{:U('User/personalCenter')}">
+            <div>
+                <img src="__PUBLIC__/mobile/images/tab_icon_my_n.png">
+                <span>我的</span>
+            </div>
+        </a>
+    </footer>
+
+</body>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/url.js"></script>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+    var p = 1;
+    //滚动加载
+    function loadMore() {
+        $(window).on('scroll', function() {
+
+            if($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                p++;
+                mui.ajax(url + 'Mobile/Push/getPush',{
+                    dataType:'get',//服务器返回json格式数据
+                    type:'post',//HTTP请求类型
+                    timeout:10000,//超时时间设置为10秒；
+                    success:function(data){
+                        alert(JSON.stringify(data));
+                        // mui.toast(data['info']);
+                        // alert(JSON.stringify(data));
+                        if(data['status'] == 1){
+
+                        }else{
+                            $(window).off('scroll');
+                        }
+                    },
+                    error:function(xhr,type,errorThrown){
+                        //异常处理；
+                        console.log(type);
+                    }
+                });
+            }
+        });
+    }
+    loadMore();
+</script>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+</html>
