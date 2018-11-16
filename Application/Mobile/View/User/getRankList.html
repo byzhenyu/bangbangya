@@ -10,7 +10,7 @@
     <header class="mui-bar mui-bar-nav help-duck-head">
         <a></a>
         <p class="mui-title">每周排名</p>
-        <a href="rank-history.html">历史榜单</a>
+        <!--<a href="rank-history.html">历史榜单</a>-->
     </header>
 
     <div class="rank-week-top3">
@@ -85,7 +85,7 @@
                 <span>首页</span>
             </div>
         </a>
-        <a href="{:U('Message/getMessage')}">
+        <a href="{:U('Push/getPush')}">
             <div>
                 <img src="__PUBLIC__/mobile/images/tab_icon_message_n.png">
                 <span>消息</span>
@@ -93,14 +93,14 @@
         </a>
         <a href="{:U('User/getRankList')}">
             <div>
-                <img src="__PUBLIC__/mobile/images/tab_icon_rank_n.png">
-                <span>排行榜</span>
+                <img src="__PUBLIC__/mobile/images/tab_icon_rank_s.png">
+                <span  style="color: #6f75ef">排行榜</span>
             </div>
         </a>
         <a href="{:U('User/personalCenter')}">
             <div>
-                <img src="__PUBLIC__/mobile/images/tab_icon_my_s.png">
-                <span style="color: #6f75ef">我的</span>
+                <img src="__PUBLIC__/mobile/images/tab_icon_my_n.png">
+                <span>我的</span>
             </div>
         </a>
     </footer>
