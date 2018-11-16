@@ -15,10 +15,13 @@ class TaskLogModel extends  Model{
     protected $updateFields = array('task_id', 'task_name', 'valid_time','valid_info','valid_img','valid_text','valid_status','status','finish_time','add_time');
     protected $selectFields = array('id','task_id', 'user_id', 'task_name', 'task_price', 'valid_time', 'valid_info', 'valid_img', 'valid_pic', 'valid_text', 'valid_status', 'finish_time','add_time');
     protected $_validate = array(
-        array('user_id', 'require', '用户id缺失', 1, 'regex', 1),
+        array('user_id', 'require', '用户id缺失', 1, 'regex', 1), //添加
         array('task_id','require','任务id缺失',1,'regex', 1),
-        array('valid_time', 'require', '任务有效日期不能为空', 1, 'regex', 2),
-        array('valid_info','require','验证信息不能为空',1,'regex', 2)
+        array('valid_time', 'require', '任务有效日期不能为空', 1, 'regex', 2),//修改
+        array('valid_info','require','验证信息不能为空',1,'regex', 2),
+        array('valid_img','require','请上传验证图',1,'regex', 5), //做任务用
+        array('valid_status', array(0,1,2,3,4), '审核字段非法', 1, 'in', 5),
+        array('valid_info', 'require', '验证信息不能为空', 0, 'regex', 5),
 
     );
     public function getTaskLog($where = [], $field = '', $sort = 'l.add_time DESC'){
@@ -56,21 +59,50 @@ class TaskLogModel extends  Model{
         );
     }
     /**
-    * @desc 我的任务详情
+    * @desc 任务记录详情
     * @param  $where
     * @param  $field
     * @return mixed
     */
-    public function  getTaskLogDetail($where = [], $field = null, $sort = ''){
-        if(is_null($field)) $field = '';
-         $taskInfo  = $this->alias('l')
+    public function  getTaskLogDetail($where = [], $field = null) {
+        if(is_null($field)) $field = 'l.*, t.category_id, t.remark, c.category_name,t.user_id as task_user_id, u.head_pic,u.nick_name,s.shop_accounts,s.top_time,s.shop_type,s.partner_time';
+        $taskDetail  = $this->alias('l')
                       ->join('__TASK__ as t on t.id = l.task_id', 'LEFT')
                       ->join('__TASK_CATEGORY__ as c on c.id = t.category_id')
+                      ->join('__SHOP__ as s  on s.user_id = t.user_id')
+                      ->join('__USER__ u on t.user_id = u.user_id')
                       ->field($field)
                       ->where($where)
                       ->find();
-         return $taskInfo;
+
+         if (!empty($taskDetail)) {
+             /*查看任务详情信息*/
+             $taskStep = M('TaskStep')->where(array('task_id'=>$taskDetail['task_id']))->select();
+             if (!empty($taskStep)) {
+                 $j = 0;
+                 $i = 0;
+                 foreach ($taskStep as $k=>$v) {
+                     if ($v['type'] == 2) {
+                         $taskDetail['check_info'][$j] = $v['step_img'];
+                         $j++;
+                     } else if($v['type'] == 1) {
+                         $taskDetail['step_info'][$i]['step_img'] = $v['step_img'];
+                         $taskDetail['step_info'][$i]['step_text'] = $v['step_text'];
+                         $i++;
+                     }
+                 }
+             }
+
+             /*查看粉丝关注状态   0 不是粉丝  1 是粉丝*/
+             fansSverify(UID, $taskDetail['task_user_id'], 1) == true? $taskDetail['is_fans'] = 1: $taskDetail['is_fans'] = 0;
+
+         }
+
+         return $taskDetail;
     }
+
+
+
     protected function _before_insert(&$data, $option){
         $data['valid_time'] = NOW_TIME  + C('TASK_LIMIT_TIME');
         $data['valid_status'] = 0;
@@ -106,7 +138,7 @@ class TaskLogModel extends  Model{
           $taskLogDel = $this->where('id = '.$id)->save(array('status' => 0));
           if($taskLogDel) {
               /*task 更新的数据  如果是没有做的任务,更新任务数量*/
-              if($taskLogInfo['valid_status']  == 0){
+              if($taskLogDel['valid_status']  == 0){
                   $where['task_num'] = array('exp', ' task_num + 1');
               }
               if($taskInfo !== ',' || strpos($taskInfo, ','.$taskInfo['user_id'].',')  === false){

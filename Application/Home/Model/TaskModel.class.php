@@ -115,10 +115,6 @@ class TaskModel extends Model{
 
     }
 
-    protected function _before_update(&$data, $option) {
-        $data['audit_status'] = 0;
-        $data['add_time'] = NOW_TIME;
-    }
     /**
     * @desc 接单_任务详情
     * @param $where
@@ -158,15 +154,20 @@ class TaskModel extends Model{
             /*查看粉丝关注状态   0 不是粉丝  1 是粉丝*/
             fansSverify(UID, $taskDetail['user_id'], 1) == true? $taskDetail['is_fans'] = 1: $taskDetail['is_fans'] = 0;
             /*判断任务是否到期  is_stale 0到期 1正常 */
-            $taskDetail['end_time'] < NOW_TIME? $taskDetail['is_stale'] = 0 : $taskDetail['is_stale'] = 1;
+            $taskDetail['end_time'] < NOW_TIME ? $taskDetail['is_stale'] = 0 : $taskDetail['is_stale'] = 1;
             /*判断是否已经接单 is_task   0 未接单  1 已经正常接单  2接单失效过期重新 抢单*/
-            $valid_time  = D('Home/TaskLog')->where(array('user_id' => UID, 'task_id'=> $where['t.id']))->getField('valid_time');
-            if ($valid_time) {
-                $taskDetail['is_task'] = 1;
-                /*判断订单是否到期 is_past  0过期 1正常*/
-                $valid_time > NOW_TIME?$taskDetail['is_past'] = 1:$taskDetail['is_past'] = 0;
+            $logwhere['status'] = array('eq', 1);
+            $logwhere['task_id'] = array('eq', $taskDetail['id']);
+            $logwhere['user_id'] = array('eq', UID);
+            $logwhere['valid_time'] = array('gt', NOW_TIME);
+            $logwhere['valid_status'] = array('in', [0,1,2,3]);
+            $logInfo  = M('TaskLog')->where($logwhere)->order('id desc')->field('id, valid_time,valid_status')->find();
+            if (!empty($logInfo)) {
+                $taskDetail['task_log_id'] = $logInfo['id']; //用于判断是否接单
+                $taskDetail['log_valid_status'] = $logInfo['valid_status']; //0显示上传 2显示重做 3 已完成
             } else {
-                $taskDetail['is_task'] = 0;
+                $taskDetail['task_log_id'] = 0;
+                $taskDetail['log_valid_status'] = 0;
             }
         }
 
