@@ -80,7 +80,7 @@ class TaskModel extends Model {
         $list = $this->alias('t')
               ->join('__USER__ as u on t.user_id = u.user_id','LEFT')
               ->join('__TASK_CATEGORY__ c on t.category_id = c.id', 'LEFT')
-              ->field('t.*,u.nick_name,c.category_name')
+              ->field('t.*,u.nick_name,u.total_money,c.category_name')
               ->where('t.id ='.$id)
               ->find();
         if ($list) {
