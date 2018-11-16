@@ -12,15 +12,16 @@ class UserAccountController extends CommonController {
         //查询
         $keyword  = I('keyword', '', 'trim');
         if ($keyword) {
-            $where['u.user_name'] = array('like','%'.$keyword.'%');
+            $where['u.nick_name'] = array('like','%'.$keyword.'%');
             $this->keyword = $keyword;
         }
 
         //查询列表
 //        $where['ua.type'] = 1;
         $where['ua.status'] = 1;
-        $field = 'ua.*, u.user_name, u.nick_name, u.alipay_num, u.alipay_name,u.bonus_money,u.total_money';
+        $field = 'ua.*, u.nick_name, u.alipay_num, u.alipay_name,u.bonus_money,u.total_money';
         $list = D('Admin/UserAccount')->getUserAccountList($where, $field);
+        p($list);
         $this->list = $list['list'];
         $this->page = $list['page'];
         $this->display();

@@ -19,9 +19,10 @@ class FeedBackController extends CommonController
         $mobile = I('mobile', '', 'trim');
         $where = array();
         if($mobile){
-            $where['mobile'] = array('like', '%'.$mobile.'%');
+            $where['u.nick_name|f.comment'] = array('like', '%'.$mobile.'%');
         }
-        $feedBackInfo = D('Admin/FeedBack')->getFeedBackByPage($where);
+        $field = 'f.*, u.nick_name';
+        $feedBackInfo = D('Admin/FeedBack')->getFeedBackByPage($where, $field);
         $this->info = $feedBackInfo['info'];
         $this->page = $feedBackInfo['page'];
         $this->mobile = $mobile;
@@ -38,11 +39,9 @@ class FeedBackController extends CommonController
             $this->error('参数有误！', U('FeedBack/listFeedBack'));
         }
         $feedBackInfo = D('Admin/FeedBack')->where(array('id'=>$id))->find();
-        $feedBackInfo['user_name'] = D('User')->getUserName($feedBackInfo['user_id']);
-
+        $feedBackInfo['nick_name'] = D('User')->getUserName($feedBackInfo['user_id']);
         $this->info = $feedBackInfo;
         $this->display();
-        
     }
 
     // 删除方法

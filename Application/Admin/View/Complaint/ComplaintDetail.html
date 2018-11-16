@@ -26,15 +26,34 @@
                             </div>
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
+                                    投诉类型
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    {$Info['type'] == 0? '投诉':'申诉'}
+                                    <small></small>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label class="am-u-sm-3 am-form-label">
                                     投诉人
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    {$Info['mobile']}
+                                    {$Info['username']}
                                     <small></small>
                                 </div>
                             </div>
-
+                            <div class="am-form-group">
+                                <label class="am-u-sm-3 am-form-label">
+                                    被投诉人
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    {$Info['beusername']}
+                                    <small></small>
+                                </div>
+                            </div>
                             <div class="am-form-group">
                                 <label class="am-u-sm-3 am-form-label">
                                    申诉时间
@@ -52,6 +71,16 @@
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
                                    {$Info['information']}
+                                    <small></small>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label class="am-u-sm-3 am-form-label">
+                                    申诉金额
+                                    <span class="tpl-form-line-small-title must-input">*</span>
+                                </label>
+                                <div class="am-u-sm-7 am-u-sm-pull-2">
+                                    {:fen_to_yuan($Info['price'])}元
                                     <small></small>
                                 </div>
                             </div>
@@ -86,6 +115,7 @@
                                 </div>
                             </div>
                             <input type="hidden" name="id" value="{$Info['id']}"/>
+                            <input type="hidden" name="type" value="{$Info['type']}"/>
                             <div class="am-form-group">
                                 <div class="am-u-sm-9 am-u-sm-push-3">
                                        <if condition="$Info['audit_status']  eq 0">

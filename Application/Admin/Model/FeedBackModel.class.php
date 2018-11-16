@@ -10,7 +10,7 @@ use Think\Model;
 
 class FeedBackModel extends Model
 {
-    protected $selectFields = array('id', 'comment', 'user_id', 'mobile', 'create_time', 'type');
+    protected $selectFields = array('id', 'comment', 'user_id', 'create_time', 'type');
 
     protected $_validate = array(
         array('comment', 'require', '请输入反馈内容', 1, 'regex', 3),
@@ -36,16 +36,18 @@ class FeedBackModel extends Model
      * @return array
      */
     public function getFeedBackByPage($where, $field = null, $order = 'create_time desc'){
-
-        if(is_null($field)){
-            $field = $this->selectFields;
-        }
-
-        $count = $this->where($where)->count();
+        $count = $this->alias('f')
+                ->join('__USER__ as u on u.user_id = f.user_id','LEFT')
+                ->where($where)
+                ->count();
         $page = get_page($count);
-
-        $info = $this->field($field)->where($where)->limit($page['limit'])->order($order)->select();
-
+        $info = $this->alias('f')
+                ->join('__USER__ as u on u.user_id = f.user_id','LEFT')
+                ->field($field)
+                ->where($where)
+                ->limit($page['limit'])
+                ->order($order)
+                ->select();
         return array(
             'info' => $info,
             'page' => $page['page'],
