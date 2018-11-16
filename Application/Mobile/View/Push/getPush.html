@@ -29,7 +29,7 @@
              </div>
          </foreach>
     </div>
-
+    <div style="height: 1rem;"></div>
     <footer class="mui-bar mui-bar-tab help-duck-foot">
         <a href="{:U('Index/index')}">
             <div>
@@ -61,6 +61,7 @@
 <script src="__PUBLIC__/mobile/js/mui.min.js"></script>
 <script src="__PUBLIC__/mobile/js/url.js"></script>
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
     mui.init();
     var p = 1;
@@ -80,9 +81,9 @@
                             mui.toast(data['info']);
                             var html = '';
                             for (var i=0; i < data.data.length; i++) {
-                                         html =  '<div class="message-item"><div class="message-item-title"><p>'+data.data[i].title+'</p><div><span>'+data.data[i].content1+'</span></div></div><p>'+data.data[i].content1+'</p><p>'+data.data[i].content2+'</p><p>'+data.data[i].content3+'</p><p>'+data.data[i].content4+'</p></div>';
+                                         html +=  '<div class="message-item"><div class="message-item-title"><p>'+data.data[i].title+'</p><div><span>'+data.data[i].content1+'</span></div></div><p>'+data.data[i].content1+'</p><p>'+data.data[i].content2+'</p><p>'+data.data[i].content3+'</p><p>'+data.data[i].content4+'</p></div>';
                             }
-                            $("#message-list").append(html);
+                            $(".message-list").append(html);
                         }else{
                             $(window).off('scroll');
                         }
@@ -97,6 +98,4 @@
     }
     loadMore();
 </script>
-<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
 </html>
