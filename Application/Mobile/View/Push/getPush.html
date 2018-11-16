@@ -19,7 +19,7 @@
                  <div class="message-item-title">
                      <p>{$v.title}</p>
                      <div>
-                         <span>{:time_format($v[add_time])}</span>
+                         <span>{$v[add_time]}</span>
                      </div>
                  </div>
                  <p>{$v.content1}</p>
@@ -81,7 +81,7 @@
                             mui.toast(data['info']);
                             var html = '';
                             for (var i=0; i < data.data.length; i++) {
-                                         html +=  '<div class="message-item"><div class="message-item-title"><p>'+data.data[i].title+'</p><div><span>'+data.data[i].content1+'</span></div></div><p>'+data.data[i].content1+'</p><p>'+data.data[i].content2+'</p><p>'+data.data[i].content3+'</p><p>'+data.data[i].content4+'</p></div>';
+                                         html +=  '<div class="message-item"><div class="message-item-title"><p>'+data.data[i].title+'</p><div><span>'+data.data[i].add_time+'</span></div></div><p>'+data.data[i].content1+'</p><p>'+data.data[i].content2+'</p><p>'+data.data[i].content3+'</p><p>'+data.data[i].content4+'</p></div>';
                             }
                             $(".message-list").append(html);
                         }else{

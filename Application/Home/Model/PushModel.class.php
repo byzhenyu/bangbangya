@@ -23,6 +23,11 @@ class PushModel extends Model{
          $count = $this->where($where)->count();
          $page = get_page($count,4);
          $list = $this->field($field)->where($where)->limit($page['limit'])->order($sort)->select();
+         if($list){
+              foreach ($list as $key=>$value){
+                  $list[$key]['add_time'] = time_format($value['add_time']);
+              }
+         }
         return array(
             'list'=>$list,
             'page'=>$page['page']
