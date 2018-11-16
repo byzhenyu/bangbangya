@@ -152,9 +152,9 @@
              });
          }
     }
-    if({$type} == 4){
-        $('#makemoney-item1').hide();
-    }
+//    if({$type} == 4){
+//        $('#makemoney-item1').hide();
+//    }
     /*删除操作*/
     function del(id){
         mui.confirm('您是否要删除该条任务?', '提示', '', function(e) {
@@ -170,7 +170,7 @@
                         if(data['status'] == 1){
                             setTimeout(function(){
                                 mui.openWindow({
-                                    url:  url + 'Mobile/TaskLog/getTaskLog/type/4'
+                                    url:  url + 'Mobile/TaskLog/getTaskLog/type/5'
                                 });
                             }, 1000);
                         }
@@ -180,7 +180,7 @@
                         console.log(type);
                     }
                 });
-            }else{
+            } else {
                 mui.alert('您取消了操作');
             }
 
@@ -188,7 +188,7 @@
     }
     /*上传验证*/
     function verify(id){
-        alert(id);
+        window.location.href = "{:U('TaskLog/taskVerify')}/id/"+id;
     }
     /*不合格*/
     function fail(id){
