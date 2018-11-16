@@ -21,7 +21,6 @@ class UserAccountController extends CommonController {
         $where['ua.status'] = 1;
         $field = 'ua.*, u.nick_name, u.alipay_num, u.alipay_name,u.bonus_money,u.total_money';
         $list = D('Admin/UserAccount')->getUserAccountList($where, $field);
-        p($list);
         $this->list = $list['list'];
         $this->page = $list['page'];
         $this->display();
@@ -34,7 +33,7 @@ class UserAccountController extends CommonController {
         $id = I('id', 0, 'intval');
         $where['ua.id'] = $id;
         $userModel = D('Admin/UserAccount');
-        $field = 'ua.*, u.user_name';
+        $field = 'ua.*, u.nick_name';
         $userInfo = $userModel->getAccountInfo($where,$field);
         $this->userInfo = $userInfo;
         $this->display();

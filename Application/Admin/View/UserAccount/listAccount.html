@@ -56,12 +56,8 @@
                                     <tr class="gradeX" title="{$v['id']}">
                                         <td><input class="ids" type="checkbox" name="chkbId" value="{$v['id']}"></td>
                                         <td>{$v['id']}</td>
+                                        <td>{$v['nick_name']}</td>
                                         <td>{$type[$v['type']]}</td>
-                                        <td>{$v['nick_name']}</td>
-                                        <td>{$v['nick_name']}</td>
-                                        <td>
-                                            {:showAccountType($v['type'])}
-                                        </td>
                                         <td>{:fen_to_yuan($v['money'])}</td>
                                         <td>{$v['account_fee']}</td>
                                         <td>{:fen_to_yuan($v['drawmoney'])}</td>

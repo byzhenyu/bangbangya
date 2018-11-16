@@ -105,6 +105,18 @@
 
                             </li>
                         </foreach>
+                        <if condition="empty($taskLogInfo['list'])">
+                            <div id="makemoney-item2" class="mui-control-content">
+                                <ul class="mui-table-view make-money-info task-order-record">
+                                    <li class="mui-table-view-cell  make-money-info-li-none">
+                                        <p>提示：仅显示最后一个月的数据信息哦</p>
+                                    </li>
+                                </ul>
+                                <div class="mui-scrollbar mui-scrollbar-vertical">
+                                    <div class="mui-scrollbar-indicator"></div>
+                                </div>
+                            </div>
+                        </if>
                     </ul>
                 </div>
                 <div class="mui-scrollbar mui-scrollbar-vertical">

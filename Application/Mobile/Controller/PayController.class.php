@@ -108,7 +108,7 @@ class PayController  extends CommonController{
             $data = I('post.', 2);
             $userRes = $this->user->where('alipay_num ='.$data['alipay_num'])->find();
             if($userRes){
-                $this->ajaxReturn(V(0, '绑定失败,已有账号绑定该支付宝!!'));
+                $this->ajaxReturn(V(0, '绑定失败,已有账号绑定该支付宝!'));
             }
             $result = $this->user->where('user_id = '.UID)->save($data);
             if($result){
