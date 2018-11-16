@@ -105,7 +105,7 @@
 
                             </li>
                         </foreach>
-                        <if condition="count($taskLogInfo['list']) eq 0">
+                        <if condition="empty($taskLogInfo['list'])">
                             <div id="makemoney-item2" class="mui-control-content">
                                 <ul class="mui-table-view make-money-info task-order-record">
                                     <li class="mui-table-view-cell  make-money-info-li-none">
