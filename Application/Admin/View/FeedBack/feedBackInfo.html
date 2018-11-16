@@ -26,21 +26,21 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td style="width: 25%;"><div align="right"><strong>发布人：</strong></div></td>
-                                <td>{$info['user_name']}</td>
-                            </tr>
-                            <tr>
-                                <td style="width: 25%;"><div align="right"><strong>创建时间：</strong></div></td>
-                                <td>{$info['create_time']|time_format}</td>
+                                <td style="width: 25%;"><div align="right"><strong>反馈人：</strong></div></td>
+                                <td>{$info['nick_name']}</td>
                             </tr>
                             <tr>
                                 <td><div align="right"><strong>反馈内容：</strong></div></td>
                                 <td>{$info['comment']}</td>
                             </tr>
                             <tr>
-                                <td><div align="right"><strong>反馈类型：</strong></div></td>
-                                <td>{$info['type']|show_feed_type}</td>
+                                <td style="width: 25%;"><div align="right"><strong>创建时间：</strong></div></td>
+                                <td>{$info['create_time']|time_format}</td>
                             </tr>
+                            <!--<tr>-->
+                                <!--<td><div align="right"><strong>反馈类型：</strong></div></td>-->
+                                <!--<td>{$info['type']|show_feed_type}</td>-->
+                            <!--</tr>-->
 
                         </table>
                         <table width="100%" class="am-table">

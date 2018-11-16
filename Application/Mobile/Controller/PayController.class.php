@@ -106,6 +106,10 @@ class PayController  extends CommonController{
         $user_id = UID;
         if(IS_POST){
             $data = I('post.', 2);
+            $userRes = $this->user->where('alipay_num ='.$data['alipay_num'])->find();
+            if($userRes){
+                $this->ajaxReturn(V(0, '绑定失败,已有账号绑定该支付宝!'));
+            }
             $result = $this->user->where('user_id = '.UID)->save($data);
             if($result){
                 $this->ajaxReturn(V(1, '绑定成功',$data['user_id']));
@@ -153,7 +157,7 @@ class PayController  extends CommonController{
           }
           $userInfo = D('Home/User')->field('alipay_num, alipay_name')->where('user_id = '.UID)->find();
           if($userInfo['alipay_num'] == ''  || $userInfo ['alipay_name'] == ''){
-              $this->ajaxReturn(V(3, '请绑定支付宝提现!'));
+              $this->ajaxReturn(V(3, '请绑定支付宝解冻保证金!'));
           }
           /*添加提现信息*/
           $insData['user_id'] = UID;
@@ -162,7 +166,7 @@ class PayController  extends CommonController{
           $insData['money'] = $shop_accounts * 0.99;
           $insData['brank_no'] = $userInfo['alipay_num'];
           $insData['brank_user_name'] = $userInfo['alipay_name'];
-          $insData['type'] = 3;
+          $insData['type'] = 2;
           $insRes = D('Home/UserAccount')->add($insData);
           if($shopRes && $insRes){
               M()->commit();

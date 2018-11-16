@@ -2,8 +2,8 @@
 /**
  * Copyright (c) 山东六牛网络科技有限公司 https://www.liuniukeji.com
  *
- * @Description
- * @Author
+ * @Description     申诉 投诉控制器
+ * @Author          wangzhenyu  byzhenyu@qq.com
  * @Date           2018/10/25
  * @CreateBy       PhpStorm
  */
@@ -17,9 +17,10 @@ class ComplaintController extends CommonController {
         $keyword = I('keyword', '');
         $ComplaintModel = D('Admin/Complaint');
         if ($keyword) {
-            $where['task_id|user_id']  = array('like', '%'.$keyword.'%');
+            $where['u1.nick_name|u2.nick_name']  = array('like', '%'.$keyword.'%');
         }
-        $data =  $ComplaintModel->getComplaintList($where);
+        $field = 'u1.nick_name as username , u2.nick_name as beusername,  c.*';
+        $data =  $ComplaintModel->getComplaintList($where, $field);
         $this->assign('list', $data['Complaintlist']);
         $this->assign('page', $data['page']);
         $this->display();
@@ -38,37 +39,45 @@ class ComplaintController extends CommonController {
             if($id > 0){
                 if($ComplaintModel ->create()){
                     $data = I('post.','');
-                    $result = $ComplaintModel->save();
-                    if($data['audit_status'] == 1)
-                    {
-                          $ComplaintInfo = $ComplaintModel ->getComplaintInfo($data['id']);
-                          $taskInfo = D('Admin/Task') ->getTaskDetail($ComplaintInfo['task_id']);
-                          if($taskInfo['total_price'] == 0) $this->ajaxReturn(V(2, '任务总金额不足', $taskInfo['id']));
-                          // die;
-                          //开启事务 
-                          M() ->startTrans();
-                          /*更新用户数据*/
-                          $userData = array(
-                               'total_money' => array('exp','total_money +'.$taskInfo['price'])
-                          );
-                          $userRes = D('Admin/User')->updateUserInfo($ComplaintInfo['user_id'],$userData);
-                          /*更新任务表数据*/
-                          $taskData = array(
-                              'task_num'  => array('exp','task_num - 1'),
-                               'total_price' => array('exp','total_price -'.$taskInfo['price'])
-                          );
-                          $taskRes = D('Admin/Task')->updateTaskinfo($taskInfo['id'],$taskData);
-                          if($userRes  &&  $taskRes  && $result)
-                          {
+                    $userModel = D('Home/User');
+                    $shopModel = D('Home/Shop');
+                    $ComplaintModel->save();
+                    if($data['audit_status'] == 1){
+                        $ComplaintInfo = $ComplaintModel ->getComplaintInfo($data['id']);
+                        if($data['type'] == 0){
 
-                              M()->commit();
-                              $this->ajaxReturn(V(1, '操作成功', $id));
-                          }else{
-                              M()->rollback();
-                              $this->ajaxReturn(V(0, '操作失败'));                    
-                          }
-                    }else if($result === false){
-                           $this->ajaxReturn(V(0, '操作失败'));
+                            $usershopRes = $shopModel->where('user_id = '.$ComplaintInfo['be_user_id'])->setInc('be_complain_num');
+                            $beusershopRes = $shopModel->where('user_id = '.$ComplaintInfo['user_id'])->setInc('complain_num');
+                            if($usershopRes && $beusershopRes){
+                                $this->ajaxReturn(V(1, '操作成功'));
+                            }else{
+                                $this->ajaxReturn(V(0, '失败'));
+                            }
+                        }else{
+                            M()->startTrans();
+                            $userData = array(
+                                  'task_suc_money' => array('exp','task_suc_money + '.$ComplaintInfo['price']),
+                                  'total_money' => array('exp','total_money + '.$ComplaintInfo['price']),
+                            );
+                            $userRes = $userModel->where('user_id = '.$ComplaintInfo['user_id'])->save($userData);
+                            $usershopRes = $shopModel->where('user_id = '.$ComplaintInfo['user_id'])->setInc('appeal_num');
+                            account_log($ComplaintInfo['user_id'], $ComplaintInfo['price'],4,'申诉获得任务金额',$ComplaintInfo['task_id']);
+                            $beuserData = array(
+                                'total_money' => array('exp','total_money - '.$ComplaintInfo['price'])
+                            );
+                            $beuserRes = $userModel->where('user_id = '.$ComplaintInfo['be_user_id'])->save($beuserData);
+                            $beusershopRes = $shopModel->where('user_id = '.$ComplaintInfo['be_user_id'])->setInc('be_appeal_num');
+                            account_log($ComplaintInfo['be_user_id'], $ComplaintInfo['price'],3,'被申诉扣除任务的金额',$ComplaintInfo['task_id']);
+                            if($usershopRes && $beusershopRes  && $userRes && $beuserRes){
+                                M()->commit();
+                                $this->ajaxReturn(V(1, '操作成功'));
+                            }else{
+                                M()->rollback();
+                                $this->ajaxReturn(V(0, '失败'));
+                            }
+                        }
+                    }else{
+                            $this->ajaxReturn(V(1, '操作成功'));
                     }
                 }else{
                     $this->ajaxReturn(V(3, $ComplaintModel->getError()));

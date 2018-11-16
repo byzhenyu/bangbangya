@@ -29,16 +29,24 @@ class ComplaintModel extends Model {
      * @param $sort string 排序顺序
      * @return mixed
      */
-    public function getComplaintList($where, $field = false, $sort = 'add_time desc')
+    public function getComplaintList($where, $field = false, $sort = 'c.audit_status ASC')
     {
-        if(is_null($field)){
-            $field = $this->selectFields;
-        }
         /*status 状态查询 0 被删除的信息 1 正常显示的信息*/
-        $where['status'] = 1;
-        $count = $this->where($where)->count();
+        $where['c.status'] = 1;
+        $count = $this->alias('c')
+                ->join('__USER__ as u1 on u1.user_id = c.user_id ','LEFT')
+                ->join( '__USER__ as u2 on u2.user_id = c.be_user_id ')
+                ->where($where)
+                ->count();
         $page = get_page($count, 10);
-        $Complaintlist = $this->field($field)->where($where)->limit($page['limit'])->order($sort)->select();
+        $Complaintlist = $this->alias('c')
+                          ->join('__USER__ as u1 on u1.user_id = c.user_id ','LEFT')
+                          ->join( '__USER__ as u2 on u2.user_id = c.be_user_id ')
+                          ->field($field)
+                          ->where($where)
+                          ->limit($page['limit'])
+                          ->order($sort)
+                          ->select();
         return array(
             'Complaintlist'=>$Complaintlist,
             'page'=>$page['page']
@@ -53,9 +61,10 @@ class ComplaintModel extends Model {
     public function getComplaintInfo($where=[], $fields = null)
     {
         $list = $this->alias('c')
-                ->join('__USER__ as u on c.user_id = u.user_id','LEFT')
+                ->join('__USER__ as u1 on u1.user_id = c.user_id','LEFT')
+                ->join('__USER__ as u2 on u2.user_id = c.be_user_id')
                 ->join('__TASK__ as t on c.task_id = t.id','LEFT')
-                ->field('c.*,u.user_name,u.mobile,t.title')
+                ->field('c.*,u1.nick_name as username ,u2.nick_name as beusername ,t.title')
                 ->where('c.id  = '.$where['id'])
                 ->find();
         return $list;

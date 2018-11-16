@@ -122,7 +122,7 @@ class UserModel extends Model{
      * create by wangwujiang 2018/3/22
      */
     public function getUserName($user_id){
-        $userInfo = $this->where('user_id ='.$user_id)->getField('user_name');
+        $userInfo = $this->where('user_id ='.$user_id)->getField('nick_name');
         return $userInfo;
     }
     //禁用账号改变会员token下线
