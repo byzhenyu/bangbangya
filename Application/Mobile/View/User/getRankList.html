@@ -63,8 +63,7 @@
         <p>4-100名</p>
         <p>赚钱金额</p>
     </div>
-
-    <div class="top-user-list">
+    <div id="rankList" class="top-user-list">
        <foreach name="randList" item="v" key="k">
            <if condition="$k gt 2 ">
                <div class="top-user-item">
@@ -79,7 +78,6 @@
            </if>
        </foreach>
     </div>
-
     <footer class="mui-bar mui-bar-tab help-duck-foot">
         <a href="{:U('Index/index')}">
             <div>
@@ -110,6 +108,13 @@
 <script src="__PUBLIC__/mobile/js/mui.min.js"></script>
 <script type="text/javascript" charset="utf-8">
     mui.init();
+    var page = 1;
+    //排名分页
+    function rankList(){
+           page ++;
+
+
+    }
 </script>
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
