@@ -21,7 +21,7 @@ class PushModel extends Model{
              $field = $this->selectFields;
          }
          $count = $this->where($where)->count();
-         $page = get_page($count,5);
+         $page = get_page($count,4);
          $list = $this->field($field)->where($where)->limit($page['limit'])->order($sort)->select();
         return array(
             'list'=>$list,

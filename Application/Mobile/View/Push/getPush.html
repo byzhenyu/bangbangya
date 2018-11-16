@@ -13,7 +13,6 @@
         <p class="mui-title">消息</p>
         <a></a>
     </header>
-
     <div class="message-list">
          <foreach name="pushList['list']" item="v">
              <div class="message-item">
@@ -71,16 +70,19 @@
 
             if($(document).scrollTop() >= $(document).height() - $(window).height()) {
                 p++;
-                mui.ajax(url + 'Mobile/Push/getPush',{
-                    dataType:'get',//服务器返回json格式数据
-                    type:'post',//HTTP请求类型
+                mui.ajax(url + 'Mobile/Push/getPush/p/' + p,{
+                    dataType:'json',//服务器返回json格式数据
+                    type:'get',//HTTP请求类型
                     timeout:10000,//超时时间设置为10秒；
                     success:function(data){
-                        alert(JSON.stringify(data));
-                        // mui.toast(data['info']);
                         // alert(JSON.stringify(data));
-                        if(data['status'] == 1){
-
+                        if(data.data.length){
+                            mui.toast(data['info']);
+                            var html = '';
+                            for (var i=0; i < data.data.length; i++) {
+                                         html =  '<div class="message-item"><div class="message-item-title"><p>'+data.data[i].title+'</p><div><span>'+data.data[i].content1+'</span></div></div><p>'+data.data[i].content1+'</p><p>'+data.data[i].content2+'</p><p>'+data.data[i].content3+'</p><p>'+data.data[i].content4+'</p></div>';
+                            }
+                            $("#message-list").append(html);
                         }else{
                             $(window).off('scroll');
                         }
