@@ -1554,7 +1554,7 @@ input[type="checkbox"]:checked + i {
 
 .task-details-middle img {
     width: 3.08rem;
-    height: 5.46rem;
+    /*height: 5.46rem;*/
 }
 
 .task-details-middle div {
@@ -1625,7 +1625,7 @@ input[type="checkbox"]:checked + i {
 
 .task-bottom-qr {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
 .task-bottom-qr img {
@@ -4028,6 +4028,23 @@ input[type="checkbox"]:checked + i {
     width: 2.8rem;
     border-top: 1px solid #e5e5e5;
     color: #6f75ef;
+}
+
+.fix-content {
+    position: fixed;
+    bottom: 20%;
+    right: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    text-align: center;
+}
+.fix-content img {
+    flex: 1;
+    width: 1.5rem;
+    height:1.5rem;
+
+
 }
 
 

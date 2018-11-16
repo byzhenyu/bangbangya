@@ -277,7 +277,6 @@
                     headers:{'Content-Type':'application/json'},
                     success:function(data){
                         mui.toast(data['info']);
-                        alert(JSON.stringify(data));
                         if(data['status'] == 1){
                             setTimeout(function(){
                                 mui.openWindow({

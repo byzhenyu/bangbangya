@@ -14,9 +14,10 @@ class UserCommonController extends CommonController
 {
     public function __construct()
     {
+
         parent::__construct();
 
-        if( ! UID ){// 还没登录 跳转到登录页面
+        if( !UID ){// 还没登录 跳转到登录页面
             $this->redirect('Login/login');
         }
         // 禁用刷新就下线

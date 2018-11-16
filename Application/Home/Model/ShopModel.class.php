@@ -142,4 +142,23 @@ class ShopModel extends Model{
 
 
    }
+
+    //查看店铺
+    public function shopDetail($user_id = 0, $field = "") {
+        $where['u.user_id'] = array('eq', $user_id);
+        if ($field =='') {
+            $field = 'u.user_id,u.nick_name,u.head_pic,s.shop_accounts,s.take_task,s.task_count,s.task_num,s.vol,appeal_num,be_appeal_num,complain_num,be_complain_num';
+        }
+        $info = M('User')->alias('u')
+            ->join('__SHOP__ s on s.user_id = u.user_id')
+            ->where($where)
+            ->field($field)
+            ->find();
+        $info['is_fans'] = 0;
+        $count = M('Fans')->where(array('fans_user_id'=>$user_id,'user_id'=>UID,'status'=>1))->count();
+        if ($count > 0) {
+            $info['is_fans'] = 1;
+        }
+        return $info;
+    }
 }

@@ -256,39 +256,31 @@ function randCode($length = 5, $type = 0) {
 
 /**
  * 极光推送通用消息
- * @param string $alert  提示标题
- * @param mixed $userId 用户id 可传数组
- * @param string $msg  信息内容
- * @param string $type 信息类型
- * * @param string $pushType 信息类型
- * @return mixed
+ * @param unknown $alert  提示标题
+ * @param unknown $type 信息类型
+ * @param unknown $userId 用户id 可传数组
+ * @param unknown $msg  信息内容
+ * @param unknown $title  信息标题
  */
-function jPush( $alert, $userId = null, $msg = '', $type='message', $pushType, $order_sn) {
+function jPush( $alert, $type, $userId = null, $msg = '') {
     require_once ('./Plugins/JPush/JPush.php');
-
     try {
-        if ($pushType == 1) {
-            //商家端极光key和secret
-            $client = new \JPush( '94b0b753ead3913b62885955', 'bd7f75bc12a3b6d4cb429722' );
-        } elseif($pushType == 2) {
-            //用户端极光key和secret
-            $client = new \JPush( '5a79011d04d1e484acaea257', '6237da327b3dbca89eeec233' );
-        }
+        $client = new \JPush( C( 'USER_PUSH_APIKEY' ), C( 'USER_PUSH_SECRETKEY' ) );
 
         $extras = array (
             'type' => $type,
             'alert' => $alert,
-            'content' => $msg,
-            'order_sn' => $order_sn,
+            'content' => $msg
         );
+
         $client = $client->push();
         $client = $client->setPlatform( 'all' );
         $client = $client->setNotificationAlert( $alert );
         $client = $client->addIosNotification( $alert, 'default', null, null, null, $extras );
         //$client = $client->setMessage ( $alert, $alert, 'type', $extras );
         $client = $client->addAndroidNotification( $alert, $alert, null, $extras );
-        //$client = $client->setOptions( 100000, 3600, null, false ); //测试环境
-        $client = $client->setOptions ( 100000, 3600, null, true ); //生产环境
+        $client = $client->setOptions( 100000, 3600, null, false ); //测试环境
+        //$client = $client->setOptions ( 100000, 3600, null, true ); //生产环境
         if ($userId) {
             // $client = $client->addRegistrationId ( $registrationIds );
             $client->addAlias( $userId );
@@ -1162,4 +1154,24 @@ function user_money($user_id, $money, $field = 'total_money'){
     }else{
         return false;
     }
+}
+
+/**
+ * 提现类型
+ * 余额提现0 分红提现1  2解冻保证金',
+ */
+function showAccountType($type) {
+switch ($type) {
+    case '0':
+        return '余额提现';
+        break;
+    case '1':
+        return '分红提现';
+        break;
+    case '2':
+        return '解冻保证金';
+        break;
+    default:
+        return '未知类型';
+}
 }

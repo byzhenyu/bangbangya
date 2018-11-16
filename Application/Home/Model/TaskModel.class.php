@@ -36,31 +36,45 @@ class TaskModel extends Model{
      * @param $where
      * @return array
      */
-    public function getTaskList($where = [], $field = '', $order = 't.end_time desc ') {
+    public function getTaskList($where = [], $field = '', $order = 't.top_time DESC, t.re_time DESC, t.add_time DESC') {
         /*任务状态查询条件*/
-        $where[] = array('t.status'=> 1,'t.is_show' =>1);
+        if ($field =='') {
+            $field = 't.id,t.user_id,t.discard_id,t.title,t.price,t.category_id,t.mobile_type,t.top_time,t.re_time,c.category_name,c.category_img,s.shop_accounts';
+        }
+        $map['t.status'] = array('eq', 1); //未删除
+        $map['t.end_time'] = array('gt', NOW_TIME); //未结束
+        $map['t.is_show'] = array('eq', 1);//已发布
+        $map['t.audit_status'] = array('eq', 1);//审核通过
         $count = $this->alias('t')
               ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')
               ->join('__SHOP__ as s on s.user_id = t.user_id')
               ->where($where)
+              ->where($map)
               ->count();
-        $page = get_page($count);
+
+        $page = get_page($count,10);
         $list = $this->alias('t')
               ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')
               ->join('__SHOP__ as s on s.user_id = t.user_id')
               ->field($field)
+              ->where($map)
               ->where($where)
               ->limit($page['limit'])
               ->order($order)
               ->select();
+
         /*判断是否丢失任务*/
+        $new = array();
+
         foreach ($list  as  $key=> $value) {
             if (strpos($value['discard_id'], ',' . UID . ',') !== false) {
-                unset($list[$key]);
+
+            } else {
+                $new[] = $value;
             }
         }
         return array(
-            'list' => $list,
+            'list' => $new,
             'page' => $page['page']
         );
     }
@@ -95,9 +109,15 @@ class TaskModel extends Model{
     }
     //添加操作前的钩子操作
     protected function _before_insert(&$data, $option){
+
+        $data['add_time'] = NOW_TIME;
+        $data['user_id'] = UID;
+
+    }
+
+    protected function _before_update(&$data, $option) {
         $data['audit_status'] = 0;
         $data['add_time'] = NOW_TIME;
-
     }
     /**
     * @desc 接单_任务详情
@@ -105,7 +125,12 @@ class TaskModel extends Model{
     * @param $field
     * @return mixed
     */
-    public function getTaskDetail($where = [], $field = null){
+    public function getTaskDetail ($where = [], $field = null) {
+
+        if (!$field) {
+            $field = 't.*, u.nick_name,u.head_pic,s.shop_accounts,s.top_time,s.shop_type,s.partner_time,c.category_name';
+        }
+
         $taskDetail =  $this->alias('t')
                        ->join('__USER__ as u on t.user_id = u.user_id', 'LEFT')
                        ->join('__SHOP__ as s  on s.user_id = t.user_id')
@@ -114,21 +139,37 @@ class TaskModel extends Model{
                        ->where($where)
                        ->find();
 
-        /*查看任务详情信息*/
-        $taskDetail['taskStep'] = D('Home/taskStep')->where('task_id = '.$where['t.id'])->select();
-        /*查看粉丝关注状态   0 不是粉丝  1 是粉丝*/
-        fansSverify(UID, $taskDetail['user_id'], 1) == true? $taskDetail['is_fans'] = 1: $taskDetail['is_fans'] = 0;
-        /*判断任务是否到期  is_stale 0到期 1正常 */
-        $taskDetail['end_time'] < NOW_TIME? $taskDetail['is_stale'] = 0 : $taskDetail['is_stale'] = 1;
-        /*判断是否已经接单 is_task   0 未接单  1 已经正常接单  2接单失效过期重新 抢单*/
-        $valid_time  = D('Home/TaskLog')->where(array('user_id' => UID, 'task_id'=> $where['t.id']))->getField('valid_time');
-        if($valid_time){
-            $taskDetail['is_task'] = 1;
-            /*判断订单是否到期 is_past  0过期 1正常*/
-            $valid_time > NOW_TIME?$taskDetail['is_past'] = 1:$taskDetail['is_past'] = 0;
-        }else{
-            $taskDetail['is_task'] = 0;
+        if (!empty($taskDetail)) {
+
+            /*查看任务详情信息*/
+            $taskStep = M('TaskStep')->where(array('task_id'=>$where['t.id']))->select();
+            $j = 0;
+            $i = 0;
+            foreach ($taskStep as $k=>$v) {
+                if ($v['type'] == 2) {
+                    $taskDetail['check_info'][$j] = $v['step_img'];
+                    $j++;
+                } else if($v['type'] == 1) {
+                    $taskDetail['step_info'][$i]['step_img'] = $v['step_img'];
+                    $taskDetail['step_info'][$i]['step_text'] = $v['step_text'];
+                    $i++;
+                }
+            }
+            /*查看粉丝关注状态   0 不是粉丝  1 是粉丝*/
+            fansSverify(UID, $taskDetail['user_id'], 1) == true? $taskDetail['is_fans'] = 1: $taskDetail['is_fans'] = 0;
+            /*判断任务是否到期  is_stale 0到期 1正常 */
+            $taskDetail['end_time'] < NOW_TIME? $taskDetail['is_stale'] = 0 : $taskDetail['is_stale'] = 1;
+            /*判断是否已经接单 is_task   0 未接单  1 已经正常接单  2接单失效过期重新 抢单*/
+            $valid_time  = D('Home/TaskLog')->where(array('user_id' => UID, 'task_id'=> $where['t.id']))->getField('valid_time');
+            if ($valid_time) {
+                $taskDetail['is_task'] = 1;
+                /*判断订单是否到期 is_past  0过期 1正常*/
+                $valid_time > NOW_TIME?$taskDetail['is_past'] = 1:$taskDetail['is_past'] = 0;
+            } else {
+                $taskDetail['is_task'] = 0;
+            }
         }
+
         return $taskDetail;
     }
     /**
@@ -138,12 +179,20 @@ class TaskModel extends Model{
     */
     public function getMyTask($where = [],$field = null, $sort = ' t.add_time DESC'){
           $where['t.status'] = 1;
+          $count = $this->alias('t')
+                 ->join('__TASK_CATEGORY__ as c on  c.id = t.category_id', 'LEFT')
+                 ->where($where)
+                 ->count();
+
+          $page = get_web_page($count, 10);
           $taskInfo = $this->alias('t')
                       ->join('__TASK_CATEGORY__ as c on  c.id = t.category_id', 'LEFT')
                       ->where($where)
                       ->field($field)
                       ->order($sort)
+                      ->limit($page['limit'])
                       ->select();
+
           if(!empty($taskInfo)){
               $taskLogModel = D('Home/TaskLog');
               foreach ($taskInfo as $key=>$value){
@@ -171,5 +220,22 @@ class TaskModel extends Model{
               }
           }
           return $taskInfo;
+    }
+
+    //丢弃任务
+    public function discardTask($id = 0) {
+        if ($id == 0) {
+            return V(0, '任务id缺失，操作失败');
+        }
+        $discard_id = $this->where(array('id'=>$id))->getField('discard_id');
+
+        $ids = $discard_id.UID.',';
+
+        $res = $this->where(array('id'=>$id))->setField('discard_id', $ids);
+        if ($res === false) {
+            return V(0, '操作失败');
+        } else {
+            return V(1, '操作成功');
+        }
     }
 }

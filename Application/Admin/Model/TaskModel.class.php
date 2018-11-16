@@ -15,8 +15,8 @@ use Think\Model;
  * 任务表模型
  */
 class TaskModel extends Model {
-    protected $insertFields = array('id', 'title', 'category_id', 'mobile_type', 'end_time', 'price', 'task_num', 'total_price', 'link_url', 'validate_words', 'remark', 'audit_status', 'audit_info', 'add_time', 'status');
-    protected $updateFields = array('id', 'title', 'category_id', 'mobile_type', 'end_time', 'price', 'task_num', 'total_price', 'link_url', 'validate_words', 'remark', 'audit_status', 'audit_info', 'add_time', 'status');
+    protected $insertFields = array('id', 'title', 'user_id',  'category_id', 'mobile_type', 'end_time', 'price', 'task_num', 'task_zong', 'total_price', 'link_url', 'look_num', 'validate_words', 'remark', 'is_show', 'audit_status', 'audit_info', 'add_time', 'status','top', 'top_time', 'recommend', 're_time', 'discard_id');
+    protected $updateFields = array('id', 'title', 'user_id',  'category_id', 'mobile_type', 'end_time', 'price', 'task_num', 'task_zong', 'total_price', 'link_url', 'look_num', 'validate_words', 'remark', 'is_show', 'audit_status', 'audit_info', 'add_time', 'status','top', 'top_time', 'recommend', 're_time', 'discard_id');
 
     protected $_validate = array(
 
@@ -25,9 +25,32 @@ class TaskModel extends Model {
         array('audit_info', '0,30', '您输入的 审核理由过长，超过了30个字符数限制', 1, 'length', 5),
 
     );
+    //审核扣钱
+    protected function  _before_update(&$data,$options) {
+        if ($data['audit_status'] == 1) {
+            $userModel = M('User');
+            $total_money = $userModel->where(array('user_id'=>$data['user_id']))->getField('total_money');
 
+            if ($data['total_price'] > $total_money) {
+                $this->error = '用户余额不足';
+                return false;
+            }
+            $saveData = array(
+                'frozen_money' => array('exp','frozen_money +'.$data['total_price']),
+                'total_money' => array('exp','total_money -'.$data['total_price']),
+            );
+            $res = $userModel->save($saveData);
+            if ($res ===false) {
+                $this->error = '扣费失败';
+                return false;
+            }
+
+        }
+
+    }
     public function getTaskList($where = [], $field = '', $order = 't.add_time desc') {
         $where['u.disabled'] = 1;  /*用户状态*/
+        $where['t.is_show'] = 1;
         $count = $this->alias('t')
               ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')
               ->join('__USER__ as u on t.user_id = u.user_id')
@@ -57,7 +80,7 @@ class TaskModel extends Model {
         $list = $this->alias('t')
               ->join('__USER__ as u on t.user_id = u.user_id','LEFT')
               ->join('__TASK_CATEGORY__ c on t.category_id = c.id', 'LEFT')
-              ->field('t.*,u.nick_name,c.category_name')
+              ->field('t.*,u.nick_name,u.total_money,c.category_name')
               ->where('t.id ='.$id)
               ->find();
         if ($list) {

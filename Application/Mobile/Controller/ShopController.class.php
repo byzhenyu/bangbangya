@@ -86,4 +86,23 @@ class ShopController extends CommonController {
         }
             $this->ajaxReturn(V(2, $this->shop->getError()));
     }
+
+    public function shopDetail() {
+        $user_id = I('user_id', 0, 'intval');
+        $ShopModel = D('Home/Shop');
+        $ShopInfo = $ShopModel->shopDetail($user_id);
+        $taskModel = D('Home/Task');
+        $where['t.user_id']  =  $user_id;
+        $where['t.end_time']  =  array('gt', NOW_TIME);
+        $taskField = 't.id, t.price, t.task_num, t.title, c.category_name , c.category_img';
+        $taskInfo = $taskModel->getTaskList($where, $taskField);
+        $where['t.end_time'] =  array(array('gt',NOW_TIME - 172800),array('lt',NOW_TIME)) ;
+        $where['t.audit_status'] =  3;
+        $last_taskInfo = $taskModel->getTaskList($where, $taskField);
+        //p($ShopInfo);
+        $this->assign('ShopInfo', $ShopInfo);
+        $this->assign('last_taskInfo', $last_taskInfo['list']);
+        $this->assign('taskInfo', $taskInfo['list']);
+        $this->display();
+    }
 }

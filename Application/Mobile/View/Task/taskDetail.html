@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>任务详情</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav help-duck-head">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <p class="mui-title">任务详情</p>
+    <a>接单规则</a>
+</header>
+
+
+<div id="grap-order-gray" class="">
+    <div class="grap-order-boom" id="grap-order-content">
+        <div class="grap-order-title">
+            <p>提示</p>
+        </div>
+        <p class="grap-order-details">请按备注及操作说明完成任务，并上传验证图到<span>【我的任务】</span>，有效时长<span>20分钟</span>，超时您将需要重新抢单</p>
+        <div class="grap-order-btnbox">
+            <button type="button" id="grap-order-btn">确定抢单</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="task-details-top">
+    <div class="task-details-title">
+        <p>标题</p>
+        <span>{$taskDetail['title']}</span>
+    </div>
+    <div class="task-publish-info">
+        <p>发布方</p>
+        <img src="{$taskDetail['head_pic']}">
+        <span>{$taskDetail['nick_name']}</span>
+        <if condition="$taskDetail['shop_accounts'] neq 0">
+            <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
+            <i>￥{:fen_to_yuan($taskDetail['shop_accounts'])}</i>
+        </if>
+
+        <if condition="$taskDetail['is_fans'] neq 0">
+            <input type="button" value="已关注">
+            <else />
+            <input type="button" value="+关注" onclick="addFans({$taskDetail['user_id']})">
+        </if>
+
+        <input type="button" onclick="shopInfo({$taskDetail['user_id']})" value="店铺">
+    </div>
+    <div class="task-no-type">
+        <p>编号</p>
+        <span>{$taskDetail['id']}</span>
+        <p>类别</p>
+        <span>{$taskDetail['category_name']}</span>
+    </div>
+    <div class="task-price">
+        <p>单价</p>
+        <span>￥{:fen_to_yuan($taskDetail['price'])}</span>
+    </div>
+    <div class="task-font-verification">
+        <p>文字验证</p>
+        <span>{$taskDetail['validate_words']}</span>
+    </div>
+    <div class="task-link">
+        <p>链接</p>
+        <div>
+            <span id="url1">{$taskDetail['link_url']}</span>
+            <button onclick="copyUrl2()">复制</button>
+        </div>
+    </div>
+    <div class="task-details-remarks">
+        <p>备注</p>
+        <span>{$taskDetail['remark']}</span>
+    </div>
+    <if condition="$taskDetail['top_time'] gt 0">
+        <div class="task-top-time">
+            <p>置顶到期</p>
+            <span>{$taskDetail['top_time']|time_format}</span>
+        </div>
+    </if>
+
+    <div class="task-last-time">
+        <p>截止时间</p>
+        <span>{$taskDetail['end_time']|time_format}</span>
+    </div>
+</div>
+
+<div class="task-details-middle">
+    <div>
+        <p>验证图</p>
+        <span>（共{:count($taskDetail['check_info'])}张）</span>
+    </div>
+    <volist name="taskDetail['check_info']" id="v" key="k">
+        <img src="{$v}">
+        <span>图{$k}</span>
+    </volist>
+
+</div>
+
+<div class="task-details-bottom">
+    <div class="task-bottom-title">
+        <p>操作说明</p>
+    </div>
+    <volist name="taskDetail['step_info']" id="v" key="k">
+        <div class="task-bottom-step1">
+            <p>{$k}</p>
+            <span>{$v['step_text']}</span>
+        </div>
+        <div class="task-bottom-qr">
+            <img src="{$v['step_img']}">
+
+        </div>
+    </volist>
+
+</div>
+<div class="fix-content">
+    <if condition="($taskDetail['user_id'] eq UID) AND ($taskDetail['is_show'] eq 0)">
+        <img id="fabu" src="__PUBLIC__/mobile/images/commom_btn_grab.png" >
+        <elseif condition="$taskDetail['is_task'] eq 1" />
+        <img id="up-task" src="__PUBLIC__/mobile/images/commom_btn_grab.png">
+        <elseif condition="$taskDetail['user_id'] neq UID"/>
+        <img id="grab-single" src="__PUBLIC__/mobile/images/commom_btn_upload.png">
+        <img id="discard-task" src="__PUBLIC__/mobile/images/commom_btn_giveup.png">
+        <else/>
+    </if>
+</div>
+<div class="task-details-tip">
+    <input id="task_id" type="hidden" value="{$id}">
+    <p>完成任务后，请到【我的任务】上传任务截图</p>
+</div>
+
+</body>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+</script>
+<script>
+    $(".fix-content").on('tap', '#discard-task', function () {
+        var delArray = ['取消','确定'];
+        mui.confirm('选择丢弃该任务将不再对您展示，您确定丢弃吗？', '提示', delArray, function(e) {
+            if (e.index == 0) {
+
+            } else {
+                var task_id = $("#task_id").val();
+                $.post("{:U('Task/discardTask')}",{'id':task_id}, function (data) {
+                    mui.toast(data.info);
+                    if (data.status == 1) {
+                        window.location.href = "{:U('Task/listTask')}";
+                    }
+                })
+            }
+        })
+    })
+
+
+    $(".fix-content").on('tap', '#grab-single', function () {
+        $("#grap-order-gray").addClass("mui-popup-backdrop mui-active");
+        $("#grap-order-content").css("display","block");
+    })
+
+    $(".fix-content").on('tap', '#grap-order-gray', function () {
+
+        $("#grap-order-gray").removeClass("mui-popup-backdrop mui-active");
+        $("#grap-order-content").css("display","none");
+    })
+    //上传验证
+    $(".fix-content").on('tap', '#up-task', function () {
+        alert(123);
+    })
+    //发布
+    $(".fix-content").on('tap', '#fabu', function () {
+        var id = $('#task_id').val();
+        $.post("{:U('Task/changeShowStatus')}", {'id':id}, function (data) {
+            mui.toast(data.info);
+            if (data.status == 1) {
+                window.location.reload();
+            }
+        })
+    })
+    $("#grap-order-btn").on('tap', function () {
+
+        var id = $('#task_id').val();
+        $.post("{:U('TaskLog/getTask')}", {'id':id}, function (data) {
+            mui.toast(data.info);
+            if (data.status == 1) {
+                $("#grap-order-gray").removeClass("mui-popup-backdrop mui-active");
+                $("#grap-order-content").css("display","none");
+            }
+        })
+
+    })
+
+    //复制到剪切板
+    function copyUrl2()
+    {
+        var Url2=document.getElementById("url1").innerText;
+        var oInput = document.createElement('input');
+        oInput.value = Url2;
+        document.body.appendChild(oInput);
+        oInput.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        oInput.className = 'oInput';
+        oInput.style.display='none';
+        mui.toast('复制成功');
+    }
+    //加关注
+    function addFans(user_id) {
+        $.post("{:U('Fans/attention')}", {'fans_id':user_id}, function (data) {
+            mui.toast(data.info);
+            if (data.status == 1) {
+                window.location.reload();
+            }
+        })
+    }
+    //跳转店铺
+    function shopInfo(user_id) {
+        window.location.href = "{:U('Shop/shopDetail')}/user_id/"+user_id;
+    }
+</script>
+</html>

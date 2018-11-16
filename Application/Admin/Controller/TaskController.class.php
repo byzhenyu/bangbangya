@@ -29,9 +29,12 @@ class TaskController extends CommonController {
         $taskModel = D('Admin/Task');
         if (IS_POST) {
             $data = I('post.', '');
-            if($taskModel->create($data,5) !==false) {
+
+            if($taskModel->create($data, 5) !== false) {
+
                 $res = $taskModel->save();
-                if ($res ===false) {
+
+                if ($res === false) {
                     $this->ajaxReturn(V(0, '审核失败'));
                 }
 
@@ -42,6 +45,7 @@ class TaskController extends CommonController {
             }
         }
         $info = $taskModel->getTaskDetail($id);
+        p($info);
         $this->assign('id', $id);
         $this->assign('info', $info);
         $this->display();

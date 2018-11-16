@@ -59,7 +59,7 @@
 
 <div class="my-release-list">
     <foreach name="taskList" item="v" key="k">
-        <div class="my-release-item">
+        <div class="my-release-item" onclick="taskDetail({$v['id']})">
             <div class="my-release-left">
                 <div class="my-release-name">
                     <p>{$v.category_name}</p>
@@ -83,9 +83,8 @@
                 <if condition="$v['is_show'] eq 0">
                     <div class="my-release-btns">
                         <input id="del-btn" type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn" onclick="del({$v['id']})" value="删除" />
-                        <a href="{:U('addTask', array('id'=>$v['id']))}"><input type="button" class="mui-btn mui-btn-outlined my-release-btn modify-btn" value="修改" /></a>
-                        <a href="{:U('addTask', array('id'=>$v['id']))}"><input type="button" class="mui-btn mui-btn-outlined my-release-btn release-btn" onclick="fabu({$v['id']})" value="发布"/></a>
-
+                        <a href="{:U('addTask', array('id'=>$v['id']))}"><input type="button" class="mui-btn mui-btn-outlined my-release-btn modify-btn" value="修改"/></a>
+                        <input type="button" class="mui-btn mui-btn-outlined my-release-btn release-btn" onclick="fabu({$v['id']})" value="发布"/>
                     </div>
                       <else />
                         <if condition="$v['audit_status'] eq 0">
@@ -120,7 +119,7 @@
                          <if condition="$v['audit_status'] eq 2">
                              <div class="my-release-btns">
                                  <input type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn" value="删除">
-                                 <a href="modify-release.html"><input type="button" class="mui-btn mui-btn-outlined my-release-btn modify-btn" value="修改"/></a>
+                                 <a href="{:U('addTask',array('id'=>$v['id']))}"><input type="button" class="mui-btn mui-btn-outlined my-release-btn modify-btn" value="修改"/></a>
                                  <p class="my-release-btn release-audit-fail">审核失败</p>
                              </div>
                              <p class="task-details-font">失败原因：<span>{$v.audit_info}</span></p>
@@ -586,6 +585,23 @@ function recommend(task_id){
         mui.openWindow({
             url:  url + 'Mobile/TaskLog/auditTask/task_id/' + task_id
         });
+    }
+
+    function taskDetail(task_id) {
+        mui.openWindow({
+            url:  url + 'Mobile/Task/taskDetail/id/' + task_id
+        });
+    }
+
+    //发布
+    function fabu(task_id) {
+
+        $.post("{:U('Task/changeShowStatus')}", {'id':task_id}, function (data) {
+            mui.toast(data.info);
+            if (data.status == 1) {
+                window.location.reload();
+            }
+        })
     }
 </script>
 </html>

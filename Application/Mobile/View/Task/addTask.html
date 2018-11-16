@@ -91,7 +91,7 @@
                 },
                 onComplete: function(file, response){
                     json = $.parseJSON($(response).text());
-                    console.log(json);
+
                     if(json['status'] == true || json['status'] == 1 || json['status'].toString() == '1'){
                         $("#img_" + item).attr('src', json['data']['nameosspath']).show();
                         $("#img" + item).val(json['data']['nameosspath']);
@@ -280,7 +280,9 @@
 
         <div class="release-task-btns">
             <input type="hidden" name="id" value="{$id}">
-            <button>保存</button>
+            <input id="is_show" type="hidden" name="task[is_show]" value="0">
+            <input id="total_money" type="hidden" value="{$userMoney}">
+            <button type="submit" id="save-btn" type="button">保存</button>
             <button type="submit" id="balance-insufficient">发布</button>
         </div>
     </form>
@@ -291,7 +293,7 @@
 
 <script src="__PUBLIC__/mobile/js/mui.min.js"></script>
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript" src="__STATIC__/js/ajaxForm.js"></script>
+<!--<script type="text/javascript" src="__STATIC__/js/ajaxForm.js"></script>-->
 <script type="text/javascript" src="__ADMIN__/layDate-v5.0.9/laydate/laydate.js"></script>
 
 <script type="text/javascript" charset="utf-8">
@@ -342,14 +344,6 @@
         })
 
     }
-    /**
-     * 上传图片
-     * btnUpload: 上传按钮的ID
-     * inputImg: 保存图片路径的input ID
-     * savePath: 指定存放在服务器上的路径
-     * item: 一个页面上传多个图片时的标识
-     * by zhaojiping
-     **/
 
     //操作步骤计数
     var base = "{$base}";
@@ -363,7 +357,7 @@
         if (base > 0) {
             var text_n = $('#step_text_'+(base-1)).val();
             var img_n = $('#img'+(base-1)).val();
-            console.log(text_n + '--------'+ img_n);
+
             if (text_n == '' && img_n == '') {
                 mui.toast('步骤不能为空');
                 return false;
@@ -459,6 +453,12 @@
             mui.toast('请选择结束时间');
             return false;
         }
+
+        if ($('#total_price').val() == '') {
+            mui.toast('请填写价格及数量');
+            return false;
+        }
+
         var agree = $("#agree").attr('checked');
         if (!agree) {
             mui.toast('请勾选发布协议');
@@ -466,6 +466,45 @@
         }
 
     }
+    $("#save-btn").on('click', function () {
+        $('#is_show').val('0');
+        submitForm();
+    })
+$('#balance-insufficient').on('click', function() {
+    $('#is_show').val('1');
+    //表单提交
+    submitForm();
+});
+    function submitForm() {
+        $(document)
+            .ajaxStart(function(){
+                $("button:submit").attr("disabled", true);
+            })
+            .ajaxStop(function(){
+                $("button:submit").attr("disabled", false);
+            });
+        $("form").submit(function(){
+            if (typeof(validate) != 'undefined' && $.isFunction(validate)) {
+                if ( eval(validate)() == false ) {
+                    return false;
+                }
+            }
+            var self = $(this);
+            var data = self.serialize();
+
+            $.post(self.attr("action"), data, function(data){
+                mui.toast(data.info);
+                if(data.status == 1){
+                setTimeout(function() {
+                    window.location.href = "{:U('Task/myTask')}";
+                },1500);
+                }
+            }, "json");
+
+            return false;
+        });
+    }
+
 </script>
 
 </html>

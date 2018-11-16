@@ -78,7 +78,7 @@ class ComplaintModel extends Model {
     public function changeAuditStatus($id) {
 
         $ComplaintInfo = $this->where(array('id'=>$id))->field('audit_status, id')->find();
-        $dataInfo = $ComplaintInfo['audit_status'] == 1 ? 0 : 1;
+        $audit_status = $ComplaintInfo['audit_status'] == 1 ? 0 : 1;
         $update_info = $this->where(array('id'=>$id))->setField('audit_status', $audit_status);
         if($update_info !== false){
             return V(1, '操作成功');
