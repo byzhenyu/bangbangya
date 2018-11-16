@@ -9,7 +9,7 @@
 </head>
 <body>
     <header class="mui-bar mui-bar-nav help-duck-head">
-        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="{:U('TaskLog/getTaskLog')}"></a>
+        <a class=" mui-icon mui-icon-left-nav mui-pull-left" href="{:U('TaskLog/getTaskLog')}"></a>
         <p class="mui-title">我的任务</p>
         <a href="{:U('Task/listTask')}">接单赚钱</a>
     </header>
@@ -105,7 +105,7 @@
 
                             </li>
                         </foreach>
-                        <if condition="empty($taskLogInfo['list'])">
+                        <if condition="count($taskLogInfo['list']) eq 0">
                             <div id="makemoney-item2" class="mui-control-content">
                                 <ul class="mui-table-view make-money-info task-order-record">
                                     <li class="mui-table-view-cell  make-money-info-li-none">
