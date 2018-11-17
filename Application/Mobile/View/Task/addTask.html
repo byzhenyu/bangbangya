@@ -109,13 +109,13 @@
     <header class="mui-bar mui-bar-nav help-duck-head">
         <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
         <p class="mui-title">发布任务</p>
-        <a href="{:U('Article/articleDetail')}">发布规则</a>
+        <a href="{:U('Article/articleDetail',array('category_id'=>3))}">发布规则</a>
     </header>
     <form action="{:U('addTask')}" method="post" class="ajaxFrom">
 
         <div class="task-type-title">
             <span>选择类型</span>
-            <a href="{:U('Article/articleDetail',array('id'=>2))}"><p>类别说明</p></a>
+            <a href="{:U('Article/articleDetail',array('category_id'=>2))}"><p>类别说明</p></a>
         </div>
 
         <div class="task-type-list">
@@ -274,7 +274,7 @@
             <label class="release-task-check">
                 <input name="task[agree]" class="check-task" type="checkbox" id="agree" checked>
                 <i></i>
-                <span>我已阅读、理解并同意<a href="{:U('Article/articleDetail',array('id'=>3))}">《发布规则》</a>的全部内容</span>
+                <span>我已阅读、理解并同意<a href="{:U('Article/articleDetail',array('category_id'=>3))}">《发布规则》</a>的全部内容</span>
             </label>
         </div>
 
