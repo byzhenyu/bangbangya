@@ -59,9 +59,9 @@
 
 <div class="my-release-list">
     <foreach name="taskList" item="v" key="k">
-        <div class="my-release-item" onclick="taskDetail({$v['id']})">
+        <div class="my-release-item">
             <div class="my-release-left">
-                <div class="my-release-name">
+                <div class="my-release-name" onclick="myTaskDetail({$v['id']})">
                     <p>{$v.category_name}</p>
                     <span class="my-release-no">编号：<span>{$v.id}</span></span>
                     <span>{$v.title}</span>
@@ -587,9 +587,9 @@ function recommend(task_id){
         });
     }
 
-    function taskDetail(task_id) {
+    function myTaskDetail(task_id) {
         mui.openWindow({
-            url:  url + 'Mobile/Task/taskDetail/id/' + task_id
+            url:  url + 'Mobile/Task/myTaskDetail/id/' + task_id
         });
     }
 

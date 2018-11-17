@@ -114,7 +114,11 @@ class TaskLogController extends CommonController {
           $field = 'l.id, l.task_id, l.task_name,l.valid_time, l.valid_status, t.price, c.category_name, c.category_img';
           $taskLogModel = D('Home/TaskLog');
           $taskLogInfo = $taskLogModel->getTaskLog($where,$field);
-//          p($taskLogInfo);
+
+          if (IS_POST) {
+              $this->ajaxReturn(V(1, '接单记录', $taskLogInfo['list']));
+
+          }
           $this->assign('type', $type);
           $this->assign('taskLogInfo', $taskLogInfo);
           $this->display();
@@ -140,19 +144,28 @@ class TaskLogController extends CommonController {
      * @param $task_id
      * @return mixed
      */
-     public function taskVerify()
-    {
-        $data = json_decode(I('data', '', 'strip_tags'),true);
-        if(IS_POST)
-        {
-            $taskLogRes  = $this->TaskLogModel->save($data);
-            $taskRes = $this->TaskLogModel->changeTaskStatus($data['id'], 1);
+     public function taskVerify() {
+        $id = I('id', 0, 'intval');
+        $taskLogModel = D('Home/TaskLog');
+        if(IS_POST) {
+            $data = I('post.', '');
+            $data['valid_img'] = implode(',', $data['valid_img']);
+            $data['valid_status'] = 1;
+
+            if ($taskLogModel->create($data, 5) !== false) {
+                $rs = $taskLogModel->save($data);
+                if ($rs === false) {
+                    $this->ajaxReturn(V(0, '操作失败'));
+                }
+                $this->ajaxReturn(V(1, '上传成功'));
+            } else {
+                $this->ajaxReturn(V(0, $taskLogModel->getError()));
+            }
         }
-        if($taskRes && $taskLogRes) {
-            $this->ajaxReturn(V(1,'上传验证成功'));
-        }else{
-            $this->ajaxReturn(V(0, $this->TaskLogModel->getDbError()));
-        }
+        $info = $taskLogModel->getTaskLogDetail(array('l.id'=>$id));
+        $this->assign('info', $info);
+        $this->assign('id', $id);
+        $this->display();
      }
      /**
      * @desc  任务审核
@@ -334,6 +347,17 @@ class TaskLogController extends CommonController {
             M()->rollback();
             $this->ajaxReturn(V(0, '失败'));
         }
+    }
+
+    /**
+     *  任务详情
+     */
+    public function taskLogDetail() {
+        $id = I('id', 0, 'intval');
+        $info = D('Home/TaskLog')->getTaskLogDetail(array('l.id'=>$id));
+
+        $this->assign('taskDetail', $info);
+        $this->display();
     }
 }
 

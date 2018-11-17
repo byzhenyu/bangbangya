@@ -44,32 +44,6 @@
                 </a>
             </div>
         </div>
-
-        <div id="makemoney-item2" class="mui-control-content">
-            <ul class="mui-table-view make-money-info task-order-record">
-                <!--<foreach name="taskLogAll['list']" item="v">-->
-                    <!--<li class="mui-table-view-cell make-money-info-li">-->
-                        <!--<div class="task-info-left">-->
-                            <!--<img src="{$v['category_img']}">-->
-                            <!--<div class="task-info-basic">-->
-                                <!--<div class="task-basic-top">-->
-                                    <!--<p>{$v['category_name']}</p>-->
-                                    <!--<span>{$v['task_name']}</span>-->
-                                <!--</div>-->
-                                <!--<div class="task-basic-bottom">-->
-                                    <!--<span>编号：<i>{$v['task_id']}</i></span>-->
-                                    <!--<span>单价：￥<i>{:fen_to_yuan($v['price'])}</i></span>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<input class="order-task-del" type="button" value="删除">-->
-                    <!--</li>-->
-                <!--</foreach>-->
-            </ul>
-            <div class="mui-scrollbar mui-scrollbar-vertical">
-                <div class="mui-scrollbar-indicator"></div>
-            </div>
-        </div>
     </div>
 
     <div id="task-hiden">
@@ -77,9 +51,10 @@
             <div class="mui-scroll-content">
                 <div class="mui-scroll">
                     <ul class="mui-table-view make-money-info">
+
                         <foreach name="taskLogInfo['list']" item="v">
                             <li class="mui-table-view-cell make-money-info-li">
-                                <div class="task-info-left">
+                                <div class="task-info-left" onclick="taskDetail({$v['id']})">
                                     <img src="{$v['category_img']}">
                                     <div class="task-info-basic">
                                         <div class="task-basic-top">
@@ -94,18 +69,19 @@
                                 </div>
                                 <if condition="$type eq 4">
                                     <input class="order-task-del" type="button" value="删除" onclick="del({$v['id']})">
-                                    <else /><if condition="$v['valid_status'] eq 0">
+                                    <else />
+                                    <if condition="$v['valid_status'] eq 0">
                                     <label name="caozuo" class="upload-verification" onclick="verify({$v['id']})">上传验证</label>
                                     <elseif condition="$v['valid_status'] eq 1"/><label  name="caozuo"  class="audit-ing">审核中</label>
                                     <elseif condition="$v['valid_status'] eq 2"/><label  name="caozuo" onclick="fail({$v[id]})" class="no-qualified">不合格</label>
                                     <else /><label name="caozuo"   class="task-finshed">已完成</label>
-                                </if>
+                                    </if>
                                 </if>
 
                             </li>
                         </foreach>
                         <if condition="empty($taskLogInfo['list'])">
-                            <div id="makemoney-item2" class="mui-control-content">
+                            <div class="mui-control-content">
                                 <ul class="mui-table-view make-money-info task-order-record">
                                     <li class="mui-table-view-cell  make-money-info-li-none">
                                         <p>提示：仅显示最后一个月的数据信息哦</p>
@@ -130,30 +106,18 @@
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
     mui.init();
-    $(function () {
-        $('#task-order-records').on('tap', function () {
-           $("#task-hiden").css("display","none");
-        });
-
-        $('#task-order-get').on('tap', function () {
-            $("#task-hiden").css("display","block");
-        })
-    })
+    var p = 1;
+    var type = 5;
     /*跳转链接*/
     function task(num){
-         if(num == 5){
-             mui.openWindow({
-                 url:url + 'Mobile/TaskLog/getTaskLog'
-             });
-         }else{
-             mui.openWindow({
-                 url:url + 'Mobile/TaskLog/getTaskLog/type/' + num
-             });
-         }
+        p = 1;
+        type = num;
+        window.location.href = "{:U('TaskLog/getTaskLog')}/type/"+num;
+        loadMore();
     }
-//    if({$type} == 4){
-//        $('#makemoney-item1').hide();
-//    }
+    if("{$type}" == 4){
+        $('#makemoney-info').hide();
+    }
     /*删除操作*/
     function del(id){
         mui.confirm('您是否要删除该条任务?', '提示', '', function(e) {
@@ -195,5 +159,66 @@
             url:  url + 'Mobile/TaskLog/taskLogFail/id/' + id
         });
     }
+    function taskDetail (log_id) {
+        window.location.href = "{:U('TaskLog/taskLogDetail')}/id/"+log_id;
+    }
+    //滚动加载
+    function loadMore() {
+        $(window).on('scroll', function() {
+            if($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                var type = $('#type').val();
+                    var load_data = {
+                        type: type,
+                    }
+                p++;
+                var load_url = "{:U('getTaskLog')}/p/"+p;
+
+                $.post(load_url, load_data, function(data) {
+                    var html2 = '';
+                    if(data.status == 1) {
+                        console.log(data.data);
+                        if (data.data.length) {
+                            for (var i=0; i < data.data.length; i++) {
+
+                            html2 += '<li class="mui-table-view-cell make-money-info-li">'
+                                    +'<div class="task-info-left" onclick="taskDetail('+data.data[i].task_id+')">'
+                                    +'<img src="'+ data.data[i].category_img +'">'
+                                    +'<div class="task-info-basic">'
+                                    +'<div class="task-basic-top">'
+                                    +'<p>'+ data.data[i].category_name +'</p>'
+                                    +'<span>'+ data.data[i].task_name +'</span>'
+                                    +'</div>'
+                                    +'<div class="task-basic-bottom">'
+                                    +'<span>编号：<i>'+ data.data[i].task_id +'</i></span>'
+                                +'<span>单价：￥<i>'+ data.data[i].price +'</i></span>'
+                                +'</div>'
+                                +'</div>'
+                                +'</div>';
+                                if (type == 4) {
+                                    html2+='<input class="order-task-del" type="button" value="删除"></li>';
+                                } else if (data.data[i].valid_status == 0) {
+                                    html2+='<label name="caozuo" class="upload-verification" onclick="verify('+data.data[i].id+')">上传验证</label>';
+                                } else if (data.data[i].valid_status == 1) {
+                                    html2+='<label  name="caozuo"  class="audit-ing">审核中</label>';
+                                } else if (data.data[i].valid_status == 2) {
+                                    html2+='<label  name="caozuo"  class="no-qualified">不合格</label>';
+                                } else if (data.data[i].valid_status == 3) {
+                                    html2+='<label  name="caozuo"  class="task-finshed">已完成</label>';
+                                }
+
+                            }
+                        } else {
+                            $(window).off('scroll');
+                        }
+
+                        $("#task-hiden .mui-table-view").append(html2);
+
+                    }
+
+                });
+            }
+        });
+    }
+    loadMore();
 </script>
 </html>
