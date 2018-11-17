@@ -449,16 +449,25 @@ class TaskController extends UserCommonController {
             M()->startTrans();
             $userModel = D('Home/User');
             $userRes  = $userModel->where('user_id = '.UID)->setDec('total_money',$data['money']);
+            $taskTime = $this->Task->where('id = '.$data['id'])->getField('top_time,re_time');
             if($data['top'] == 1){
                 $type = 10;
                 $desc = '任务置顶';
-                $taskData['top_time'] = $data['topNum'] * 3600  + NOW_TIME;
-                $taskData['top'] = 1;
+                if($taskTime['top_time'] > NOW_TIME){
+                    $taskData['top_time'] = $data['topNum'] * 3600  + $taskData['top_time'];
+                }else{
+                    $taskData['top_time'] = $data['topNum'] * 3600  + NOW_TIME;
+                    $taskData['top'] = 1;
+                }
             }else{
                 $type = 9;
                 $desc = '任务推荐';
-                $taskData['recommend'] = 1;
-                $taskData['re_time'] = $data['topNum'] * 3600  + NOW_TIME;
+                if($taskTime['re_time'] > NOW_TIME){
+                    $taskData['re_time'] = $data['topNum'] * 3600  + $taskData['re_time'];
+                }else{
+                    $taskData['recommend'] = 1;
+                    $taskData['re_time'] = $data['topNum'] * 3600  + NOW_TIME;
+                }
             }
             account_log(UID, $data['money'], $type, $desc, $data['id']);
             $taskRes = $this->Task->where('id = '.$data['id'])->save($taskData);
