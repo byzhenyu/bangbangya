@@ -275,4 +275,28 @@ class TaskLogModel extends  Model{
         $taskAudit['no_audit'] = $this->where($where)->count();
         return $taskAudit;
     }
+    //重做任务
+
+    public function reDoTaskLog($log_id) {
+        $where['id'] = $log_id;
+        M()->startTrans();
+        $res = $this->where($where)->setField('valid_status', 4);
+        if ($res === false) {
+            M()->rollback();
+            return false;
+        }
+        $info = $this->where($where)->field('user_id,task_id,task_name,task_price')->find();
+        $info['add_time'] = NOW_TIME;
+        $info['valid_time'] = NOW_TIME + C('TASK_LIMIT_TIME');
+
+        $new_id = $this->data($info)->add();
+        if ($new_id === false) {
+            M()->rollback();
+            return false;
+        } else {
+            M()->commit();
+            return $new_id;
+        }
+
+    }
 }

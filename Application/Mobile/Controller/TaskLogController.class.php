@@ -315,15 +315,14 @@ class TaskLogController extends CommonController {
         $taskLog_id = I('id', 0, 'intval');
         $taskLogInfo = $this->TaskLogModel->field('id, user_id, task_id, valid_pic')->where('id = '.$taskLog_id)->find();
         $chatModel = D('Home/Chat');
-        $taskLogInfo['userChat']  = $chatModel ->field('content')->where('user_id  = '.$taskLogInfo['user_id'].'  and task_id =  '.$taskLogInfo['task_id'])->select();
-        $taskLogInfo['taskChat']  = $chatModel ->field('content')->where('task_user_id = '.$taskLogInfo['user_id'].'  and  task_id =  '.$taskLogInfo['task_id'])->select();
+        $taskLogInfo['userChat']  = $chatModel ->field('content')->where('user_id  = '.$taskLogInfo['user_id'].'  and task_log_id =  '.$taskLog_id)->select();
+        $taskLogInfo['taskChat']  = $chatModel ->field('content')->where('task_user_id = '.$taskLogInfo['user_id'].'  and  task_log_id =  '.$taskLog_id)->select();
         if(strpos($taskLogInfo['valid_pic'], ',')  !== false){
             $taskLogInfo['valid_pic']   =   explode(',',$taskLogInfo['valid_pic']);
-        }else{
+        } else {
             $taskLogInfo['valid_pic']   =    array($taskLogInfo['valid_pic']);
         }
-        p($taskLogInfo);
-        p($taskLogInfo['userChat']);
+
         $this->assign('taskLogInfo',$taskLogInfo);
         $this->display();
     }
@@ -358,6 +357,23 @@ class TaskLogController extends CommonController {
 
         $this->assign('taskDetail', $info);
         $this->display();
+    }
+
+    /**
+     * 重做
+     * 返回新logid
+     */
+    public function reDoLog() {
+        $log_id = I('log_id', 0 , 'intval');
+
+        $new_id = D('Home/TaskLog')->reDoTaskLog($log_id);
+
+        if ($new_id === false) {
+            $this->ajaxReturn(V(0, '操作失败'));
+        } else {
+            $this->ajaxReturn(V(1, '操作成功',$new_id));
+        }
+
     }
 }
 

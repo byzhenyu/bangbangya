@@ -79,7 +79,7 @@
         </foreach>
         <div class="unqualified-details-btns">
             <button class="give-up-task" onclick="giveUp({$taskLogInfo[id]},{$taskLogInfo[task_id]})">放弃</button>
-            <button class="redo-task">重做</button>
+            <button onclick="reDoLog({$taskLogInfo[id]})" class="redo-task">重做</button>
         </div>
     </div>
 </body>
@@ -135,14 +135,13 @@
             }
         })
     }
-    function giveUp(user_id,task_id){
-        alert(user_id);
-        alert(task_id);
+    function giveUp(tasklog_id,task_id){
+
         mui.confirm('您是否要放弃该任务?', '提示', '', function(e) {
             if (e.index == 1) {
                 mui.ajax(url + 'Mobile/TaskLog/giveUpTask', {
                     data: {
-                        user_id: tasklog_id,
+                        id: tasklog_id,
                         task_id: task_id
                     },
                     dataType: 'json',//服务器返回json格式数据
@@ -204,6 +203,15 @@
                 });
             } else {
                 // 点击了确定按钮
+            }
+        })
+    }
+    
+    function reDoLog(log_id) {
+        $.post("{:U('reDoLog')}", {'log_id':log_id}, function (data) {
+            if (data.status == 1) {
+                console.log(data.data);
+                window.location.href = "{:U('taskVerify')}/id/"+data.data;
             }
         })
     }
