@@ -252,8 +252,8 @@ class TaskLogModel extends  Model{
               }
               if($value['valid_status']  == 2){
                   /* taskChat 发任务的   userChat 接单人user_id*/
-                  $list[$key]['message']['taskChat'] = $chatModel ->field('content')->where('task_user_id = '.UID.' and  task_id =  '.$where['task_id'])->select();
-                  $list[$key]['message']['userChat'] = $chatModel ->field('content')->where('user_id = '.UID.' and task_id =  '.$where['task_id'])->select();
+                  $list[$key]['message']['taskChat'] = $chatModel ->field('content')->where('task_user_id = '.UID.' and  task_log_id =  '.$value['tid'])->select();
+                  $list[$key]['message']['userChat'] = $chatModel ->field('content')->where('user_id = '.UID.' and task_log_id =  '.$value['tid'])->select();
               }
         }
         return array(

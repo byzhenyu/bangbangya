@@ -157,7 +157,7 @@ class UserController extends CommonController {
             }
             $user_pic = $this->user->where('user_id = '.UID)->getField('head_pic');
             /*删除OSS文件*/
-            if($user_pic != '/Uploads/default.jpg' || $user_pic  != '') {
+            if(strpos($user_pic,'http://bangbangya.oss') !== false) {
                  $object = $object = explode('com/',$user_pic)[1];
                  $oss->deleteObject($bucket,$object);
             }

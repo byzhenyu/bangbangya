@@ -119,7 +119,7 @@
             </div>
         </div>
         <div class="task-unqualified-relpy">
-            <button onclick="reply({$taskLogInfo['list'][0]['user_id']},{$taskLogInfo['list'][0]['task_id']})">回复</button>
+            <button onclick="reply({$taskLogInfo['list'][0]['user_id']},{$taskLogInfo['list'][0]['tid']})">回复</button>
         </div>
     </div>
 </if>
@@ -357,7 +357,7 @@
     function none(){
         mui.toast('没有数据了!');
     }
-    function  reply(user_id,task_id) {
+    function  reply(user_id,task_log_id) {
         var btnArray = ['取消', '确定'];
         mui.prompt('', '请输入回复的信息', '信息交流', btnArray, function (e) {
             if (e.index == 1) {
@@ -369,7 +369,7 @@
                 mui.ajax(url + 'Mobile/Chat/addChat', {
                     data: {
                         user_id: user_id,
-                        task_id: task_id,
+                        task_log_id: task_log_id,
                         content: content,
                         type : 1
                     },

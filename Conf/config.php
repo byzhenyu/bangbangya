@@ -87,9 +87,9 @@
         'SMS_USERNAME' => 'ln_yqbdc',
         'SMS_PASSWORD' => 'lnkj123',
         'ALIOSS_CONFIG' => [
-            'KEY_ID'=>'LTAIMbNQwSz9x52y',
-            'KEY_SECRET'=>'AwCIf43aeBhoZojudtMvfi0fVBOPbF',
-            'END_POINT'=>'oss-cn-shanghai.aliyuncs.com',
-            'BUCKET'=>'wangzhenyu'
+            'KEY_ID'=>'xR6v3xsAOAFiPiPy',
+            'KEY_SECRET'=>'l7dpek8hyfPZX7edNJ3I3cPrPu9baL',
+            'END_POINT'=>'oss-cn-beijing.aliyuncs.com',
+            'BUCKET'=>'bangbangya'
         ]
     );
