@@ -218,6 +218,14 @@ class TaskModel extends Model{
                       $taskInfo[$key]['sucNum'] = 0;
                       $taskInfo[$key]['auditNum'] = 0;
                   }
+                  if($value['audit_status'] == 1 || $value['audit_status'] == 5){
+                      $taskRes = $taskLogModel->where('task_id ='.$value['id'])->find();
+                      if($taskRes){
+                          $taskInfo[$key]['is_task_num']  = 1;
+                      }else{
+                          $taskInfo[$key]['is_task_num']  = 0;
+                      }
+                  }
               }
           }
           return $taskInfo;

@@ -123,13 +123,11 @@ class TaskController extends UserCommonController {
 
         if (IS_POST) {
             $data = I('post.', '');
-
             $taskData = $data['task']; //任务
             $step0Data = $data['step'][0]; //验证图
             $step1Data = $data['step'][1]; //步骤
             $taskData['end_time'] = strtotime($taskData['end_time']);
             $taskData['price'] = yuan_to_fen($taskData['price']);
-
             $taskData['total_price'] = ($taskData['price'] * $taskData['task_num'] * (1 + ($orderFee/100)));
             $taskData['task_zong'] = $taskData['task_num'];
             $taskData['audit_status'] = 0;
@@ -186,10 +184,8 @@ class TaskController extends UserCommonController {
         }
 
         $taskInfo = $taskModel->getMyTaskDetail($id);
-
         $base = $taskInfo['step_info'] ? count($taskInfo['step_info']) : 0;
         $this->count = $taskInfo['check_info'] ? count($taskInfo['check_info']) : 0;
-
         $this->base = $base;
         $this->assign('id', $id);
         $this->assign('orderFee',$orderFee);
@@ -209,7 +205,6 @@ class TaskController extends UserCommonController {
         $where['t.id'] = $id;
         $taskModel = D('Home/Task');
         $taskDetail = $taskModel->getTaskDetail($where);
-
         $this->assign('id', $id);
         $this->assign('taskDetail', $taskDetail);
         $this->display();
@@ -220,7 +215,6 @@ class TaskController extends UserCommonController {
         $where['t.id'] = $id;
         $taskModel = D('Home/Task');
         $taskDetail = $taskModel->getTaskDetail($where);
-
         $this->assign('id', $id);
         $this->assign('taskDetail', $taskDetail);
         $this->display();
@@ -279,7 +273,6 @@ class TaskController extends UserCommonController {
         $config=C('ALIOSS_CONFIG');
         $oss=new \OSS\OssClient($config['KEY_ID'],$config['KEY_SECRET'],$config['END_POINT']);
         $bucket=$config['BUCKET'];
-        // p($object);die();
         $test=$oss->deleteObject($bucket,$object);
         $this->ajaxReturn(V(1, '删除成功'));
     }
@@ -293,7 +286,6 @@ class TaskController extends UserCommonController {
         $field = 't.id,t.end_time, t.top,t.top_time , t.recommend, t.re_time, t.title, t.audit_info,t.price,t.task_zong, t.task_num, t.total_price, t.audit_status, t.is_show, t.add_time, c.category_name ';
         $taskList = D('Home/Task')->getMyTask($where, $field);
         $total_money = D('Home/User')->where('user_id = '.UID)->getField('total_money');
-
         $this->assign('taskList', $taskList);
         $this->assign('total_money', $total_money);
         $this->display();
@@ -373,6 +365,11 @@ class TaskController extends UserCommonController {
             $this->ajaxReturn(V(0, $this->Task->getError()));
         }
     }
+    /**
+    * @desc  追加任务
+    * @param
+    * @return mixed
+    */
     public function addTaskPrice(){
         $data = I('post.', 3);
         $res  =  user_money(UID, $data['money']);
@@ -406,7 +403,6 @@ class TaskController extends UserCommonController {
         foreach ($taskLogInfo as $key=>$value){
             $money += $value['task_price'];
         }
-//        p($money);
         $res  = user_money(UID,$money);
         if(!$res){
             $this->ajaxReturn(V(2, '您的余额余额不足,下架失败'));
@@ -480,7 +476,6 @@ class TaskController extends UserCommonController {
     //丢弃任务
     public function discardTask() {
         $id = I('id', 0, 'intval');
-
         $res = D('Home/Task')->discardTask($id);
         $this->ajaxReturn($res);
     }

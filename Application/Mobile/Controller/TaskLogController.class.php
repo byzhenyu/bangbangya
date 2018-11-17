@@ -53,7 +53,7 @@ class TaskLogController extends CommonController {
              }
              $this->ajaxReturn(V(0, $TaskLogInfo->getDbError()));
          }
-         P($TaskLogInfo);
+//         P($TaskLogInfo);
          $this->assign('$TaskLogInfo',$TaskLogInfo);
          $this->display();
      }
@@ -183,7 +183,6 @@ class TaskLogController extends CommonController {
          $taskLogInfo = $this->TaskLogModel->auditTask($where, $field);
          p($taskLogInfo);
          $taskAudit = $this->TaskLogModel->taskAudit($task_id);
-//         p($taskLogInfo['count']);
          $this->assign('taskAudit',$taskAudit);
          $this->assign('task_id',$task_id);
          $this->assign('p',$p);
@@ -322,9 +321,6 @@ class TaskLogController extends CommonController {
         } else {
             $taskLogInfo['valid_pic']   =    array($taskLogInfo['valid_pic']);
         }
-//        p($taskLogInfo);
-//        p($taskLogInfo['userChat']);
-
         $this->assign('taskLogInfo',$taskLogInfo);
         $this->display();
     }

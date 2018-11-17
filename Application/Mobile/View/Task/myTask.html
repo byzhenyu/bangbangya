@@ -97,7 +97,7 @@
                             <div class="my-release-btns release-high-price">
                                 <div>
                                     <a>
-                                        <input onclick="audit({$v[id]})" type="button" value="审核">
+                                        <input onclick="audit({$v[id]},{$v[is_task_num]})" type="button" value="审核">
                                     </a>
                                     <input class="my-release-pause" type="button" onclick="pause({$v['id']},5)" value="开启">
                                     <input class="add-num-btn1"  type="button"  value="追加数量" onclick="addNum({$v[id]})">
@@ -140,7 +140,7 @@
                            <div class="my-release-btns release-high-price">
                                <div>
                                    <a>
-                                       <input  onclick="audit({$v[id]})" type="button" value="审核">
+                                       <input  onclick="audit({$v[id]},{$v[is_task_num]})" type="button" value="审核">
                                    </a>
                                    <input class="my-release-pause" type="button" onclick="pause({$v['id']},1)" value="暂停">
                                    <input class="add-num-btn"  type="button" onclick="addNum({$v[id]})"  value="追加数量" >
@@ -581,10 +581,14 @@ function recommend(task_id){
         }
     }
     /*审核*/
-    function audit(task_id){
-            mui.openWindow({
-                url:  url + 'Mobile/TaskLog/auditTask/task_id/' + task_id
-            });
+    function audit(task_id,is_task_num){
+            if(is_task_num  == 0){
+                mui.toast('没有需要审核的信息!');
+            }else{
+                mui.openWindow({
+                    url:  url + 'Mobile/TaskLog/auditTask/task_id/' + task_id
+                });
+            }
     }
 
     function myTaskDetail(task_id) {
