@@ -62,7 +62,10 @@ class TaskController extends UserCommonController {
         $where['t.user_id'] = array('NEQ',UID);
         //需要判断 是否已接单
         $log_ids = M('TaskLog')->where(array('user_id'=>UID,'valid_status'=>0,'status'=>1))->getField('task_id',true);
-        $where['t.id'] = array('not in', $log_ids);
+
+        if (!empty($log_ids)) {
+            $where['t.id'] = array('not in', $log_ids);
+        }
         /*任务信息*/
 
         $taskInfo = D('Home/Task')->getTaskList($where, '', $order);
