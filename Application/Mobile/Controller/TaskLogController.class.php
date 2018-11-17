@@ -242,7 +242,7 @@ class TaskLogController extends CommonController {
              $ChatModel = D('Home/Chat');
              $CharData['user_id'] = $tasklogInfo['user_id'];
              $CharData['task_user_id'] = UID;
-             $CharData['task_id'] = $tasklogInfo['task_id'];
+             $CharData['task_log_id'] = $tasklogInfo['id'];
              $CharData['content'] = $data['valid_text'];
              $chatRes = $ChatModel->add($CharData);
              if($tasklogRes  && $chatRes ){
@@ -315,15 +315,15 @@ class TaskLogController extends CommonController {
         $taskLog_id = I('id', 0, 'intval');
         $taskLogInfo = $this->TaskLogModel->field('id, user_id, task_id, valid_pic')->where('id = '.$taskLog_id)->find();
         $chatModel = D('Home/Chat');
-        $taskLogInfo['userChat']  = $chatModel ->field('content')->where('user_id  = '.$taskLogInfo['user_id'].'  and task_id =  '.$taskLogInfo['task_id'])->select();
-        $taskLogInfo['taskChat']  = $chatModel ->field('content')->where('task_user_id = '.$taskLogInfo['user_id'].'  and  task_id =  '.$taskLogInfo['task_id'])->select();
+        $taskLogInfo['userChat']  = $chatModel ->field('content')->where('user_id  = '.$taskLogInfo['user_id'].'  and task_log_id =  '.$taskLogInfo['id'])->select();
+        $taskLogInfo['taskChat']  = $chatModel ->field('content')->where('task_user_id = '.$taskLogInfo['user_id'].'  and task_log_id =  '.$taskLogInfo['id'])->select();
         if(strpos($taskLogInfo['valid_pic'], ',')  !== false){
             $taskLogInfo['valid_pic']   =   explode(',',$taskLogInfo['valid_pic']);
         }else{
             $taskLogInfo['valid_pic']   =    array($taskLogInfo['valid_pic']);
         }
-        p($taskLogInfo);
-        p($taskLogInfo['userChat']);
+//        p($taskLogInfo);
+//        p($taskLogInfo['userChat']);
         $this->assign('taskLogInfo',$taskLogInfo);
         $this->display();
     }

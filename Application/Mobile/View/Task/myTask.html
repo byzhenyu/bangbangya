@@ -77,7 +77,7 @@
                     </div>
                     <div>
                         <p>进行中：<span>{$v.beginNum}</span></p>
-                        <p>待审核：<span>{$v.auditNum}</span></p>
+                        <p>待审核：<span id="audit{$v[id]}">{$v.auditNum}</span></p>
                     </div>
                 </div>
                 <if condition="$v['is_show'] eq 0">
@@ -582,9 +582,9 @@ function recommend(task_id){
     }
     /*审核*/
     function audit(task_id){
-        mui.openWindow({
-            url:  url + 'Mobile/TaskLog/auditTask/task_id/' + task_id
-        });
+            mui.openWindow({
+                url:  url + 'Mobile/TaskLog/auditTask/task_id/' + task_id
+            });
     }
 
     function myTaskDetail(task_id) {
@@ -595,7 +595,6 @@ function recommend(task_id){
 
     //发布
     function fabu(task_id) {
-
         $.post("{:U('Task/changeShowStatus')}", {'id':task_id}, function (data) {
             mui.toast(data.info);
             if (data.status == 1) {
