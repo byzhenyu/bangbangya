@@ -21,7 +21,7 @@ class ArticleController extends Controller{
         }else{
         	$where['type'] = $type;
         }
-        $field = 'id, title';
+        $field = 'article_id, title';
         $data = $this->Help->getHelpList($where,$field);
         $this->assign('list', $data['Helplist']);
         $this->display();
@@ -32,11 +32,10 @@ class ArticleController extends Controller{
     * @return mixed
     */
     public function articleDetail() {
-         $article_id = I('id', 0, 'intval');
+         $category_id = I('category_id', 0, 'intval');
          $field = 'title, content, thumb_img, addtime';
-         $where['article_id'] = array('eq', $article_id);
-
-         $info =  D('Home/Article')-> getArticleDetail($where, $field);
+         $where['article_cat_id'] = array('eq', $category_id);
+         $info =  D('Home/Article')->getArticleDetail($where, $field);
 
          $this->assign('info', $info);
          $this->display();

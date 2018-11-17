@@ -37,7 +37,7 @@ class ArticleModel extends Model {
         if ($field == '') {
             $field = $this->selectFields;
         }
-        $info = $this->where($where)->field($field)->find();
+        $info = $this->where($where)->field($field)->order('article_id desc')->find();
         return $info;
     }
 }
