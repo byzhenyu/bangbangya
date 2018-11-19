@@ -17,6 +17,27 @@ class UserController extends CommonController {
         $this->user = D("Home/User");
     }
     /**
+     * @desc  邀请码邀请
+     * @param  uid  code
+     * @param  code
+     * @return mixed
+     */
+    public function Invitation(){
+         if(IS_POST){
+             $invitation_code = I('invitation_code');
+             $invitUserID  =  $this->user->decode($invitation_code);
+             $invitUserInfo = $this->user->where('user_id ='.$invitUserID)->setInc('invitation_num');
+             if(!$invitUserInfo)
+             {
+                 $this->ajaxReturn(V(0, '您填写的邀请码有误!'));
+             }else{
+                 $this->user->where('user_id = '.UID)->save(array('invitation_uid' => $invitUserID));
+                 $this->ajaxReturn(V(1, '填写成功'));
+             }
+         }
+         $this->display();
+    }
+    /**
     * @desc 用户中心
     * @param uid
     * @return mixed

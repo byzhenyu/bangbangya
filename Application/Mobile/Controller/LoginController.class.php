@@ -28,12 +28,12 @@ class LoginController extends CommonController {
     public function dologin()
     {
           /*测试打开*/
-        $userModel = D('Home/User');
-        $userInfo = $userModel->doLogin('123456');
-        session('user_auth', $userInfo['data']);
-        define('UID', session('user_auth')['user_id']);
-//        $this->redirect('Mobile/User/personalCenter/login/1');
-        $this->ajaxReturn(V(1, '登录成功'));
+//        $userModel = D('Home/User');
+//        $userInfo = $userModel->doLogin('123456');
+//        session('user_auth', $userInfo['data']);
+//        define('UID', session('user_auth')['user_id']);
+////        $this->redirect('Mobile/User/Invitation/user_id/'.UID);
+        $this->ajaxReturn(V(1, '登录成功',UID));
         $code = $_GET['code'];
         $weiChat_token = $this->getWeiChat($code);
         $weiChatData = $this->getWeiChatInfo($weiChat_token['access_token'], $weiChat_token['openid']);
@@ -68,6 +68,7 @@ class LoginController extends CommonController {
                 session('user_auth', $userInfo['data']);
                 define('UID', session('user_auth')['user_id']);
             }
+            $this->redirect('Mobile/User/User/Invitation');
         }
         $this->redirect('Mobile/User/personalCenter/login/1');
     }

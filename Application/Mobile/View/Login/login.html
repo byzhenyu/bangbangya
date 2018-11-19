@@ -52,11 +52,11 @@
             // headers:{'Content-Type':'application/json'},
             success:function(data){
                 mui.toast(data['info']);
-                // alert(JSON.stringify(data));
+                alert(JSON.stringify(data));
                 if(data['data'] == 1){
                     setTimeout(function(){
                         mui.openWindow({
-                            url:  url + '/Mobile/User/personalCenter/user_id/' + data['data']
+                            url:  url + '/Mobile/User/Invitation'
                         });
                     }, 1500);
                 }
