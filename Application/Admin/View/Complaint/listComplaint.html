@@ -54,13 +54,12 @@
                                     <tr>
                                         <th width="5%"><input class="check-all" type="checkbox"></th>
                                         <th width="5%">ID</th>
-                                        <th width="5%">类型</th>
-                                        <th width="5%">申诉人</th>
-                                        <th width="5%">被申诉人</th>
-                                        <th width="5%" class="align-center">审核状态</th>
-                                        <th width="5%" class="align-center">信息状态</th>
+                                        <th width="8%">类型</th>
+                                        <th width="8%">申诉人</th>
+                                        <th width="10%">被申诉人</th>
+                                        <th width="10%" class="align-center">审核状态</th>
                                         <th width="10%" class="align-center">处理时间</th>
-                                        <th width="30%">操作</th>
+                                        <th width="20%">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -72,9 +71,7 @@
                                             <td>{$v['username']}</td>
                                             <td>{$v['beusername']}</td>
                                             <td class="align-center">{:showAuditStatus($v['audit_status'])}</td>
-                                            <td class="align-center">
-                                                {:showChangeStatus($v['status'],$v['status'] == 1?'正常':'删除')}
-                                            </td>
+
                                             <td class="align-center">{:time_format($v['add_time'], 'Y-m-d H:i:s')}</td>
                                             <td class="f-14">
                                                 <div class="tpl-table-black-operation">
