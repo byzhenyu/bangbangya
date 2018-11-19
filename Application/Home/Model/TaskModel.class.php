@@ -134,6 +134,7 @@ class TaskModel extends Model{
                        ->field($field)
                        ->where($where)
                        ->find();
+        $this->where(array('id'=>$where['t.id']))->setInc('look_num');
         if (!empty($taskDetail)) {
             /*查看任务详情信息*/
             $taskStep = M('TaskStep')->where(array('task_id'=>$where['t.id']))->select();
