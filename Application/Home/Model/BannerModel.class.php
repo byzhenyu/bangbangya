@@ -23,6 +23,7 @@ class BannerModel extends Model{
           if(is_null($field)){
               $field = $this->selectFields;
           }
+          $where['status'] = 1;
           $bannerList = $this->field($field)->where($where)->select();
           return $bannerList;
     }
