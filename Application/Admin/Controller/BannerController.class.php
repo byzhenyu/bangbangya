@@ -15,11 +15,11 @@ class BannerController extends CommonController{
         if ($keyword) {
             $where['title'] = array('like','%'.$keyword.'%');
         }
-//        print_r($keyword);
         /*查询轮播图field*/
         $field = 'id, title,img_url, jump_url, sort,add_time,status,type';
         $data = $BannerModel->getBannerListByPage($where, $field);
         $this->bannerlist = $data['bannerlist'];
+        $this->keyword = $keyword;
         $this->page = $data['page'];
         $this->display();
      }

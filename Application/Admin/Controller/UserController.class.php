@@ -54,11 +54,15 @@ class UserController extends CommonController {
 
     //分销记录
     public function getInvitationList() {
-
+        $keyword = I('keyword', '');
+        if ($keyword) {
+            $where['nick_name'] = array('like','%'.$keyword.'%');
+        }
         $where['invitation_num'] = array('gt', 0);
         $data = D('Admin/User')->getUsersListByPage($where);
         $this->assign('userslist', $data['userslist']);
         $this->assign('page', $data['page']);
+        $this->assign('keyword', $keyword);
         $this->display();
     }
 

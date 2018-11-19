@@ -26,7 +26,6 @@ class FeedBackController extends CommonController
         $this->info = $feedBackInfo['info'];
         $this->page = $feedBackInfo['page'];
         $this->mobile = $mobile;
-        $this->keyword = $keyword;
         $this->display();
     }
 
