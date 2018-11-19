@@ -53,9 +53,13 @@ class LoginController extends CommonController {
                 'head_pic' => $weiChatData['headimgurl'],
                 'open_id' => $weiChatData['openid'],
                 'open_id' => $weiChatData['openid'],
+                'invitation_code' => $weiChatData['openid'],
                 'register_time' => NOW_TIME
             );
             $userid = $userModel->add($userData);
+            /*生成邀请码*/
+            $invitation_code = $userModel->createCode($userid);
+            $userModel->where('user_id = '.$userid)->setField('invitation_code',$invitation_code);
             if ($userid) {
                 $shopDate = array(
                     'user_id' => $userid,
