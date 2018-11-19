@@ -17,8 +17,11 @@ class TaskController extends CommonController {
         $keyword = I('keyword', '');
         if ($keyword) {
             $where['t.title'] = array('like','%'.$keyword.'%');
+
         }
+        $where['t.status'] = array('eq', 1);
         $data = D('Admin/Task')->getTaskList($where);
+        $this->assign('keyword', $keyword);
         $this->assign('list', $data['list']);
         $this->assign('page', $data['page']);
         $this->display();
@@ -90,8 +93,5 @@ class TaskController extends CommonController {
         $this->_recycle('task','id');
     }
 
-    public function del() {
-        $this->_del('task', 'id');
-    }
 }
         
