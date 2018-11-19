@@ -46,8 +46,9 @@ class UserAccountController extends CommonController {
         $id = I('id', 0, 'intval');
         $state = I('state',0);
         $UserAccountModel = D('Admin/UserAccount');
-        if (IS_POST) {
 
+        if (IS_POST) {
+            $pushModel = D('Common/push');
             if ($id > 0) {
                 $data =I('post.','');
                 $data['admin_user'] = session('admin_name');
@@ -61,42 +62,58 @@ class UserAccountController extends CommonController {
                         $this->ajaxReturn(V(0, '操作失败'));
                     }
                     $where['id'] = $id;
-                    $accountInfo = D('Admin/UserAccount')->getUserAccountDetail($where, 'user_id, money,type');
+                    $accountInfo = D('Admin/UserAccount')->getUserAccountDetail($where, 'user_id, money, drawmoney,type');
                     $user_where['user_id'] = array('eq', $accountInfo['user_id']);
                     if ($state == 1) { //完成审核
 
+                        if ($accountInfo['type'] == 2) { //保证金
 
-                        //减少会员冻结余额
-                        $setUserMoney = D('Admin/User')->where($user_where)->setDec('frozen_money', $accountInfo['money']);
-                        if ($setUserMoney === false) {
-                            M()->rollback(); // 事务回滚
-                            $this->ajaxReturn(V(0, '操作失败'));
+                        } else { //余额和分红提现
+                            //减少会员冻结余额
+                            $setUserMoney = D('Admin/User')->where($user_where)->setDec('frozen_money', $accountInfo['drawmoney']);
+                            if ($setUserMoney === false) {
+                                M()->rollback(); // 事务回滚
+                                $this->ajaxReturn(V(0, '操作失败'));
+                            }
+                            account_log($accountInfo['user_id'], $accountInfo['money'], 2, '提现', '');
+                            //分红
+                            $invi_uid = is_inviter($accountInfo['user_id']);
+                            if ($invi_uid) {
+                                inviterBonus($accountInfo['user_id'],$invi_uid,$accountInfo['drawmoney'],1);
+                            };
                         }
-                        account_log($accountInfo['user_id'], $accountInfo['money'], 2, '提现', '');
+
 
                     } else if ($state == 2) { //驳回
-
-
-                        //减少会员冻结余额
-                        $setUserForzenMoney = D('Admin/User')->where($user_where)->setDec('frozen_money', $accountInfo['money']);
-                        if ($setUserForzenMoney === false) {
-                            M()->rollback(); // 事务回滚
-                            $this->ajaxReturn(V(0, '操作失败'));
-                        }
-                        if ($accountInfo['type'] ==1) { //分红
-                            $saveData['total_money'] = array('exp', "total_money+".$accountInfo['money']);
-                            $saveData['bonus_money'] = array('exp', "bonus_money+".$accountInfo['money']);
+                        if ($accountInfo['type'] == 2) {
+                            $res = M('Shop')->where(array('user_id'=>$accountInfo['user_id']))->setInc('shop_accounts', $accountInfo['drawmoney']);
+                            if ($res === false) {
+                                M()->rollback();
+                                $this->ajaxReturn(V(0, '操作失败'));
+                            }
                         } else {
-                            $saveData['total_money'] = array('exp', "total_money+".$accountInfo['money']);
-                            $saveData['task_money'] = array('exp', "task_money+".$accountInfo['money']);
-                        }
-                        //增加会员余额
-                        $setUserMoney = D('Admin/User')->where($user_where)->save($saveData);
+                            //减少会员冻结余额
+                            $setUserForzenMoney = D('Admin/User')->where($user_where)->setDec('frozen_money', $accountInfo['drawmoney']);
+                            if ($setUserForzenMoney === false) {
+                                M()->rollback(); // 事务回滚
+                                $this->ajaxReturn(V(0, '操作失败'));
+                            }
+                            if ($accountInfo['type'] == 1) { //分红提现
+                                $saveData['total_money'] = array('exp', "total_money+".$accountInfo['drawmoney']);
+                                $saveData['bonus_money'] = array('exp', "bonus_money+".$accountInfo['drawmoney']);
+                            } elseif ($accountInfo['type'] == 0) { //余额
+                                $saveData['total_money'] = array('exp', "total_money+".$accountInfo['drawmoney']);
+                                $saveData['task_money'] = array('exp', "task_money+".$accountInfo['drawmoney']);
+                            }
+                            //增加会员余额
+                            $setUserMoney = D('Admin/User')->where($user_where)->save($saveData);
 
-                        if ($setUserMoney === false) {
-                            M()->rollback(); // 事务回滚
-                            $this->ajaxReturn(V(0, '操作失败'));
+                            if ($setUserMoney === false) {
+                                M()->rollback(); // 事务回滚
+                                $this->ajaxReturn(V(0, '操作失败'));
+                            }
                         }
+
                     }
                     M()->commit(); // 事务提交
                     $this->ajaxReturn(V(1, '操作成功', $id));
