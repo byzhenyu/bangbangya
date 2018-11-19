@@ -11,7 +11,7 @@
 namespace Home\Model;
 use Think\Model;
 class TaskLogModel extends  Model{
-    protected $insertFields = array('user_id','task_id', 'task_name', 'valid_time','valid_info','valid_img','valid_text','valid_status','status','finish_time','add_time');
+    protected $insertFields = array('user_id','task_id', 'task_price','task_name', 'valid_time','valid_info','valid_img','valid_text','valid_status','status','finish_time','add_time');
     protected $updateFields = array('task_id', 'task_name', 'valid_time','valid_info','valid_img','valid_text','valid_status','status','finish_time','add_time');
     protected $selectFields = array('id','task_id', 'user_id', 'task_name', 'task_price', 'valid_time', 'valid_info', 'valid_img', 'valid_pic', 'valid_text', 'valid_status', 'finish_time','add_time');
     protected $_validate = array(

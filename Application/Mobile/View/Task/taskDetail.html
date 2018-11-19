@@ -13,8 +13,6 @@
     <p class="mui-title">任务详情</p>
     <a>接单规则</a>
 </header>
-
-
 <div id="grap-order-gray" class="">
     <div class="grap-order-boom" id="grap-order-content">
         <div class="grap-order-title">
@@ -188,6 +186,7 @@
         var id = $('#task_id').val();
         $.post("{:U('TaskLog/getTask')}", {'id':id}, function (data) {
             mui.toast(data.info);
+            alert(JSON.stringify(data));
             if (data.status == 1) {
 
                window.location.reload();

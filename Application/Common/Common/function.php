@@ -24,7 +24,6 @@ function pwdHash($str_password = '', $real_password = '', $type = false) {
         return $hasher->CheckPassword($str_password, $real_password);
     }
 }
-
 function show_feed_type($type){
     switch ($type){
         case 1: return '留言';break;

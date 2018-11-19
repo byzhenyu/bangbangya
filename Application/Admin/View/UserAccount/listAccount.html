@@ -59,7 +59,7 @@
                                         <td>{$v['nick_name']}</td>
                                         <td>{$type[$v['type']]}</td>
                                         <td>{:fen_to_yuan($v['money'])}</td>
-                                        <td>{$v['account_fee']}</td>
+                                        <td>{:fen_to_yuan($v['account_fee'])}</td>
                                         <td>{:fen_to_yuan($v['drawmoney'])}</td>
                                         <td>
                                             <switch name="v['state']">

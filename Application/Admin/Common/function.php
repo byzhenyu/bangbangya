@@ -117,5 +117,8 @@ function showAuditStatus($audit_status) {
         case '0': return '待审核'; break;
         case '1': return '通过'; break;
         case '2': return '未通过'; break;
+        case '3': return '任务下架'; break;
+        case '4': return '任务结束'; break;
+        case '5': return '任务暂停'; break;
     }
 }

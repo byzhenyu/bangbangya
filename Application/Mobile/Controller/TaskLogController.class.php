@@ -60,10 +60,8 @@ class TaskLogController extends CommonController {
      //接单
     public function getTask() {
         $task_id = I('id', 0, 'intval');
-        $where['t.id'] = array('eq', $task_id);
-
+        $where['t.id'] = $task_id;
         $taskInfo = D('Home/Task')->getTaskDetail($where);
-
         if (empty($taskInfo)) {
             $this->ajaxReturn(V(0, '任务不存在，或被删除'));
         }
@@ -77,11 +75,11 @@ class TaskLogController extends CommonController {
         $data['task_id'] = $taskInfo['id'];
         $data['task_name'] = $taskInfo['title'];
         $data['task_price'] = $taskInfo['price'];
-
-        if ($TaskLogModel->create($data, 1) ===false) {
+        if ($TaskLogModel->create($data) ===false) {
             $this->ajaxReturn(V(0, $TaskLogModel->getError()));
         }
         $taskLogId = $TaskLogModel->add();
+        $this->ajaxReturn(V(1, '接单成功', $taskLogId));
         if ($taskLogId) {
             $this->ajaxReturn(V(1, '接单成功', $taskLogId));
         } else {
