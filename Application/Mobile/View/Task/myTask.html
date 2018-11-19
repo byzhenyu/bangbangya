@@ -441,9 +441,14 @@ function soldOut(task_id){
         }
 }
 function recommend(task_id){
+    var status =  $('#recommend-release-btn').val();
+    if(status == '已推荐'){
+        mui.toast('该条任务已推荐!');
+    }else{
         $("#grap-order-gray").addClass('mui-popup-backdrop mui-active');
         $("#recommend-time").css('display', 'block');
         $('#recommend-time-sure').attr('name',task_id);
+    }
 }
     $("#zhiding").focusout(function() {
         var topNum = $(this).val();
@@ -501,14 +506,19 @@ function recommend(task_id){
                 console.log(type);
             }
         });
+    }
     function offRecommend(){
         $("#grap-order-gray").removeClass('mui-popup-backdrop mui-active');
         $("#recommend-time").css('display', 'none');
     }
     function taskTop(task_id){
+        if($('#top-btn').val() == '已置顶'){
+            mui.toast('该条任务已推荐!');
+        }else{
             $("#grap-order-gray").addClass('mui-popup-backdrop mui-active');
             $("#top-time").css('display', 'block');
             $('#top-time-sure').attr('name',task_id);
+        }
     }
     function onTop(){
         var id = $('#top-time-sure').attr('name');
