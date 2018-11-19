@@ -65,6 +65,9 @@ class TaskLogController extends CommonController {
         if (empty($taskInfo)) {
             $this->ajaxReturn(V(0, '任务不存在，或被删除'));
         }
+        if ($taskInfo['task_num'] < 1) {
+            $this->ajaxReturn(V(0, '任务数量已经空了!请稍后再试!'));
+        }
         $TaskLogModel = D('Home/TaskLog');
         $logStatus = $TaskLogModel->activateTask(UID, $task_id);
         if ($logStatus) {
