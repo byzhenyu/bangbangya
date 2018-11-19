@@ -55,14 +55,14 @@ class TaskController extends CommonController {
                         M()->rollback();
                         $this->ajaxReturn(V(0, '扣除手续费失败'));
                     }
-                    $pushRes = D('Common/Push')->push("任务处理结果", $data['user_id'], '任务审核通过', '任务: '.$id, '代办', $data['audit_info']);
+                    $pushRes = D('Common/Push')->push("任务处理结果", $data['user_id'], '任务审核通过', '任务名称: '.$id, '通知类型： 代办', $data['audit_info']);
                     if ($pushRes['status'] == 0) {
                         M()->rollback();
                         $this->ajaxReturn($pushRes);
                     }
 
                 } else if ($data['audit_status'] == 2) {
-                    $pushRes = D('Common/Push')->push("任务处理结果", $data['user_id'], '任务审核未通过', '任务: '.$id, '代办', $data['audit_info']);
+                    $pushRes = D('Common/Push')->push("任务处理结果", $data['user_id'], '任务审核未通过', '任务名称: '.$id, '通知类型： 代办', $data['audit_info']);
                     if ($pushRes['status'] == 0) {
                         M()->rollback();
                         $this->ajaxReturn($pushRes);
