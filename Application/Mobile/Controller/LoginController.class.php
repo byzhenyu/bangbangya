@@ -68,7 +68,7 @@ class LoginController extends CommonController {
                 session('user_auth', $userInfo['data']);
                 define('UID', session('user_auth')['user_id']);
             }
-            $this->redirect('Mobile/User/User/Invitation');
+            $this->redirect('Mobile/User/Invitation');
         }
         $this->redirect('Mobile/User/personalCenter/login/1');
     }
