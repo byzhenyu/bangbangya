@@ -33,7 +33,6 @@ class TaskModel extends Model {
         $count = $this->alias('t')
               ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')
               ->join('__USER__ as u on t.user_id = u.user_id')
-              ->field('t.*,c.id as category_id,c.category_name,u.user_name')
               ->where($where)
               ->count();
         $page = get_page($count);

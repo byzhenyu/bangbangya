@@ -17,11 +17,8 @@ class TaskController extends CommonController {
         $keyword = I('keyword', '');
         if ($keyword) {
             $where['t.title'] = array('like','%'.$keyword.'%');
-
         }
-        $where['t.status'] = array('eq', 1);
         $data = D('Admin/Task')->getTaskList($where);
-        $this->assign('keyword', $keyword);
         $this->assign('list', $data['list']);
         $this->assign('page', $data['page']);
         $this->display();
@@ -32,6 +29,9 @@ class TaskController extends CommonController {
         $taskModel = D('Admin/Task');
         if (IS_POST) {
             $data = I('post.', '');
+            if($data['audit_status'] == 0){
+                $this->ajaxReturn(V(0, '请您审核!'));
+            }
             M()->startTrans();
             if ($taskModel->create($data, 5) !== false) {
                 $res = $taskModel->save($data);
