@@ -62,6 +62,7 @@ class ComplaintController extends CommonController {
                             $userRes = $userModel->where('user_id = '.$ComplaintInfo['user_id'])->save($userData);
                             $usershopRes = $shopModel->where('user_id = '.$ComplaintInfo['user_id'])->setInc('appeal_num');
                             account_log($ComplaintInfo['user_id'], $ComplaintInfo['price'],4,'申诉获得任务金额',$ComplaintInfo['task_id']);
+                            D('Common/Push')->push('申诉处理结果', $ComplaintInfo['user_id'], '申诉成功', '任务'.$ComplaintInfo['task_id'], '收入金额'.(fen_to_yuan($ComplaintInfo['price'])), '');
                             $beuserData = array(
                                 'total_money' => array('exp','total_money - '.$ComplaintInfo['price'])
                             );
