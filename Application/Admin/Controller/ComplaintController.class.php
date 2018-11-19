@@ -23,6 +23,7 @@ class ComplaintController extends CommonController {
         $data =  $ComplaintModel->getComplaintList($where, $field);
         $this->assign('list', $data['Complaintlist']);
         $this->assign('page', $data['page']);
+        $this->assign('keyword', $keyword);
         $this->display();
     }
     /*删除*/
