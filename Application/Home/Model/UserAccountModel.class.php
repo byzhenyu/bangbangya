@@ -80,7 +80,7 @@ class UserAccountModel extends Model{
         /*添加提现信息*/
         $insData['user_id'] = $data['user_id'];
         $insData['drawmoney'] = $data['money'];
-        $insData['account_fee'] = $serviceCharge;
+        $insData['account_fee'] = $data['money'] * $serviceCharge;
         $insData['money'] = $data['money'] * (1 - $serviceCharge);
         $insData['brank_no'] = $userInfo['alipay_num'];
         $insData['brank_user_name'] = $userInfo['alipay_name'];
