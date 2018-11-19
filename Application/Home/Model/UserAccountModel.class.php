@@ -26,17 +26,21 @@ class UserAccountModel extends Model{
     * @return mixed
     */
     public function is_draw($data) {
-        $userAuth = D('Home/Shop')->where('user_id = '.$data['user_id'])->getField('shop_type');
-        $this->userAuth = $userAuth;
-        $where['user_id'] = $data['user_id'];
-        $where['add_time']  = array('gt',strtotime('-7 days'));
-        $drawNum = $this->where($where)->count();
-        if($userAuth  == 0){
-            if($drawNum >= 3){
+        $userInfo = D('Home/Shop')->where('user_id = '.$data['user_id'])->field('shop_type,partner_time')->find();
+        $this->userAuth = $userInfo['shop_type'];
+
+        if ($userInfo['shop_type']  > 0 && ($userInfo['partner_time'] > NOW_TIME)) { //合作商 每天三次
+            $where['user_id'] = $data['user_id'];
+            $where['add_time']  = array('gt',strtotime(date('Y-m-d',time())));
+            $drawNum = $this->where($where)->count();
+            if ($drawNum >= 3) {
                 return false;
             }
-        }else{
-            if($drawNum >= 7){
+        } else { //非合作商7天一次
+            $where['user_id'] = $data['user_id'];
+            $where['add_time']  = array('gt',strtotime('-7 days'));
+            $drawNum = $this->where($where)->count();
+            if($drawNum > 0){
                 return false;
             }
         }
@@ -46,7 +50,7 @@ class UserAccountModel extends Model{
          /*验证提现次数是否用完*/
          $is_draw = $this->is_draw($data);
          if(!$is_draw){
-             return V('1','本周提现次数已经用光了!');
+             return V('1','提现次数已经用光了!');
          }
          M()->startTrans();
         $userModel = D('Home/User');
