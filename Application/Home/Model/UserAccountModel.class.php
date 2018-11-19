@@ -87,10 +87,10 @@ class UserAccountModel extends Model{
         $insData['type'] = $data['type'];
         $insRes = $this->add($insData);
         /*查看分红比例 以及添加分红*/
-        $inviter   =  is_inviter($data['user_id']);
-        if($inviter  != 0){
-            inviterBonus($data['user_id'], $inviter , $data['money'] , 1);
-        }
+//        $inviter   =  is_inviter($data['user_id']);
+//        if($inviter  != 0){
+//            inviterBonus($data['user_id'], $inviter , $data['money'] , 1);
+//        }
         if($userRes && $insRes){
               M()->commit();
             return V('0','提现成功!',$data['type']);
