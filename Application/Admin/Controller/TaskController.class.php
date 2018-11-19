@@ -18,6 +18,7 @@ class TaskController extends CommonController {
         if ($keyword) {
             $where['t.title'] = array('like','%'.$keyword.'%');
         }
+        $where['t.status'] = array('eq', 1);
         $data = D('Admin/Task')->getTaskList($where);
         $this->assign('list', $data['list']);
         $this->assign('page', $data['page']);
