@@ -186,7 +186,6 @@
         var id = $('#task_id').val();
         $.post("{:U('TaskLog/getTask')}", {'id':id}, function (data) {
             mui.toast(data.info);
-            alert(JSON.stringify(data));
             if (data.status == 1) {
 
                window.location.reload();
