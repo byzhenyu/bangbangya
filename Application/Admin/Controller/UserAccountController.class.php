@@ -62,7 +62,7 @@ class UserAccountController extends CommonController {
                         $this->ajaxReturn(V(0, '操作失败'));
                     }
                     $where['id'] = $id;
-                    $accountInfo = D('Admin/UserAccount')->getUserAccountDetail($where, 'user_id, money, drawmoney,type');
+                    $accountInfo = $UserAccountModel->getUserAccountDetail($where, 'id, user_id, money, drawmoney,type');
                     $user_where['user_id'] = array('eq', $accountInfo['user_id']);
                     if ($state == 1) { //完成审核
 
@@ -75,7 +75,17 @@ class UserAccountController extends CommonController {
                                 M()->rollback(); // 事务回滚
                                 $this->ajaxReturn(V(0, '操作失败'));
                             }
-                            account_log($accountInfo['user_id'], $accountInfo['money'], 2, '提现', '');
+                            if ($accountInfo['type'] == 0) {
+                                //修改count日志
+                                $change_desc = '余额提现';
+                            } elseif ($accountInfo['type'] == 1) {
+                                $change_desc = '分红提现';
+                            }
+                            $countRes = $UserAccountModel->where(array('id'=>$accountInfo['id']))->setField('change_desc', $change_desc);
+                            if ($countRes === false) {
+                                M()->rollback();
+                                $this->ajaxReturn(V(0, '修改操作日志失败'));
+                            }
                             //分红
                             $invi_uid = is_inviter($accountInfo['user_id']);
                             if ($invi_uid) {
@@ -101,9 +111,12 @@ class UserAccountController extends CommonController {
                             if ($accountInfo['type'] == 1) { //分红提现
                                 $saveData['total_money'] = array('exp', "total_money+".$accountInfo['drawmoney']);
                                 $saveData['bonus_money'] = array('exp', "bonus_money+".$accountInfo['drawmoney']);
+                                $change_desc = '分红提现（审核未通过）';
+
                             } elseif ($accountInfo['type'] == 0) { //余额
                                 $saveData['total_money'] = array('exp', "total_money+".$accountInfo['drawmoney']);
                                 $saveData['task_money'] = array('exp', "task_money+".$accountInfo['drawmoney']);
+                                $change_desc = '余额提现（审核未通过）';
                             }
                             //增加会员余额
                             $setUserMoney = D('Admin/User')->where($user_where)->save($saveData);
@@ -112,9 +125,15 @@ class UserAccountController extends CommonController {
                                 M()->rollback(); // 事务回滚
                                 $this->ajaxReturn(V(0, '操作失败'));
                             }
+                            $countRes = $UserAccountModel->where(array('id'=>$accountInfo['id']))->setField('change_desc', $change_desc);
+                            if ($countRes === false) {
+                                M()->rollback();
+                                $this->ajaxReturn(V(0, '修改操作日志失败'));
+                            }
                         }
 
                     }
+
                     M()->commit(); // 事务提交
                     $this->ajaxReturn(V(1, '操作成功', $id));
                 } else {
