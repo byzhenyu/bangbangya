@@ -29,6 +29,9 @@ class TaskController extends CommonController {
         $taskModel = D('Admin/Task');
         if (IS_POST) {
             $data = I('post.', '');
+            if($data['audit_status'] == 0){
+                $this->ajaxReturn(V(0, '请您审核!'));
+            }
             M()->startTrans();
             if ($taskModel->create($data, 5) !== false) {
                 $res = $taskModel->save($data);
@@ -87,11 +90,11 @@ class TaskController extends CommonController {
     }
 
     public function recycle() {
-        $this->_recycle('task','id');
     }
 
     public function del() {
-        $this->_del('task', 'id');
+        $this->_del('task', 'id');        $this->_recycle('task','id');
+
     }
 }
         
