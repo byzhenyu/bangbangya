@@ -44,7 +44,7 @@
     {
         mui.ajax(url + 'Mobile/Login/dologin',{
             data:{
-                open_id:'123456'
+                open_id:'111111'
             },
             dataType:'json',//服务器返回json格式数据
             type:'post',//HTTP请求类型
@@ -52,12 +52,9 @@
             // headers:{'Content-Type':'application/json'},
             success:function(data){
                 mui.toast(data['info']);
-                // alert(JSON.stringify(data));
-                if(data['data'] == 1){
+                if(data['status'] == 1){
                     setTimeout(function(){
-                        mui.openWindow({
-                            url:  url + '/Mobile/User/personalCenter/user_id/' + data['data']
-                        });
+                        window.location.href = "{:U('User/personalCenter')}";
                     }, 1500);
                 }
             },
