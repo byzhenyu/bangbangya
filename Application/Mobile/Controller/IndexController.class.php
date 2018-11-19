@@ -13,7 +13,7 @@ use Common\Controller\UserCommonController;
 
 class IndexController extends UserCommonController {
       public function index(){
-            var_dump(UID);die();
+
           $bannerList = D('Home/Banner')->getBanner(array('type = 1'));
           $this->assign('bannerList', $bannerList);
           $this->display();
