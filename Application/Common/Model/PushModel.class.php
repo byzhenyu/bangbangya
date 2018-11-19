@@ -10,21 +10,18 @@ use Think\Model;
 
 class PushModel extends Model{
 
-    protected $insertFields = array('id','title','url','content','description','img','add_time','open_type','user_id','record_id','record_table');
-    protected $updateFields = array('id','title','url','content','description','img','add_time','push_time','open_type','status','delete_time','send_state','user_id','record_id','record_table');
-    protected $selectFields = array('id','title','url','content','description','img','add_time','push_time','open_type','type','status','delete_time','send_state','user_id','record_id','record_table');
+    protected $insertFields = array('id','title','url','content1','content2','content3','add_time','content4');
+    protected $updateFields = array('id','title','url','content1','content2','content3','add_time','content4');
+    protected $selectFields = array('id','title','url','content1','content2','content3','add_time','content4');
 
     protected $_validate = array(
         array('title', 'require', '公告推送名称不能为空', 1, 'regex', 3),
         array('title', 'checkTitle', '公告推送标题不能超过20个字', 2, 'callback', 3),
-        array('description', 'require', '公告推送描述不能为空', 1, 'regex', 3),
-        array('description', 'checkDesc', '公告推送描述不能超过50个字', 2, 'callback', 3),
-        array('content', 'require', '公告推送内容不能为空', 0, 'regex', 3),
-        array('url','/^http:\/\//','跳转url有误！必须以http://开头', 2, 'regex', 3),
-        array('url','1,255','跳转url有误！', 2, 'length', 3),
-        array('open_type', array(1,2), '推送公告打开方式有误', 0, 'in', 3),
-        array('record_id', 'require', '业务表主键id不能为空', 0, 'regex', 3),
-        array('record_table', 'require', '业务表名称不能为空', 0, 'regex', 3),
+        array('content1', 'require', '公告推送描述不能为空', 1, 'regex', 3),
+        array('content1', 'checkDesc', '公告推送描述不能超过50个字', 2, 'callback', 3),
+        array('content2', 'require', '公告推送内容不能为空', 0, 'regex', 3),
+        array('content3', 'require', '公告推送内容不能为空', 0, 'regex', 3),
+        array('content4', 'require', '公告推送内容不能为空', 0, 'regex', 3),
     );
 
     protected function checkTitle($data) {
@@ -44,12 +41,11 @@ class PushModel extends Model{
 
     protected function _before_insert(&$data,$options) {
         $data['add_time'] = time();
-        $data['push_time'] = time();
+
     }
 
     protected function _before_update(&$data,$options) {
-        $data['add_time'] = time();
-        $data['push_time'] = time();
+
     }
 
     // 查询推送列表
@@ -57,7 +53,7 @@ class PushModel extends Model{
         if ($field == null) {
             $field = $this->selectFields;
         }
-        $where['status'] = 0;
+
         $count = $this->where($where)->count();
         $page = get_page($count);
         $data = $this->field($field)->where($where)->limit($page['limit'])->order($order)->select();
@@ -79,31 +75,30 @@ class PushModel extends Model{
      * @param int $pushType  推送用户类型 1商家端，2用户端
      * @return array
      */
-    public function push($alert, $userId, $msg, $type, $record_id=0, $record_table='', $pushType, $order_sn = '') {
-        if ($userId == '' || empty($userId))  {
+    public function push($alert, $userId, $msg1,$msg2,$msg3,$msg4) {
+        if ($userId == '' || empty($userId)) {
             return V(0, '请选择推送人群');
         } elseif ($userId == 'all') {
             $userId = '';
         }
-        $result = jPush($alert, $userId, $msg, $type, $pushType, $order_sn);
+        $result = jPush($alert, 'msg', $userId, $msg1);
         $result_json = json_decode($result);
         if ($result_json) {   // 推送成功
             // 把推送写进推送表
             if (is_array($userId)) {
                 foreach ($userId as $key => $v) {
-                    $this->_addPush($alert, $msg, $v, 1, $type, $record_id, $record_table, $order_sn);
-                    $this->_addPushHistory($alert, $msg, $v, '推送成功');
+                    $this->_addPush($alert, $msg1,$msg2,$msg3,$msg4, $v);
                 }
 
                 return V(1, '推送成功');
             } else {
-                $this->_addPush($alert, $msg, $userId, 1, $type, $record_id, $record_table, $order_sn);
-                $this->_addPushHistory($alert, $msg, $userId, '推送成功');
+                $this->_addPush($alert, $msg1,$msg2,$msg3,$msg4, $userId);
+
                 return V(1, '推送成功');
             }
         } else {  // 推送失败
-            $this->_addPush($alert, $msg, $userId, 0, $type, $record_id, $record_table, $order_sn);
-            $this->_addPushHistory($alert, $msg, $userId, $result);
+            $this->_addPush($alert, $msg1,$msg2,$msg3,$msg4, $userId);
+
             return V(0, '推送失败', $result);
         }
     }
@@ -115,40 +110,18 @@ class PushModel extends Model{
      * @param $userId 用户ID
      * @param $result 推送的结果, 0: 失败, 1:已推送
      */
-    private function _addPush($title, $content, $userId, $result, $type, $record_id, $record_table, $order_sn = ''){
+    private function _addPush($title, $content1,$content2,$content3,$content4, $userId){
         $data = array(
             'user_id'   => $userId,
             'title'     => $title,
-            'content'   => $content,
-            'push_time' => time(),
+            'content1'   => $content1,
+            'content2'   => $content2,
+            'content3'   => $content3,
+            'content4'   => $content4,
             'add_time'  => time(),
-            'type'      => $type,
-            'send_state'=> $result,
-            'record_id' => $record_id,
-            'record_table' => $record_table,
-            'order_sn' => $order_sn
+
         );
         return $this->add($data);
-    }
-
-    /**
-     * 写入推送记录
-     * @param $title 推送的标题
-     * @param $content 推送的内容
-     * @param $userId 用户ID
-     * @param $result 推送的结果, 1: 失败, 2成功
-     */
-    private function _addPushHistory($title, $content, $userId, $result){
-        $send_response_msg = $result; // 推送返回消息
-        $data = array(
-            'user_id'   => $userId,
-            'title'     => $title,
-            'content'   => $content,
-            'push_time' => time(),
-            'result'    => $result,
-            'send_response_msg' => $send_response_msg
-        );
-        M('PushHistory')->add($data);
     }
 
 }

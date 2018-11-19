@@ -26,28 +26,7 @@ class TaskModel extends Model {
 
     );
     //审核扣钱
-    protected function  _before_update(&$data,$options) {
-        if ($data['audit_status'] == 1) {
-            $userModel = M('User');
-            $total_money = $userModel->where(array('user_id'=>$data['user_id']))->getField('total_money');
 
-            if ($data['total_price'] > $total_money) {
-                $this->error = '用户余额不足';
-                return false;
-            }
-            $saveData = array(
-                'frozen_money' => array('exp','frozen_money +'.$data['total_price']),
-                'total_money' => array('exp','total_money -'.$data['total_price']),
-            );
-            $res = $userModel->save($saveData);
-            if ($res ===false) {
-                $this->error = '扣费失败';
-                return false;
-            }
-
-        }
-
-    }
     public function getTaskList($where = [], $field = '', $order = 't.add_time desc') {
         $where['u.disabled'] = 1;  /*用户状态*/
         $where['t.is_show'] = 1;

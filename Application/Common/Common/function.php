@@ -263,6 +263,7 @@ function randCode($length = 5, $type = 0) {
  * @param unknown $title  信息标题
  */
 function jPush( $alert, $type, $userId = null, $msg = '') {
+    return 1;
     require_once ('./Plugins/JPush/JPush.php');
     try {
         $client = new \JPush( C( 'USER_PUSH_APIKEY' ), C( 'USER_PUSH_SECRETKEY' ) );
