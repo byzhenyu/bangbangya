@@ -34,7 +34,7 @@ class LoginController extends CommonController {
         session('user_auth', $userInfo['data']);
         define(UID, session('user_auth')['user_id']);
         $this->redirect('Mobile/User/Invitation/user_id/'.UID);
-        $this->ajaxReturn(V(1, '登录成功',UID));
+        $this->ajaxReturn(V(1, '登录成功',$userInfo));
         $code = $_GET['code'];
         $weiChat_token = $this->getWeiChat($code);
         $weiChatData = $this->getWeiChatInfo($weiChat_token['access_token'], $weiChat_token['openid']);
