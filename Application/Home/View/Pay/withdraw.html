@@ -1,0 +1,137 @@
+<extend name="Public/base"/>
+<block name="style">
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/cur.css">
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/withdraw.css">
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/iconfont.css">
+</block>
+<body class="bg">
+<block name="body">
+    <body class="bg">
+    <include file="Public/head"/>
+    <div class="session">
+        <div class="w1200">
+            <include file="Public/nav"/>
+            <div class="nav-bred">
+                <a href="#">钱包提现</a>
+            </div>
+            <div class="withdraw sess-wapper">
+                <ul class="withdraw-ul">
+                        <li class="cf">
+                                <span class="draw-name fl">
+                                        合作商级别
+                                </span>
+                                <div class="draw-wapper fl">
+                                    <if condition="$shopInfo['shop_type'] eq 0"><span class="draw-money">非合作商</span>
+                                        <else /><span class="draw-money">{:C(	VIP_LEVEL)[$shopInfo['shop_type']]}</span>
+                                    </if>
+                                </div>
+
+                            </li>
+                    <li class="cf">
+                        <span class="draw-name fl">
+                            账户余额
+                        </span>
+                        <div class="draw-wapper fl">
+                            <span class="draw-money">
+                                {:fen_to_yuan($shopInfo['total_money'])}元
+                        </div>
+                    </li>
+                    <li class="cf">
+                        <span class="draw-name fl">
+                                提现金额
+                        </span>
+                        <div class="draw-wapper fl">
+                            <input  name="money" onkeyup="num(this)"  id="money" type="text" placeholder="">
+                            元
+                        </div>
+                    </li>
+                    <li class="cf">
+                        <span class="draw-name fl">
+                                提现方式
+                        </span>
+                        <div class="draw-wapper fl">
+                            <div class="draw-pay">
+                                <input type="radio" checked="checked">
+                                <img src="__PUBLIC__/pc/images/alipay.png"/>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <button onclick="withdarw()" class="withdraw-btn">
+                        提现
+                </button>
+                <div class="withdraw-tips">
+                    <h1>提现说明</h1>
+                    <p>1、提现金额限制在1.0元-200元，账户余额不能低于1.2元，提现时间为工作日的早9:00-17:00。  </p>
+                    <p>2、提现手续费：非合作商15%；普通合作商10%；金牌合作商8%；白金合作商5%。</p>
+                    <p>3、合作商每天可以提现三次；非合作商7天内只能提现一次，需要审核，审核时间1个工作日内。 </p>
+                    <p>4、提现有时因网络原因会有几秒到几分钟的延时，注意查收红包。 </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</block>
+<block name="script">
+    <script src="__PUBLIC__/pc/js/jquery-3.1.1.min.js"></script>
+    <script>
+        /*判断只能输入两位小数*/
+        function num(obj){
+            obj.value = obj.value.replace(/[^\d.]/g,""); //清除"数字"和"."以外的字符
+            obj.value = obj.value.replace(/^\./g,""); //验证第一个字符是数字
+            obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个, 清除多余的
+            obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+            obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'); //只能输入两个小数
+        }
+       function withdarw(){
+           var total_money = Number($('#total_money').text());
+           var money = $('#money').val();
+           if (money < 1.2) {
+               mui.toast('您的余额太低,无法提现');
+               return
+           }
+           if (money  > 200) {
+               mui.toast('提现最大额度200元');
+               return
+           }
+           mui.confirm('您是否提现' + money + '元', '提示', '', function (e) {
+               if (e.index == 1){
+                   mui.ajax(url + 'Home/Pay/withdraw', {
+                       data: {
+                           money: money,
+                           type: {$shopInfo['type']}
+                       },
+                       dataType: 'json',//服务器返回json格式数据
+                       type: 'post',//HTTP请求类型
+                       timeout: 10000,//超时时间设置为10秒；
+                       success: function (data) {
+                           mui.toast(data['info']);
+                           // alert(JSON.stringify(data));
+                           if (data['status'] == 0) {
+                               if(data['data']  == 0) {
+                                   setTimeout(function(){
+                                       mui.openWindow({
+                                           url:  url + 'Mobile/Pay/myWallet'
+                                       });
+                                   }, 1500);
+                               }else{
+                                   setTimeout(function(){
+                                       mui.openWindow({
+                                           url:  url + 'Mobile/Pay/incomeDividends'
+                                       });
+                                   }, 1500);
+                               }
+                           }
+                       },
+                       error: function (xhr, type, errorThrown) {
+                           //异常处理；
+                           console.log(type);
+                       }
+                   });
+               }else{
+                   mui.toast('您取消了操作!')
+               }
+           });
+       }
+    </script>
+</block>
