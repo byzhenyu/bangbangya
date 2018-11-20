@@ -19,13 +19,20 @@ class FeedbackController extends CommonController {
      **/
     public function feedback(){
         if(IS_POST){
-            $data = I('post.', 1);
+            $data = I('post.');
             $data['user_id'] = UID;
-            $insRes = $this->Feedback->add($data);
-            if($insRes){
-                $this->ajaxReturn(V(1,'反馈成功'));
-            }else{
-                $this->ajaxReturn(V(2,$this->Feedback->getDbError()));
+            $create = $this->Feedback->create($data, 1);
+            if(false !== $create){
+                $insRes = $this->Feedback->add($data);
+                if($insRes){
+                    $this->ajaxReturn(V(1,'反馈成功'));
+                }
+                else{
+                    $this->ajaxReturn(V(0,$this->Feedback->getError()));
+                }
+            }
+            else {
+                $this->ajaxReturn(V(0,$this->Feedback->getError()));
             }
         }
         $this->display();
