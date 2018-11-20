@@ -1,56 +1,57 @@
 <nav name="nav">
     <div class="nav">
-        <a href="{:U('Task/listTask')}" class="nav-link nav-active">
+        <a href="{:U('Task/listTask')}" <if condition="ACTION_NAME eq 'listTask'">  class="nav-link nav-active"<else /> class="nav-link"</if>>
             <i class="iconfont icon-leftbar_icon_jdzq_n"></i>
             接单赚钱
         </a>
-        <a href="{:U('Task/addTask')}" class="nav-link">
+        <a href="{:U('Task/addTask')}" <if condition="ACTION_NAME eq 'addTask'">  class="nav-link nav-active"<else /> class="nav-link"</if>>
             <i class="iconfont icon-leftbar_icon_publish"></i>
             发布任务
         </a>
-        <a href="{:U('User/friendQequest')}" class="nav-link">
+        <a href="{:U('User/friendQequest')}" <if condition="ACTION_NAME eq 'friendQequest'">  class="nav-link nav-active"<else /> class="nav-link"</if>>
             <i class="iconfont icon-leftbar_icon_invitef"></i>
             邀请好友
         </a>
-        <a href="{:U('TaskLog/getTaskLog')}" class="nav-link">
+        <a href="{:U('TaskLog/getTaskLog')}" <if condition="ACTION_NAME eq 'getTaskLog'">  class="nav-link nav-active"<else /> class="nav-link"</if>>
             <i class="iconfont icon-leftbar_icon_mytask_"></i>
             我的任务
         </a>
-        <a href="{:U('User/getRankList')}" class="nav-link">
+        <a href="{:U('User/getRankList')}" <if condition="ACTION_NAME eq 'getRankList'">  class="nav-link nav-active"<else /> class="nav-link"</if>>
             <i class="iconfont icon-leftbar_icon_rank_n"></i>
             排行榜
         </a>
-        <a href="{:U('User/personalCenter')}" class="nav-link">
+        <a href="{:U('User/personalCenter')}" <if condition="ACTION_NAME eq 'personalCenter'">  class="nav-link nav-active"<else /> class="nav-link"</if>>
             <i class="iconfont icon-leftbar_icon_my_n"></i>
             个人中心
         </a>
-        <a href="{:U('Task/myTask')}" class="nav-link">
+        <a href="{:U('Task/myTask')}" <if condition="ACTION_NAME eq 'myTask'">  class="nav-link nav-active"<else /> class="nav-link"</if>>
             <i class="iconfont icon-leftbar_icon_mypubli"></i>
             我的发布
         </a>
-        <a href="{:U('Pay/myWallet')}" class="nav-link">
+        <a href="{:U('Pay/myWallet')}" <if condition="ACTION_NAME eq 'myWallet'">  class="nav-link nav-active"<else /> class="nav-link"</if>>
             <i class="iconfont icon-leftbar_icon_mywalle"></i>
             我的钱包
         </a>
-        <a href="{:U('Pay/incomeDividends')}" class="nav-link">
+        <a href="{:U('Pay/incomeDividends')}" <if condition="ACTION_NAME eq 'incomeDividends'">  class="nav-link nav-active"<else /> class="nav-link"</if>>
             <i class="iconfont icon-leftbar_icon_income_"></i>
             收入分红
         </a>
-        <a href="{:U('User/partners')}" class="nav-link">
+        <a href="{:U('User/partners')}" <if condition="ACTION_NAME eq 'partners'">  class="nav-link nav-active"<else /> class="nav-link"</if>>
             <i class="iconfont icon-leftbar_icon_coopera"></i>
             合作商
         </a>
-        <a href="{:U('Help/questionList')}" class="nav-link">
+        <a href="{:U('Help/questionList')}" <if condition="ACTION_NAME eq 'questionList'">  class="nav-link nav-active"<else /> class="nav-link"</if>>
             <i class="iconfont icon-leftbar_icon_questio"></i>
             常见问题
         </a>
-        <a href="{:U('Feedback/feedback')}" class="nav-link">
+        <a href="{:U('Feedback/feedback')}" <if condition="ACTION_NAME eq 'feedback'">  class="nav-link nav-active"<else /> class="nav-link"</if>>
             <i class="iconfont icon-leftbar_icon_opinion"></i>
             意见反馈
         </a>
-        <a href="{:U('Article/articleDetail',array('category_id'=>4))}')}" class="nav-link">
+        <a href="{:U('Article/userAgreement')}" <if condition="ACTION_NAME eq 'userAgreement'">  class="nav-link nav-active"<else /> class="nav-link"</if>>
             <i class="iconfont icon-leftbar_icon_useragr"></i>
             用户协议
         </a>
+
     </div>
 </nav>
