@@ -450,11 +450,11 @@ class TaskController extends UserCommonController {
             M()->startTrans();
             $userModel = D('Home/User');
             $userRes  = $userModel->where('user_id = '.UID)->setDec('total_money',$data['money']);
-            $taskTime = $this->Task->where('id = '.$data['id'])->getField('top_time,re_time');
+            $taskData = $this->Task->where('id = '.$data['id'])->field('top_time,re_time')->find();
             if($data['top'] == 1){
                 $type = 10;
                 $desc = '任务置顶';
-                if($taskTime['top_time'] > NOW_TIME){
+                if($taskData['top_time'] > NOW_TIME){
                     $taskData['top_time'] = $data['topNum'] * 3600  + $taskData['top_time'];
                 }else{
                     $taskData['top_time'] = $data['topNum'] * 3600  + NOW_TIME;
@@ -463,7 +463,7 @@ class TaskController extends UserCommonController {
             }else{
                 $type = 9;
                 $desc = '任务推荐';
-                if($taskTime['re_time'] > NOW_TIME){
+                if($taskData['re_time'] > NOW_TIME){
                     $taskData['re_time'] = $data['topNum'] * 3600  + $taskData['re_time'];
                 }else{
                     $taskData['recommend'] = 1;
