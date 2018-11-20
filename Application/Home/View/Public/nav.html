@@ -28,7 +28,7 @@
             <i class="iconfont icon-leftbar_icon_mypubli"></i>
             我的发布
         </a>
-        <a href="{:U('Pay/myWallet')}" <if condition="ACTION_NAME eq 'myWallet'">  class="nav-link nav-active"<else /> class="nav-link"</if>>
+        <a href="{:U('Pay/myWallet')}" <if condition="(ACTION_NAME eq 'myWallet') OR (ACTION_NAME eq 'topUpsPage')">  class="nav-link nav-active"<else /> class="nav-link"</if>>
             <i class="iconfont icon-leftbar_icon_mywalle"></i>
             我的钱包
         </a>
