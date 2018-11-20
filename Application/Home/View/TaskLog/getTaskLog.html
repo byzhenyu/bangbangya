@@ -1,158 +1,125 @@
 <extend name="Public/base"/>
 <block name="style">
+    <title>{:C('WEB_TITLE')}-我的任务</title>
     <link rel="stylesheet" href="__PUBLIC__/pc/css/task.css">
 </block>
 <block name="body">
+    <body class="bg">
+    <include file="Public/head"/>
+        <div class="session">
+            <div class="w1200">
+                <include file="Public/nav"/>
+                <div class="nav-bred">
+                    <a href="#">我的任务 ></a>
+                    <a href="#"><if condition="$type eq 4">接单记录<else/>接单任务</if></a>
+                </div>
+                <div class="sess-wapper task">
+                    <div class="task-record">
+                        <ul class="task-record-title">
+                            <li onclick="task(5)" <if condition="$type eq 5">class="task-active"<else/></if>>接单任务</li>
+                            <li onclick="task(4)" <if condition="$type eq 4">class="task-active"<else/></if>>接单记录</li>
+                        </ul>
+                        <div class="tab_box">
+                            <div>
 
-<body class="bg">
-<include file="Public/head"/>
-    <div class="session">
-        <div class="w1200">
-            <include file="Public/nav"/>
+                                <if condition="$type eq 4">
+                                    <else/>
+                                    <ul class="task-group">
+                                        <li onclick="task(5)" <if condition="$type eq 5">class="btn-active"<else/></if>>全部</li>
+                                        <li onclick="task(0)" <if condition="$type eq 0">class="btn-active"<else/></if>>待提交</li>
+                                        <li onclick="task(1)" <if condition="$type eq 1">class="btn-active"<else/></if>>审核中</li>
+                                        <li onclick="task(2)" <if condition="$type eq 2">class="btn-active"<else/></if>>不合格</li>
+                                        <li onclick="task(3)" <if condition="$type eq 3">class="btn-active"<else/></if>>已完成</li>
+                                    </ul>
+                                </if>
 
-            <div class="nav-bred">
-                <a href="#">我的任务 ></a>
-                <a href="#">接单记录</a>
-            </div>
-            <div class="sess-wapper task">
-                <div class="task-record">
-                    <ul class="task-record-title">
-                        <li class="task-active">
-                            接单任务
-                        </li>
-                        <li>
-                            接单记录
-                        </li>
-                    </ul>
-                    <div class="tab_box">
-                        <div>
-                            <ul class="task-group">
-                                <li class="btn-active">全部</li>
-                                <li>待提交</li>
-                                <li>审核中</li>
-                                <li>不合格</li>
-                                <li>已完成</li>
-                            </ul>
-                            <ul class="index-wapper">
-                                <li class="cf">
-                                    <div class="item-wapper fl cf">
-                                        <div class="item-i fl">
-                                            <img src="__PUBLIC__/pc/images/jdzq_icon_comment.png" />
-                                        </div>
-                                        <div class="item-sess fl">
-                                            <div class="item-h1 cf">
-                                                <h1 class="fl">注册</h1>
-                                                <span class="item-p fl">
-                                                    天天快报一秒完成
-                                                </span>
-                                            </div>
-                                            <div class="item-span">
-                                                <span>编号：740006</span>
-                                                <span>单价：￥2.5</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="fr task-btn">
-                                        删除
-                                    </button>
-                                </li>
-                                <li class="cf">
-                                    <div class="item-wapper fl cf">
-                                        <div class="item-i fl">
-                                            <img src="__PUBLIC__/pc/images/jdzq_icon_comment.png" />
-                                        </div>
-                                        <div class="item-sess fl">
-                                            <div class="item-h1 cf">
-                                                <h1 class="fl">注册</h1>
-                                                <span class="item-p fl">
-                                                    天天快报一秒完成
-                                                </span>
-                                            </div>
-                                            <div class="item-span">
-                                                <span>编号：740006</span>
-                                                <span>单价：￥2.5</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="fr task-green">
-                                        已完成
-                                    </button>
-                                </li>
-                                <li class="cf">
-                                    <div class="item-wapper fl cf">
-                                        <div class="item-i fl">
-                                            <img src="__PUBLIC__/pc/images/jdzq_icon_comment.png" />
-                                        </div>
-                                        <div class="item-sess fl">
-                                            <div class="item-h1 cf">
-                                                <h1 class="fl">注册</h1>
-                                                <span class="item-p fl">
-                                                    天天快报一秒完成
-                                                </span>
-                                            </div>
-                                            <div class="item-span">
-                                                <span>编号：740006</span>
-                                                <span>单价：￥2.5</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="fr task-org">
-                                        审核中
-                                    </button>
-                                </li>
-
-                            </ul>
-                        </div>
-                        <div class="task-hide">
-                            <ul class="index-wapper">
-                                <li class="cf">
-                                    <div class="item-wapper fl cf">
-                                        <div class="item-i fl">
-                                            <img src="__PUBLIC__/pc/images/jdzq_icon_comment.png" />
-                                        </div>
-                                        <div class="item-sess fl">
-                                            <div class="item-h1 cf">
-                                                <h1 class="fl">注册</h1>
-                                                <span class="item-p fl">
-                                                    天天快报一秒完成
-                                                </span>
-                                            </div>
-                                            <div class="item-span">
-                                                <span>编号：740006</span>
-                                                <span>单价：￥2.5</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="fr task-btn">
-                                        删除
-                                    </button>
-                                </li>
-                            </ul>
-                            <button class="check-more">
-                                查看更多
-                            </button>
-
+                                <ul class="index-wapper" id="ajax_return"></ul>
+                                <button class="check-more" id="more" onclick="ajax_getTaskLog()">查看更多</button>
+                                <button class="check-more" id="no" style="display: none">没有更多了</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-</body>
-
+    </body>
 </block>
 <block name="script">
-    <script>
-        //切换
-        $(document).ready(function () {
-            var $tab_li = $('.task-record-title li');
-            $tab_li.click(function () {
-                $(this).addClass('task-active').siblings().removeClass('task-active');
-                var index = $tab_li.index(this);
-                $('div.tab_box > div').eq(index).show().siblings().hide();
-            });
+    <script type="text/javascript">
+        /*跳转链接*/
+        function task(num){
+            window.location.href = "{:U('TaskLog/getTaskLog')}/type/"+num;
+        }
+
+        /*开始加载*/
+        $(document).ready(function(){
+            var type = "{$type}";
+            ajax_getTaskLog(type);
         });
+        /**
+         * ajax 抓取接单页面(点击查看更多)
+         **/
+        var cur_page = 1;
+        function ajax_getTaskLog(type){
+            $.ajax({
+                url:"{:U('ajax_getTaskLog')}/p/"+cur_page,
+                type: 'POST',
+                data : {type:type},
+                success:function(data){
+                    if(!data) {
+                        $('#more').hide();
+                        $('#no').show();
+                    }
+                    else{
+                        cur_page++;
+                        $("#ajax_return").append(data);
+                        $('#more').show();
+                        $('#no').hide();
+                    }
+                }
+            });
+        }
+
+        /*删除操作*/
+        function del(id){
+            if (confirm('您是否要删除该条任务?')) {
+                $.ajax({
+                    url : "{:U('TaskLog/delTaskLog')}",
+                    type : "POST",
+                    dataType : "json",
+                    data : {id: id},
+                    success:function(data){
+                        toastr(data['info']);
+//                        if(data['status'] == 1){
+//                            setTimeout("reload()", 1500);
+//                        }
+                    },
+                    error:function(xhr,type,errorThrown){
+                        //异常处理；
+                        console.log(type);
+                    }
+                })
+            }
+        }
+
+        function reload() {
+            location.reload();
+        }
+
+        /*上传验证*/
+        function verify(id){
+            window.location.href = "{:U('TaskLog/taskVerify')}/id/"+id;
+        }
+        /*不合格*/
+        function fail(id){
+            mui.openWindow({
+                url:  url + 'Mobile/TaskLog/taskLogFail/id/' + id
+            });
+        }
+        /*详情*/
+        function taskDetail (log_id) {
+            window.location.href = "{:U('TaskLog/taskLogDetail')}/id/"+log_id;
+        }
     </script>
 </block>
 </html>

@@ -1,0 +1,42 @@
+<foreach name="list" item="v">
+    <li class="cf">
+        <div class="item-wapper fl cf" onclick="taskDetail({$v['id']})">
+            <div class="item-i fl">
+
+                <if condition="$v['category_img']">
+                    <img src="{$v['category_img']}">
+                    <else/>
+                    <img src="__PUBLIC__/pc/images/jdzq_icon_comment.png" />
+                </if>
+
+            </div>
+            <div class="item-sess fl">
+                <div class="item-h1 cf">
+                    <h1 class="fl">{$v['category_name']}</h1>
+                    <span class="item-p fl">{$v['task_name']}</span>
+                </div>
+                <div class="item-span">
+                    <span>编号：{$v['task_id']}</span>
+                    <span>单价：￥￥{:fen_to_yuan($v['price'])}</span>
+                </div>
+            </div>
+        </div>
+
+        <if condition="$type eq 4">
+            <button class="fr task-btn" onclick="del({$v['id']})">删除</button>
+            <else />
+
+            <if condition="$v['valid_status'] eq 0">
+                <button class="fr task-org" onclick="verify({$v['id']})">上传验证</button>
+                <elseif condition="$v['valid_status'] eq 1"/>
+                <button class="fr task-org">审核中</button>
+                <elseif condition="$v['valid_status'] eq 2"/>
+                <button class="fr task-org" onclick="fail({$v[id]})">审核中</button>
+                <else />
+                <button class="fr task-green">已完成</button>
+            </if>
+
+        </if>
+
+    </li>
+</foreach>
