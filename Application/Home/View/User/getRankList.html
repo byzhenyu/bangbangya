@@ -1,121 +1,97 @@
-<!DOCTYPE html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>每周排名</title>
-    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
-</head>
-<body>
-    <header class="mui-bar mui-bar-nav help-duck-head">
-        <a></a>
-        <p class="mui-title">每周排名</p>
-        <!--<a href="rank-history.html">历史榜单</a>-->
-    </header>
+<extend name="Public/base"/>
+<block name="style">
+    <title>{:C('WEB_TITLE')}-排行榜</title>
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/leaderboard.css">
+</block>
+<block name="body">
+    <body class="bg">
+    <include file="Public/head"/>
+    <div class="session">
+        <div class="w1200">
+            <include file="Public/nav"/>
+            <div class="nav-bred">
+                <a href="#">每周排行</a>
+            </div>
+            <div class="sess-wapper leaderboard">
+                <!--<a class="leader-histroy" href="#">历史榜单</a>-->
+                <div class="leader-wapper">
+                    <div class="leader-title">
+                        <i></i>
+                        <h1>接单能手排行榜</h1>
+                        <i></i>
+                    </div>
+                    <div class="leader-box cf">
+                        <div class="leader-winner fl">
+                            <div class="winner-i">
+                                <span class="winner-useri">
+                                    <img src="__PUBLIC__/pc/images/user.png" />
+                                </span>
+                                <span class="winner-corolla">
+                                    <img src="__PUBLIC__/pc/images/rank_icon_no2.png" />
+                                </span>
+                            </div>
+                            <h1 class="leader-name">{$randList[1]['nick_name']}</h1>
+                            <p class="leader-id">ID：{$randList[1]['user_id']}</p>
+                            <span class="leader-price">￥{:fen_to_yuan($randList[1]['task_suc_money'])}</span>
+                        </div>
+                        <div class="leader-winner fl">
+                            <div class="winner-i">
+                                <span class="winner-useri">
+                                    <img src="__PUBLIC__/pc/images/user.png" />
+                                </span>
+                                <span class="winner-corolla">
+                                    <img src="__PUBLIC__/pc/images/rank_img_no1.png" />
+                                </span>
+                            </div>
+                            <h1 class="leader-name">{$randList[0]['nick_name']}</h1>
+                            <p class="leader-id">ID：{$randList[0]['user_id']}</p>
+                            <span class="leader-price">￥{:fen_to_yuan($randList[0]['task_suc_money'])}</span>
+                        </div>
+                        <div class="leader-winner fl">
+                            <div class="winner-i">
+                                <span class="winner-useri">
+                                    <img src="__PUBLIC__/pc/images/user.png" />
+                                </span>
+                                <span class="winner-corolla">
+                                    <img src="__PUBLIC__/pc/images/rank_icon_no3.png" />
+                                </span>
+                            </div>
+                            <h1 class="leader-name">{$randList[2]['nick_name']}</h1>
+                            <p class="leader-id">ID：{$randList[2]['user_id']}</p>
+                            <span class="leader-price">￥{:fen_to_yuan($randList[2]['task_suc_money'])}</span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="leader-table">
+                    <li class="leader-th cf">
+                        <span class="fl">4-100</span>
+                        <span class="fr">赚钱金额</span>
+                    </li>
 
-    <div class="rank-week-top3">
-        <div class="rank-top3-title">
-            <div class="top3-line"></div>
-            <p>接单能手排行榜</p>
-            <div class="top3-line"></div>
+                    <foreach name="randList" item="v" key="k">
+                        <if condition="$k gt 2 ">
+                            <li class="leader-tr cf">
+                                <span class="leader-num fl">{$k + 1}</span>
+                                <span class="leader-user fl">
+
+                                    <if condition="$v['head_pic']">
+                                        <img src="{$v['head_pic']}" />
+                                        <else/>
+                                        <img src="__PUBLIC__/pc/images/user.png" />
+                                    </if>
+
+                                </span>
+                                <span class="leader-name fl">{$v.nick_name}</span>
+                                <span class="leader-id fl">ID：{$v.user_id}
+                                </span>
+                                <span class="leader-money fr">￥{:fen_to_yuan($v['task_suc_money'])}</span>
+                            </li>
+                        </if>
+                    </foreach>
+
+                </ul>
+            </div>
         </div>
-
-        <div class="rank-week-top3-users">
-            <div class="rank-top3-user">
-                <div class="rank-top3-headimg">
-                    <img class="top3-user-headimg" src="{$randList[1]['head_pic']}">
-                    <img class="top3-border" src="__PUBLIC__/mobile/images/common_img_no2.png">
-                </div>
-                <div class="top3-user-info">
-                    <p>{$randList[1]['nick_name']}</p>
-                    <span>ID：{$randList[1]['user_id']}</span>
-                    <p>￥{:fen_to_yuan($randList[1]['task_suc_money'])}</p>
-                </div>
-            </div>
-
-            <div class="rank-top3-user">
-                <div class="rank-top3-headimg">
-                    <img class="top3-user-headimg" src="{$randList[0]['head_pic']}">
-                    <img class="top3-border" src="__PUBLIC__/mobile/images/common_img_no1.png">
-                </div>
-                <div class="top3-user-info">
-                    <p>{$randList[0]['nick_name']}</p>
-                    <span>ID：{$randList[0]['user_id']}</span>
-                    <p>￥{:fen_to_yuan($randList[0]['task_suc_money'])}</p>
-                </div>
-            </div>
-
-            <div class="rank-top3-user">
-                <div class="rank-top3-headimg">
-                    <img class="top3-user-headimg" src="{$randList[2]['head_pic']}">
-                    <img class="top3-border" src="__PUBLIC__/mobile/images/common_img_no3.png">
-                </div>
-                <div class="top3-user-info">
-                    <p>{$randList[2]['nick_name']}</p>
-                    <span>ID：{$randList[2]['user_id']}</span>
-                    <p>￥{:fen_to_yuan($randList[2]['task_suc_money'])}</p>
-                </div>
-            </div>
-        </div>
     </div>
-
-    <div class="top-list-title">
-        <p>4-100名</p>
-        <p>赚钱金额</p>
-    </div>
-    <div id="rankList" class="top-user-list">
-       <foreach name="randList" item="v" key="k">
-           <if condition="$k gt 2 ">
-               <div class="top-user-item">
-                   <div class="top-user-left">
-                       <p>{$k + 1}</p>
-                       <img src="{$v['head_pic']}">
-                       <p>{$v.nick_name}</p>
-                       <p>ID：{$v.id}</p>
-                   </div>
-                   <p>￥{:fen_to_yuan($v['task_suc_money'])}</p>
-               </div>
-           </if>
-       </foreach>
-    </div>
-    <footer class="mui-bar mui-bar-tab help-duck-foot">
-        <a href="{:U('Index/index')}">
-            <div>
-                <img src="__PUBLIC__/mobile/images/tab_icon_home_n.png">
-                <span>首页</span>
-            </div>
-        </a>
-        <a href="{:U('Push/getPush')}">
-            <div>
-                <img src="__PUBLIC__/mobile/images/tab_icon_message_n.png">
-                <span>消息</span>
-            </div>
-        </a>
-        <a href="{:U('User/getRankList')}">
-            <div>
-                <img src="__PUBLIC__/mobile/images/tab_icon_rank_s.png">
-                <span  style="color: #6f75ef">排行榜</span>
-            </div>
-        </a>
-        <a href="{:U('User/personalCenter')}">
-            <div>
-                <img src="__PUBLIC__/mobile/images/tab_icon_my_n.png">
-                <span>我的</span>
-            </div>
-        </a>
-    </footer>
-</body>
-<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
-<script type="text/javascript" charset="utf-8">
-    mui.init();
-    var page = 1;
-    //排名分页
-    function rankList(){
-           page ++;
-
-
-    }
-</script>
-<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
-</html>
+    </body>
+</block>
