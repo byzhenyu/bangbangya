@@ -16,7 +16,7 @@ class LoginController extends CommonController{
     {
         /*测试打开*/
         $userModel = D('Home/User');
-        $userInfo = $userModel->doLogin('olI8S1RksDmlQwdINAHf758alen0');
+        $userInfo = $userModel->doLogin('123456');
         session('user_auth', $userInfo['data']);
         define(UID, session('user_auth')['user_id']);
         $this->redirect('Home/User/personalCenter');

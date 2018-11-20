@@ -32,8 +32,10 @@
                             账户余额
                         </span>
                         <div class="draw-wapper fl">
-                            <span class="draw-money">
-                                {:fen_to_yuan($shopInfo['total_money'])}元
+                            <if condition="$shopInfo['type'] eq 0">
+                                <span id="total_money" >{:fen_to_yuan($shopInfo['total_money'])}</span>元
+                                <else /><span id="total_money" class="draw-money" >{:fen_to_yuan($shopInfo['bonus_money'])}</span>元
+                            </if>
                         </div>
                     </li>
                     <li class="cf">

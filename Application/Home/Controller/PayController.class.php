@@ -96,6 +96,7 @@ class PayController extends UserCommonController{
                 $this->ajaxReturn($drawRes);
             }
             $this->assign('shopInfo',$shopInfo);
+            p($shopInfo);
             $this->display();
         }else{
             $this->display('Pay/bindAlipay');
