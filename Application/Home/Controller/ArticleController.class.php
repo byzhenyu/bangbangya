@@ -34,7 +34,7 @@ class ArticleController extends CommonController {
         $field = 'title, content, thumb_img, addtime';
         $where['article_cat_id'] = array('eq', 4);
         $info =  D('Home/Article')->getArticleDetail($where, $field);
-        p($info);
+
         $this->assign('info', $info);
         $this->display('articleDetail');
     }
