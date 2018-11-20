@@ -1,0 +1,102 @@
+<extend name="Public/base"/>
+<block name="style">
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/cur.css">
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/wallet.css">
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/iconfont.css">
+    <style>
+        p {
+            display: block;
+            -webkit-margin-before: 1em;
+            -webkit-margin-after: 1em;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+        }
+        a {
+            color : white;
+        }
+    </style>
+</block>
+<block name="body">
+        <body class="bg">
+        <include file="Public/head"/>
+    <div class="session">
+        <div class="w1200">
+            <include file="Public/nav"/>
+            <div class="nav-bred">
+                <a href="#">我的钱包</a>
+            </div>
+            <div class="sess-wapper income">
+                <div class="incom-wapper">
+                    <p>余额</p>
+                    <h1>￥{:fen_to_yuan($total_money)}</h1>
+                    <a  href="{:U('Pay/topUpsPage')}"><button class="income-btn">充值</button></a>
+                    <a href="{:U('Pay/withdraw',array('type' => 0))}"><button class="income-btn">提现</button></a>
+                </div>
+                <div class="incom-record">
+                    <ul class="incom-record-title">
+                        <li class="incom-active">
+                                充值记录
+                        </li>
+                        <li>
+                                支出记录
+                        </li>
+                    </ul>
+                    <div class="tab_box">
+                        <ul class="record-sess">
+                                <foreach name="payRecord" item="v">
+                                    <li class="cf">
+                                    <span class="fl record-i">
+                                        <svg class="icon" aria-hidden="true">
+                                            <use xlink:href="#icon-mywallet_icon_in"></use>
+                                        </svg>
+                                    </span>
+                                        <div class="record-wapper fl cf">
+                                            <div class="record-box fl">
+                                                <h1>充值</h1>
+                                                <p>{:time_format($v['change_time'])}</p>
+                                            </div>
+                                            <span class="record-money c-pur fr">+{:fen_to_yuan($v['user_money'])}</span>
+                                        </div>
+                                    </li>
+                            </foreach>
+                        </ul>
+                        <ul class="record-sess record-hide">
+                            <foreach name="expendRecord" item="v">
+                                <li class="cf">
+                                <span class="fl record-i">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-mywallet_icon_out"></use>
+                                    </svg>
+                                </span>
+                                    <div class="record-wapper fl cf">
+                                        <div class="record-box fl">
+                                            <h1>{$v.change_desc}</h1>
+                                            <p>{:time_format($v['change_time'])}</p>
+                                        </div>
+                                        <span class="record-money fr">-{:fen_to_yuan($v['user_money'])}</span>
+                                    </div>
+                                </li>
+                            </foreach>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</block>
+<block name="script">
+    <script src="__PUBLIC__/pc/js/iconfont.js"></script>
+    <script src="__PUBLIC__/pc/js/jquery-3.1.1.min.js"></script>
+    <script>
+        //切换
+        $(document).ready(function () {
+            var $tab_li = $('.incom-record-title li');
+            $tab_li.click(function () {
+                $(this).addClass('incom-active').siblings().removeClass('incom-active');
+                var index = $tab_li.index(this);
+                $('div.tab_box > ul').eq(index).show().siblings().hide();
+            });
+        });
+    </script>
+</block>

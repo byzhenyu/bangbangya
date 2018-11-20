@@ -11,11 +11,52 @@
 
 namespace Home\Controller;
 use Common\Controller\CommonController;
-class UserController extends CommonController{
+use Common\Controller\UserCommonController;
+class UserController extends UserCommonController {
     public function _initialize() {
         $this->user = D("Home/User");
     }
-
+    /**
+     * @desc  邀请码邀请
+     * @param  uid  code
+     * @param  code
+     * @return mixed
+     */
+    public function Invitation(){
+        if(IS_POST){
+            $invitation_code = I('invitation_code');
+            $invitUserID  =  $this->user->decode($invitation_code);
+            $invitUserInfo = $this->user->where('user_id ='.$invitUserID)->setInc('invitation_num');
+            if(!$invitUserInfo)
+            {
+                $this->ajaxReturn(V(0, '您填写的邀请码有误!'));
+            }else{
+                $this->user->where('user_id = '.UID)->save(array('invitation_uid' => $invitUserID));
+                $this->ajaxReturn(V(1, '填写成功'));
+            }
+        }
+        $this->display();
+    }
+    /**
+     * @desc 用户中心
+     * @param uid
+     * @return mixed
+     */
+    public function personalCenter(){
+        $login  = I('login', 0, 'intval');
+        $user_id = UID;
+        $where['u.user_id'] = $user_id;
+        $field = 'u.head_pic, u.nick_name,u.alipay_num,u.alipay_name,u.invitation_uid,u.register_time, u.total_money,u.bonus_money,s.shop_type, u.task_suc_money,u.user_id, s.shop_accounts,s.take_task';
+        $userList = $this->user->getUserInfo($where, $field);
+        if($userList['register_time']  + 3 > NOW_TIME){
+            $userList['register_time'] = 1;
+        }else{
+            $userList['register_time'] = 0;
+        }
+        $this->assign('userList',$userList);
+        $this->assign('login',$login);
+        $this->display();
+    }
     public function userList()
     {
         $this->display();

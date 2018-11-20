@@ -1,107 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<extend name="Public/base"/>
+<block name="style">
     <link rel="stylesheet" href="__PUBLIC__/pc/css/cur.css">
     <link rel="stylesheet" href="__PUBLIC__/pc/css/personal-center.css">
     <link rel="stylesheet" href="__PUBLIC__/pc/css/iconfont.css">
-</head>
-
-<body class="bg">
-    <div class="header">
-        <div class="head w1200 cf">
-            <a class="h-logo fl">
-                <img src="__PUBLIC__/pc/images/logo.png" />
-            </a>
-            <div class="h-user fr cf">
-                <div class="user-i fl">
-                    <span><img src="__PUBLIC__/pc/images/"></span>
-                    <p>图图</p>
-                </div>
-                <i class="iconfont icon-nav_icon_dropdown fl">
-                    <button class="h-outbtn">退出</button>
-                </i>
-            </div>
-        </div>
-    </div>
+</block>
+<block name="body">
+    <body class="bg">
+    <include file="Public/head"/>
     <div class="session">
         <div class="w1200">
-            <div class="nav">
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_jdzq_n"></i>
-                    接单赚钱
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_publish"></i>
-                    发布任务
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_invitef"></i>
-                    邀请好友
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_mytask_"></i>
-                    我的任务
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_rank_n"></i>
-                    排行榜
-                </a>
-                <a class="nav-link  nav-active">
-                    <i class="iconfont icon-leftbar_icon_my_n"></i>
-                    个人中心
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_mypubli"></i>
-                    我的发布
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_mywalle"></i>
-                    我的钱包
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_income_"></i>
-                    收入分红
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_coopera"></i>
-                    合作商
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_questio"></i>
-                    常见问题
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_opinion"></i>
-                    意见反馈
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_useragr"></i>
-                    用户协议
-                </a>
-            </div>
+            <include file="Public/nav"/>
             <div class="nav-bred">
-                <a href="#">我的钱包</a>
+                <a href="#">个人中心</a>
             </div>
             <div class="sess-wapper person">
                 <ul class="person-wapper cf">
                     <li class="fl">
                         <h2>完成</h2>
-                        <h1>1880单</h1>
+                        <h1>{$userList['take_task']}单</h1>
                     </li>
                     <li class="fl">
                         <h2>余额</h2>
-                        <h1>￥1000.0</h1>
+                        <h1>￥{:fen_to_yuan($userList['total_money'])}</h1>
                     </li>
                     <li class="fl">
                         <h2>收入</h2>
-                        <h1>￥1000.0</h1>
+                        <h1>￥{:fen_to_yuan($userList['task_suc_money'])}</h1>
                     </li>
                     <li class="fl">
                         <h2>保证金</h2>
-                        <h1>￥1000.0</h1>
+                        <h1>￥{:fen_to_yuan($userList['shop_accounts'])}</h1>
                         <h3>请在手机端操作</h3>
                     </li>
                 </ul>
@@ -109,46 +37,159 @@
                     <li class="fl">
                         <div class="inb-wapper">
                             <span>支付宝账号</span>
-                            <input type="text" placeholder="">
+                            <input type="text" placeholder="请输入支付宝账号" id="alipay_num" name="alipay_num" value="{$userList['alipay_num']}">
                         </div>
                         <p class="inb-tips">一个账号只能绑定一个支付宝账户</p>
                     </li>
                     <li class="fl">
                         <div class="inb-wapper">
                             <span>真实姓名</span>
-                            <input type="text" placeholder="">
+                            <input type="text" placeholder="请输入支付宝认证的姓名"  id="alipay_name" name="alipay_name" value="{$userList['alipay_name']}">
                         </div>
                     </li>
                 </ul>
-                <button class="person-btn">绑定支付宝</button>
+                <if condition="$userList['alipay_num']  eq  ''">
+                    <button class="person-btn"  onclick="bindAlipay()">绑定支付宝</button>
+                    <else /> <button class="person-btn" onclick="alrealdbind()">已绑定</button>
+                </if>
                 <div class="person-promotion">
-                    <img src="./__PUBLIC__/pc/images/promotion.png"/>
+                    <img src="__PUBLIC__/pc/images/promotion.png"/>
                     <p>产品要推广？没有曝光渠道？没有好平台？推广费用巨大？</p>
                     <p>帮帮鸭来帮你！ </p>
                 </div>
             </div>
         </div>
     </div>
-    <div class="model">
-        <div class="pop-ups">
-            <button id="close" class="iconfont icon-common_icon_close"></button>
-            <div class="invite-code">
-                <span>邀请码</span>
-                <input type="text" placeholder="用户ID即为邀请码，如不清楚可不填">
+    <if condition="$userList['invitation_uid'] eq 0 && $userList['register_time'] eq 1">
+        <div class="model">
+            <div class="pop-ups">
+                <button id="close" class="iconfont icon-common_icon_close"></button>
+                <div class="invite-code">
+                    <span>邀请码</span>
+                    <input type="text" id="invitation_code"   placeholder="邀请码注意大小写，如不清楚可不填">
+                </div>
+                <button onclick="btn()" class="pro-upsbtn">
+                    确定
+                </button>
             </div>
-            <button class="pro-upsbtn">
-                确定
-            </button>
         </div>
-    </div>
+    </if>
+
+</body>
+</block>
+<block name="script">
     <script src="__PUBLIC__/pc/js/iconfont.js"></script>
     <script src="__PUBLIC__/pc/js/jquery-3.1.1.min.js"></script>
     <script>
         $("#close").click(function(){
             $(".pop-ups").hide();
             $(".model").hide();
+            mui.ajax(url + 'Mobile/User/Invitation',{
+                data:{
+                    invitation_code: -1
+                },
+                dataType:'json',//服务器返回json格式数据
+                type:'post',//HTTP请求类型
+                timeout:10000,//超时时间设置为10秒；
+                // headers:{'Content-Type':'application/json'},
+                success:function(data){
+                    mui.toast(data['info']);
+                    // alert(JSON.stringify(data));
+                    if(data['status'] == 1){
+                        setTimeout(function(){
+                            mui.openWindow({
+                                url:  url + 'Home/User/personalCenter/login/1'
+                            });
+                        }, 1000);
+                    }
+                },
+                error:function(xhr,type,errorThrown){
+                    //异常处理；
+                    console.log(type);
+                }
+            });
         })
+        var login  = {$login};
+        if(login == 1){
+            mui.toast('登录成功');
+        }
+        mui.init();
+        function btn(){
+            var invitation_code  = $('#invitation_code').val();
+            if(invitation_code == ''){
+                mui.toast('请您输入邀请码,可以选择跳过');
+                return
+            }
+            mui.ajax(url + 'Mobile/User/Invitation',{
+                data:{
+                    invitation_code: invitation_code
+                },
+                dataType:'json',//服务器返回json格式数据
+                type:'post',//HTTP请求类型
+                timeout:10000,//超时时间设置为10秒；
+                // headers:{'Content-Type':'application/json'},
+                success:function(data){
+                    mui.toast(data['info']);
+                    // alert(JSON.stringify(data));
+                    if(data['status'] == 1){
+                        setTimeout(function(){
+                            mui.openWindow({
+                                url:  url + 'Home/User/personalCenter/login/1'
+                            });
+                        }, 1000);
+                    }
+                },
+                error:function(xhr,type,errorThrown){
+                    //异常处理；
+                    console.log(type);
+                }
+            });
+        }
+        function bindAlipay(){
+            var alipay_num = $('#alipay_num').val();
+            var alipay_name = $('#alipay_name').val();
+            if(alipay_num == ''){
+                mui.toast('请你输入支付宝账号');
+                return;
+            }else if(alipay_name == ''){
+                mui.toast('请你输入支付宝姓名');
+                return;
+            }else{
+                var delArray = ['取消','确定'];
+                mui.confirm('请核对您的支付宝账号姓名', '提示', delArray, function(e) {
+                    if (e.index == 1) {
+                        mui.ajax(url + 'mobile/Pay/bindAlipay',{
+                            data:{
+                                alipay_num:alipay_num,
+                                alipay_name:alipay_name
+                            },
+                            dataType:'json',//服务器返回json格式数据
+                            type:'post',//HTTP请求类型
+                            timeout:10000,//超时时间设置为10秒；
+                            success:function(data){
+                                mui.toast(data['info']);
+                                // alert(JSON.stringify(data));
+                                if(data['status'] == 1){
+                                    setTimeout(function(){
+                                        mui.openWindow({
+                                            url:  url + 'Home/User/personalCenter'
+                                        });
+                                    }, 1000);
+                                }
+                            },
+                            error:function(xhr,type,errorThrown){
+                                //异常处理；
+                                console.log(type);
+                            }
+                        });
+                    } else {
+                        mui.toast('您取消了操作');
+                    }
+                })
+            }
+        }
+        function alrealdbind(){
+            mui.toast('您已经绑定了账号');
+        }
     </script>
-</body>
-
-</html>
+</block>
