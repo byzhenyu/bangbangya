@@ -36,6 +36,15 @@ class HelpModel extends Model {
             'page'=>$page['page']
         );
     }
+
+    public function getHelpListNot($where, $field = false, $sort = 'sort asc , add_time desc')
+    {
+        if(is_null($field)){
+            $field = $this->selectFields;
+        }
+        $Helplist = $this->field($field)->where($where)->order($sort)->select();
+        return $Helplist;
+    }
     /**
     * @desc
     * @param
