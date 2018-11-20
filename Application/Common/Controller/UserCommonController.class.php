@@ -14,7 +14,7 @@ class UserCommonController extends CommonController
 {
     public function __construct()
     {
-        define(UID,1);
+        // define(UID,1);
         parent::__construct();
 
         if( !UID ){// 还没登录 跳转到登录页面
