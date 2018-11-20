@@ -32,5 +32,17 @@ class UserController extends CommonController{
         $this->display();
     }
 
+    /**
+     * 任务总收入排名
+     * @return   arr
+     */
+    public function getRankList()
+    {
+        $where['task_suc_money']  = array('neq', 0);
+        $field = 'user_id, head_pic, nick_name, task_suc_money';
+        $rankList = $this->user->getRankList($where, $field);
+        $this->assign('randList', $rankList);
+        $this->display();
+    }
 
 }

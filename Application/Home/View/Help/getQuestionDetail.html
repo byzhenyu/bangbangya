@@ -1,0 +1,28 @@
+<extend name="Public/base"/>
+<block name="style">
+    <title>{:C('WEB_TITLE')}-常见问题详情</title>
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/common-problem.css">
+</block>
+<block name="body">
+    <body class="bg">
+        <include file="Public/head"/>
+        <div class="session">
+            <div class="w1200">
+                <include file="Public/nav"/>
+                <div class="nav-bred">
+                    <a href="#">常见问题_详情</a>
+                </div>
+                <div class="sess-wapper problem-detial">
+                    <div class="detial-title">
+                        <h1>{$questionInfo['title']}</h1>
+                        <span class="detial-date">{:time_format($questionInfo['add_time'])}</p>
+                    </div>
+                    <div class="detial-sess">
+                        <p>{$questionInfo['content']}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</block>
+<block name="script"></block>

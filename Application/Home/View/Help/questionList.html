@@ -1,0 +1,31 @@
+<extend name="Public/base"/>
+<block name="style">
+    <title>{:C('WEB_TITLE')}-常见问题</title>
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/common-problem.css">
+</block>
+<block name="body">
+    <body class="bg">
+    <include file="Public/head"/>
+    <div class="session">
+        <div class="w1200">
+            <include file="Public/nav"/>
+            <div class="nav-bred">
+                <a href="#">常见问题</a>
+            </div>
+            <ul class="sess-wapper common-problem">
+
+                <foreach name="list" item="v">
+                    <li>
+                        <a class="problem-link" href="{:U('Help/getQuestionDetail',array('id' => $v['id']))}">
+                            <span>{$v.title}</span>
+                            <i class=" iconfont icon-question_icon_more"></i>
+                        </a>
+                    </li>
+                </foreach>
+
+            </ul>
+        </div>
+    </div>
+    </body>
+</block>
+<block name="script"></block>

@@ -1,0 +1,116 @@
+<extend name="Public/base"/>
+<block name="style">
+    <title>{:C('WEB_TITLE')}-排行榜</title>
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/leaderboard.css">
+</block>
+<block name="body">
+    <body class="bg">
+    <include file="Public/head"/>
+    <div class="session">
+        <div class="w1200">
+            <include file="Public/nav"/>
+            <div class="nav-bred">
+                <a href="#">每周排行</a>
+            </div>
+            <div class="sess-wapper leaderboard">
+                <!--<a class="leader-histroy" href="#">历史榜单</a>-->
+                <div class="leader-wapper">
+                    <div class="leader-title">
+                        <i></i>
+                        <h1>接单能手排行榜</h1>
+                        <i></i>
+                    </div>
+                    <div class="leader-box cf">
+                        <div class="leader-winner fl">
+                            <div class="winner-i">
+                                <span class="winner-useri">
+
+                                    <if condition="$randList[1]['head_pic']">
+                                        <img src="{$randList[1]['head_pic']}" />
+                                        <else/>
+                                        <img src="__PUBLIC__/pc/images/user.png" />
+                                    </if>
+
+                                    <img src="__PUBLIC__/pc/images/user.png" />
+                                </span>
+                                <span class="winner-corolla">
+                                    <img src="__PUBLIC__/pc/images/rank_icon_no2.png" />
+                                </span>
+                            </div>
+                            <h1 class="leader-name">{$randList[1]['nick_name']}</h1>
+                            <p class="leader-id">ID：{$randList[1]['user_id']}</p>
+                            <span class="leader-price">￥{:fen_to_yuan($randList[1]['task_suc_money'])}</span>
+                        </div>
+                        <div class="leader-winner fl">
+                            <div class="winner-i">
+                                <span class="winner-useri">
+
+                                    <if condition="$randList[0]['head_pic']">
+                                        <img src="{$randList[0]['head_pic']}" />
+                                        <else/>
+                                        <img src="__PUBLIC__/pc/images/user.png" />
+                                    </if>
+
+                                </span>
+                                <span class="winner-corolla">
+                                    <img src="__PUBLIC__/pc/images/rank_img_no1.png" />
+                                </span>
+                            </div>
+                            <h1 class="leader-name">{$randList[0]['nick_name']}</h1>
+                            <p class="leader-id">ID：{$randList[0]['user_id']}</p>
+                            <span class="leader-price">￥{:fen_to_yuan($randList[0]['task_suc_money'])}</span>
+                        </div>
+                        <div class="leader-winner fl">
+                            <div class="winner-i">
+                                <span class="winner-useri">
+
+                                    <if condition="$randList[2]['head_pic']">
+                                        <img src="{$randList[2]['head_pic']}" />
+                                        <else/>
+                                        <img src="__PUBLIC__/pc/images/user.png" />
+                                    </if>
+
+                                </span>
+                                <span class="winner-corolla">
+                                    <img src="__PUBLIC__/pc/images/rank_icon_no3.png" />
+                                </span>
+                            </div>
+                            <h1 class="leader-name">{$randList[2]['nick_name']}</h1>
+                            <p class="leader-id">ID：{$randList[2]['user_id']}</p>
+                            <span class="leader-price">￥{:fen_to_yuan($randList[2]['task_suc_money'])}</span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="leader-table">
+                    <li class="leader-th cf">
+                        <span class="fl">4-100</span>
+                        <span class="fr">赚钱金额</span>
+                    </li>
+
+                    <foreach name="randList" item="v" key="k">
+                        <if condition="$k gt 2 ">
+                            <li class="leader-tr cf">
+                                <span class="leader-num fl">{$k + 1}</span>
+                                <span class="leader-user fl">
+
+                                    <if condition="$v['head_pic']">
+                                        <img src="{$v['head_pic']}" />
+                                        <else/>
+                                        <img src="__PUBLIC__/pc/images/user.png" />
+                                    </if>
+
+                                </span>
+                                <span class="leader-name fl">{$v.nick_name}</span>
+                                <span class="leader-id fl">ID：{$v.user_id}
+                                </span>
+                                <span class="leader-money fr">￥{:fen_to_yuan($v['task_suc_money'])}</span>
+                            </li>
+                        </if>
+                    </foreach>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    </body>
+</block>
