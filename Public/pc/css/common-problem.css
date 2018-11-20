@@ -1,0 +1,43 @@
+
+.common-problem li{
+    height: 55px;
+    border-bottom: 1px solid #E5E5E5;
+}
+.common-problem li .problem-link{
+    width: 100%;
+    height: 100%;
+    display: block;
+    display: flex;
+    flex: 1;
+    line-height: 54px;
+}
+.common-problem li .problem-link span{
+    width: 100%;
+    font-size: 16px;
+    color: #666666;
+    display: block;
+}
+.common-problem li .problem-link i{
+    width: 15px;
+    font-size: 12px;
+}
+/* problem-detial */
+.problem-detial .detial-title h1{
+    font-size: 16px;
+    color: #333333;
+    line-height: 50px;
+    border-bottom: 1px solid #E5E5E5;
+    margin-bottom: 10px;
+}
+.problem-detial .detial-title .detial-date{
+    font-size: 14px;
+    color: #999999;
+}
+.detial-sess{
+    margin-top: 15px;
+}
+.detial-sess p{
+    font-size: 16px;
+    color: #666666;
+    line-height: 26px;
+}

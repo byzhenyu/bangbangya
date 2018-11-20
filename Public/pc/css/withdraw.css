@@ -1,0 +1,72 @@
+.withdraw{
+    min-height: 800px;
+}
+.withdraw .withdraw-ul li{
+    width: 100%;
+    font-size: 16px;
+    color: #333333;
+    line-height: 30px;
+    margin: 30px 0;
+    height: 30px;
+}
+.withdraw .withdraw-ul .draw-name{
+    width: 100px;
+    display: block;
+}
+.withdraw .withdraw-ul .draw-wapper{
+    width: 900px;
+    height: 100%;
+    line-height: 30px;
+}
+.withdraw .withdraw-ul .draw-wapper .draw-money{
+    margin-left: 60px;
+}
+.withdraw .withdraw-ul .draw-wapper input[type="text"]{
+    width: 250px;
+    height: 100%;
+    border: 1px solid #E5E5E5;
+    padding-left: 10px;
+    border-radius:6px;
+}
+.withdraw .withdraw-ul .draw-wapper .draw-pay input[type="radio"]{
+    width: 20px;
+	height: 20px;
+	border-radius: 10px;
+    border: 2px solid #6F75FE;
+    -webkit-appearance: none;
+	-moz-appearance: none;
+    appearance: none;
+    vertical-align: 5px;
+}
+.withdraw .withdraw-ul .draw-wapper .draw-pay input[type="radio"]:checked{
+    padding: 4px;
+	background-color: #6F75FE;
+    background-clip: content-box;
+    -webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+.withdraw .withdraw-ul .draw-wapper .draw-pay img{
+    width: 150px;
+    display: inline-block;
+    /* vertical-align: 10px; */
+}
+.withdraw .withdraw-btn{
+    width: 220px;
+    height: 40px;
+    background: #6F75FE;
+    color: #fff;
+    border-radius:6px;
+    display: block;
+    margin: 50px auto 80px;
+}
+.withdraw .withdraw-tips h1{
+    font-size: 16px;
+    color: #666666;
+    margin-bottom: 10px;
+}
+.withdraw .withdraw-tips p{
+    font-size: 16px;
+    color: #999999;
+    line-height: 24px;
+}

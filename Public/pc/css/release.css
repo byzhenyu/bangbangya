@@ -1,0 +1,161 @@
+
+.release-wapper{
+    width: 100%;
+    padding: 15px 0;
+    border-bottom: 1px solid #E5E5E5;
+}
+.release-wapper .release-sess{
+    width: 50%;
+}
+.release-wapper .release-sess .release-i{
+    width: 44px;
+    height: 44px;
+    display: block;
+    margin-right: 10px;
+    margin-top: 8px;
+}
+.release-wapper .release-sess .sess-box{
+    width: 515px;
+}
+.release-wapper .release-sess .sess-box .sess-title{
+    width: 100%;
+    line-height: 30px;
+}
+.release-wapper .release-sess .sess-box .sess-title h1{
+    font-size: 16px;
+    color: #333;
+    width: 50px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.release-wapper .release-sess .sess-box .sess-title p{
+    width: 200px;
+    font-size: 16px;
+    color: #666666;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.release-wapper .release-sess .sess-box .sess-title span{
+    width: 200px;
+    font-size: 14px;
+    color: #666666;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.release-wapper .release-sess .sess-box ul li{
+    width: 33.3%;
+    display: block;
+    font-size: 14px;
+    color: #999;
+    line-height: 24px;
+}
+.release-wapper .release-sess .sess-box .release-fail{
+    font-size: 14px;
+    color: #F65454;
+    margin-top: 10px;
+}
+.release-wapper .release-sess .sess-box .release-date{
+    font-size: 14px;
+    color: #666666;
+    margin-top: 10px;
+}
+.release-wapper .release-sess .sess-box .release-date span{
+    display: inline-block;
+    width: 45%;
+}
+.release-wapper .release-btng{
+    width: 50%;
+    text-align: right;
+    padding-top: 10px;
+}
+.release-wapper .release-btng button{
+    min-width: 56px;
+    height: 30px;
+    display: inline-block;
+    margin-left: 10px;
+    border-radius: 6px;
+    padding: 0 10px;
+    margin: 5px;
+}
+.release-wapper .release-btng .btn-pur{
+    border: 1px solid #6F75FE;
+    color: #6F75FE;
+}
+.release-wapper .release-btng .btn-red{
+    border: 1px solid #F65454;
+    color: #F65454;
+}
+.release-wapper .release-btng .review-ing{
+    color: #FFBF77;
+}
+.release-wapper .release-btng .review-end{
+    color: #93E572;
+}
+.release-wapper .release-btng .review-fail{
+    color: #F65454;
+}
+/* 弹窗 */
+.pop-ups{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 510px;
+    padding: 30px 30px;
+    background: #fff;
+    border:1px solid rgba(153,153,153,1);
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    border-radius:6px;
+    display: none;
+}
+.pop-ups #close{
+    position: absolute;
+    right: 10px;
+    top:  10px;
+    padding: 5px;
+    font-size: 16px;
+}
+.pop-ups #close:hover{
+    color: #eb2437;
+    background: #eee;
+}
+.invite-code{
+    width: 100%;
+}
+.invite-code h1{
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+}
+.invite-code p{
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 15px;
+}
+.pro-btng{
+    margin: 50px auto 0;
+    text-align: right;
+}
+.pro-btng button{
+    width:70px;
+    height:34px;
+    border-radius:6px;    
+    color: #fff;
+    display: inline-block;
+    margin-left: 20px;
+    font-size: 16px;
+}
+.pro-btng  .pro-confirm{
+    background:#6F75FE;
+    border: 1px solid #6F75FE;
+    color: #fff
+}
+.pro-btng  .pro-cancel{
+    background:#fff;
+    border: 1px solid #E5E5E5;
+    color: #333333;
+}

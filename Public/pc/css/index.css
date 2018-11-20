@@ -1,0 +1,200 @@
+
+.topshop{
+  width: 100%;
+  height: 110px;
+  background: #fff;
+  box-shadow: 0 3px 22px rgba(111,117,254,0.18);
+  margin-bottom: 24px;
+}
+.topshop .topshop-name{
+  width: 110px;
+  height: 110px;
+  font-size: 24px;
+  color: #6F75FE;
+  text-align: center;
+  padding: 24px;
+  box-shadow: 3px 0 6px rgba(111,117,254,0.44);
+}
+.topshop .topshop-wapper{
+  width: 1090px;
+  padding: 0 6px;
+}
+.topshop-box{
+  width: 90px;
+  display: block;
+  text-align: center;
+  padding: 7px 0;
+  margin: 0 4px;
+}
+.topshop-box p{
+  font-size: 16px;
+  color: #666666;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  overflow:hidden;
+}
+.topshop-box .topshop-img{
+  position: relative;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 15px;
+}
+.topshop-box .topshop-img .topshop-i{
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  display: block;
+  border: 1px solid #F3F4FF;
+}
+.topshop-box .topshop-img .topshop-i img{
+  width: 100%;
+  display: block;
+}
+.topshop-box .topshop-img .topshop-topi{
+  width: 70px;
+  display: block;
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  margin-left: -35px;
+}
+.topshop-box .topshop-img .topshop-topi img{
+  width: 100%;
+  display: block;
+}
+.seach-wapper{
+  width: 100%;
+  height: 48px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #E5E5E5;
+  position: relative;
+  margin-bottom: 20px;
+}
+.seach-wapper input[type="text"]{
+  width: 100%;
+  height: 100%;
+  padding-left: 20px;
+  padding-right: 100px;
+  border: none;
+  font-size: 14px;
+}
+input::-webkit-input-placeholder{
+  color: #999999;
+}
+.seach-wapper .seach-btn{
+  width: 100px;
+  height: 46px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: #6F75FE;
+  color: #fff;
+  font-size: 16px;
+}
+.class-wapper li{
+  margin: 12px 0;
+}
+.class-wapper li .class-name{
+  width: 60px;
+  line-height: 36px;
+  display: block;
+  font-size: 16px;
+  color: #B7BAFE;
+}
+.class-wapper li .class-type{
+  width: 1080px;
+}
+.class-type span{
+  display: inline-block;
+  width: 66px;
+  height: 36px;
+  border-radius:6px;
+  text-align: center;
+  line-height: 36px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666666;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+.class-type .class-type-active{
+  background: #6F75FE;
+  color: #fff;
+}
+.item-wapper{
+  width: 700px;
+}
+.index-wapper li{
+  padding: 15px 0;
+  border-bottom: 1px solid #E5E5E5;
+}
+.item-wapper .item-i{
+  width: 44px;
+  height: 44px;
+  display: block;
+  margin-right: 12px;
+}
+.item-wapper .item-i img{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.item-wapper .item-sess{
+  width: 600px;
+}
+.item-wapper  .item-sess .item-h1 h1{
+  width: 60px;
+  font-size: 16px;
+  color: #333333;
+  font-weight: bold;
+}
+.item-wapper .item-sess .item-h1 .item-tips{
+  width: 100px;
+  display: block;
+}
+.item-wapper .item-sess .item-h1 .item-tips svg{
+  font-size: 24px;
+}
+.item-wapper .item-sess .item-h1  .item-p{
+  width: 500px;
+  display: block;
+  font-size: 16px;
+  color: #666666;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  overflow:hidden;
+}
+.item-wapper .item-sess .item-span{
+  margin-top: 5px;
+}
+.item-wapper .item-sess .item-span span{
+  width: 150px;
+  display: inline-block;
+  font-size: 14px;
+  color: #666666;
+  margin-right: 20px;
+}
+.item-btn{
+  width:66px;
+  height:30px;
+  border:1px solid rgba(111,117,254,1);
+  border-radius:6px;
+  text-align: center;
+  line-height: 28px;
+  font-size: 16px;
+  color: #6F75FE;
+  margin-top: 8px;
+}
+.check-more{
+  width: 310px;
+  height: 40px;
+  border: 1px solid #6F75FE;
+  color: #6F75FE;
+  font-size: 20px;
+  display: block;
+  margin: 60px auto;
+  border-radius:6px;
+}

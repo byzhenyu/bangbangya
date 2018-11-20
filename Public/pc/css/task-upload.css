@@ -1,0 +1,126 @@
+.task-upload{
+    position: relative;
+}
+.task-upload .task-detial{
+    position: absolute;
+    right: 30px;
+    color: 30px;
+    font-size: 16px;
+    color: #6F75FE;
+}
+.task-up {
+    border-bottom: 1px solid #E5E5E5;
+    padding-bottom: 30px;
+}
+
+.task-up li{
+    margin: 5px 0;
+    line-height: 30px;
+}
+.task-up li span{
+    font-size: 14px;
+    color: #666666;
+    margin-right: 10px;
+}
+.task-up li span i{
+    font-size: 16px;
+    color: #333333;
+    margin-right: 10px;
+}
+.task-up li span img{
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.upload-wapper {
+    margin-top: 30px;
+}
+.upload-wapper .upload-box .upload-title{
+    text-align: center;
+}
+.upload-wapper .upload-box .upload-title h1{
+    font-size: 16px;
+    color: #333333;
+}
+.upload-wapper .upload-box .upload-title p{
+    font-size: 14px;
+    color: #6F75FE;
+}
+.upload-wapper .upload-box .upload-imgb{
+    padding: 0 60px;
+    margin-top: 24px;
+}
+.upload-wapper .upload-box .upload-imgb .upload-img{
+    width:200px;
+    height:200px;
+    border:1px solid rgba(229,229,229,1);
+    background: url(../images/add.png) no-repeat center center;
+    position: relative;
+    margin: 0 20px;
+}
+.upload-wapper .upload-box .upload-imgb .upload-img img{
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.upload-wapper .upload-box .upload-imgb .upload-img input[type="file"]{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 990;
+    opacity: 0;
+}
+.upload-wapper .upload-box .upload-imgb .upload-img .upload-delete{
+    width:40px;
+    height:40px;
+    background:rgba(183,186,254,1);
+    color: #fff;
+    position: absolute;
+    right: 0;
+    top:  0;
+    z-index: 991;
+}
+.upload-wapper .upload-box .upload-text{
+    margin-top: 60px;
+}
+.upload-wapper .upload-box .upload-text span{
+    display: inline-block;
+    font-size: 16px;
+    color: #333333;
+    vertical-align: top;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+.upload-wapper .upload-box .upload-text textarea{
+    display: inline-block;
+    width: 840px;
+    height:64px;
+    border:1px solid rgba(229,229,229,1);
+    border-radius:6px;
+    resize: none;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+.upload-wapper .upload-box .upload-btng{
+    margin-top: 60px;
+    text-align: center;
+}
+.upload-wapper .upload-box .upload-btng button{
+    width:128px;
+    height:40px;
+    background:rgba(111,117,254,1);
+    border-radius:6px;
+    margin: 0 50px;
+    color: #fff;
+    font-size: 20px;
+}
+.upload-wapper .upload-box .upload-btng p{
+    font-size:12px;
+    line-height:34px;
+    color:rgba(246,84,84,1);
+    margin-top: 50px;
+}

@@ -1,0 +1,120 @@
+.task-record-title{
+    width: 100%;
+    border-bottom: 1px solid #E5E5E5;
+}
+.task-record  .task-record-title li{
+    display: inline-block;
+    margin-right: 120px;
+    line-height: 32px;
+    cursor: pointer;
+}
+.task-record  .task-record-title .task-active{
+    color: #6F75FE;
+    border-bottom: 2px solid #6F75FE;
+}
+.item-wapper{
+    width: 700px;
+}
+.index-wapper li{
+    padding: 15px 0;
+    border-bottom: 1px solid #E5E5E5;
+}
+.item-wapper .item-i{
+    width: 44px;
+    height: 44px;
+    display: block;
+    margin-right: 12px;
+}
+.item-wapper .item-i img{
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.item-wapper .item-sess{
+    width: 600px;
+}
+.item-wapper  .item-sess .item-h1 h1{
+    width: 60px;
+    font-size: 16px;
+    color: #333333;
+    font-weight: bold;
+}
+.item-wapper .item-sess .item-h1 .item-tips{
+    width: 100px;
+    display: block;
+}
+.item-wapper .item-sess .item-h1 .item-tips svg{
+    font-size: 24px;
+}
+.item-wapper .item-sess .item-h1  .item-p{
+    width: 500px;
+    display: block;
+    font-size: 16px;
+    color: #666666;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+}
+.item-wapper .item-sess .item-span{
+    margin-top: 5px;
+}
+.item-wapper .item-sess .item-span span{
+    width: 150px;
+    display: inline-block;
+    font-size: 14px;
+    color: #666666;
+    margin-right: 20px;
+}
+.task .task-btn{
+    width:88px;
+    height:30px;
+    border:1px solid rgba(246,84,84,1);
+    border-radius:6px;
+    color: rgba(246,84,84,1);
+    margin-top: 8px;
+}
+.task .task-green{
+    width:88px;
+    height:30px;
+    color: #93E572;
+    margin-top: 8px;
+}
+.task .task-org{
+    width:88px;
+    height:30px;
+    color: #FFBF77;
+    margin-top: 8px;
+}
+.check-more{
+    width: 310px;
+    height: 40px;
+    border: 1px solid #6F75FE;
+    color: #6F75FE;
+    font-size: 20px;
+    display: block;
+    margin: 60px auto;
+    border-radius:6px;
+}
+.task-group{
+    margin: 24px 0;
+}
+.task-group li{
+    width:66px;
+    height:36px;
+    border:1px solid rgba(111,117,254,1);
+    border-radius:6px;   
+    text-align: center;
+    line-height: 34px;
+    display: inline-block;
+    margin-right: 20px; 
+    color: #6F75FE;
+    font-size: 16px;
+    cursor: pointer;
+}
+.task-group .btn-active{
+        background: #6F75FE;
+        color: #fff;
+}
+.task-hide{
+    display: none;
+}

@@ -1,0 +1,205 @@
+
+.review{
+    position: relative;
+}
+.review .review-complaint{
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    font-size: 16px;
+    color: #6F75FE;
+}
+.review .review-title{
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    color: #333333;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #E5E5E5;
+}
+.review .review-title ul{
+    margin-top: 30px;
+}
+.review .review-title ul li{
+    display: inline-block;
+    margin: 0 50px;
+}
+.review-user{
+    text-align: center;
+}
+.review-user .cf{
+    margin: 30px auto 0;
+    display: inline-block;
+}
+.review-user .user-i{
+    width: 54px;
+    height: 54px;
+    display: block;
+    margin-right: 15px;
+}
+.review-user .user-i img{
+    width: 100%;
+    display: block;
+}
+.review-user  .user-name{
+    text-align: left;
+}
+.review-user  .user-name h1{
+    font-size: 16px;
+    line-height: 36px;
+    color: #666666;
+}
+.review-user  .user-name p{
+    font-size: 14px;
+    color: #666666;
+}
+.review-user .review-p{
+    margin-top: 30px;
+    font-size: 14px;
+    color: #B7BAFE;
+}
+.review-swiper{
+    width: 900px;
+    margin: 30px auto;
+    position: relative;
+}
+.review-swiper .swiper-container{
+    width: 700px;
+    margin: 0 auto;
+}
+.review-swiper .swiper-slide{
+    text-align: center;
+}
+.review-swiper .slide-img{
+    width: 308px;
+    display: block;
+    margin: 0 auto 15px;
+}
+.review-swiper .slide-img img{
+    width: 100%;
+    display: block;
+}
+.review-swiper .swiper-button-prev {
+    background-image: url(../images/mypublish_check_icon_previous.png);
+    left: 10px;
+    right: auto;
+}
+.review-swiper .swiper-button-next{
+    background-image: url(../images/mypublish_check_icon_next.png);
+    right: 10px;
+    left: auto;
+}
+.upload-btng{
+    margin-top: 60px;
+    text-align: center;
+}
+.upload-btng button{
+    width:128px;
+    height:40px;
+    background:rgba(111,117,254,1);
+    border-radius:6px;
+    margin: 0 50px;
+    color: #fff;
+    font-size: 20px;
+}
+.reivew-chat{
+    padding: 20px 0;
+    border-bottom: 1px solid #E5E5E5;
+}
+.reivew-chat .chat-name{
+    display: inline-block;
+    font-size: 16px;
+    vertical-align: top;
+}
+.reivew-chat .chat-ul{
+    width: 1000px;
+    display: inline-block;
+}
+.reivew-chat .chat-ul li{
+    margin-bottom: 8px;
+    text-align: left;
+}
+.reivew-chat .chat-ul li:nth-child(2n){
+    text-align: right;
+}
+.reivew-chat .chat-ul li span{
+    background:rgba(245,245,245,1);
+    border-radius:6px;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #666;
+    display: inline-block;
+    max-width: 500px;
+    text-align: left;
+    line-height: 22px;
+}
+/* 弹窗 */
+.pop-ups{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 510px;
+    padding: 30px 30px;
+    background: #fff;
+    border:1px solid rgba(153,153,153,1);
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    border-radius:6px;
+    display: none;
+}
+.pop-ups #close{
+    position: absolute;
+    right: 10px;
+    top:  10px;
+    padding: 5px;
+    font-size: 16px;
+}
+.pop-ups #close:hover{
+    color: #eb2437;
+    background: #eee;
+}
+.invite-code{
+    width: 100%;
+}
+.invite-code h1{
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+}
+.invite-code p{
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 15px;
+}
+.invite-code textarea{
+    width: 100%;
+    height:64px;
+    border:1px solid rgba(229,229,229,1);
+    border-radius:6px;
+    resize: none;
+    padding: 10px;
+}
+.pro-btng{
+    margin: 50px auto 0;
+    text-align: right;
+}
+.pro-btng button{
+    width:70px;
+    height:34px;
+    border-radius:6px;    
+    color: #fff;
+    display: inline-block;
+    margin-left: 20px;
+    font-size: 16px;
+}
+.pro-btng  .pro-confirm{
+    background:#6F75FE;
+    border: 1px solid #6F75FE;
+    color: #fff
+}
+.pro-btng  .pro-cancel{
+    background:#fff;
+    border: 1px solid #E5E5E5;
+    color: #333333;
+}

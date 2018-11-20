@@ -1,0 +1,89 @@
+
+.partner .partner-seach{
+    position: relative;
+    width: 100%;
+    height: 55px;
+    box-shadow:0px 4px 20px rgba(111,117,254,0.16);
+    border-radius: 50px;
+    overflow: hidden;
+}
+.partner .partner-seach .seach-i{
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.partner .partner-seach input[type="text"]{
+    width: 100%;
+    height: 100%;
+    padding-left: 55px;
+    border: none;
+    font-size: 20px;
+    text-align: center;
+}
+input::placeholder{
+    color: #6F75FE;
+}
+.parnter-wapper{
+    margin: 50px 0;
+    background: #fff;
+    box-shadow:0px 4px 20px rgba(111,117,254,0.16);
+    padding: 10px 20px;
+}
+.parnter-wapper .parnter-table{
+    width: 100%;
+}
+.parnter-table th{
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 16px;
+    color: #666666;
+    font-weight: normal;
+    border-bottom: 1px solid #E5E5E5;
+}
+.parnter-table th:first-child{
+    text-align: left;
+}
+.parnter-table th:last-child{
+    text-align: right;
+}
+.parnter-table td{
+    height: 50px;
+    font-size: 16px;
+    text-align: center;
+    padding: 0 10px;
+}
+.parnter-table td:first-child{
+    text-align: left;
+}
+.parnter-table td:last-child{
+    text-align: right;
+}
+.parnter-table td svg{
+    font-size: 20px;
+    vertical-align: middle;
+}
+.parnter-table td .partner-btn{
+    width: 56px;
+    height: 30px;
+    border: 1px solid #6F75FE;
+    color: #6F75FE;
+    font-size: 16px;
+    border-radius:6px;
+    margin-left: 20px;
+}
+.parnter-tips h1{
+    font-size: 16px;
+    color: #666666;
+    margin-bottom: 10px;
+}
+.parnter-tips p{
+    font-size: 16px;
+    color: #999999;
+    line-height: 24px;
+}

@@ -12,7 +12,9 @@
 
 namespace Mobile\Controller;
 use Common\Controller\CommonController;
-class UserController extends CommonController {
+use Common\Controller\UserCommonController;
+
+class UserController extends UserCommonController {
     public function _initialize() {
         $this->user = D("Home/User");
     }

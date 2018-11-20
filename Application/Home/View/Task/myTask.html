@@ -1,79 +1,13 @@
 <extend name="Public/base"/>
-<block name="style"></block>
+<block name="style">
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/release.css">
+</block>
 <block name="body">
 <body class="bg">
-    <div class="header">
-        <div class="head w1200 cf">
-            <a class="h-logo fl">
-                <img src="images/logo.png" />
-            </a>
-            <div class="h-user fr cf">
-                <div class="user-i fl">
-                    <span><img src="images/"></span>
-                    <p>图图</p>
-                </div>
-                <i class="iconfont icon-nav_icon_dropdown fl">
-                    <button class="h-outbtn">退出</button>
-                </i>
-            </div>
-        </div>
-    </div>
+<include file="Public/head"/>
     <div class="session">
         <div class="w1200">
-            <div class="nav">
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_jdzq_n"></i>
-                    接单赚钱
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_publish"></i>
-                    发布任务
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_invitef"></i>
-                    邀请好友
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_mytask_"></i>
-                    我的任务
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_rank_n"></i>
-                    排行榜
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_my_n"></i>
-                    个人中心
-                </a>
-                <a class="nav-link  nav-active">
-                    <i class="iconfont icon-leftbar_icon_mypubli"></i>
-                    我的发布
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_mywalle"></i>
-                    我的钱包
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_income_"></i>
-                    收入分红
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_coopera"></i>
-                    合作商
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_questio"></i>
-                    常见问题
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_opinion"></i>
-                    意见反馈
-                </a>
-                <a class="nav-link">
-                    <i class="iconfont icon-leftbar_icon_useragr"></i>
-                    用户协议
-                </a>
-            </div>
+            <include file="Public/nav"/>
             <div class="nav-bred">
                 <a href="#">我的发布</a>
             </div>
@@ -81,7 +15,7 @@
                 <li class="release-wapper cf">
                     <div class="release-sess fl cf">
                         <div class="release-i fl">
-                            <img src="./images/jdzq_icon_register.png" />
+                            <img src="__PUBLIC__/pc/images/jdzq_icon_register.png" />
                         </div>
                         <div class="sess-box fl">
                             <div class="sess-title cf">
@@ -109,7 +43,7 @@
                 <li class="release-wapper cf">
                     <div class="release-sess fl cf">
                         <div class="release-i fl">
-                            <img src="./images/jdzq_icon_vote.png" />
+                            <img src="__PUBLIC__/pc/images/jdzq_icon_vote.png" />
                         </div>
                         <div class="sess-box fl">
                             <div class="sess-title cf">
@@ -138,7 +72,7 @@
                 <li class="release-wapper cf">
                     <div class="release-sess fl cf">
                         <div class="release-i fl">
-                            <img src="./images/jdzq_icon_follow.png" />
+                            <img src="__PUBLIC__/pc/images/jdzq_icon_follow.png" />
                         </div>
                         <div class="sess-box fl">
                             <div class="sess-title cf">
