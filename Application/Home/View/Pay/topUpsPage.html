@@ -49,56 +49,56 @@
         </div>
     </div>
 </body>
-    <block name="script">
-        <script type="text/javascript" src="__PUBLIC__/mobile/js/mui.min.js"></script>
-        <script src="__PUBLIC__/pc/js/jquery-3.1.1.min.js"></script>
-        <script>
-            mui.init();
-            function pay(){
-                var money = $('#money').val();
-                if((/^(\+|-)?\d+$/.test( money ))&&money>0){
-                    mui.confirm('是否充值'+money+'元', '提示', '', function(e) {
-                        if (e.index == 1) {
-                            mui.ajax(url + 'Home/Pay/alipay',{
-                                data:{
-                                    recharge_money:money * 100,
-                                    recharge_type: 0
-                                },
-                                dataType:'json',//服务器返回json格式数据
-                                type:'post',//HTTP请求类型
-                                timeout:10000,//超时时间设置为10秒；
-                                success:function(data){
-                                    mui.toast(data['info']);
-                                    alert(JSON.stringify(data));
-                                    // if(data['status'] == 1){
-                                    //     setTimeout(function(){
-                                    //         mui.openWindow({
-                                    //             url:  url + 'Home/Pay/myWallet'
-                                    //         });
-                                    //     }, 1500);
-                                    // }
-                                },
-                                error:function(xhr,type,errorThrown){
-                                    //异常处理；
-                                    console.log(type);
-                                }
-                            });
-                        }else{
-                            mui.toast('您取消了操作');
-                        }
-                    })
-                }else {
-                    mui.alert("请输入整数充值");
-                    return;
-                }
-            }
-            $("#money").blur(function(){
-                var value = $(this).val();
-                if((/^(\+|-)?\d+$/.test( value ))&&value>0){
-                }else{
-                    mui.alert("请输入整数充值");;
-                }
-            });
-        </script>
+
 </block>
+<block name="script">
+    <script src="__PUBLIC__/pc/js/jquery-3.1.1.min.js"></script>
+    <script>
+
+        function pay(){
+            var money = $('#money').val();
+            if((/^(\+|-)?\d+$/.test( money ))&&money>0){
+                mui.confirm('是否充值'+money+'元', '提示', '', function(e) {
+                    if (e.index == 1) {
+                        mui.ajax(url + 'Home/Pay/alipay',{
+                            data:{
+                                recharge_money:money * 100,
+                                recharge_type: 0
+                            },
+                            dataType:'json',//服务器返回json格式数据
+                            type:'post',//HTTP请求类型
+                            timeout:10000,//超时时间设置为10秒；
+                            success:function(data){
+                                mui.toast(data['info']);
+                                alert(JSON.stringify(data));
+                                // if(data['status'] == 1){
+                                //     setTimeout(function(){
+                                //         mui.openWindow({
+                                //             url:  url + 'Home/Pay/myWallet'
+                                //         });
+                                //     }, 1500);
+                                // }
+                            },
+                            error:function(xhr,type,errorThrown){
+                                //异常处理；
+                                console.log(type);
+                            }
+                        });
+                    }else{
+                        mui.toast('您取消了操作');
+                    }
+                })
+            }else {
+                mui.alert("请输入整数充值");
+                return;
+            }
+        }
+        $("#money").blur(function(){
+            var value = $(this).val();
+            if((/^(\+|-)?\d+$/.test( value ))&&value>0){
+            }else{
+                mui.alert("请输入整数充值");;
+            }
+        });
+    </script>
 </block>
