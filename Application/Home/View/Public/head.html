@@ -2,17 +2,21 @@
 <div class="header">
     <div class="head w1200 cf">
         <a class="h-logo fl">
-            <img src="__PUBLIC__/pc/images/logo.png" />
+            <img  src="__PUBLIC__/pc/images/logo.png" />
         </a>
-        <div class="h-user fr cf">
-            <div class="user-i fl">
-                <span><img src="images/"></span>
-                <p>图图</p>
+        <if condition="empty($userList)">
+            <button class="login fr">登录</button>
+            <else />
+            <div class="h-user fr cf">
+                <div class="user-i fl">
+                    <span><img src="{$userList['head_pic']}"></span>
+                    <p>{$userList['nick_name']}</p>
+                </div>
+                <i class="iconfont icon-nav_icon_dropdown fl">
+                    <button class="h-outbtn" onclick="logOut()">退出</button>
+                </i>
             </div>
-            <i class="iconfont icon-nav_icon_dropdown fl">
-                <button class="h-outbtn">退出</button>
-            </i>
-        </div>
+        </if>
     </div>
 </div>
 </head>

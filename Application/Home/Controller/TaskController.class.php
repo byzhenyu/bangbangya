@@ -14,9 +14,15 @@ use Common\Controller\CommonController;
 use Common\Controller\UserCommonController;
 
 class TaskController extends UserCommonController{
-
+       public function _initialize() {
+           $this->user = D("Home/User");
+       }
        public function listTask()
        {
+           if(UID !== 'UID'){
+               $userList = $this->user->field('head_pic,nick_name')->where('user_id ='.UID)->find();
+           }
+           $this->assign('userList',$userList);
        	   $this->display();
        }
        //添加/修改任务

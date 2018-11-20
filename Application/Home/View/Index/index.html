@@ -120,14 +120,13 @@
         });
         var login  = {$login};
         if(login == 1){
-            mui.alert('登录成功');
+            mui.toast('登录成功');
         }
         mui.init();
         function logOut()
         {
             mui.confirm('您是否退出登录?', '提示', '', function(e) {
                 if (e.index == 1) {
-                    alert(1);
                     mui.ajax(url + 'Home/Login/logOut',{
                         dataType:'json',//服务器返回json格式数据
                         type:'get',//HTTP请求类型
