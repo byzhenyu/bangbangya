@@ -59,9 +59,9 @@ class LoginController extends CommonController{
                 session('user_auth', $userInfo['data']);
                 define(UID, session('user_auth')['user_id']);
             }
-            $this->redirect('Home/Index/Index/login/1');
+            $this->redirect('Home/index/index/login/1');
         }
-        $this->redirect('Home/Index/Index/login/1');
+        $this->redirect('Home/index/index/login/1');
     }
     /**
      * 退出登录
