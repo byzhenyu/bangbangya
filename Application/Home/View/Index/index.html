@@ -1,13 +1,19 @@
 <extend name="Public/base"/>
 <block name="style">
     <link rel="stylesheet" href="__PUBLIC__/pc/css/home.css">
+    <style>
+        .wrp_code img{
+            width: 100%;
+            display: block;
+        }
+    </style>
 </block>
 <block name="body">
     <body class="home">
     <div class="header header-w">
         <div class="head w1200 cf">
             <a class="h-logo fl">
-                <img src="__PUBLIC__/pc/images/logo.png" />
+                <img  src="__PUBLIC__/pc/images/logo.png" />
             </a>
             <!-- <div class="h-user fr cf">
             <div class="user-i fl">
@@ -68,7 +74,8 @@
             <button class="close iconfont icon-common_icon_close"></button>
             <h1>微信登录</h1>
             <div class="weichat-box">
-                <img src="__PUBLIC__/pc/images/ewm.jpg" />
+                <!--<img  src="__PUBLIC__/pc/images/ewm.jpg" />-->
+                <div  id="login_container"></div>
             </div>
             <p>请使用微信扫描二维码</p>
             <p>登录登录即为同意<a href="">《帮帮鸭用户协议》</a></p>
@@ -77,6 +84,7 @@
     </body>
 </block>
 <block name="script">
+    <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js" type="text/javascript" charset="utf-8"></script>
     <script src="__PUBLIC__/pc/js/swiper.min.js"></script>
     <script>
         var swiper = new Swiper('.swiper-container', {
@@ -103,6 +111,16 @@
             $(".model").hide();
             $(".login-wapper").hide();
         })
+        var obj = new WxLogin({
+            self_redirect:false,
+            id:"login_container",
+            appid: "wxabfa47477f012987",
+            scope: "snsapi_login",
+            redirect_uri: "http%3a%2f%2fbby.host5.liuniukeji.net%2fMobile%2fLogin%2fdologin",
+            state: "Mobile",
+            style: "black",
+            href: "http://bangbangya.com/Public/pc/css/code.css"
+        });
     </script>
 </block>
 </html>
