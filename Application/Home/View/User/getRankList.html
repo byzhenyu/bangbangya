@@ -24,6 +24,13 @@
                         <div class="leader-winner fl">
                             <div class="winner-i">
                                 <span class="winner-useri">
+
+                                    <if condition="$randList[1]['head_pic']">
+                                        <img src="{$randList[1]['head_pic']}" />
+                                        <else/>
+                                        <img src="__PUBLIC__/pc/images/user.png" />
+                                    </if>
+
                                     <img src="__PUBLIC__/pc/images/user.png" />
                                 </span>
                                 <span class="winner-corolla">
@@ -37,7 +44,13 @@
                         <div class="leader-winner fl">
                             <div class="winner-i">
                                 <span class="winner-useri">
-                                    <img src="__PUBLIC__/pc/images/user.png" />
+
+                                    <if condition="$randList[0]['head_pic']">
+                                        <img src="{$randList[0]['head_pic']}" />
+                                        <else/>
+                                        <img src="__PUBLIC__/pc/images/user.png" />
+                                    </if>
+
                                 </span>
                                 <span class="winner-corolla">
                                     <img src="__PUBLIC__/pc/images/rank_img_no1.png" />
@@ -50,7 +63,13 @@
                         <div class="leader-winner fl">
                             <div class="winner-i">
                                 <span class="winner-useri">
-                                    <img src="__PUBLIC__/pc/images/user.png" />
+
+                                    <if condition="$randList[2]['head_pic']">
+                                        <img src="{$randList[2]['head_pic']}" />
+                                        <else/>
+                                        <img src="__PUBLIC__/pc/images/user.png" />
+                                    </if>
+
                                 </span>
                                 <span class="winner-corolla">
                                     <img src="__PUBLIC__/pc/images/rank_icon_no3.png" />
