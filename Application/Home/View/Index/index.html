@@ -1,12 +1,6 @@
 <extend name="Public/base"/>
 <block name="style">
     <link rel="stylesheet" href="__PUBLIC__/pc/css/home.css">
-    <style>
-        .wrp_code img{
-            width: 100%;
-            display: block;
-        }
-    </style>
 </block>
 <block name="body">
     <body class="home">
@@ -15,16 +9,19 @@
             <a class="h-logo fl">
                 <img  src="__PUBLIC__/pc/images/logo.png" />
             </a>
-            <!-- <div class="h-user fr cf">
-            <div class="user-i fl">
-                <span><img src="images/"></span>
-                <p>图图</p>
-            </div>
-            <i class="iconfont icon-nav_icon_dropdown fl">
-                <button class="h-outbtn">退出</button>
-            </i>
-        </div> -->
-            <button class="login fr">登录</button>
+            <if condition="empty($userList)">
+                <button class="login fr">登录</button>
+                <else />
+                <div class="h-user fr cf">
+                    <div class="user-i fl">
+                        <span><img src="{$userList['head_pic']}"></span>
+                        <p>$userList['nick_name']}</p>
+                    </div>
+                    <i class="iconfont icon-nav_icon_dropdown fl">
+                        <button class="h-outbtn">退出</button>
+                    </i>
+                </div>
+            </if>
         </div>
     </div>
     <div class="session">
@@ -117,10 +114,11 @@
             appid: "wxabfa47477f012987",
             scope: "snsapi_login",
             redirect_uri: "http%3a%2f%2fbby.host5.liuniukeji.net%2fMobile%2fLogin%2fdologin",
-            state: "Mobile",
+            state: "Home",
             style: "black",
-            href: "bby.host5.liuniukeji.net/Public/pc/css/code.css"
+            href: ""
         });
+        // $('.wrp_code').css("","none");
     </script>
 </block>
 </html>
