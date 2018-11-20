@@ -103,7 +103,7 @@
             /*支付宝公钥，在支付宝上获取*/
             'alipayrsaPublicKey'    => 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjoMejr7d55Bw9nQHqxtVSgC/3XT8HGJofNvfChDwj+7kRs6QPelfsY1G+DZwh3lnbCWNnrChAO57bVCQCpEQavjbW0T91MfYGiSkisKXketr9o66WjBSgJLpL5AsLP/tXapWmfEqKR2KSmaHWQISjuAWA2y0i6oQ3wNlyBQ5oxh0l/nF4RRKoWvzPdvph2D4laiwSTY8efdMGY5P6os14ntUHFYql601R8Br5yau8McOpKw77J5LnT1qPPoSREZtWBLhweb1KPNRjvW5AzCxVo7sqlDYbfMGsxEoofYiXOwx3PWsGrmrSSN9QESBeMam4SZFaWQJ+6o7LNEEA1JRVwIDAQAB',
             /*支付宝回调地址*/
-            'notifyUrl'    => 'http://exam.host5.liuniukeji.com/index.php/Payment/Alipay/alipayNotify',
+            'notifyUrl'    => 'http://bby.host5.liuniukeji.net/index.php/Payment/Alipay/alipayNotify',
             /*用于web支付返回地址*/
             'returnUrl'    => 'http://exam.host5.liuniukeji.com/index.php/Payment/AlipayReturn/index',
         ),
