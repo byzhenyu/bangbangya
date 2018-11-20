@@ -82,24 +82,29 @@
 
         /*删除操作*/
         function del(id){
-            if (confirm('您是否要删除该条任务?')) {
-                $.ajax({
-                    url : "{:U('TaskLog/delTaskLog')}",
-                    type : "POST",
-                    dataType : "json",
-                    data : {id: id},
-                    success:function(data){
-                        toastr(data['info']);
-//                        if(data['status'] == 1){
-//                            setTimeout("reload()", 1500);
-//                        }
-                    },
-                    error:function(xhr,type,errorThrown){
-                        //异常处理；
-                        console.log(type);
-                    }
-                })
-            }
+            mui.confirm('您是否要删除该条任务?', '提示', '', function(e) {
+                if (e.index == 1) {
+                    $.ajax({
+                        url : "{:U('TaskLog/delTaskLog')}",
+                        type : "POST",
+                        dataType : "json",
+                        data : {id: id},
+                        success:function(data){
+                            mui.toast(data['info']);
+                            if(data['status'] == 1){
+                                setTimeout("reload()", 2000);
+                            }
+                        },
+                        error:function(xhr,type,errorThrown){
+                            //异常处理；
+                            console.log(type);
+                        }
+                    });
+                }
+                else{
+                    mui.alert('您取消了操作');
+                }
+            });
         }
 
         function reload() {
@@ -112,9 +117,7 @@
         }
         /*不合格*/
         function fail(id){
-            mui.openWindow({
-                url:  url + 'Mobile/TaskLog/taskLogFail/id/' + id
-            });
+            window.location.href = "{:U('TaskLog/taskLogFail')}/id/"+id;
         }
         /*详情*/
         function taskDetail (log_id) {

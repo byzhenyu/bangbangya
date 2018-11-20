@@ -14,7 +14,7 @@
                 </div>
                 <div class="feedback sess-wapper">
 
-                    <form action="__ACTION__" method="post" class="ajaxForm">
+                    <form action="__ACTION__" method="post" class="ajaxforms">
                         <textarea name="comment" placeholder="请输入反馈内容" maxlength="255"></textarea>
                         <div class="feedback-up">
                             <p class="feedback-tips">提示！反馈内容请不要超过255个字</p>
@@ -29,19 +29,52 @@
 </block>
 <block name="script">
     <script type="text/javascript">
-        /**
-         * 执行回调函数
-         **/
-        function callback(data) {
-            if(!data.status){
-                toastr(data.info);
-                return false;
-            }
-            else{
-                toastr(data.info);
-                setTimeout("reload()",1500);
-            }
+        var _IS_SUBMIT_SUCCESS = false; // 全局变量, 提交是否成功
+        var _NEED_REFRESH = true;
+        function enbaleSubmitButton(){
+            $("button:submit").attr("disabled", false);
         }
+        $(document)
+            .ajaxStart(function(){
+                $("button:submit").attr("disabled", true);
+            })
+            .ajaxStop(function(){
+                setTimeout("enbaleSubmitButton();", 3000);//延时5s执行
+            });
+        $(".ajaxforms").submit(function(){
+            var self = $(this);
+            $.ajax({
+                type : "POST",
+                cache: false,
+                url  : self.attr("action"),
+                data : self.serialize(),
+                datatype : "json",
+                success : success,
+                error: function(){
+                    alert("程序错误!")
+                }
+            });
+            return false;
+            function success(data){
+                //如果没有回调函数, 默认执行
+                if(data.status == 1){
+                    _IS_SUBMIT_SUCCESS = true;
+
+                    if (data.info != '' && typeof(data.info) != 'undefined')  mui.toast(data.info);
+                    //跳转页面
+                    if ( typeof(_TARGET_URL) != 'undefined' && _TARGET_URL != '') {
+                        window.location.href = _TARGET_URL;
+                    }
+                    //刷新页面
+                    if ( typeof(_NEED_REFRESH) != 'undefined' && _NEED_REFRESH == true) {
+                        setTimeout("reload()",1500);
+                    }
+                } else {
+                    if (data.info != '' && typeof(data.info) != 'undefined') mui.toast(data.info);
+                    else  mui.toast('未定义错误!');
+                }
+            }
+        });
         function reload() {
             location.reload();
         }
