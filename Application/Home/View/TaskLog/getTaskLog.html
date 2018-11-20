@@ -1,0 +1,158 @@
+<extend name="Public/base"/>
+<block name="style">
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/task.css">
+</block>
+<block name="body">
+
+<body class="bg">
+<include file="Public/head"/>
+    <div class="session">
+        <div class="w1200">
+            <include file="Public/nav"/>
+
+            <div class="nav-bred">
+                <a href="#">我的任务 ></a>
+                <a href="#">接单记录</a>
+            </div>
+            <div class="sess-wapper task">
+                <div class="task-record">
+                    <ul class="task-record-title">
+                        <li class="task-active">
+                            接单任务
+                        </li>
+                        <li>
+                            接单记录
+                        </li>
+                    </ul>
+                    <div class="tab_box">
+                        <div>
+                            <ul class="task-group">
+                                <li class="btn-active">全部</li>
+                                <li>待提交</li>
+                                <li>审核中</li>
+                                <li>不合格</li>
+                                <li>已完成</li>
+                            </ul>
+                            <ul class="index-wapper">
+                                <li class="cf">
+                                    <div class="item-wapper fl cf">
+                                        <div class="item-i fl">
+                                            <img src="__PUBLIC__/pc/images/jdzq_icon_comment.png" />
+                                        </div>
+                                        <div class="item-sess fl">
+                                            <div class="item-h1 cf">
+                                                <h1 class="fl">注册</h1>
+                                                <span class="item-p fl">
+                                                    天天快报一秒完成
+                                                </span>
+                                            </div>
+                                            <div class="item-span">
+                                                <span>编号：740006</span>
+                                                <span>单价：￥2.5</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="fr task-btn">
+                                        删除
+                                    </button>
+                                </li>
+                                <li class="cf">
+                                    <div class="item-wapper fl cf">
+                                        <div class="item-i fl">
+                                            <img src="__PUBLIC__/pc/images/jdzq_icon_comment.png" />
+                                        </div>
+                                        <div class="item-sess fl">
+                                            <div class="item-h1 cf">
+                                                <h1 class="fl">注册</h1>
+                                                <span class="item-p fl">
+                                                    天天快报一秒完成
+                                                </span>
+                                            </div>
+                                            <div class="item-span">
+                                                <span>编号：740006</span>
+                                                <span>单价：￥2.5</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="fr task-green">
+                                        已完成
+                                    </button>
+                                </li>
+                                <li class="cf">
+                                    <div class="item-wapper fl cf">
+                                        <div class="item-i fl">
+                                            <img src="__PUBLIC__/pc/images/jdzq_icon_comment.png" />
+                                        </div>
+                                        <div class="item-sess fl">
+                                            <div class="item-h1 cf">
+                                                <h1 class="fl">注册</h1>
+                                                <span class="item-p fl">
+                                                    天天快报一秒完成
+                                                </span>
+                                            </div>
+                                            <div class="item-span">
+                                                <span>编号：740006</span>
+                                                <span>单价：￥2.5</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="fr task-org">
+                                        审核中
+                                    </button>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="task-hide">
+                            <ul class="index-wapper">
+                                <li class="cf">
+                                    <div class="item-wapper fl cf">
+                                        <div class="item-i fl">
+                                            <img src="__PUBLIC__/pc/images/jdzq_icon_comment.png" />
+                                        </div>
+                                        <div class="item-sess fl">
+                                            <div class="item-h1 cf">
+                                                <h1 class="fl">注册</h1>
+                                                <span class="item-p fl">
+                                                    天天快报一秒完成
+                                                </span>
+                                            </div>
+                                            <div class="item-span">
+                                                <span>编号：740006</span>
+                                                <span>单价：￥2.5</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="fr task-btn">
+                                        删除
+                                    </button>
+                                </li>
+                            </ul>
+                            <button class="check-more">
+                                查看更多
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</block>
+<block name="script">
+    <script>
+        //切换
+        $(document).ready(function () {
+            var $tab_li = $('.task-record-title li');
+            $tab_li.click(function () {
+                $(this).addClass('task-active').siblings().removeClass('task-active');
+                var index = $tab_li.index(this);
+                $('div.tab_box > div').eq(index).show().siblings().hide();
+            });
+        });
+    </script>
+</block>
+</html>

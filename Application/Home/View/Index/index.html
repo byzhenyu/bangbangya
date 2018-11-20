@@ -1,0 +1,108 @@
+<extend name="Public/base"/>
+<block name="style">
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/home.css">
+</block>
+<block name="body">
+    <body class="home">
+    <div class="header header-w">
+        <div class="head w1200 cf">
+            <a class="h-logo fl">
+                <img src="__PUBLIC__/pc/images/logo.png" />
+            </a>
+            <!-- <div class="h-user fr cf">
+            <div class="user-i fl">
+                <span><img src="images/"></span>
+                <p>图图</p>
+            </div>
+            <i class="iconfont icon-nav_icon_dropdown fl">
+                <button class="h-outbtn">退出</button>
+            </i>
+        </div> -->
+            <button class="login fr">登录</button>
+        </div>
+    </div>
+    <div class="session">
+        <div class="banner-wapper">
+            <!-- Swiper -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" style="width:100%; height:450px; background:url(__PUBLIC__/pc/images/banner.png) no-repeat center center; background-size: cover;"></div>
+                    <div class="swiper-slide" style="width:100%; height:450px; background:url(__PUBLIC__/pc/images/banner.png) no-repeat center center; background-size: cover;"></div>
+                    <div class="swiper-slide" style="width:100%; height:450px; background:url(__PUBLIC__/pc/images/banner.png) no-repeat center center; background-size: cover;"></div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Arrows -->
+                <!-- <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div> -->
+            </div>
+        </div>
+        <div class="item-wapper cf">
+            <a href="{:U('Task/listTask')}" class="item-box fl">
+                <img src="__PUBLIC__/pc/images/item-i1.png" />
+                <h1>接单赚钱</h1>
+                <p>投票、关注、浏览也可以赚钱</p>
+            </a>
+            <a href="{:U('Task/listTask')}" class="item-box fl">
+                <img src="__PUBLIC__/pc/images/item-i2.png" />
+                <h1>发布任务</h1>
+                <p>要投票？要粉丝？还是品牌推广？</p>
+            </a>
+            <a href="{:U('User/friendQequest')}" class="item-box fl">
+                <img src="__PUBLIC__/pc/images/item-i3.png" />
+                <h1>好友邀请</h1>
+                <p>推荐好友返利多多</p>
+            </a>
+            <a href="{:U('TaskLog/getTaskLog')}" class="item-box fl">
+                <img src="__PUBLIC__/pc/images/item-i4.png" />
+                <h1>我的任务</h1>
+                <p>已接单的任务在这里</p>
+            </a>
+        </div>
+    </div>
+    <div class="footer">
+        山东六牛科技网络有限公司版权所有
+    </div>
+    <div class="model">
+        <div class="login-wapper">
+            <button class="close iconfont icon-common_icon_close"></button>
+            <h1>微信登录</h1>
+            <div class="weichat-box">
+                <img src="__PUBLIC__/pc/images/ewm.jpg" />
+            </div>
+            <p>请使用微信扫描二维码</p>
+            <p>登录登录即为同意<a href="">《帮帮鸭用户协议》</a></p>
+        </div>
+    </div>
+    </body>
+</block>
+<block name="script">
+    <script src="__PUBLIC__/pc/js/swiper.min.js"></script>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            spaceBetween: 0,
+            centeredSlides: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+        $(".login").click(function(){
+            $(".model").show();
+            $(".login-wapper").show();
+        });
+        $(".close").click(function(){
+            $(".model").hide();
+            $(".login-wapper").hide();
+        })
+    </script>
+</block>
+</html>

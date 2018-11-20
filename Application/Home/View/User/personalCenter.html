@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/cur.css">
+    <link rel="stylesheet" href="css/personal-center.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+</head>
+
+<body class="bg">
+    <div class="header">
+        <div class="head w1200 cf">
+            <a class="h-logo fl">
+                <img src="images/logo.png" />
+            </a>
+            <div class="h-user fr cf">
+                <div class="user-i fl">
+                    <span><img src="images/"></span>
+                    <p>图图</p>
+                </div>
+                <i class="iconfont icon-nav_icon_dropdown fl">
+                    <button class="h-outbtn">退出</button>
+                </i>
+            </div>
+        </div>
+    </div>
+    <div class="session">
+        <div class="w1200">
+            <div class="nav">
+                <a class="nav-link">
+                    <i class="iconfont icon-leftbar_icon_jdzq_n"></i>
+                    接单赚钱
+                </a>
+                <a class="nav-link">
+                    <i class="iconfont icon-leftbar_icon_publish"></i>
+                    发布任务
+                </a>
+                <a class="nav-link">
+                    <i class="iconfont icon-leftbar_icon_invitef"></i>
+                    邀请好友
+                </a>
+                <a class="nav-link">
+                    <i class="iconfont icon-leftbar_icon_mytask_"></i>
+                    我的任务
+                </a>
+                <a class="nav-link">
+                    <i class="iconfont icon-leftbar_icon_rank_n"></i>
+                    排行榜
+                </a>
+                <a class="nav-link  nav-active">
+                    <i class="iconfont icon-leftbar_icon_my_n"></i>
+                    个人中心
+                </a>
+                <a class="nav-link">
+                    <i class="iconfont icon-leftbar_icon_mypubli"></i>
+                    我的发布
+                </a>
+                <a class="nav-link">
+                    <i class="iconfont icon-leftbar_icon_mywalle"></i>
+                    我的钱包
+                </a>
+                <a class="nav-link">
+                    <i class="iconfont icon-leftbar_icon_income_"></i>
+                    收入分红
+                </a>
+                <a class="nav-link">
+                    <i class="iconfont icon-leftbar_icon_coopera"></i>
+                    合作商
+                </a>
+                <a class="nav-link">
+                    <i class="iconfont icon-leftbar_icon_questio"></i>
+                    常见问题
+                </a>
+                <a class="nav-link">
+                    <i class="iconfont icon-leftbar_icon_opinion"></i>
+                    意见反馈
+                </a>
+                <a class="nav-link">
+                    <i class="iconfont icon-leftbar_icon_useragr"></i>
+                    用户协议
+                </a>
+            </div>
+            <div class="nav-bred">
+                <a href="#">我的钱包</a>
+            </div>
+            <div class="sess-wapper person">
+                <ul class="person-wapper cf">
+                    <li class="fl">
+                        <h2>完成</h2>
+                        <h1>1880单</h1>
+                    </li>
+                    <li class="fl">
+                        <h2>余额</h2>
+                        <h1>￥1000.0</h1>
+                    </li>
+                    <li class="fl">
+                        <h2>收入</h2>
+                        <h1>￥1000.0</h1>
+                    </li>
+                    <li class="fl">
+                        <h2>保证金</h2>
+                        <h1>￥1000.0</h1>
+                        <h3>请在手机端操作</h3>
+                    </li>
+                </ul>
+                <ul class="person-inb cf">
+                    <li class="fl">
+                        <div class="inb-wapper">
+                            <span>支付宝账号</span>
+                            <input type="text" placeholder="">
+                        </div>
+                        <p class="inb-tips">一个账号只能绑定一个支付宝账户</p>
+                    </li>
+                    <li class="fl">
+                        <div class="inb-wapper">
+                            <span>真实姓名</span>
+                            <input type="text" placeholder="">
+                        </div>
+                    </li>
+                </ul>
+                <button class="person-btn">绑定支付宝</button>
+                <div class="person-promotion">
+                    <img src="./images/promotion.png"/>
+                    <p>产品要推广？没有曝光渠道？没有好平台？推广费用巨大？</p>
+                    <p>帮帮鸭来帮你！ </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="model">
+        <div class="pop-ups">
+            <button id="close" class="iconfont icon-common_icon_close"></button>
+            <div class="invite-code">
+                <span>邀请码</span>
+                <input type="text" placeholder="用户ID即为邀请码，如不清楚可不填">
+            </div>
+            <button class="pro-upsbtn">
+                确定
+            </button>
+        </div>
+    </div>
+    <script src="js/iconfont.js"></script>
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script>
+        $("#close").click(function(){
+            $(".pop-ups").hide();
+            $(".model").hide();
+        })
+    </script>
+</body>
+
+</html>
