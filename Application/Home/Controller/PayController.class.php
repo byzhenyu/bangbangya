@@ -99,7 +99,7 @@ class PayController extends UserCommonController{
             p($shopInfo);
             $this->display();
         }else{
-            $this->display('User/personalCenter/id_band/1');
+            $this->redirect('User/personalCenter/id_band/1');
         }
     }
     /**
