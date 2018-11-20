@@ -12,7 +12,10 @@ $(function() {
  * 弹出信息
  */
 function toastr(msg) {
-    $('.tips').html(msg);
+    layer.msg(msg, {
+        offset: 0,
+        shift: 6
+    });
 }
 
 /** 
