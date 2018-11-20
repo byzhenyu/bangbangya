@@ -117,9 +117,7 @@
         }
         /*不合格*/
         function fail(id){
-            mui.openWindow({
-                url:  url + 'Mobile/TaskLog/taskLogFail/id/' + id
-            });
+            window.location.href = "{:U('TaskLog/taskLogFail')}/id/"+id;
         }
         /*详情*/
         function taskDetail (log_id) {
