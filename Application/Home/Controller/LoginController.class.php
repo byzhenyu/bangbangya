@@ -63,4 +63,12 @@ class LoginController extends CommonController{
         }
         $this->redirect('Home/Index/Index/login/1');
     }
+    /**
+     * 退出登录
+     **/
+    public function logout(){
+        session('user_auth',null);
+        define('UID', null);
+        $this->ajaxReturn(V(1, '您退出了登录'));
+    }
 }

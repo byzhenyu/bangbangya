@@ -18,7 +18,7 @@
                         <p>{$userList['nick_name']}</p>
                     </div>
                     <i class="iconfont icon-nav_icon_dropdown fl">
-                        <button class="h-outbtn">退出</button>
+                        <button class="h-outbtn" onclick="logOut()">退出</button>
                     </i>
                 </div>
             </if>
@@ -83,6 +83,7 @@
 <block name="script">
     <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js" type="text/javascript" charset="utf-8"></script>
     <script src="__PUBLIC__/pc/js/swiper.min.js"></script>
+    <script src="__PUBLIC__/mobile/js/url.js"></script>
     <script>
         var swiper = new Swiper('.swiper-container', {
             spaceBetween: 0,
@@ -121,6 +122,33 @@
         var login  = {$login};
         if(login == 1){
             mui.alert('登录成功');
+        }
+        function dologin()
+        {
+            mui.ajax(url + 'Home/Login/dologin',{
+                data:{
+                    open_id:'123456'
+                },
+                dataType:'json',//服务器返回json格式数据
+                type:'post',//HTTP请求类型
+                timeout:10000,//超时时间设置为10秒；
+                // headers:{'Content-Type':'application/json'},
+                success:function(data){
+                    mui.toast(data['info']);
+                    // alert(JSON.stringify(data));
+                    if(data['data'] == 1){
+                        setTimeout(function(){
+                            mui.openWindow({
+                                url:  url + '/Mobile/User/Invitation'
+                            });
+                        }, 1500);
+                    }
+                },
+                error:function(xhr,type,errorThrown){
+                    //异常处理；
+                    console.log(type);
+                }
+            });
         }
     </script>
 </block>
