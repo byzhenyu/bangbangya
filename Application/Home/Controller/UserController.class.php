@@ -32,4 +32,5 @@ class UserController extends CommonController{
         $this->display();
     }
 
+
 }
