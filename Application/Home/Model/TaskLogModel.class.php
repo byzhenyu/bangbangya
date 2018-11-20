@@ -26,13 +26,13 @@ class TaskLogModel extends  Model{
     );
     public function getTaskLog($where = [], $field = '', $sort = 'l.add_time DESC'){
         $map['l.status'] = array('eq', 1);
-        $map['l.status'] = array('eq', 1);
 
         $count = $this->alias('l')
                  ->join('__TASK__ as t on t.id = l.task_id', 'LEFT')
                  ->join('__TASK_CATEGORY__ as c on c.id = t.category_id')
                  ->field($field)
                  ->where($where)
+                 ->where($map)
                  ->count();
         $page = get_page($count,10);
         $list = $this->alias('l')
@@ -40,6 +40,7 @@ class TaskLogModel extends  Model{
                 ->join('__TASK_CATEGORY__ as c on c.id = t.category_id')
                 ->field($field)
                 ->where($where)
+                ->where($map)
                 ->limit($page['limit'])
                 ->order($sort)
                 ->select();
