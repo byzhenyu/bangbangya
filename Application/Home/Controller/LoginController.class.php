@@ -46,7 +46,7 @@ class LoginController extends CommonController{
             $userid = $userModel->add($userData);
             /*生成邀请码*/
             $invitation_code = $userModel->createCode($userid);
-            $userModel->where('user_id = '.$userid)->setField('invitation_code',$invitation_code);
+            $userModel->where('user_id = ' . $userid)->setField('invitation_code', $invitation_code);
             if ($userid) {
                 $shopDate = array(
                     'user_id' => $userid,
@@ -62,5 +62,5 @@ class LoginController extends CommonController{
             $this->redirect('Home/Index/Index/login/1');
         }
         $this->redirect('Home/Index/Index/login/1');
-
+    }
 }
