@@ -18,8 +18,10 @@ class IndexController extends CommonController {
         }
        public function index()
        {
+           if(UID !== 'UID'){
+               $userList = $this->user->field('head_pic,nick_name')->where('user_id ='.UID)->find();
+           }
            $login  = I('login', 0, 'intval');
-           $userList = $this->user->field('head_pic,nick_name')->where('user_id ='.UID)->find();
            $this->assign('userList',$userList);
            $this->assign('login',$login);
        	   $this->display();
