@@ -16,7 +16,7 @@ class IndexController extends CommonController {
         public function _initialize() {
             $this->user = D("Home/User");
         }
-       public function index()
+       public function Index()
        {
            if(UID !== 'UID'){
                $userList = $this->user->field('head_pic,nick_name')->where('user_id ='.UID)->find();
