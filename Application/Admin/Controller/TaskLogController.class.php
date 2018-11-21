@@ -17,7 +17,7 @@ class TaskLogController extends CommonController {
         }
         $field = 'log.*,u.nick_name';
         $data = D('Admin/TaskLog')->getTaskLogList($where,$field);
-
+        $this->assign('keyword', $keyword);
         $this->assign('list', $data['info']);
         $this->assign('page', $data['page']);
         $this->display();
