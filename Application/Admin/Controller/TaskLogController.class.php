@@ -13,7 +13,7 @@ class TaskLogController extends CommonController {
     public function listTaskLog(){
         $keyword = I('keyword', '');
         if ($keyword) {
-            $where['log.title'] = array('like','%'.$keyword.'%');
+            $where['log.task_name'] = array('like','%'.$keyword.'%');
         }
         $field = 'log.*,u.nick_name';
         $data = D('Admin/TaskLog')->getTaskLogList($where,$field);
