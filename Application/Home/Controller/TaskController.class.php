@@ -15,14 +15,95 @@ use Common\Controller\UserCommonController;
 
 class TaskController extends UserCommonController{
     public function _initialize() {
-        $this->user = D("Home/User");
+        $this->Task = D("Home/Task");
     }
-    public function listTask()
-    {
-        if(UID !== 'UID'){
-            $userList = $this->user->field('head_pic,nick_name')->where('user_id ='.UID)->find();
+
+    /**
+     * 首页接单信息页面
+     * @param UID
+     * @param  [order] 排序方式 未定
+     * @return array
+     */
+    public function listTask(){
+//        if(UID !== 'UID'){
+//            $userList = $this->user->field('head_pic,nick_name')->where('user_id ='.UID)->find();
+//        }
+//        $this->assign('userList',$userList);
+
+        $keyword = I('keyword', '');
+        /* order 接单赚钱的条件查询 */
+        $typeOrder = I('typeOrder',0,'intval');
+
+        switch ($typeOrder) {
+            case 1:
+                $order = 't.top_time DESC,t.re_time DESC,t.add_time DESC';
+                break;
+            case 2:
+                $order = 't.top_time DESC, re_time DESC, t.end_time DESC';
+                break;
+            case 3:
+                $order = 't.top_time DESC,t.re_time DESC,s.top_time DESC, s.partner_time DESC, t.add_time ASC';
+                break;
+            case 4:
+                $order = 't.look_num DESC';
+                break;
+            case 5:
+                $where['t.mobile_type'] = '苹果';
+                $order = 't.top_time DESC,t.re_time DESC,t.add_time DESC';
+                break;
+            default:
+                $order = 't.top_time DESC, t.re_time DESC, t.add_time DESC';
+                break;
         }
-        $this->assign('userList',$userList);
+
+        /*选择任务类型*/
+        $taskCategoryId = I('taskCategoryId', 0, 'intval');
+        if($taskCategoryId)
+        {
+            $where['t.category_id'] = $taskCategoryId;
+        }
+        /*任务标题查询  标题  任务id号*/
+        if ($keyword) {
+            $where['t.title|t.id'] = array('like', '%'.$keyword.'%');
+        }
+        $where['t.user_id'] = array('NEQ',UID);
+        //需要判断 是否已接单
+        $log_ids = M('TaskLog')->where(array('user_id'=>UID,'valid_status'=>0,'status'=>1))->getField('task_id',true);
+
+        if (!empty($log_ids)) {
+            $where['t.id'] = array('not in', $log_ids);
+        }
+        /*任务信息*/
+        $where['t.end_time'] = array('gt', NOW_TIME); //未结束
+        $where['t.audit_status'] = array('eq', 1);//审核通过
+        $taskInfo = D('Home/Task')->getTaskList($where, '', $order);
+        $list = $taskInfo['list'];
+        if (!empty($list)) {
+            foreach ($list as $k=>$v) {
+                $list[$k]['price'] = fen_to_yuan($v['price']);
+                if ($list[$k]['top_time'] > NOW_TIME) {
+                    $list[$k]['top'] = 1;
+                }
+                if ($list[$k]['re_time'] > NOW_TIME) { //推荐 暂时缺少图片未判断
+                    $list[$k]['ret'] = 1;
+                }
+            }
+        }
+        if(IS_POST) {
+
+            $this->ajaxReturn(V(1, '任务列表', $list));
+        }
+        /*置顶店铺*/
+        $shopWhere['s.top_time'] = array('gt', NOW_TIME);
+        $shopField = 's.user_id, s.shop_img, s.shop_name';
+        $topShop = D('Home/Shop')->getAllShop($shopWhere, $shopField);
+        /*任务类别*/
+        $taskCategory = D('Home/TaskCategory')->getTaskCategory();
+        $this->assign('topShop',$topShop['shopList']);
+        $this->assign('taskCategory',$taskCategory);
+        $this->assign('taskInfo', $list);
+        $this->assign('page', $taskInfo['page']);
+        $this->display();
         $this->display();
     }
 
