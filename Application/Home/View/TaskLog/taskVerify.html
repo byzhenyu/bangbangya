@@ -2,6 +2,20 @@
 <block name="style">
     <title>{:C('WEB_TITLE')}-我的任务</title>
     <link rel="stylesheet" href="__PUBLIC__/pc/css/task-upload.css">
+    <style>
+        #upload1{
+            border: none;
+            z-index: 99;
+            position: absolute;
+            overflow: hidden;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            width: 200px;
+            height: 200px;
+            top: 0;
+            left: 0;
+        }
+    </style>
 </block>
 <block name="body">
     <body class="bg">
@@ -12,7 +26,7 @@
                 <div class="nav-bred">
                     <a href="{:U('TaskLog/getTaskLog')}">我的任务 ></a>
                     <a href="{:U('TaskLog/getTaskLog')}">接单任务 ></a>
-                    <a href="#">上传验证</a>
+                    <a href="#" onclick="delPic()">上传验证</a>
                 </div>
                 <div class="sess-wapper task-upload">
                     <a href="" class="task-detial">任务详情</a>
@@ -35,38 +49,36 @@
                             <span><i>类别</i>{$info['category_name']}</span>
                             <span><i>单价</i>￥{:fen_to_yuan($info['task_price'])}</span>
                         </li>
-                        <li>
-                            <span><i>文字验证</i>{$info['validate_words']}</span>
-                        </li>
-                        <li>
-                            <span><i>备注</i>{$info['remark']}</span>
-                        </li>
+                        <li><span><i>文字验证</i>{$info['validate_words']}</span></li>
+                        <li><span><i>备注</i>{$info['remark']}</span></li>
                     </ul>
                     <div class="upload-wapper">
                         <div class="upload-box">
-                            <div class="upload-title">
-                                <h1>验证图</h1>
-                                <p>（最多5张）</p>
-                            </div>
-                            <div class="upload-imgb cf">
-                                <div class="upload-img fl">
-                                    <img src="__PUBLIC__/pc/images/">
-                                    <input type="file">
-                                    <button class="upload-delete iconfont icon-common_icon_close"></button>
+                            <div class="upload-title"><h1>验证图</h1><p>（最多5张）</p></div>
+
+                            <form action="{:U('taskVerify')}" method="post" class="ajaxforms">
+                                <div class="upload-imgb cf" id="uploaderFiles" style="position: relative;">
+                                    <div class="upload-img fl" id="hide">
+                                        <input type="file" id="upload1">
+                                    </div>
                                 </div>
-                            </div>
-                            <if condition="$info['validate_words'] neq ''">
-                                <div class="upload-text cf">
-                                    <span>文字验证</span>
-                                    <textarea placeholder="请输入文字验证"></textarea>
+
+                                <if condition="$info['validate_words'] neq ''">
+                                    <div class="upload-text cf">
+                                        <span>文字验证</span>
+                                        <textarea name="valid_info" maxlength="100" placeholder="请输入文字验证(100字以内)"></textarea>
+                                    </div>
+                                    <else/>
+                                </if>
+
+                                <div class="upload-btng">
+                                    <input type="hidden" name="id" value="{$info['id']}">
+                                    <button type="button">取消</button>
+                                    <button type="submit">确认提交</button>
+                                    <p>提示：请诚信做单，骗单将被罚款，严重者封号</p>
                                 </div>
-                                <else/>
-                            </if>
-                            <div class="upload-btng">
-                                <button>取消</button>
-                                <button>确认提交</button>
-                                <p>提示：请诚信做单，骗单将被罚款，严重者封号</p>
-                            </div>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -75,9 +87,83 @@
     </body>
 </block>
 <block name="script">
+    <script type="text/javascript" src="__PUBLIC__/fileupload/js/vendor/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.iframe-transport.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.fileupload.js"></script>
     <script type="text/javascript">
-        $(".upload-delete").click(function(){
-            $(this).parent().hide();
-        })
+        UPLOAD_IMG_URL_OSS = "{:U('Mobile/TaskLog/uploadImg')}"; //OSS默认上传图片地址
+        OSS_DELET_OBJECT = "{:U('Mobile/Task/oss_delet_object')}";//删除地址
+        //单图上传
+        var count = 0;
+        $('#upload1').fileupload({
+            url: UPLOAD_IMG_URL_OSS,
+            dataType: 'json',
+            done: function (e, data) {
+                $('#uploaderFiles').prepend(
+                    '<div class="upload-img fl">' +
+                        '<img src="'+data.result.data.nameosspath+'">' +
+                        '<button class="upload-delete iconfont icon-common_icon_close" onclick="delPic(this)"></button>' +
+                    '</div>' +
+                    '<input type="hidden" name="valid_img[]" value="'+data.result.data.nameosspath+'">');
+                count++;
+                if(count>4){
+                    $('#hide').hide();
+                }
+            }
+        }).prop('disabled', !$.support.fileInput)
+            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+        //单图删除
+        function delPic(obj) {
+            var obj = obj;
+            var img_src = $(obj).parent().next('input').val();
+            $.post(OSS_DELET_OBJECT,{'img_src':img_src}, function (data) {
+                if (data.status == 1) {
+                    $(obj).parent().parent().remove();
+                    count--;
+                    $('#upload').attr('disabled',false);
+                }
+            })
+
+        }
+
+        function enbaleSubmitButton(){
+            $("button:submit").attr("disabled", false);
+        }
+        $(document)
+            .ajaxStart(function(){
+                $("button:submit").attr("disabled", true);
+            })
+            .ajaxStop(function(){
+                setTimeout("enbaleSubmitButton();", 3000);//延时5s执行
+            });
+        $(".ajaxforms").submit(function(){
+            var self = $(this);
+            $.ajax({
+                type : "POST",
+                cache: false,
+                url  : self.attr("action"),
+                data : self.serialize(),
+                datatype : "json",
+                success : success,
+                error: function(){
+                    alert("程序错误!")
+                }
+            });
+            return false;
+            function success(data){
+                //如果没有回调函数, 默认执行
+                if(data.status == 1){
+                    mui.toast(data.info);
+                    setTimeout(function() {
+                        window.location.href = "{:U('TaskLog/getTaskLog')}";
+                    },1500);
+                }
+                else {
+                    if (data.info != '' && typeof(data.info) != 'undefined') mui.toast(data.info);
+                    else  mui.toast('未定义错误!');
+                }
+            }
+        });
     </script>
 </block>
