@@ -14,17 +14,17 @@ use Common\Controller\CommonController;
 use Common\Controller\UserCommonController;
 
 class TaskController extends UserCommonController{
-       public function _initialize() {
-           $this->user = D("Home/User");
-       }
-       public function listTask()
-       {
-           if(UID !== 'UID'){
-               $userList = $this->user->field('head_pic,nick_name')->where('user_id ='.UID)->find();
-           }
-           $this->assign('userList',$userList);
-       	   $this->display();
-       }
+    public function _initialize() {
+        $this->user = D("Home/User");
+    }
+    public function listTask()
+    {
+        if(UID !== 'UID'){
+            $userList = $this->user->field('head_pic,nick_name')->where('user_id ='.UID)->find();
+        }
+        $this->assign('userList',$userList);
+        $this->display();
+    }
 
     /**
      * @desc 发布任务
@@ -123,7 +123,7 @@ class TaskController extends UserCommonController{
         $this->assign('taskCategoryInfo', $taskCategoryInfo);
         $this->display();
     }
-   //我的发布
+
     /**
      * @desc  我的发布
      * @param UID
@@ -141,7 +141,9 @@ class TaskController extends UserCommonController{
         $this->display();
     }
 
-    //我的任务详情
+    /**
+     * @desc  我的任务详情
+     */
     public function myTaskDetail() {
         $id = I('id', 0, 'intval');
         $where['t.id'] = $id;
@@ -151,6 +153,7 @@ class TaskController extends UserCommonController{
         $this->assign('taskDetail', $taskDetail);
         $this->display();
     }
+
     /**
      * @desc  接单任务详情  && 我的任务上传验证页面
      * @param  $id
@@ -167,10 +170,10 @@ class TaskController extends UserCommonController{
         $this->assign('taskDetail', $taskDetail);
         $this->display();
     }
+
     /**
      * @desc  上传图片
      */
-    // 上传图片
     public function uploadImg() {
 
         //$this->_uploadImg();  //调用父类的方法
@@ -208,6 +211,7 @@ class TaskController extends UserCommonController{
             $this->ajaxReturn(V(1, 'success', $data));
         }
     }
+    
     /**
      * 删除oss上指定文件
      * @param  string $object 文件路径 例如删除 /Public/README.md文件  传Public/README.md 即可
