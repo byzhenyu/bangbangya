@@ -28,7 +28,7 @@ class TaskLogModel extends Model {
      * @param string $order
      * @return array
      */
-    public function getTaskLogList($where = [], $field = '', $order = 'log.add_time asc') {
+    public function getTaskLogList($where = [], $field = '', $order = 'log.add_time desc') {
         if ($field == '') {
             $field = $this->selectFields;
         }
