@@ -19,7 +19,7 @@ class LoginController extends CommonController{
         $userInfo = $userModel->doLogin('olI8S1RksDmlQwdINAHf758alen0');
         session('user_auth', $userInfo['data']);
         define(UID, session('user_auth')['user_id']);
-        $this->redirect('Home/User/personalCenter');
+        $this->redirect('Home/User/personalCenter/login/1');
 //        $this->ajaxReturn(V(1, '登录成功',$userInfo));
         $code = $_GET['code'];
         $weiChat_token = $this->getWeiChat($code);
