@@ -29,7 +29,9 @@ class TaskLogController extends CommonController {
         if (IS_POST) {
             $data = I('post.', '');
             if($taskModel->create($data,5) !==false) {
-                $res = $taskModel->save();
+
+                $res = $taskModel->save($data);
+
                 if ($res ===false) {
                     $this->ajaxReturn(V(0, '审核失败'));
                 }
