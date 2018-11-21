@@ -110,7 +110,7 @@
                     </foreach>
                 </if>
             </div>
-            <div class="unqualified-system-reply">
+            <div id="myMessage" class="unqualified-system-reply">
                 <if condition="count($taskLogInfo['list'][0]['message'][taskChat])  neq 0  ">
                             <foreach  name="taskLogInfo['list'][0]['message'][taskChat]"  item="v">
                                      <p>{$v.content}</p>
@@ -147,8 +147,7 @@
             <foreach name="taskLogInfo['list'][0]['valid_img']" item="v">
                 <img src="{$v}">
             </foreach>
-            <php> $valid_status = ['待提交','待审核','不合格','已完成','已放弃']</php>
-            <p>{$valid_status[$taskLogInfo['list'][0]['valid_status']]}</p>
+            <p>{:show_valid_status($taskLogInfo['list'][0]['valid_status'])}</p>
         </div>
     </div>
 
@@ -379,11 +378,12 @@
                     success: function (data) {
                         mui.toast(data['info']);
                         // alert(JSON.stringify(data));
-                        if (data['status'] == 1) {
-                            setTimeout(function () {
-                                window.location.reload()
-                            }, 1000);
-                        }
+                        // if (data['status'] == 1) {
+                        //     setTimeout(function () {
+                        //         window.location.reload()
+                        //     }, 1000);
+                        // }
+                         $('#myMessage').append("<p>"+ content +"</p>");
                     },
                     error: function (xhr, type, errorThrown) {
                         //异常处理；

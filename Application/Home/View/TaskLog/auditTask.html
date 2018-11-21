@@ -16,80 +16,68 @@
                 <a href="#">审核</a>
             </div>
             <div class="sess-wapper review">
-                <button class="review-complaint">投诉</button>
+                <button class="review-complaint" onclick="complaint({$taskLogInfo['list'][0]['tid']})">投诉</button>
                 <div class="review-wapper">
                     <div class="review-title">
                         <h1>审核情况</h1>
                         <ul>
-                            <li>已审核：2</li>
-                            <li>未审核：3</li>
+                            <li>已审核：{$taskAudit[is_audit]}</li>
+                            <li>未审核：{$taskAudit[no_audit]}</li>
                         </ul>
                     </div>
+<if condition="$taskLogInfo['list'][0]['valid_status'] eq 2">
                     <div class="reivew-chat">
                         <div class="chat-name">
                             信息交流：
                         </div>
                         <div class="cf chat-ul">
                             <ul class=" fl">
-                                <li>
-                                    <span>没有阅读详情</span>
-                                </li>
-                                <li>
-                                    <span>没有阅读详情</span>
-                                </li>
+                                <if condition="count($taskLogInfo['list'][0]['message'][userChat])  neq 0  ">
+                                    <foreach  name="taskLogInfo['list'][0]['message'][userChat]"  item="v">
+                                        <li>
+                                            <span>{$v.content}</span>
+                                        </li>
+                                    </foreach>
+                                </if>
                             </ul>
-                            <ul class="fr">
-                                <li>
-                                    <span>阅读详情具体的界面是什么样的阅读详情具体的界面是什么样的阅读详情具体的界面是什么样的阅读详情具体的界面是什么样的阅读详情具体的界面是什么样的阅读详情具体的界面是什么样的阅读详情具体的界面是什么样的阅读详情具体的界面是什么样的阅读详情具体的界面是什么样的</span>
-                                </li>
-                                <li>
-                                    <span>没有阅读详情</span>
-                                </li>
+                            <ul id="myMessage" class="fr">
+                                <if condition="count($taskLogInfo['list'][0]['message'][taskChat])  neq 0  ">
+                                    <foreach  name="taskLogInfo['list'][0]['message'][taskChat]"  item="v">
+                                        <li>
+                                            <span>{$v.content}</span>
+                                        </li>
+                                    </foreach>
+                                </if>
                             </ul>
                         </div>
                         <div class="reivew-btn">
-                            <button>回复</button>
+                            <button onclick="reply({$taskLogInfo['list'][0]['user_id']},{$taskLogInfo['list'][0]['tid']})" >回复</button>
                         </div>
                     </div>
+</if>
                     <div class="review-sess">
                         <div class="review-user cf">
                             <div class="cf">
-                                <span class="user-i fl"><img src="__PUBLIC__/pc/images/user.png" /></span>
+                                <span class="user-i fl"><img src="{$taskLogInfo['list'][0]['head_pic']}" /></span>
                                 <div class="user-name fl">
-                                    <h1> 没有腹肌的IT</h1>
-                                    <p>ID 697953</p>
+                                    <h1> {$taskLogInfo['list'][0]['nick_name']}</h1>
+                                    <p>ID{$taskLogInfo['list'][0]['user_id']}</p>
                                 </div>
                             </div>
-                            <div class="review-p">待审核</div>
+                            <div class="review-p">{:show_valid_status($taskLogInfo['list'][0]['valid_status'])}</div>
                         </div>
                         <div class="review-swiper">
                             <!-- Swiper -->
                             <div class="swiper-container">
                                 <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
+                                    <foreach name="taskLogInfo['list'][0]['valid_img']" item="v" key="k">
+                                        <div class="swiper-slide">
                                         <span class="slide-img">
-                                            <img src="__PUBLIC__/pc/images/IMG_4165.png" />
+                                            <img src="{$v}" />
                                         </span>
-                                        图一
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <span class="slide-img">
-                                            <img src="__PUBLIC__/pc/images/IMG_4165.png" />
-                                        </span>
-                                        图二
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <span class="slide-img">
-                                            <img src="__PUBLIC__/pc/images/IMG_4165.png" />
-                                        </span>
-                                        图三
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <span class="slide-img">
-                                            <img src="__PUBLIC__/pc/images/IMG_4165.png" />
-                                        </span>
-                                        图四
-                                    </div>
+                                            图{$k + 1}
+                                        </div>
+                                    </foreach>
                                 </div>
                                 <!-- Add Pagination -->
                                 <!-- <div class="swiper-pagination"></div> -->
@@ -98,10 +86,15 @@
                             <div class="swiper-button-next"></div>
                             <div class="swiper-button-prev"></div>
                         </div>
-                        <div class="upload-btng">
-                            <button>不合格</button>
-                            <button>合格</button>
-                        </div>
+                        <if condition="$valid_status  eq 1">
+                            <div class="upload-btng">
+                                <button onclick="fail({$taskLogInfo['list'][0]['tid']})" >不合格</button>
+                                <button  onclick="pass({$taskLogInfo['list'][0]['tid']})" >合格</button>
+                            </div>
+                            <else /> <div class="upload-btng">
+                                        <button >{:show_valid_status($taskLogInfo['list'][0]['valid_status'])}</button>
+                                    </div>
+                        </if>
                     </div>
                 </div>
             </div>
@@ -149,7 +142,121 @@
             $(".pop-ups").hide();
             // $(".model").hide();
         })
-    </script>
+        function  reply(user_id,task_log_id) {
+            var btnArray = ['取消', '确定'];
+            mui.prompt('', '请输入回复的信息', '信息交流', btnArray, function (e) {
+                if (e.index == 1) {
+                    var content = e.value;
+                    if (content == '') {
+                        mui.toast('请输入回复内容');
+                        return
+                    }
+                    mui.ajax(url + 'Mobile/Chat/addChat', {
+                        data: {
+                            user_id: user_id,
+                            task_log_id: task_log_id,
+                            content: content,
+                            type : 1
+                        },
+                        dataType: 'json',//服务器返回json格式数据
+                        type: 'post',//HTTP请求类型
+                        timeout: 10000,//超时时间设置为10秒；
+                        success: function (data) {
+                            mui.toast(data['info']);
+                            // alert(JSON.stringify(data));
+                            // if (data['status'] == 1) {
+                            //     setTimeout(function () {
+                            //         window.location.reload()
+                            //     }, 1000);
+                            // }
+                            $('#myMessage').append("<li><span>"+ content +"</span></li>");
+                        },
+                        error: function (xhr, type, errorThrown) {
+                            //异常处理；
+                            console.log(type);
+                        }
+                    });
+                } else {
+                    // 点击了确定按钮
+                }
+            })
+        }
+        function complaint(tid){
+            var btnArray = ['取消', '确定'];
+            mui.prompt('', '请输入投诉理由和内容', '投诉', btnArray, function(e) {
+                if (e.index == 1) {
+                    var information = e.value;
+                    if(information == ''){
+                        mui.toast('请输入投诉内容');
+                        return
+                    }
+                    mui.ajax(url + 'Mobile/Complaint/addComplaint',{
+                        data:{
+                            tid : tid,
+                            information: information,
+                            type : 0
+                        },
+                        dataType:'json',//服务器返回json格式数据
+                        type:'post',//HTTP请求类型
+                        timeout:10000,//超时时间设置为10秒；
+                        success:function(data){
+                            mui.toast(data['info']);
+                            // alert(JSON.stringify(data));
+                        },
+                        error:function(xhr,type,errorThrown){
+                            //异常处理；
+                            console.log(type);
+                        }
+                    });
+                } else {
+                    // 点击了确定按钮
+                }
+            })
+        }
+        // function fail(task_id){
+        //     $("#unqualified-boom-btn").attr('name',task_id);
+        //     $("#grap-order-gray").addClass("mui-popup-backdrop mui-active");
+        //     $("#unqualified-window").css("display","block");
+        // }
+        function pass(tid){
+            mui.confirm('是否通过这个任务', '提示', '', function(e) {
+                if (e.index == 1) {
+                    mui.ajax(url + 'Mobile/TaskLog/pass',{
+                        data:{
+                            id : tid
+                        },
+                        dataType:'json',//服务器返回json格式数据
+                        type:'post',//HTTP请求类型
+                        timeout:10000,//超时时间设置为10秒；
+                        success:function(data){
+                            mui.toast(data['info']);
+                            // alert(JSON.stringify(data));
+                            if(data['status'] == 1){
+                                setTimeout(function(){
+                                    window.location.reload()
+                                }, 500);
+                            }else if(data['status'] == 2){
+                                mui.confirm('您的余额不足,是否去充值?', '提示', '', function(e) {
+                                    if (e.index == 1) {
+                                        mui.openWindow({
+                                            url:  url + 'Home/Pay/topUpsPage'
+                                        });
+                                    }else{
+                                        mui.toast('您取消了操作');
+                                    }
+                                });
+                            }
+                        },
+                        error:function(xhr,type,errorThrown){
+                            //异常处理；
+                            console.log(type);
+                        }
+                    });
+                }else{
+                    mui.toast('您取消了操作');
+                }
+            })
+        }
     </script>
 </block>
 </html>

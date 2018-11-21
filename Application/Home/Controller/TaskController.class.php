@@ -194,6 +194,52 @@ class TaskController extends UserCommonController{
         }
     }
     /**
+     * @desc  推荐置顶
+     * @param  $task_id
+     * @return mixed
+     */
+    public function topTask(){
+        $data = I('post.', 4);
+        $res  =  user_money(UID, $data['money']);
+        if(!$res){
+            $this->ajaxReturn(V(2, '余额不足'));
+        }else{
+            M()->startTrans();
+            $userModel = D('Home/User');
+            $userRes  = $userModel->where('user_id = '.UID)->setDec('total_money',$data['money']);
+            $taskData = $this->Task->where(array('id'=>$data['id']))->field('top_time,re_time')->find();
+            if($data['top'] == 1){
+                $type = 10;
+                $desc = '任务置顶';
+                if($taskData['top_time'] > NOW_TIME){
+                    $taskData['top_time'] = $data['topNum'] * 3600  + $taskData['top_time'];
+                }else{
+                    $taskData['top_time'] = $data['topNum'] * 3600  + NOW_TIME;
+                    $taskData['top'] = 1;
+                }
+            }else{
+                $type = 9;
+                $desc = '任务推荐';
+                if($taskData['re_time'] > NOW_TIME){
+                    $taskData['re_time'] = $data['topNum'] * 3600  + $taskData['re_time'];
+                }else{
+                    $taskData['recommend'] = 1;
+                    $taskData['re_time'] = $data['topNum'] * 3600  + NOW_TIME;
+                }
+            }
+            account_log(UID, $data['money'], $type, $desc, $data['id']);
+            $taskRes = $this->Task->where(array('id'=>$data['id']))->save($taskData);
+            if($taskRes  && $userRes){
+                M()->commit();
+                $this->ajaxReturn(V(1, $desc.'成功'));
+            }else{
+                M()->rollback();
+                $this->ajaxReturn(V(2, $desc.'失败'));
+            }
+            $this->ajaxReturn(V(0, $this->Task->getError()));
+        }
+    }
+    /**
      * 删除oss上指定文件
      * @param  string $object 文件路径 例如删除 /Public/README.md文件  传Public/README.md 即可
      */
