@@ -81,8 +81,8 @@ class TaskLogController extends UserCommonController{
         $taskLogInfo = $taskLogModel->field('id, user_id, task_id, valid_pic')->where('id = '.$taskLog_id)->find();
         $taskLogInfo['userChat']  = $chatModel ->field('content')->where('user_id  = '.$taskLogInfo['user_id'].'  and task_log_id =  '.$taskLogInfo['id'])->select();
         $taskLogInfo['taskChat']  = $chatModel ->field('content')->where('task_user_id = '.$taskLogInfo['user_id'].'  and task_log_id =  '.$taskLogInfo['id'])->select();
-        if(strpos($taskLogInfo['valid_pic'], ',')  !== false)
-            $taskLogInfo['valid_pic']   =   explode(',',$taskLogInfo['valid_pic']);{
+        if(strpos($taskLogInfo['valid_pic'], ',')  !== false){
+            $taskLogInfo['valid_pic']   =   explode(',',$taskLogInfo['valid_pic']);
         } else {
             $taskLogInfo['valid_pic']   =    array($taskLogInfo['valid_pic']);
         }
