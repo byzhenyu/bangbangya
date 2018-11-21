@@ -19,7 +19,7 @@
                 <div class="jd_info">
                     <div class="jd_utitle">标题</div>
                     <div class="jd_uvalue">{$taskDetail['title']}</div>
-                    <div class="jd_gz">接单规则</div>
+                    <div class="jd_gz" onclick="jumpRules()">接单规则</div>
                 </div>
                 <div class="jd_info">
                     <div class="jd_utitle">发布方</div>
@@ -27,7 +27,7 @@
                         <span>
                             <img src="{$taskDetail['head_pic']}"/>
                         </span>
-                        697953
+                        {$taskDetail['nick_name']}
                     </div>
                     <if condition="$taskDetail['shop_accounts'] neq 0">
                         <div class="jd_price">
@@ -190,6 +190,9 @@
         $(".jd_gno").click(function () {
             $(".jd_glertws").addClass("jd_alerth");
         })
+        function jumpRules() {
+            window.location.href = "{:U('Article/articleDetail',array('category_id'=>1))}";
+        }
     </script>
 </block>
 
