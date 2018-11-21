@@ -10,8 +10,8 @@
  * @CreateBy       PhpStorm
  */
 namespace Home\Controller;
-use Common\Controller\CommonController;
-class HelpController extends CommonController {
+use Common\Controller\UserCommonController;
+class HelpController extends UserCommonController {
     public function _initialize() {
         $this->Help = D("Home/Help");
     }

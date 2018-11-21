@@ -9,8 +9,8 @@
  * @CreateBy       PhpStorm
  */
 namespace Home\Controller;
-use Common\Controller\CommonController;
-class FeedbackController extends CommonController {
+use Common\Controller\UserCommonController;
+class FeedbackController extends UserCommonController {
     public function _initialize() {
         $this->Feedback = D("Home/FeedBack");
     }
