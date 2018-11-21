@@ -39,7 +39,7 @@ class TaskModel extends Model{
     public function getTaskList($where = [], $field = '', $order = 't.top_time DESC, t.re_time DESC, t.add_time DESC') {
         /*任务状态查询条件*/
         if ($field =='') {
-            $field = 't.id,t.user_id,t.discard_id,t.title,t.price,t.category_id,t.mobile_type,t.top_time,t.re_time,c.category_name,c.category_img,s.shop_accounts';
+            $field = 't.id,t.user_id,t.discard_id,t.title,t.price,t.category_id,t.mobile_type,t.top_time,t.re_time,t.task_num,c.category_name,c.category_img,s.shop_accounts';
         }
         $map['t.status'] = array('eq', 1); //未删除
 //        $map['t.end_time'] = array('gt', NOW_TIME); //未结束
