@@ -29,8 +29,6 @@
 </block>
 <block name="script">
     <script type="text/javascript">
-        var _IS_SUBMIT_SUCCESS = false; // 全局变量, 提交是否成功
-        var _NEED_REFRESH = true;
         function enbaleSubmitButton(){
             $("button:submit").attr("disabled", false);
         }
@@ -58,25 +56,16 @@
             function success(data){
                 //如果没有回调函数, 默认执行
                 if(data.status == 1){
-                    _IS_SUBMIT_SUCCESS = true;
-
-                    if (data.info != '' && typeof(data.info) != 'undefined')  mui.toast(data.info);
-                    //跳转页面
-                    if ( typeof(_TARGET_URL) != 'undefined' && _TARGET_URL != '') {
-                        window.location.href = _TARGET_URL;
-                    }
-                    //刷新页面
-                    if ( typeof(_NEED_REFRESH) != 'undefined' && _NEED_REFRESH == true) {
-                        setTimeout("reload()",1500);
-                    }
-                } else {
+                    mui.toast(data.info);
+                    setTimeout(function() {
+                        location.reload();
+                    },1500);
+                }
+                else {
                     if (data.info != '' && typeof(data.info) != 'undefined') mui.toast(data.info);
                     else  mui.toast('未定义错误!');
                 }
             }
         });
-        function reload() {
-            location.reload();
-        }
     </script>
 </block>
