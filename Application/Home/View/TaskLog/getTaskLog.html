@@ -92,7 +92,9 @@
                         success:function(data){
                             mui.toast(data['info']);
                             if(data['status'] == 1){
-                                setTimeout("reload()", 2000);
+                                setTimeout(function(){
+                                    location.reload();
+                                }, 2000);
                             }
                         },
                         error:function(xhr,type,errorThrown){
@@ -105,10 +107,6 @@
                     mui.alert('您取消了操作');
                 }
             });
-        }
-
-        function reload() {
-            location.reload();
         }
 
         /*上传验证*/

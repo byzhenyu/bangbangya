@@ -31,7 +31,7 @@
                 <elseif condition="$v['valid_status'] eq 1"/>
                 <button class="fr task-org">审核中</button>
                 <elseif condition="$v['valid_status'] eq 2"/>
-                <button class="fr task-org" onclick="fail({$v[id]})">不合格</button>
+                <button class="fr task-org" style="color:red;" onclick="fail({$v[id]})">不合格</button>
                 <else />
                 <button class="fr task-green">已完成</button>
             </if>

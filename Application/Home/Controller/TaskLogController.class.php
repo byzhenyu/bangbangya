@@ -69,6 +69,35 @@ class TaskLogController extends UserCommonController{
     }
 
     /**
+     * @desc 我的任务-上传验证
+     * @param $task_id
+     * @return mixed
+     */
+    public function taskVerify() {
+        $id = I('id', 0, 'intval');
+        $taskLogModel = D('Home/TaskLog');
+        if(IS_POST) {
+            $data = I('post.', '');
+            $data['valid_img'] = implode(',', $data['valid_img']);
+            $data['valid_status'] = 1;
+
+            if ($taskLogModel->create($data, 5) !== false) {
+                $rs = $taskLogModel->save($data);
+                if ($rs === false) {
+                    $this->ajaxReturn(V(0, '操作失败'));
+                }
+                $this->ajaxReturn(V(1, '上传成功'));
+            } else {
+                $this->ajaxReturn(V(0, $taskLogModel->getError()));
+            }
+        }
+        $info = $taskLogModel->getTaskLogDetail(array('l.id'=>$id));
+        $this->assign('info', $info);
+        $this->assign('id', $id);
+        $this->display();
+    }
+
+    /**
      * @desc  任务不合格详情
      * @param  tasklog_id
      * @return mixed
@@ -82,7 +111,8 @@ class TaskLogController extends UserCommonController{
         $taskLogInfo['taskChat']  = $chatModel ->field('content')->where('task_user_id = '.$taskLogInfo['user_id'].'  and task_log_id =  '.$taskLogInfo['id'])->select();
         if(strpos($taskLogInfo['valid_pic'], ',')  !== false){
             $taskLogInfo['valid_pic']   =   explode(',',$taskLogInfo['valid_pic']);
-        } else {
+        }
+        else {
             $taskLogInfo['valid_pic']   =    array($taskLogInfo['valid_pic']);
         }
         $this->assign('taskLogInfo',$taskLogInfo);
@@ -106,7 +136,8 @@ class TaskLogController extends UserCommonController{
         if($taskLogRes && $taskRes){
             M()->commit();
             $this->ajaxReturn(V(1, '成功'));
-        }else{
+        }
+        else{
             M()->rollback();
             $this->ajaxReturn(V(0, '失败'));
         }
