@@ -92,6 +92,7 @@ class TaskLogController extends UserCommonController{
             }
         }
         $info = $taskLogModel->getTaskLogDetail(array('l.id'=>$id));
+        p($info);
         $this->assign('info', $info);
         $this->assign('id', $id);
         $this->display();
