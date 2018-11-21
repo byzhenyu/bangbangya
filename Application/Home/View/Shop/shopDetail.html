@@ -1,0 +1,195 @@
+<extend name="Public/base"/>
+<block name="style">
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/store-detail.css">
+    <style>
+        .index-wapper {
+            display: none;
+        }
+        .index-active{
+            display: block;
+        }
+        .state-active {
+            display: block;
+            color: #ffffff;
+            background: #6F75FE;
+            border: 1px solid #ffffff;
+        }
+        .sd_stateinfo {
+            border-bottom: 1px solid #E5E5E5;
+        }
+    </style>
+</block>
+<block name="body">
+    <body class="bg">
+    <include file="Public/head"/>
+        <div class="session">
+            <div class="w1200">
+                <include file="Public/nav"/>
+                <div class="nav-bred">
+                    <a href="#">接单赚钱>{$ShopInfo.nick_name}的店铺</a>
+                </div>
+                <div class="sess-wapper">
+                    <div class="sd_uinfo">
+                        <div class="sd_upic">
+                            <span>
+                                <img src="{$ShopInfo.head_pic}">
+                            </span>
+                        </div>
+                        <div class="sd_uinfos">
+                            <div class="sd_unames">
+                                <div class="sd_uname">
+                                    {$ShopInfo.nick_name}
+                                </div>
+                                <div class="sd_ulevel">
+                                    <span>
+
+                                        <if condition="$ShopInfo.partner_time gt time()">
+                                            <img src="__PUBLIC__/pc/images/common_icon_baijin@3x.png">
+                                        </if>
+
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="sd_uids">
+                                <div class="sd_uid">
+                                    ID {$ShopInfo.user_id}
+                                </div>
+
+                                    <div class="sd_uprice">
+                                        <if condition="$ShopInfo.shop_accounts gt 0">
+                                        <span>
+                                            <img src="__PUBLIC__/pc/images/common_icon_promise_green@3x.png">
+                                        </span>
+                                        ￥ {:fen_to_yuan($ShopInfo['shop_accounts'])}
+                                        </if>
+                                    </div>
+
+
+                                <div class="sd_udate">
+                                    <if condition="$ShopInfo.top_time gt NOW_TIME">
+                                        置顶到期 {$ShopInfo.top_time|time_format}
+                                    </if>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="sd_orderinfo">
+                        <div class="sd_order1">
+                            <div>总发单<span>{$ShopInfo['task_num']}单</span></div>
+                            <div>总成交<span>{$ShopInfo['vol']}单</span></div>
+                            <div>被申诉<span>{$ShopInfo['be_appeal_num']}次</span></div>
+                            <div>申诉<span>{$ShopInfo['appeal_num']}次</span></div>
+                            <div>发任务<span>{$ShopInfo['task_count']}个</span></div>
+                            <div>接任务<span>{$ShopInfo['take_task']}单</span></div>
+                        </div>
+                        <div class="sd_order2">
+                            <div>被投诉<span>{$ShopInfo['be_complain_num']}次</span></div>
+                            <div>投诉<span>{$ShopInfo['complain_num']}次</span></div>
+                        </div>
+                    </div>
+
+                    <div class="sd_stateinfo">
+                        <div class="sd_state sd_state1 state-active" onclick="showPage(1)">
+                            进行中
+                        </div>
+                        <div class="sd_state sd_state2" onclick="showPage(2)">
+                            已下架（48小时内）
+                        </div>
+                    </div>
+
+
+
+                    <ul id="item1" class="index-wapper index-active">
+                        <foreach name="taskInfo" item="v">
+                        <li class="cf">
+                            <div class="item-wapper fl cf">
+                                <div class="item-i fl">
+                                    <img src="{$v.category_img}"/>
+                                </div>
+                                <div class="item-sess fl">
+                                    <div class="item-h1 cf">
+                                        <h1 class="fl">{$v.category_name}</h1>
+                                        <span class="item-tips fl">
+                                            <!--<svg class="icon" aria-hidden="true">-->
+                                                <!--<use xlink:href="#icon-jdzq_icon_top"></use>-->
+                                            <!--</svg>-->
+                                            <!--<svg class="icon" aria-hidden="true">-->
+                                                <!--<use xlink:href="#icon-jdzq_icon_promise"></use>-->
+                                            <!--</svg>-->
+                                            <!--<svg class="icon" aria-hidden="true">-->
+                                                <!--<use xlink:href="#icon-home_jdzq_icon_tuiji"></use>-->
+                                            <!--</svg>-->
+                                        </span>
+                                        <span class="item-p fl">
+                                            {$v.title}
+                                        </span>
+                                    </div>
+                                    <div class="item-span">
+                                        <span>编号：{$v.id}</span>
+                                        <span>单价：￥{:fen_to_yuan($v['price'])}</span>
+                                        <span>剩余单数：{$v.task_num}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{:U('Task/TaskDetail',array('id'=>$v['id']))}" class="item-btn fr">查看</a>
+                        </li>
+                        </foreach>
+                    </ul>
+                    <ul id="item2" class="index-wapper">
+                        <foreach name="last_taskInfo" item="v">
+                            <li class="cf">
+                                <div class="item-wapper fl cf">
+                                    <div class="item-i fl">
+                                        <img src="{$v.category_img}"/>
+                                    </div>
+                                    <div class="item-sess fl">
+                                        <div class="item-h1 cf">
+                                            <h1 class="fl">{$v.category_name}</h1>
+                                            <!--<span class="item-tips fl">-->
+                                            <!--<svg class="icon" aria-hidden="true">-->
+                                                <!--<use xlink:href="#icon-jdzq_icon_top"></use>-->
+                                            <!--</svg>-->
+                                            <!--<svg class="icon" aria-hidden="true">-->
+                                                <!--<use xlink:href="#icon-jdzq_icon_promise"></use>-->
+                                            <!--</svg>-->
+                                            <!--<svg class="icon" aria-hidden="true">-->
+                                                <!--<use xlink:href="#icon-home_jdzq_icon_tuiji"></use>-->
+                                            <!--</svg>-->
+                                        <!--</span>-->
+                                            <span class="item-p fl">
+                                            {$v.title}
+                                        </span>
+                                        </div>
+                                        <div class="item-span">
+                                            <span>编号：{$v.id}</span>
+                                            <span>单价：￥{:fen_to_yuan($v['price'])}</span>
+                                            <span>剩余单数：{$v.task_num}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="{:U('Task/TaskDetail',array('id'=>$v['id']))}" class="item-btn fr">查看</a>
+                            </li>
+                        </foreach>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </body>
+</block>
+<block name="script">
+    <script>
+        $(".sd_stateinfo").on('click', 'div',function () {
+            $('.sd_state').removeClass("state-active");
+            $(this).addClass("state-active");
+        })
+        function showPage(item) {
+            $('.index-wapper').removeClass("index-active");
+            $('#item'+item).addClass("index-active");
+        }
+
+    </script>
+</block>
+</html>
