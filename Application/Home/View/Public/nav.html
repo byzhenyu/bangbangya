@@ -32,7 +32,7 @@
             <i class="iconfont icon-leftbar_icon_mywalle"></i>
             我的钱包
         </a>
-        <a href="{:U('Pay/incomeDividends')}" <if condition="ACTION_NAME eq 'incomeDividends'">  class="nav-link nav-active"<else /> class="nav-link"</if>>
+        <a href="{:U('Pay/incomeDividends')}" <if condition="(ACTION_NAME eq 'incomeDividends') OR (ACTION_NAME eq 'withdraw1') ">  class="nav-link nav-active"<else /> class="nav-link"</if>>
             <i class="iconfont icon-leftbar_icon_income_"></i>
             收入分红
         </a>

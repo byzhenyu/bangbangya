@@ -5,12 +5,38 @@
     <title>登录</title>
     <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+    <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+        .index-login-boom {
+            position: fixed;
+            top: 40%;
+        }
+        .index-login-boom .wrp-code {
+            width: 180px;
+            height: 180px;
+        }
+        .qrcode-box {
+            max-height: 180px;
+            max-width: 180px;
+        }
+        .wrp_code img{
+            width: 100px;
+            height: 100px;
+        }
+    </style>
 </head>
 <body>
 
     <div class="login-index-top">
         <img class="help_duck_logo" src="__PUBLIC__/mobile/images/logoin_img_logo.png">
         <img class="help_duck_font" src="__PUBLIC__/mobile/images/login_font.png">
+    </div>
+
+    <div class="index-login-boom">
+        <p class="login-boom-title">微信登录</p>
+        <div class="qrcode-box">
+            <div id="login_container" class="wrp-code"></div>
+        </div>
     </div>
 
     <div class="login-index-middle">
@@ -40,34 +66,46 @@
 <script src="__PUBLIC__/mobile/js/url.js"></script>
 <script type="text/javascript" charset="utf-8">
     mui.init();
-    function dologin()
-    {
-        mui.ajax(url + 'Mobile/Login/dologin',{
-            data:{
-                open_id:'123456'
-            },
-            dataType:'json',//服务器返回json格式数据
-            type:'post',//HTTP请求类型
-            timeout:10000,//超时时间设置为10秒；
-            // headers:{'Content-Type':'application/json'},
-            success:function(data){
-                mui.toast(data['info']);
-                // alert(JSON.stringify(data));
-                if(data['data'] == 1){
-                    setTimeout(function(){
-                        mui.openWindow({
-                            url:  url + '/Mobile/User/Invitation'
-                        });
-                    }, 1500);
-                }
-            },
-            error:function(xhr,type,errorThrown){
-                //异常处理；
-                console.log(type);
-            }
-        });
-    }
+    var obj = new WxLogin({
+        self_redirect:false,
+        id:"login_container",
+        appid: "wxabfa47477f012987",
+        scope: "snsapi_login",
+        redirect_uri: "http%3a%2f%2fbby.host5.liuniukeji.net%2fHome%2fLogin%2fdologin",
+        state: "Mobile",
+        style: "black",
+        href: ""
+    });
+    // function dologin()
+    // {
+    //     mui.ajax(url + 'Mobile/Login/dologin',{
+    //         data:{
+    //             open_id:'123456'
+    //         },
+    //         dataType:'json',//服务器返回json格式数据
+    //         type:'post',//HTTP请求类型
+    //         timeout:10000,//超时时间设置为10秒；
+    //         // headers:{'Content-Type':'application/json'},
+    //         success:function(data){
+    //             mui.toast(data['info']);
+    //             // alert(JSON.stringify(data));
+    //             if(data['data'] == 1){
+    //                 setTimeout(function(){
+    //                     mui.openWindow({
+    //                         url:  url + '/Mobile/User/Invitation'
+    //                     });
+    //                 }, 1500);
+    //             }
+    //         },
+    //         error:function(xhr,type,errorThrown){
+    //             //异常处理；
+    //             console.log(type);
+    //         }
+    //     });
+    // }
+    function dologin(){
 
+    }
 </script>
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>

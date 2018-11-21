@@ -87,5 +87,71 @@ class UserController extends UserCommonController {
         $this->assign('randList', $rankList);
         $this->display();
     }
+    /**
+     * @desc 合作商查看
+     * @param  $user_id
+     * @param  $shop_type
+     * @return mixed
+     */
+    public  function partners(){
+        $vip = getVip();
+        $user_id = UID;
+        $where['u.user_id'] = $user_id;
+        $field = 's.shop_type, s.partner_time ';
+        $shopInfo  = $this->user->getUserInfo($where, $field);
+        if($shopInfo['shop_type']  == 0){
+            $shop_type = 0;
+        }elseif($shopInfo['partner_time']  < NOW_TIME){
+            $shop_type = 0;
+        }else{
+            $shop_type = $shopInfo['shop_type'];
+        }
+        $this->assign('shop_type', $shop_type);
+        $this->assign('vip', $vip);
+        $this->display();
+    }
+    /**
+     * @desc  上传用户头像  OSS
+     * @return url
+     */
+    public function uploadImg(){
+        $config = array(
+            'rootPath' => '.'.C('UPLOAD_URL').'head_pic/',
+            'savePath' => '',
+            'maxSize' => C('UPLOAD_SIZE'),
+            'exts' => 'jpg,jpeg,png,gif',
+        );
 
+        $Upload = new \Think\Upload($config);
+        $info = $Upload->upload();
+
+        if ($info === false) {
+            $this->ajaxReturn(V(0, $Upload->getError()));
+        } else {
+            vendor('Alioss.autoload');
+            $config = C('ALIOSS_CONFIG');
+
+            $oss=new \OSS\OssClient($config['KEY_ID'],$config['KEY_SECRET'],$config['END_POINT']);
+            $bucket=$config['BUCKET'];
+
+            // 返回成功信息
+            foreach($info as $file){
+                $path = '.'.C('UPLOAD_URL').'head_pic/'.$file['savepath'].$file['savename'];
+                $oss_path = trim($path, './');
+                $local_path = trim($path, '.');
+                $oss->uploadFile($bucket,$oss_path,$path);
+                unlink($path);
+                $data['nameosspath'] ='http://'.$bucket.'.'.$config['END_POINT'].'/'.$oss_path;
+                $data['name'] =$local_path;
+            }
+            $user_pic = $this->user->where('user_id = '.UID)->getField('head_pic');
+            /*删除OSS文件*/
+            if(strpos($user_pic,'http://bangbangya.oss') !== false) {
+                $object = $object = explode('com/',$user_pic)[1];
+                $oss->deleteObject($bucket,$object);
+            }
+            $this->user->where('user_id = '.UID)->save(array('head_pic'=>$data['nameosspath']));
+            $this->ajaxReturn(V(1, '更换头像成功', $data));
+        }
+    }
 }

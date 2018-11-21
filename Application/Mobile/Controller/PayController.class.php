@@ -92,7 +92,7 @@ class PayController  extends CommonController{
                   $this->ajaxReturn($drawRes);
               }
               $this->assign('shopInfo',$shopInfo);
-              $this->display();
+                  $this->display();
           }else{
               $this->display('Pay/bindAlipay');
           }

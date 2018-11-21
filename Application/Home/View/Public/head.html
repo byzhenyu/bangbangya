@@ -1,5 +1,19 @@
 <head name="header">
 <div class="header">
+    <style>
+        #upload{
+            border: none;
+            z-index: 99;
+            position: absolute;
+            overflow: hidden;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            width: 100px;
+            height: 100px;
+            top: 0;
+            left: 0;
+        }
+    </style>
     <div class="head w1200 cf">
         <a class="h-logo fl">
             <img  src="__PUBLIC__/pc/images/logo.png" />
@@ -10,6 +24,7 @@
             <div class="h-user fr cf">
                 <div class="user-i fl">
                     <span><img src="{:session('user_auth')['head_pic']}"></span>
+                    <input type="file" id="upload" accept="image/jpeg, image/gif" />
                     <p>{:session('user_auth')['nick_name']}</p>
                 </div>
                 <i class="iconfont icon-nav_icon_dropdown fl">
@@ -20,8 +35,9 @@
     </div>
 </div>
 </head>
+<script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.fileupload.js"></script>
+<script type="text/javascript" src="__PUBLIC__/pc/js/jquery-3.1.1.min.js"></script>
 <script>
-
     function logOut()
     {
         mui.confirm('您是否退出登录?', '提示', '', function(e) {
@@ -52,4 +68,12 @@
 
         })
     }
+    $('#upload').fileupload({
+        url: "{:U('User/uploadImg')}",
+        dataType: 'json',
+        done: function (e, data) {
+            $('#head_pic').attr('src',data.result.data.nameosspath);
+            mui.toast('更换成功');
+        }
+    });
 </script>
