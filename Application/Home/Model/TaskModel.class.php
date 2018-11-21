@@ -42,9 +42,9 @@ class TaskModel extends Model{
             $field = 't.id,t.user_id,t.discard_id,t.title,t.price,t.category_id,t.mobile_type,t.top_time,t.re_time,c.category_name,c.category_img,s.shop_accounts';
         }
         $map['t.status'] = array('eq', 1); //未删除
-        $map['t.end_time'] = array('gt', NOW_TIME); //未结束
+//        $map['t.end_time'] = array('gt', NOW_TIME); //未结束
         $map['t.is_show'] = array('eq', 1);//已发布
-        $map['t.audit_status'] = array('eq', 1);//审核通过
+//        $map['t.audit_status'] = array('eq', 1);//审核通过
         $count = $this->alias('t')
               ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')
               ->join('__SHOP__ as s on s.user_id = t.user_id')
