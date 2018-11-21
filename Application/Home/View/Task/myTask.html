@@ -12,166 +12,78 @@
                 <a href="#">我的发布</a>
             </div>
             <ul class="sess-wapper release">
-                <li class="release-wapper cf">
-                    <div class="release-sess fl cf">
-                        <div class="release-i fl">
-                            <img src="__PUBLIC__/pc/images/jdzq_icon_register.png" />
-                        </div>
-                        <div class="sess-box fl">
-                            <div class="sess-title cf">
-                                <h1 class="fl">注册</h1>
-                                <p class="fl">天天快报一秒完成</p>
-                                <span class="fl">编号：740006</span>
+                <volist name="taskList" id="v">
+                    <li class="release-wapper cf">
+                        <div class="release-sess fl cf">
+                            <div class="release-i fl">
+                                <img src="{$vo.category_img}" />
                             </div>
-                            <ul class="cf">
-                                <li class="fl">单价：￥2.5</li>
-                                <li class="fl">总量：100</li>
-                                <li class="fl">进行中：0</li>
-                                <li class="fl">剩余：100</li>
-                                <li class="fl">已完成：0</li>
-                                <li class="fl">待审核：0</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="release-btng fr cf">
-                        <button class="btn-red">删除</button>
-                        <button class="btn-red">修改</button>
-                        <button class="btn-red">发布</button>
-                        <button class="btn-pur">查看</button>
-                    </div>
-                </li>
-                <li class="release-wapper cf">
-                    <div class="release-sess fl cf">
-                        <div class="release-i fl">
-                            <img src="__PUBLIC__/pc/images/jdzq_icon_vote.png" />
-                        </div>
-                        <div class="sess-box fl">
-                            <div class="sess-title cf">
-                                <h1 class="fl">投票</h1>
-                                <p class="fl">京东砍快通过</p>
-                                <span class="fl">编号：740006</span>
+                            <div class="sess-box fl">
+                                <div class="sess-title cf">
+                                    <h1 class="fl">{$v.category_name}</h1>
+                                    <p class="fl">{$v.title}</p>
+                                    <span class="fl">编号：{$v.id}</span>
+                                </div>
+                                <ul class="cf">
+                                    <li class="fl">单价：￥{:fen_to_yuan($v.price)}</li>
+                                    <li class="fl">总量：{$v.task_zong}</li>
+                                    <li class="fl">进行中：{$v.beginNum}</li>
+                                    <li class="fl">剩余：{$v.task_num}</li>
+                                    <li class="fl">已完成：{$v.sucNum}</li>
+                                    <li class="fl">待审核：{$v.auditNum}</li>
+                                </ul>
+                                <if condition="$v['audit_status'] eq 2">
+                                    <p class="release-fail">
+                                        失败原因: {$v['audit_info']}
+                                    </p>
+                                    <elseif condition="$v['audit_status'] eq 1"/>
+                                    <p class="release-date">
+                                        <span>发布：{$v['add_time']|time_format}</span>
+                                        <span>截止：{$v['end_time']|time_format}</span>
+                                    </p>
+                                </if>
+
                             </div>
-                            <ul class="cf">
-                                <li class="fl">单价：￥2.5</li>
-                                <li class="fl">总量：100</li>
-                                <li class="fl">进行中：0</li>
-                                <li class="fl">剩余：100</li>
-                                <li class="fl">已完成：0</li>
-                                <li class="fl">待审核：0</li>
-                            </ul>
                         </div>
-                    </div>
-                    <div class="release-btng fr cf">
-                        <button class="review-ing">
-                            审核中
-                        </button>
-                        <button class="btn-red">删除</button>
-                        <button class="btn-pur">查看</button>
-                    </div>
-                </li>
-                <li class="release-wapper cf">
-                    <div class="release-sess fl cf">
-                        <div class="release-i fl">
-                            <img src="__PUBLIC__/pc/images/jdzq_icon_follow.png" />
+                        <div class="release-btng fr cf">
+                            <if condition="$v['is_show'] eq 0">
+
+                                <a href="{:U('addTask',array('id'=>$v['id']))}" class="btn-red">修改</a>
+                                <button class="btn-red">发布</button>
+
+                                <else/>
+                                <switch name="v['audit_status']">
+                                    <case value="0">
+                                        <button class="review-ing">
+                                            审核中
+                                        </button>
+                                    </case>
+                                    <case value="1">
+                                        <button class="btn-red">审核</button>
+                                        <button class="btn-red">暂停</button>
+                                        <button class="btn-red">追加数量</button>
+                                        <button class="btn-red">上调出价</button>
+                                        <button class="btn-red">下架</button>
+                                        <button class="btn-red">刷新</button>
+                                        <button class="btn-pur">下载</button>
+                                        <button class="btn-red">推荐</button>
+                                        <button class="btn-red">置顶</button>
+                                    </case>
+                                    <case value="2">
+                                        <button class="review-fail">
+                                            审核失败
+                                        </button>
+                                        <a href="{:U('addTask',array('id'=>$v['id']))}" class="btn-red">修改</a>
+                                    </case>
+                                </switch>
+
+                            </if>
+                            <button class="btn-red">删除</button>
+                            <a href="{:U('Task/myTaskDetail',array('id'=>$v['id']))}" class="btn-pur">查看</a>
                         </div>
-                        <div class="sess-box fl">
-                            <div class="sess-title cf">
-                                <h1 class="fl">关注</h1>
-                                <p class="fl">关注任务</p>
-                                <span class="fl">编号：740006</span>
-                            </div>
-                            <ul class="cf">
-                                <li class="fl">单价：￥2.5</li>
-                                <li class="fl">总量：100</li>
-                                <li class="fl">进行中：0</li>
-                                <li class="fl">剩余：100</li>
-                                <li class="fl">已完成：0</li>
-                                <li class="fl">待审核：0</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="release-btng fr cf">
-                        <button class="review-end">
-                            已结束
-                        </button>
-                        <button class="btn-red">删除</button>
-                        <button class="btn-pur">查看</button>
-                    </div>
-                </li>
-                <li class="release-wapper cf">
-                    <div class="release-sess fl cf">
-                        <div class="release-i fl">
-                            <img src="./images/jdzq_icon_skan.png" />
-                        </div>
-                        <div class="sess-box fl">
-                            <div class="sess-title cf">
-                                <h1 class="fl">浏览</h1>
-                                <p class="fl">简单阅读即可</p>
-                                <span class="fl">编号：740006</span>
-                            </div>
-                            <ul class="cf">
-                                <li class="fl">单价：￥2.5</li>
-                                <li class="fl">总量：100</li>
-                                <li class="fl">进行中：0</li>
-                                <li class="fl">剩余：100</li>
-                                <li class="fl">已完成：0</li>
-                                <li class="fl">待审核：0</li>
-                            </ul>
-                            <p class="release-fail">
-                                失败原因：验证图不明确
-                            </p>
-                        </div>
-                    </div>
-                    <div class="release-btng fr cf">
-                        <button class="review-fail">
-                            审核失败
-                        </button>
-                        <button class="btn-red">删除</button>
-                        <button class="btn-red">修改</button>
-                        <button class="btn-pur">查看</button>
-                    </div>
-                </li>
-                <li class="release-wapper cf">
-                    <div class="release-sess fl cf">
-                        <div class="release-i fl">
-                            <img src="./images/jdzq_icon_highprice.png" />
-                        </div>
-                        <div class="sess-box fl">
-                            <div class="sess-title cf">
-                                <h1 class="fl">高价</h1>
-                                <p class="fl">注册APP账号</p>
-                                <span class="fl">编号：740006</span>
-                            </div>
-                            <ul class="cf">
-                                <li class="fl">单价：￥2.5</li>
-                                <li class="fl">总量：100</li>
-                                <li class="fl">进行中：0</li>
-                                <li class="fl">剩余：100</li>
-                                <li class="fl">已完成：0</li>
-                                <li class="fl">待审核：0</li>
-                            </ul>
-                            <p class="release-date">
-                                <span>发布：2018-10-31 12:00</span>
-                                <span>截止：2018-10-31 12:00</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="release-btng fr cf">
-                        <button class="btn-red">审核</button>
-                        <button class="btn-red">暂停</button>
-                        <button class="btn-red">追加数量</button>
-                        <button class="btn-red">上调出价</button>
-                        <button class="btn-red">下架</button>
-                        <button class="btn-red">刷新</button>
-                        <button class="btn-pur">下载</button>
-                        <button class="btn-red">推荐</button>
-                        <button class="btn-red">置顶</button>
-                        <button class="btn-red">删除</button>
-                        <button class="btn-red">修改</button>
-                        <button class="btn-red">发布</button>
-                        <button class="btn-pur">查看</button>
-                    </div>
-                </li>
+                    </li>
+                </volist>
+
             </ul>
         </div>
     </div>

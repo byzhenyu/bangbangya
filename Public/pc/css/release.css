@@ -80,6 +80,16 @@
     padding: 0 10px;
     margin: 5px;
 }
+.release-wapper .release-btng a{
+    min-width: 56px;
+    height: 30px;
+    line-height: 30px;
+    display: inline-block;
+    margin-left: 10px;
+    border-radius: 6px;
+    padding: 0 10px;
+    margin: 5px;
+}
 .release-wapper .release-btng .btn-pur{
     border: 1px solid #6F75FE;
     color: #6F75FE;
