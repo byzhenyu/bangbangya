@@ -56,7 +56,7 @@ class TaskLogModel extends Model {
         $info = $this->alias('log')
             ->join('__TASK__ t on log.task_id = t.id')
             ->join('__USER__ u on log.user_id = u.user_id')
-            ->field('log.*,t.*,u.nick_name')
+            ->field('log.*,t.title,t.category_id,t.mobile_type,t.end_time,t.price,t.task_zong,t.task_num,t.total_price,t.look_num,t.link_url,t.validate_words,t.remark,t.is_show,t.audit_status,t.user_id as task_user_id,u.nick_name')
             ->where($where)->find();
             if($info) {
                $info['checkInfo'] = D('TaskStep')->getTaskStepList(array('task_id'=>$info['task_id'],'type'=>2));
