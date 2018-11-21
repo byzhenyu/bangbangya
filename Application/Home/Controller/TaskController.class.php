@@ -223,19 +223,6 @@ class TaskController extends UserCommonController{
     }
 
     /**
-     * @desc  我的任务详情
-     */
-    public function myTaskDetail() {
-        $id = I('id', 0, 'intval');
-        $where['t.id'] = $id;
-        $taskModel = D('Home/Task');
-        $taskDetail = $taskModel->getTaskDetail($where);
-        $this->assign('id', $id);
-        $this->assign('taskDetail', $taskDetail);
-        $this->display();
-    }
-
-    /**
      * @desc  接单任务详情  && 我的任务上传验证页面
      * @param  id
      * @param  user_id
@@ -247,6 +234,19 @@ class TaskController extends UserCommonController{
         $taskModel = D('Home/Task');
         $taskDetail = $taskModel->getTaskDetail($where);
 
+        $this->assign('id', $id);
+        $this->assign('taskDetail', $taskDetail);
+        $this->display();
+    }
+
+    /**
+     * @desc  我的任务详情
+     */
+    public function myTaskDetail() {
+        $id = I('id', 0, 'intval');
+        $where['t.id'] = $id;
+        $taskModel = D('Home/Task');
+        $taskDetail = $taskModel->getTaskDetail($where);
         $this->assign('id', $id);
         $this->assign('taskDetail', $taskDetail);
         $this->display();
