@@ -150,7 +150,6 @@ class TaskLogController extends UserCommonController{
         $id = I('id', 0, 'intval');
         $info = D('Home/TaskLog')->getTaskLogDetail(array('l.id'=>$id));
         $this->assign('taskDetail', $info);
-        p($info);
         $this->display();
     }
 
