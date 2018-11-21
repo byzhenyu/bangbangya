@@ -25,9 +25,7 @@
                     </div>
                     <div class="invite-inid">
                         <p>您的邀请码(ID)</p>
-                        <h1>{$userInfo['invitation_code']}
-                            <input id="biao1" type="hidden" value="{$userInfo['invitation_code']}">
-                        </h1>
+                        <h1 id="url1">{$userInfo['invitation_code']}</h1>
                         <button onclick="copyUrl2()">复制</button>
                     </div>
                     <div class="invite-code">
@@ -46,12 +44,18 @@
 <block name="script">
     <script src="__PUBLIC__/pc/js/iconfont.js"></script>
     <script>
+        //复制到剪切板
         function copyUrl2()
         {
-            var Url2=document.getElementById("biao1");
-            Url2.select(); // 选择对象
+            var Url2=document.getElementById("url1").innerText;
+            var oInput = document.createElement('input');
+            oInput.value = Url2;
+            document.body.appendChild(oInput);
+            oInput.select(); // 选择对象
             document.execCommand("Copy"); // 执行浏览器复制命令
-            alert("已复制好，可贴粘。");
+            oInput.className = 'oInput';
+            oInput.style.display='none';
+            mui.toast('复制成功');
         }
     </script>
 </block>
