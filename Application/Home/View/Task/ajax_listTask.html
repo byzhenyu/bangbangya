@@ -1,5 +1,5 @@
 <volist name="taskInfo" id="vo">
-    <li class="cf" data-task="{$vo.id}">
+    <li class="cf">
         <div class="item-wapper fl cf">
             <div class="item-i fl">
 
@@ -14,15 +14,23 @@
                 <div class="item-h1 cf">
                     <h1 class="fl">{$vo.category_name}</h1>
                     <span class="item-tips fl">
-                        <svg class="icon" aria-hidden="true">
+
+                        <if condition="$vo.top eq 1">
+                            <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-jdzq_icon_top"></use>
                         </svg>
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-jdzq_icon_promise"></use>
-                        </svg>
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-home_jdzq_icon_tuiji"></use>
-                        </svg>
+                        </if>
+                        <if condition="$vo.shop_accounts gt 0">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-jdzq_icon_promise"></use>
+                            </svg>
+                        </if>
+                        <if condition="$vo.ret eq 1">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-home_jdzq_icon_tuiji"></use>
+                            </svg>
+                        </if>
+
                     </span>
                     <span class="item-p fl">{$vo.title}</span>
                 </div>
@@ -33,6 +41,6 @@
                 </div>
             </div>
         </div>
-        <a href="" class="item-btn fr">查看</a>
+        <a href="{:U('Task/taskDetail',array('id'=>$vo['id']))}" class="item-btn fr">查看</a>
     </li>
 </volist>

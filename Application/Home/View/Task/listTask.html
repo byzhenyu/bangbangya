@@ -55,9 +55,10 @@
                     </li>
                 </ul>
 
-                <ul class="index-wapper"></ul>
+                <ul class="index-wapper" id="ajax_return"></ul>
             </div>
-            <button class="check-more">查看更多</button>
+            <button class="check-more" id="more">查看更多</button>
+            <button class="check-more" id="no" style="display: none;">没有更更多了</button>
         </div>
     </div>
     </div>
@@ -65,6 +66,34 @@
 </block>
 <block name="script">
     <script type="text/javascript">
+        /*开始加载*/
+        $(document).ready(function(){
+            ajax_listTask();
+        });
+        /**
+         * ajax 抓取任务页面(点击查看更多)
+         **/
+        var cur_page = 1;
+        function ajax_listTask(type){
+            $.ajax({
+                url:"{:U('ajax_listTask')}/p/"+cur_page,
+                type: 'POST',
+                data : {type:type},
+                success:function(data){
+                    if(!data) {
+                        $('#more').hide();
+                        $('#no').show();
+                    }
+                    else{
+                        cur_page++;
+                        $("#ajax_return").append(data);
+                        $('#more').show();
+                        $('#no').hide();
+                    }
+                }
+            });
+        }
+
         $(".class-type span").click(function () {
             $(this).parent().children().removeClass("class-type-active");
             $(this).addClass("class-type-active");
