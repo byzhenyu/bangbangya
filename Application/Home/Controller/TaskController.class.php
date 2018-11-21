@@ -124,9 +124,33 @@ class TaskController extends UserCommonController{
         $this->display();
     }
    //我的发布
-   public function myTask() {
+    /**
+     * @desc  我的发布
+     * @param UID
+     * @return array
+     */
+    public function myTask() {
+        $where['t.user_id'] = UID;
+        $field = 't.id,t.end_time, t.top,t.top_time , t.recommend, t.re_time, t.title, t.audit_info,t.price,t.task_zong, t.task_num, t.total_price, t.audit_status, t.is_show, t.add_time, c.category_name, c.category_img ';
+        $taskList = D('Home/Task')->getMyTask($where, $field);
+        $total_money = D('Home/User')->where('user_id = '.UID)->getField('total_money');
+       // p($taskList);
+        $this->assign('taskList', $taskList);
+        $this->assign('total_money', $total_money);
+
         $this->display();
-   }
+    }
+
+    //我的任务详情
+    public function myTaskDetail() {
+        $id = I('id', 0, 'intval');
+        $where['t.id'] = $id;
+        $taskModel = D('Home/Task');
+        $taskDetail = $taskModel->getTaskDetail($where);
+        $this->assign('id', $id);
+        $this->assign('taskDetail', $taskDetail);
+        $this->display();
+    }
     /**
      * @desc  上传图片
      */

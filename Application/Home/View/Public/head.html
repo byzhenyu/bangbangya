@@ -23,7 +23,7 @@
             <else />
             <div class="h-user fr cf">
                 <div class="user-i fl">
-                    <span><img src="{:session('user_auth')['head_pic']}"></span>
+                    <span><img id="head-img" src="{:session('user_auth')['head_pic']}"></span>
                     <input type="file" id="upload" accept="image/jpeg, image/gif" />
                     <p>{:session('user_auth')['nick_name']}</p>
                 </div>
@@ -35,8 +35,11 @@
     </div>
 </div>
 </head>
-<script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.fileupload.js"></script>
 <script type="text/javascript" src="__PUBLIC__/pc/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/fileupload/js/vendor/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.fileupload.js"></script>
+
 <script>
     function logOut()
     {
@@ -72,7 +75,7 @@
         url: "{:U('User/uploadImg')}",
         dataType: 'json',
         done: function (e, data) {
-            $('#head_pic').attr('src',data.result.data.nameosspath);
+            $('#head-img').attr('src',data.result.data.nameosspath);
             mui.toast('更换成功');
         }
     });
