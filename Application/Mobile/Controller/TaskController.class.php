@@ -68,6 +68,8 @@ class TaskController extends UserCommonController {
         }
         /*任务信息*/
 
+        $where['t.end_time'] = array('gt', NOW_TIME); //未结束
+        $where['t.audit_status'] = array('eq', 1);//审核通过
         $taskInfo = D('Home/Task')->getTaskList($where, '', $order);
         $list = $taskInfo['list'];
         if (!empty($list)) {
