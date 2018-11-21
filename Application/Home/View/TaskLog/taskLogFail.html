@@ -1,0 +1,192 @@
+<extend name="Public/base"/>
+<block name="style">
+    <title>{:C('WEB_TITLE')}-不合格详情</title>
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/task-failed.css">
+</block>
+<block name="body">
+    <body class="bg">
+        <include file="Public/head"/>
+        <div class="session">
+            <div class="w1200">
+                <include file="Public/nav"/>
+                <div class="nav-bred"><a href="#">不合格详情</a></div>
+                <div class="sess-wapper failed">
+                    <button class="failed-appeal" onclick="appeal({$taskLogInfo[user_id]},{$taskLogInfo[task_id]})">申诉</button>
+                    <div class="failed-information">
+                        <p>
+                            <span>信息交流：</span>
+
+                            <foreach  name="taskLogInfo['userChat']"  item="v">
+                                <p style="margin-bottom: 5px;">{$v.content}</p>
+                            </foreach>
+
+                        </p>
+                        <p>
+                            <span>回复：</span>
+                            <foreach  name="taskLogInfo['taskChat']"  item="v">
+                                <p style="margin-bottom: 5px;">{$v.content}</p>
+                            </foreach>
+                        </p>
+                        <button onclick="reply({$taskLogInfo['user_id']},{$taskLogInfo['id']})">回复</button>
+                    </div>
+                    <div class="failed-yan">
+                        <div class="yan-title">
+                            <h1>验证图</h1>
+                            <p>（最多5张）</p>
+                        </div>
+                        <div class="yan-img">
+
+                            <foreach name="taskLogInfo['valid_pic']" item="v">
+                                <img src="{$v}" style="max-width:200px;height:210px;">
+                            </foreach>
+
+                        </div>
+                        <div class="upload-btng">
+                            <button onclick="giveUp({$taskLogInfo[id]},{$taskLogInfo[task_id]})">放弃</button>
+                            <button onclick="reDoLog({$taskLogInfo[id]})">重做</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</block>
+<block name="script">
+    <script type="text/javascript">
+
+        /**
+         * 回复操作
+         **/
+        function  reply(task_user_id,task_log_id) {
+            var btnArray = ['取消', '确定'];
+            mui.prompt('', '请输入回复的信息', '信息交流', btnArray, function (e) {
+                if (e.index == 1) {
+                    var content = e.value;
+                    if (content == '') {
+                        mui.toast('请输入回复内容');
+                        return
+                    }
+                    mui.ajax("{:U('Mobile/Chat/addChat')}", {
+                        data: {
+                            task_user_id: task_user_id,
+                            task_log_id: task_log_id,
+                            content: content,
+                            type : 0
+                        },
+                        dataType: 'json',//服务器返回json格式数据
+                        type: 'post',//HTTP请求类型
+                        timeout: 10000,//超时时间设置为10秒；
+                        success: function (data) {
+                            mui.toast(data['info']);
+                            // alert(JSON.stringify(data));
+                            if (data['status'] == 1) {
+                                setTimeout(function () {
+                                    window.location.reload()
+                                }, 1000);
+                            }
+                        },
+                        error: function (xhr, type, errorThrown) {
+                            //异常处理；
+                            console.log(type);
+                        }
+                    });
+                } else {
+                    // 点击了确定按钮
+                }
+            })
+        }
+
+        /**
+         * 申诉操作
+         **/
+        function appeal(user_id, task_id) {
+            var btnArray = ['取消', '确定'];
+            mui.prompt('','请输入申诉理由和内容', '申诉内容商家看不到，不符合申诉条件的将不会受理，您确定要申诉吗', btnArray, function(e) {
+                if (e.index == 1) {
+                    var information = e.value;
+                    if(information == ''){
+                        mui.toast('请输入投诉内容');
+                        return
+                    }
+                    mui.ajax("{:U('Mobile/Complaint/appeal')}",{
+                        data:{
+                            user_id : user_id,
+                            task_id: task_id,
+                            information : information,
+                            type : 1
+                        },
+                        dataType:'json',//服务器返回json格式数据
+                        type:'post',//HTTP请求类型
+                        timeout:10000,//超时时间设置为10秒；
+                        success:function(data){
+                            mui.toast(data['info']);
+                            // alert(JSON.stringify(data));
+                            if(data['status'] == 1){
+                                setTimeout(function(){
+                                    window.location.reload()
+                                }, 1000);
+                            }
+                        },
+                        error:function(xhr,type,errorThrown){
+                            //异常处理；
+                            console.log(type);
+                        }
+                    });
+                } else {
+                    // 点击了确定按钮
+                }
+            })
+        }
+
+        /**
+         * 放弃操作
+         **/
+        function giveUp(tasklog_id,task_id){
+            mui.confirm('您是否要放弃该任务?', '提示', '', function(e) {
+                if (e.index == 1) {
+                    mui.ajax("{:U('TaskLog/giveUpTask')}", {
+                        data: {
+                            id: tasklog_id,
+                            task_id: task_id
+                        },
+                        dataType: 'json',//服务器返回json格式数据
+                        type: 'post',//HTTP请求类型
+                        timeout: 10000,//超时时间设置为10秒；
+                        success: function (data) {
+                            mui.toast(data['info']);
+                            // alert(JSON.stringify(data));
+                            if (data['status'] == 1) {
+                                setTimeout(function () {
+                                    window.location.href="{:U('TaskLog/getTaskLog')}";
+                                }, 1000);
+                            }
+                        },
+                        error: function (xhr, type, errorThrown) {
+                            //异常处理；
+                            console.log(type);
+                        }
+                    });
+                }
+                else{
+                    mui.toast('您取消了操作');
+                }
+            });
+        }
+
+        /**
+         * 重做操作
+         **/
+        function reDoLog(log_id) {
+            mui.confirm('您是否要重做该任务?', '提示', '', function(e) {
+                if (e.index == 1) {
+                    $.post("{:U('reDoLog')}", {'log_id': log_id}, function (data) {
+                        if (data.status == 1) {
+                            console.log(data.data);
+                            window.location.href = "{:U('taskVerify')}/id/" + data.data;
+                        }
+                    })
+                }
+            });
+        }
+    </script>
+</block>

@@ -1,6 +1,7 @@
 <extend name="Public/base"/>
 <block name="style">
     <link rel="stylesheet" href="__PUBLIC__/pc/css/store-detail.css">
+    <script type="text/javascript" src="__PUBLIC__/pc/js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload/ajaxupload.js?v=1.0"></script>
 
     <style type="text/css">
@@ -113,7 +114,7 @@
             <a href="#">发布任务</a>
         </div>
         <div class="sess-wapper">
-            <div>
+            <form action="{:U('addTask')}" method="post">
                 <div class="pj_items">
                     <span class="pj_item">
                         选择类型
@@ -188,7 +189,7 @@
                     </span>
 
                         <div>
-                            <input type="text" class="pj_input" value="<if condition="$taskInfo['id'] gt 0">{$taskInfo['task_num']}<else/></if>" placeholder="最少{$taskCategoryInfo[0]['limit_num']}单">
+                            <input id="task_num" name="task[task_num]" type="text" class="pj_input" value="<if condition="$taskInfo['id'] gt 0">{$taskInfo['task_num']}<else/></if>" placeholder="最少{$taskCategoryInfo[0]['limit_num']}单">
                         </div>
                         <span class="">单</span>
                     </div>
@@ -210,7 +211,7 @@
                     </span>
 
                         <div>
-                            <input type="text" class="pj_input" placeholder="服务费：成交额{$orderFee}%，最低1元">
+                            <input type="text" id="total_price" disabled="disabled" class="pj_input" value="<if condition="$taskInfo['id'] gt 0">{:fen_to_yuan($taskInfo['total_price'])}<else/></if>" placeholder="服务费：成交额{$orderFee}%，最低1元">
                         </div>
                         <span class="">元</span>
                     </div>
@@ -250,7 +251,7 @@
 
                                     <div class="pj_opimg">
                                         <img  id="img_{$k-1}" src="{$v['step_img']}">
-                                        <button id="btnUpload_{$k-1}" type="button"></button>
+                                        <button id="btnUpload_{$k-1}" type="button" class="uploader-img"></button>
                                         <input id="img{$k-1}" type="hidden" name="step[1][{$k-1}][step_img]" value="{$v['step_img']}">
                                     </div>
                                     <div class="pj_optext">
@@ -260,9 +261,13 @@
                                         <span  data-num="{$k}" id="del_{$k-1}">删除</span>
                                     </div>
                                 </div>
-                                $("#del_"+(base-1)).css('display','none');
-                                ajaxUpload('#btnUpload_'+base, $("#img_"+base), 'Task', base);
-                                base++;
+                                <script>
+                                    var m = "{$k-1}";
+                                    $('.del-item').hide();
+                                    $("#del_"+m).show();
+                                    ajaxUpload("#btnUpload_"+m, $("#img_"+m), "Task", m);
+                                </script>
+
                             </volist>
                         </div>
 
@@ -280,7 +285,7 @@
                         <div>
                             <span>链接</span>
                             <div class="pj_endinputs">
-                                <input type="text" class="pj_endinput" placeholder="请输入准确链接地址，如无链接可不填">
+                                <input type="text" class="pj_endinput"  name="task[link_url]" placeholder="请输入准确链接地址，如无链接可不填" value="{$taskInfo['link_url']}">
                             </div>
                         </div>
                     </li>
@@ -288,7 +293,7 @@
                         <div>
                             <span>文字验证</span>
                             <div class="pj_endtextas">
-                                <textarea placeholder="如需接单者提供文字信息，请在此输入内容，如不需要可不填"></textarea>
+                                <textarea name="task[validate_words]" placeholder="如需接单者提供文字信息，请在此输入内容，如不需要可不填">{$taskInfo['validate_words']}</textarea>
                             </div>
                         </div>
 
@@ -297,7 +302,7 @@
                         <div>
                             <span>备注</span>
                             <div class="pj_endtextas2">
-                                <textarea placeholder="200字以内"></textarea>
+                                <textarea name="task[remark]" rows="3" placeholder="200字以内">{$taskInfo['remark']}</textarea>
                             </div>
                         </div>
 
@@ -305,18 +310,21 @@
                 </ul>
                 <div class="pj_down">
                     <span class="pj_downchoose">
-                        <input class="pj_downchecbox" type="checkbox">
+                        <input class="pj_downchecbox"  name="task[agree]" type="checkbox" id="agree" checked>
                     </span>
-                    我已阅读、理解并同意<span class="pj_downtext">《发布规则》</span>的全部内容
+                    我已阅读、理解并同意<span class="pj_downtext"><a href="{:U('Article/articleDetail',array('category_id'=>3))}">《发布规则》</a></span>的全部内容
                 </div>
                 <div class="pj_downbtn">
-                    <button>保存</button>
-                    <button>发布</button>
+                    <input type="hidden" name="id" value="{$id}">
+                    <input id="is_show" type="hidden" name="task[is_show]" value="0">
+                    <input id="total_money" type="hidden" value="{$userMoney}">
+                    <button type="submit" id="save-btn">保存</button>
+                    <button type="submit" id="balance-insufficient">发布</button>
                 </div>
                 <div class="pj_downtip">
                     <span>提示！平台禁止发布黄赌毒及涉政等一切法律所禁止的内容，另外与本平台又同类性质功能的软件或平台禁止在本平台发布推广任<br>务，如发现将查封账户，余款不退，敬请周知</span>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -418,16 +426,7 @@
                     '<span>删除</span>'+
                     '</div>'+
                 '</div>'
-//                '<div class="task-operation-row1">'+
-//                '<div>'+
-//                '<p>'+n+'</p>'+
-//                '<p class="del-item" data-num="'+n+'" id="del_'+base+'">删除</p>'+
-//                '</div>'+
-//                '<img id="img_'+base+'" src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">'+
-//                '<button id="btnUpload_'+base+'" class="uploader-img" type="button" ></button>'+
-//                '<input id="img'+base+'" type="hidden" name="step[1]['+base+'][step_img]" value="">'+
-//                '<textarea name="step[1]['+base+'][step_text]" class="step-text" placeholder="请填写步骤" id="step_text_'+base+'"></textarea>'+
-//                '</div>'
+
             );
             $("#del_"+(base-1)).css('display','none');
             ajaxUpload('#btnUpload_'+base, $("#img_"+base), 'Task', base);
@@ -441,6 +440,129 @@
             $('#del_'+(base-1)).css('display','block');
 
         });
+    </script>
+    <script type="text/javascript">
+
+        var charge = "{$orderFee}";
+        var all = 1 + (charge/100);
+        var limit_num = "{$taskCategoryInfo[0]['limit_num']}";
+        var limit_money = "{$taskCategoryInfo[0]['limit_money']}";
+        var user_total = $('#total_money').val();
+        /*判断任务价钱*/
+        $("#task_num").blur(function() {
+            var price =  +$('#price').val();
+            var task_num = +$('#task_num').val();
+            if (task_num < limit_num) {
+                mui.toast('最小数量为'+limit_num);
+                $('#task_num').val('');
+                return false;
+            }
+            if(price && task_num)
+            {
+                var zong =  (price * task_num *  all).toFixed(2);
+                $('#total_price').val(zong);
+            }
+        });
+        $("#price").focusout(function() {
+            var price = +$('#price').val();
+            var task_num = $('#task_num').val();
+
+            if (price < limit_money) {
+                mui.toast('最小金额为'+limit_money+ '元');
+                $('#price').val('');
+                return false;
+            }
+            if(price && task_num)
+            {
+                var zong = (price * task_num *  all).toFixed(2);
+                $('#total_price').val(zong);
+            }
+        });
+        $('.pj_iradio').on('click', 'input', function () {
+            limit_money =  $(this).data('money');
+            limit_num =  $(this).data('num');
+
+            $('#price').attr('placeholder', '最低出价'+limit_money+' 元');
+            $('#task_num').attr('placeholder', '最少'+limit_num+'单');
+        });
+
+        function validate() {
+            var agree = $("#agree").prop('checked');
+            if (!agree) {
+                mui.toast('请阅读并勾选发布协议');
+                return false;
+            }
+            var task_title = $('#task_title').val();
+            if (task_title == '') {
+                mui.toast('标题不能为空');
+                return false;
+            }
+            if ($('#end_time').val() == '') {
+                mui.toast('请选择结束时间');
+                return false;
+            }
+
+            if ($('#total_price').val() == '') {
+                mui.toast('请填写价格及数量');
+                return false;
+            }
+
+            if (count ==0) {
+                mui.toast('请上传验证图');
+                return false;
+            }
+
+        }
+        $("#save-btn").on('click', function () {
+            $('#is_show').val('0');
+            submitForm();
+        })
+        $('#balance-insufficient').on('click', function() {
+            $('#is_show').val('1');
+            var zong = $('#total_price').val();
+            if (zong > (user_total/100)) {
+                var delArray = ['确定'];
+                mui.confirm('您账户余额不足，请到个人中心充值后再发布', '提示', delArray, function(e) {
+                    if (e.index == 0) {
+                        // 点击了确定
+                        window.location.href = "{:U('Pay/topUpsPage')}";
+                    }
+
+                });
+                return false;
+            }
+            submitForm();
+        });
+        function submitForm() {
+            $(document)
+                .ajaxStart(function(){
+                    $("button:submit").attr("disabled", true);
+                })
+                .ajaxStop(function(){
+                    $("button:submit").attr("disabled", false);
+                });
+            $("form").submit(function(){
+                if (typeof(validate) != 'undefined' && $.isFunction(validate)) {
+                    if ( eval(validate)() == false ) {
+                        return false;
+                    }
+                }
+                var self = $(this);
+                var data = self.serialize();
+
+                $.post(self.attr("action"), data, function(data){
+                    mui.toast(data.info);
+                    if(data.status == 1){
+                        setTimeout(function() {
+                            window.location.href = "{:U('Task/myTask')}";
+                        },1500);
+                    }
+                }, "json");
+
+                return false;
+            });
+        }
+
     </script>
 </block>
 </html>

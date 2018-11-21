@@ -1,0 +1,99 @@
+<extend name="Public/base"/>
+<block name="style">
+    <title>{:C('WEB_TITLE')}-我的任务</title>
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/task-upload.css">
+</block>
+<block name="body">
+    <body class="bg">
+    <include file="Public/head"/>
+        <div class="session">
+            <div class="w1200">
+                <include file="Public/nav"/>
+                <div class="nav-bred">
+                    <a href="{:U('TaskLog/getTaskLog')}">我的任务 ></a>
+                    <a href="{:U('TaskLog/getTaskLog')}">接单任务 ></a>
+                    <a href="#">上传验证</a>
+                </div>
+                <div class="sess-wapper task-upload">
+                    <a href="" class="task-detial">任务详情</a>
+                    <ul class="task-up">
+                        <li>
+                            <span>
+                                <i>发布方</i>
+                                <img src="./images/user.png" />
+                                697953
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <i>编号</i>
+                                754616
+                            </span>
+                            <span>
+                                <i>类别</i>
+                                加粉
+                            </span>
+                            <span>
+                                <i>单价</i>
+                                ￥0.3
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <i>文字验证</i>
+                                微信名字
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <i>备注</i>
+                                一个手机验证一次
+                            </span>
+                        </li>
+                    </ul>
+                    <div class="upload-wapper">
+                        <div class="upload-box">
+                            <div class="upload-title">
+                                <h1>验证图</h1>
+                                <p>（最多5张）</p>
+                            </div>
+                            <div class="upload-imgb cf">
+                                <div class="upload-img fl">
+                                    <img src="./images/">
+                                    <input type="file">
+                                    <button class="upload-delete iconfont icon-common_icon_close"></button>
+                                </div>
+                                <div class="upload-img fl">
+                                    <img src="./images/">
+                                    <input type="file">
+                                    <button class="upload-delete iconfont icon-common_icon_close"></button>
+                                </div>
+                                <div class="upload-img fl">
+                                    <!-- <img src="./images/"> -->
+                                    <input type="file">
+                                    <!-- <button class="upload-delete iconfont icon-common_icon_close"></button> -->
+                                </div>
+                            </div>
+                            <div class="upload-text cf">
+                                <span>文字验证</span>
+                                <textarea placeholder="请输入文字验证"></textarea>
+                            </div>
+                            <div class="upload-btng">
+                                <button>取消</button>
+                                <button>确认提交</button>
+                                <p>提示：请诚信做单，骗单将被罚款，严重者封号</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</block>
+<block name="script">
+    <script type="text/javascript">
+        $(".upload-delete").click(function(){
+            $(this).parent().hide();
+        })
+    </script>
+</block>

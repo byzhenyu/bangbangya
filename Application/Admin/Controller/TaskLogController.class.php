@@ -13,11 +13,11 @@ class TaskLogController extends CommonController {
     public function listTaskLog(){
         $keyword = I('keyword', '');
         if ($keyword) {
-            $where['log.title'] = array('like','%'.$keyword.'%');
+            $where['log.task_name'] = array('like','%'.$keyword.'%');
         }
         $field = 'log.*,u.nick_name';
         $data = D('Admin/TaskLog')->getTaskLogList($where,$field);
-
+        $this->assign('keyword', $keyword);
         $this->assign('list', $data['info']);
         $this->assign('page', $data['page']);
         $this->display();
@@ -29,7 +29,9 @@ class TaskLogController extends CommonController {
         if (IS_POST) {
             $data = I('post.', '');
             if($taskModel->create($data,5) !==false) {
-                $res = $taskModel->save();
+
+                $res = $taskModel->save($data);
+
                 if ($res ===false) {
                     $this->ajaxReturn(V(0, '审核失败'));
                 }

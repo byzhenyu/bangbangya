@@ -22,11 +22,12 @@ class ChatController extends CommonController{
     */
     public function addChat(){
           $data = I('post.');
-          $taskModel = D('Home/TaskLog');
+          $taskModel = D('Home/Task');
           if($data['type']  == 0){
               $taskid = D('Home/TaskLog')->where('id = '.$data['task_log_id'])->getField('task_id');
               $data['user_id'] = $taskModel->where('id = '.$taskid)->getField('user_id');
-          }else{
+          }
+          else{
               $data['task_user_id'] = UID;
           }
           unset($data['type']);

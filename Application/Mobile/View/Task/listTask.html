@@ -6,6 +6,17 @@
     <title>接单赚钱</title>
     <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+    <style type="text/css">
+        .get-order-list div {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: unset;
+        }
+        .get-order-list div .get-order-single {
+            width: 17%;
+            margin: 4px;
+        }
+    </style>
 </head>
 <body style="background: #F6F6F6">
     <header class="mui-bar mui-bar-nav help-duck-head">
@@ -94,7 +105,7 @@
                                         <span>编号：{$vo.id}</span>
                                     </div>
                                 </div>
-                                <span>￥{:fen_to_yuan($vo['price'])}</span>
+                                <span>￥{$vo['price']}</span>
                             </li>
                         </volist>
 
