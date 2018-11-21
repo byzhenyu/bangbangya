@@ -83,11 +83,13 @@
     background-image: url(../images/mypublish_check_icon_previous.png);
     left: 10px;
     right: auto;
+    top: -100px;
 }
 .review-swiper .swiper-button-next{
     background-image: url(../images/mypublish_check_icon_next.png);
     right: 10px;
     left: auto;
+    top: -100px;
 }
 .upload-btng{
     margin-top: 60px;
@@ -115,14 +117,22 @@
     width: 1000px;
     display: inline-block;
 }
-.reivew-chat .chat-ul li{
+.reivew-chat .chat-ul ul{
+    width: 50%;
+}
+
+.reivew-chat .chat-ul ul li{
     margin-bottom: 8px;
     text-align: left;
 }
-.reivew-chat .chat-ul li:nth-child(2n){
+/* .reivew-chat .chat-ul ul li:nth-child(2n){
+    text-align: right;
+} */
+.reivew-chat .chat-ul ul:nth-child(2) li{
+    margin-top: 30px;
     text-align: right;
 }
-.reivew-chat .chat-ul li span{
+.reivew-chat .chat-ul ul li span{
     background:rgba(245,245,245,1);
     border-radius:6px;
     padding: 5px 10px;
@@ -132,6 +142,17 @@
     max-width: 500px;
     text-align: left;
     line-height: 22px;
+}
+.reivew-btn{
+    text-align: right;
+    margin-top: 40px;
+}
+.reivew-btn button{
+    width:100px;
+    height:30px;
+    background:rgba(111,117,254,1);
+    color: #fff;
+    margin-right: 60px;
 }
 /* 弹窗 */
 .pop-ups{
@@ -187,7 +208,7 @@
 .pro-btng button{
     width:70px;
     height:34px;
-    border-radius:6px;    
+    border-radius:6px;
     color: #fff;
     display: inline-block;
     margin-left: 20px;

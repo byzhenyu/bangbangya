@@ -26,7 +26,7 @@
                 <p><span id="zong"></span>元</p>
             </div>
             <div class="recommend-time-tip">
-                <span>收费标准为￥5/小时</span>
+                <span>收费标准为￥{:C(TASK_TOP_MONEY)[0]}/小时</span>
                 <span>当前余额￥{:fen_to_yuan($total_money)}</span>
             </div>
         </div>
@@ -46,7 +46,7 @@
                 <p><span id="zong1"></span>元</p>
             </div>
             <div class="recommend-time-tip top-time-tip">
-                <span>收费标准为￥15/小时</span>
+                <span>收费标准为￥{:C(TASK_TOP_MONEY)[1]}/小时</span>
                 <span>当前余额￥{:fen_to_yuan($total_money)}</span>
             </div>
         </div>
@@ -447,12 +447,12 @@ function recommend(task_id){
 }
     $("#zhiding").focusout(function() {
         var topNum = $(this).val();
-        var money = topNum * 15;
+        var money = topNum * {:C(TASK_TOP_MONEY)[1]};
         $('#zong1').text(money);
     });
     $("#tuijian").focusout(function() {
         var topNum = $(this).val();
-        var money = topNum * 5;
+        var money = topNum * {:C(TASK_TOP_MONEY)[0]};
         $('#zong').text(money);
     });
     //发布任务界面的置顶 ———— 确定按钮

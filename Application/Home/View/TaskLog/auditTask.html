@@ -1,0 +1,155 @@
+<extend name="Public/base"/>
+<block name="style">
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/cur.css">
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/release-review.css">
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/iconfont.css">
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/swiper.min.css">
+</block>
+<block name="body">
+    <body class="bg">
+    <include file="Public/head"/>
+    <div class="session">
+        <div class="w1200">
+            <include file="Public/nav"/>
+            <div class="nav-bred">
+                <a href="#">我的发布 ></a>
+                <a href="#">审核</a>
+            </div>
+            <div class="sess-wapper review">
+                <button class="review-complaint">投诉</button>
+                <div class="review-wapper">
+                    <div class="review-title">
+                        <h1>审核情况</h1>
+                        <ul>
+                            <li>已审核：2</li>
+                            <li>未审核：3</li>
+                        </ul>
+                    </div>
+                    <div class="reivew-chat">
+                        <div class="chat-name">
+                            信息交流：
+                        </div>
+                        <div class="cf chat-ul">
+                            <ul class=" fl">
+                                <li>
+                                    <span>没有阅读详情</span>
+                                </li>
+                                <li>
+                                    <span>没有阅读详情</span>
+                                </li>
+                            </ul>
+                            <ul class="fr">
+                                <li>
+                                    <span>阅读详情具体的界面是什么样的阅读详情具体的界面是什么样的阅读详情具体的界面是什么样的阅读详情具体的界面是什么样的阅读详情具体的界面是什么样的阅读详情具体的界面是什么样的阅读详情具体的界面是什么样的阅读详情具体的界面是什么样的阅读详情具体的界面是什么样的</span>
+                                </li>
+                                <li>
+                                    <span>没有阅读详情</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="reivew-btn">
+                            <button>回复</button>
+                        </div>
+                    </div>
+                    <div class="review-sess">
+                        <div class="review-user cf">
+                            <div class="cf">
+                                <span class="user-i fl"><img src="__PUBLIC__/pc/images/user.png" /></span>
+                                <div class="user-name fl">
+                                    <h1> 没有腹肌的IT</h1>
+                                    <p>ID 697953</p>
+                                </div>
+                            </div>
+                            <div class="review-p">待审核</div>
+                        </div>
+                        <div class="review-swiper">
+                            <!-- Swiper -->
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <span class="slide-img">
+                                            <img src="__PUBLIC__/pc/images/IMG_4165.png" />
+                                        </span>
+                                        图一
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <span class="slide-img">
+                                            <img src="__PUBLIC__/pc/images/IMG_4165.png" />
+                                        </span>
+                                        图二
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <span class="slide-img">
+                                            <img src="__PUBLIC__/pc/images/IMG_4165.png" />
+                                        </span>
+                                        图三
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <span class="slide-img">
+                                            <img src="__PUBLIC__/pc/images/IMG_4165.png" />
+                                        </span>
+                                        图四
+                                    </div>
+                                </div>
+                                <!-- Add Pagination -->
+                                <!-- <div class="swiper-pagination"></div> -->
+                                <!-- Add Arrows -->
+                            </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                        <div class="upload-btng">
+                            <button>不合格</button>
+                            <button>合格</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pop-ups">
+        <button id="close" class="iconfont icon-common_icon_close"></button>
+        <div class="invite-code">
+            <h1>提示</h1>
+            <textarea placeholder="请输入投诉理由和内容"></textarea>
+        </div>
+        <div class="pro-btng">
+            <button class="pro-confirm">
+                确定
+            </button>
+            <button class="pro-cancel">
+                取消
+            </button>
+        </div>
+    </div>
+</body>
+</block>
+<block name="script">
+    <script src="__PUBLIC__/pc/js/iconfont.js"></script>
+    <script src="__PUBLIC__/pc/js/jquery-3.1.1.min.js"></script>
+    <script src="__PUBLIC__/pc/js/swiper.min.js"></script>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 2,
+            spaceBetween: 30,
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+        $(".review-complaint").click(function () {
+            $(".pop-ups").show();
+        })
+        $("#close").click(function () {
+            $(".pop-ups").hide();
+            // $(".model").hide();
+        })
+    </script>
+    </script>
+</block>
+</html>

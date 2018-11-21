@@ -369,7 +369,7 @@ class TaskController extends UserCommonController {
         }
     }
     /**
-    * @desc  追加任务
+    * @desc  追加任务价格
     * @param
     * @return mixed
     */

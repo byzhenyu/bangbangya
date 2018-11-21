@@ -12,7 +12,9 @@
 namespace Home\Controller;
 use Common\Controller\UserCommonController;
 class TaskLogController extends UserCommonController{
-
+    public function _initialize() {
+        $this->TaskLogModel = D("Home/TaskLog");
+    }
     /**
      * @desc 我的任务
      */
@@ -167,5 +169,27 @@ class TaskLogController extends UserCommonController{
             $this->ajaxReturn(V(1, '操作成功',$new_id));
         }
 
+    }
+    /**
+     * @desc  任务审核
+     * @param  task_id
+     * @return mixed
+     */
+    public function auditTask(){
+        $task_id = I('task_id', 0, 'intval');
+        $p = I('p', 1, 'intval');
+        if($p <= 1){
+            $p  = 1;
+        }
+        $where['task_id'] = $task_id;
+        $field =  'u.user_id, u.head_pic, u.nick_name, t.task_id,t.id as tid, t.valid_info, t.valid_img, t.valid_status  ';
+        $taskLogInfo = $this->TaskLogModel->auditTask($where, $field);
+         p($taskLogInfo);
+        $taskAudit = $this->TaskLogModel->taskAudit($task_id);
+        $this->assign('taskAudit',$taskAudit);
+        $this->assign('task_id',$task_id);
+        $this->assign('p',$p);
+        $this->assign('taskLogInfo',$taskLogInfo);
+        $this->display();
     }
 }

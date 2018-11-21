@@ -1,6 +1,15 @@
 <extend name="Public/base"/>
 <block name="style">
     <link rel="stylesheet" href="__PUBLIC__/pc/css/release.css">
+    <style>
+         #flush-num-pause{
+              font-size : 50px;
+              position:relative;
+              top : 3em;
+              left: 8em;
+             display:none;
+         }
+    </style>
 </block>
 <block name="body">
 <body class="bg">
@@ -10,6 +19,12 @@
             <include file="Public/nav"/>
             <div class="nav-bred">
                 <a href="#">我的发布</a>
+            </div>
+            <div id="flush-num-pause">
+                <div>
+                    <span>正在刷新数据</span>
+                    <span>......</span>
+                </div>
             </div>
             <ul class="sess-wapper release">
                 <volist name="taskList" id="v">
@@ -25,7 +40,7 @@
                                     <span class="fl">编号：{$v.id}</span>
                                 </div>
                                 <ul class="cf">
-                                    <li class="fl">单价：￥{:fen_to_yuan($v.price)}</li>
+                                    <li class="fl">单价：￥{:fen_to_yuan($v[price])}</li>
                                     <li class="fl">总量：{$v.task_zong}</li>
                                     <li class="fl">进行中：{$v.beginNum}</li>
                                     <li class="fl">剩余：{$v.task_num}</li>
@@ -59,15 +74,15 @@
                                         </button>
                                     </case>
                                     <case value="1">
-                                        <button class="btn-red">审核</button>
-                                        <button class="btn-red">暂停</button>
-                                        <button class="btn-red">追加数量</button>
-                                        <button class="btn-red">上调出价</button>
-                                        <button class="btn-red">下架</button>
-                                        <button class="btn-red">刷新</button>
-                                        <button class="btn-pur">下载</button>
-                                        <button class="btn-red">推荐</button>
-                                        <button class="btn-red">置顶</button>
+                                            <button  onclick="audit({$v[id]},{$v[is_task_num]})" class="btn-red">审核</button>
+                                            <button class="btn-red" onclick="pause({$v['id']},5)" >开启</button>
+                                            <button class="btn-red"  onclick="addNum1(1)" >追加数量</button>
+                                            <button class="btn-red" onclick="addNum1(2)">上调出价</button>
+                                            <button class="btn-red" onclick="addNum1(3)">下架</button>
+                                            <button class="btn-red" onclick="addNum1(4)" >刷新</button>
+                                            <!--<button class="btn-pur" onclick="addNum1(5)" >下载</button>-->
+                                            <button class="btn-red" onclick="addNum1(6)">{$v['recommend'] == 1?'已推荐': '推荐'}</button>
+                                            <button class="btn-red" onclick="addNum1(7)">{$v['top'] == 1?'已置顶': '置顶'}</button>
                                     </case>
                                     <case value="2">
                                         <button class="review-fail">
@@ -75,10 +90,27 @@
                                         </button>
                                         <a href="{:U('addTask',array('id'=>$v['id']))}" class="btn-red">修改</a>
                                     </case>
+                                    <case value="3">
+                                        <button class="btn-red" onclick="tosay(1)">已下架</button>
+                                    </case>
+                                    <case value="4">
+                                        <button class="btn-red" onclick="tosay(2)">已过期</button>
+                                    </case>
+                                    <case value="5">
+                                        <button  onclick="audit({$v[id]},{$v[is_task_num]})" class="btn-red">审核</button>
+                                            <button class="btn-red" onclick="pause({$v['id']},1)" >暂停</button>
+                                            <button class="btn-red" onclick="addNum({$v[id]})" >追加数量</button>
+                                            <button class="btn-red" onclick="addPrice({$v[id]},{$v[price]},{$v['task_num']})" >上调出价</button>
+                                            <button class="btn-red" onclick="soldOut({$v[id]})"  >下架</button>
+                                            <button class="btn-red" onclick="refresh()">刷新</button>
+                                            <!--<button class="btn-pur">下载</button>-->
+                                            <button class="btn-red" onclick="recommend({$v[id]})" >{$v['recommend'] == 1?'已推荐': '推荐'}</button>
+                                            <button class="btn-red"  onclick="taskTop({$v[id]})">{$v['top'] == 1?'已置顶': '置顶'}</button>
+                                    </case>
                                 </switch>
 
                             </if>
-                            <button class="btn-red">删除</button>
+                            <button class="btn-red" onclick="del({$v['id']})" >删除</button>
                             <a href="{:U('Task/myTaskDetail',array('id'=>$v['id']))}" class="btn-pur">查看</a>
                         </div>
                     </li>
@@ -88,30 +120,475 @@
         </div>
     </div>
     <!-- 弹窗   默认隐藏 display：none -->
-    <div class="pop-ups">   
+    <div class="pop-ups" id="recommend">
         <button id="close" class="iconfont icon-common_icon_close"></button>
         <div class="invite-code">
             <h1>提示</h1>
-            <p>确定要发布该任务吗</p>
+            <p>您确定要推荐该任务吗?</p>
+        </div>
+        <div class="pop-ul">
+            <ul>
+                <li>
+                    <input type="text" id="tuijian" placeholder="请输入整数/小时">
+                </li>
+                <li>
+                    <span>合计</span>
+                    <input type="text" id="zong"  disabled="disabled"  placeholder="">
+                    <span>元</span>
+                </li>
+            </ul>
+            <p class="cf">
+                <span class="fl">收费标准为￥{:C(TASK_TOP_MONEY)[0]}/小时</span>
+                <span class="fr">当前余额￥{:fen_to_yuan($total_money)}</span>
+            </p>
         </div>
         <div class="pro-btng">
-            <button class="pro-confirm">
+            <button onclick="addRecommend()" class="pro-confirm">
                 确定
             </button>
-            <button class="pro-cancel">
+            <button onclick="off()" class="pro-cancel">
                 取消
             </button>
         </div>
     </div>
-
+<div class="pop-ups" id="topTask">
+    <button id="close1" class="iconfont icon-common_icon_close"></button>
+    <div class="invite-code">
+        <h1>提示</h1>
+    </div>
+    <div class="pop-ul">
+        <ul>
+            <li>
+                <input type="text" placeholder="请输入整数" id="zhiding">
+            </li>
+            <li>
+                <span>合计</span>
+                <input type="text" id="zong1" placeholder="" disabled="disabled">
+                <span>元</span>
+            </li>
+        </ul>
+        <p class="cf">
+            <span class="fl">收费标准为￥{:C(TASK_TOP_MONEY)[1]}/小时</span>
+            <span class="fr">当前余额￥{:fen_to_yuan($total_money)}</span>
+        </p>
+    </div>
+    <div class="pro-btng">
+        <button onclick="onTop()" class="pro-confirm">
+            确定
+        </button>
+        <button onclick="off()" class="pro-cancel">
+            取消
+        </button>
+    </div>
+</div>
 </body>
 </block>
 <block name="script">
     <script>
+        function off(){
+            $(".pop-ups").hide();
+            mui.toast('您取消了操作');
+        }
         $("#close").click(function () {
             $(".pop-ups").hide();
-            // $(".model").hide();
-        })
+        });
+        $("#close1").click(function () {
+            $(".pop-ups").hide();
+        });
+        /*审核*/
+        function audit(task_id,is_task_num){
+            if(is_task_num  == 0){
+                mui.toast('没有需要审核的信息!');
+            }else{
+                mui.openWindow({
+                    url:  url + 'Home/TaskLog/auditTask/task_id/' + task_id
+                });
+            }
+        }
+        function pause(id,audit_status){
+            var message = '';
+            if(audit_status == 5){
+                message = '暂停';
+            }else{
+                message = '开启';
+            }
+            var delArray = ['取消', '确定'];
+            mui.confirm('确定要'+message+'该任务吗?', '提示', delArray, function(e) {
+                if (e.index == 1) {
+                    mui.ajax(url + 'Home/Task/pause',{
+                        data:{
+                            id:id,
+                            audit_status:audit_status
+                        },
+                        dataType:'json',//服务器返回json格式数据
+                        type:'post',//HTTP请求类型
+                        timeout:10000,//超时时间设置为10秒；
+                        success:function(data){
+                            mui.toast(data['info']);
+                            // alert(JSON.stringify(data));
+                            if(data['status'] == 1){
+                                setTimeout(function(){
+                                    mui.openWindow({
+                                        url:  url + 'Home/Task/myTask'
+                                    });
+                                }, 1000);
+                            }
+                        },
+                        error:function(xhr,type,errorThrown){
+                            //异常处理；
+                            console.log(type);
+                        }
+                    });
+                } else {
+                    mui.toast('您取消了操作!');
+                }
+            })
+
+        }
+        function addNum(task_id) {
+                var addPriceArray = ['取消', '确定'];
+                mui.prompt('', '请输入追加数量', '追加数量', addPriceArray, function(e) {
+                    if (e.index == 1) {
+                        var num = e.value;
+                        var price = Number($('#price').text());
+                        if(price * num > {$total_money}){
+                            mui.confirm('您的余额不足!', '您是否去充值?', addPriceArray, function(e) {
+                                if (e.index == 1) {
+                                    mui.openWindow({
+                                        url:url + 'Mobile/Pay/topUpsPage',
+                                    });
+                                }
+                            });
+                            return;
+                        }else{
+                            if(isNaN(num)){
+                                mui.toast('请你输入数字');
+                                return;
+                            }else if(!is_num(num)){
+                                mui.toast('请你输入正整数');
+                                return;
+                            }
+                            var money = num * price;
+                            mui.ajax(url + 'Home/Task/addTaskNum',{
+                                data:{
+                                    'id' : task_id,
+                                    'num' : num,
+                                    'money':money * 100
+                                },
+                                dataType:'json',//服务器返回json格式数据
+                                type:'post',//HTTP请求类型
+                                timeout:10000,//超时时间设置为10秒；
+                                success:function(data){
+                                    mui.toast(data['info']);
+                                    // alert(JSON.stringify(data));
+                                    if(data['status'] == 1){
+                                        setTimeout(function(){
+                                            mui.openWindow({
+                                                url:  url + 'Home/Task/myTask'
+                                            });
+                                        }, 1000);
+                                    }
+                                },
+                                error:function(xhr,type,errorThrown){
+                                    //异常处理；
+                                    console.log(type);
+                                }
+                            });
+                        }
+                    } else {
+
+                    }
+                })
+        }
+        function addNum1(type){
+            if(type == 1){
+                type = '追加数量';
+            }else if(type  == 2){
+                type  = '上调出价';
+            }else if(type == 3){
+                type = '下架';
+            }else if(type == 4){
+                type = '刷新';
+            }else if(type == 5){
+                type = '下载';
+            }else if(type == 6){
+                type = '推荐';
+            }else if(type == 7){
+                type = '置顶';
+            }
+            mui.toast(type + '前,需要暂停任务!');
+        }
+        function tosay(type){
+            if(type == 1){
+                type = '已下架';
+            }else if(type  == 2){
+                type  = '已过期';
+            }
+            mui.alert(type);
+        }
+        /*判断是否为正整数*/
+        function is_num(num){
+            var r = /^[0-9]*[1-9][0-9]*$/;
+            if(r.test(num)){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        function addNum(task_id) {
+            var pause = $('.my-release-pause').val();
+            // alert(pause);
+            if(pause == '开启'){
+                $("#add-num-pause1").css('display', 'flex');
+                setTimeout(function () {
+                    $("#add-num-pause1").fadeOut(300);
+                },1000);
+            }else{
+                var addPriceArray = ['取消', '确定'];
+                mui.prompt('', '请输入追加数量', '追加数量', addPriceArray, function(e) {
+                    if (e.index == 1) {
+                        var num = e.value;
+                        var price = Number($('#price').text());
+                        if(price * num > {$total_money}){
+                            mui.confirm('您的余额不足!', '您是否去充值?', addPriceArray, function(e) {
+                                if (e.index == 1) {
+                                    mui.openWindow({
+                                        url:url + 'Mobile/Pay/topUpsPage',
+                                    });
+                                }
+                            });
+                            return;
+                        }else{
+                            if(isNaN(num)){
+                                mui.toast('请你输入数字');
+                                return;
+                            }else if(!is_num(num)){
+                                mui.toast('请你输入正整数');
+                                return;
+                            }
+                            var money = num * price;
+                            mui.ajax(url + 'Mobile/Task/addTaskNum',{
+                                data:{
+                                    'id' : task_id,
+                                    'num' : num,
+                                    'money':money * 100
+                                },
+                                dataType:'json',//服务器返回json格式数据
+                                type:'post',//HTTP请求类型
+                                timeout:10000,//超时时间设置为10秒；
+                                success:function(data){
+                                    mui.toast(data['info']);
+                                    // alert(JSON.stringify(data));
+                                    if(data['status'] == 1){
+                                        setTimeout(function(){
+                                            mui.openWindow({
+                                                url:  url + 'Mobile/Task/myTask'
+                                            });
+                                        }, 1000);
+                                    }
+                                },
+                                error:function(xhr,type,errorThrown){
+                                    //异常处理；
+                                    console.log(type);
+                                }
+                            });
+                        }
+                    } else {
+
+                    }
+                })
+            }
+        }
+        function addPrice(task_id,price,task_num) {
+                var price = price / 100;
+                var addPriceArray = ['取消', '确定'];
+                mui.prompt('', '金额必须大于当前单价 / 元', '上调出价', addPriceArray, function(e) {
+                    if (e.index == 1) {
+                        var newPrice = e.value;
+                        if(newPrice  <= price){
+                            mui.toast('金额必须大于当前单价!');
+                            return
+                        }else if(isNaN(newPrice)) {
+                            mui.toast('请你输入数字!');
+                            return
+                        }
+                        var money = newPrice * task_num;
+                        mui.ajax(url + 'Home/Task/addTaskPrice',{
+                            data:{
+                                id : task_id,
+                                price : newPrice * 100,
+                                money : money * 100
+                            },
+                            dataType:'json',//服务器返回json格式数据
+                            type:'post',//HTTP请求类型
+                            timeout:10000,//超时时间设置为10秒；
+                            success:function(data){
+                                mui.toast(data['info']);
+                                // alert(JSON.stringify(data));
+                                if(data['status'] == 1){
+                                    setTimeout(function(){
+                                        mui.openWindow({
+                                            url:  url + 'Home/Task/myTask'
+                                        });
+                                    }, 1000);
+                                }
+                            },
+                            error:function(xhr,type,errorThrown){
+                                //异常处理；
+                                console.log(type);
+                            }
+                        });
+                    } else {
+                        // 点击了确定按钮
+                    }
+                })
+        }
+        function soldOut(task_id){
+                var delArray = ['取消', '确定'];
+                mui.confirm('下架后当前任务进行中及未审核的任务\n' +
+                    '都将视为合格，确定下架吗', '提示,下架以后任务不能重新发布!', delArray, function(e) {
+                    if (e.index == 1) {
+                        mui.ajax(url + 'Home/Task/taskSold/id/'+ task_id,{
+                            dataType:'json',//服务器返回json格式数据
+                            type:'get',//HTTP请求类型
+                            timeout:10000,//超时时间设置为10秒；
+                            success:function(data){
+                                mui.toast(data['info']);
+                                // alert(JSON.stringify(data));
+                                if(data['status'] == 1){
+                                    setTimeout(function(){
+                                        mui.openWindow({
+                                            url:  url + 'Home/Task/myTask'
+                                        });
+                                    }, 1000);
+                                }
+                            },
+                            error:function(xhr,type,errorThrown){
+                                //异常处理；
+                                console.log(type);
+                            }
+                        });
+                    } else {
+
+                    }
+                })
+        }
+        function refresh(){
+            $("#flush-num-pause").css('display', 'block');
+            setTimeout(function () {
+                $("#flush-num-pause").fadeOut(500);
+                mui.openWindow({
+                    url:  url + 'Home/Task/myTask'
+                });
+            },1000);
+            setTimeout(function () {
+                mui.toast('刷新成功');
+            },1500);
+        }
+        //弹出层
+        function recommend(id){
+            $('#recommend').css('display','block');
+            $('#recommend').attr('name',id);
+
+        }
+        //发布任务界面的置顶 ———— 确定按钮
+        function  addRecommend() {
+            var id =  $('#recommend').attr('name');
+            var topNum = $("#tuijian").val();
+            var money = Number($('#zong').val());
+            if(!is_num(topNum)) {
+                mui.toast('输入有误!');
+                return
+            }
+            mui.ajax(url + 'Home/Task/topTask',{
+                data:{
+                    id : id,
+                    topNum : topNum,
+                    money:money * 100,
+                    top : 2
+                },
+                dataType:'json',//服务器返回json格式数据
+                type:'post',//HTTP请求类型
+                timeout:10000,//超时时间设置为10秒；
+                success:function(data){
+                    mui.toast(data['info']);
+                    // alert(JSON.stringify(data));
+                    if(data['status'] == 1){
+                        setTimeout(function(){
+                            mui.openWindow({
+                                url:  url + 'Home/Task/myTask'
+                            });
+                        }, 1000);
+                    }
+                },
+                error:function(xhr,type,errorThrown){
+                    //异常处理；
+                    console.log(type);
+                }
+            });
+        }
+        $("#zhiding").focusout(function() {
+            var topNum = $(this).val();
+            var money = topNum * {:C(TASK_TOP_MONEY)[1]};
+            $('#zong1').val(money);
+        });
+        $("#tuijian").focusout(function() {
+            var topNum = $(this).val();
+            var money = topNum * {:C(TASK_TOP_MONEY)[0]};
+            $('#zong').val(money);
+        });
+        function taskTop(id){
+            $('#topTask').css('display','block');
+            $('#zhiding').attr('name',id);
+        }
+        function onTop(){
+            var id = $('#zhiding').attr('name');
+            var topNum  =   $("#zhiding").val();
+            var money  = Number($('#zong1').val());
+            if(!is_num(topNum)) {
+                mui.toast('输入有误!');
+                return
+            }
+            mui.ajax(url + 'Home/Task/topTask',{
+                data:{
+                    id : id,
+                    topNum : topNum,
+                    money:money * 100,
+                    top : 1
+                },
+                dataType:'json',//服务器返回json格式数据
+                type:'post',//HTTP请求类型
+                timeout:10000,//超时时间设置为10秒；
+                success:function(data){
+                    mui.toast(data['info']);
+                    // alert(JSON.stringify(data));
+                    if(data['status'] == 1){
+                        setTimeout(function(){
+                            mui.openWindow({
+                                url:  url + 'Home/Task/myTask'
+                            });
+                        }, 1000);
+                    }
+                },
+                error:function(xhr,type,errorThrown){
+                    //异常处理；
+                    console.log(type);
+                }
+            });
+        }
+        function del(id){
+            var delArray = ['取消', '确定'];
+            mui.confirm('确定要删除该任务吗?', '提示', delArray, function(e) {
+                if (e.index == 1) {
+                    $.post("{:U('del')}", {'id':id}, function (data) {
+                        mui.toast(data.info);
+                        if (data.status == 1 ) {
+                            window.location.reload();
+                        }
+                    })
+                }
+            })
+        }
     </script>
 </block>
 </html>
