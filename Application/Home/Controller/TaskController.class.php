@@ -25,11 +25,21 @@ class TaskController extends UserCommonController{
      * @return array
      */
     public function listTask(){
-//        if(UID !== 'UID'){
-//            $userList = $this->user->field('head_pic,nick_name')->where('user_id ='.UID)->find();
-//        }
-//        $this->assign('userList',$userList);
+        /*置顶店铺*/
+        $shopWhere['s.top_time'] = array('gt', NOW_TIME);
+        $shopField = 's.user_id, s.shop_img, s.shop_name';
+        $topShop = D('Home/Shop')->getAllShop($shopWhere, $shopField);
+        /*任务类别*/
+        $taskCategory = D('Home/TaskCategory')->getTaskCategory();
+        $this->assign('topShop',$topShop['shopList']);
+        $this->assign('taskCategory',$taskCategory);
+        $this->display();
+    }
 
+    /**
+     * @desc 获取任务列表展示
+     **/
+    public function ajax_listTask(){
         $keyword = I('keyword', '');
         /* order 接单赚钱的条件查询 */
         $typeOrder = I('typeOrder',0,'intval');
@@ -89,21 +99,8 @@ class TaskController extends UserCommonController{
                 }
             }
         }
-        if(IS_POST) {
-
-            $this->ajaxReturn(V(1, '任务列表', $list));
-        }
-        /*置顶店铺*/
-        $shopWhere['s.top_time'] = array('gt', NOW_TIME);
-        $shopField = 's.user_id, s.shop_img, s.shop_name';
-        $topShop = D('Home/Shop')->getAllShop($shopWhere, $shopField);
-        /*任务类别*/
-        $taskCategory = D('Home/TaskCategory')->getTaskCategory();
-        $this->assign('topShop',$topShop['shopList']);
-        $this->assign('taskCategory',$taskCategory);
         $this->assign('taskInfo', $list);
         $this->assign('page', $taskInfo['page']);
-        $this->display();
         $this->display();
     }
 

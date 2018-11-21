@@ -1,232 +1,70 @@
 <extend name="Public/base"/>
 <block name="style">
+    <title>{:C('WEB_TITLE')}-接单赚钱</title>
     <link rel="stylesheet" href="__PUBLIC__/pc/css/index.css">
 </block>
 <block name="body">
-<body class="bg">
+    <body class="bg">
+    <include file="Public/head"/>
+    <div class="session">
+        <div class="w1200">
+            <include file="Public/nav"/>
+            <div class="nav-bred"><a href="#">接单赚钱</a></div>
+            <div class="topshop cf">
+                <div class="topshop-name fl">置顶店铺</div>
+                <div class="topshop-wapper fl cf">
 
-<include file="Public/head"/>
-<div class="session">
-    <div class="w1200">
-        <include file="Public/nav"/>
-        <div class="nav-bred">
-            <a href="#">接单赚钱</a>
-        </div>
-        <div class="topshop cf">
-            <div class="topshop-name fl">
-                置顶店铺
-            </div>
-            <div class="topshop-wapper fl cf">
-                <a href="#" class="topshop-box fl">
-                    <div class="topshop-img">
-                            <span class="topshop-i">
-                                <img src="__PUBLIC__/pc/images/">
-                            </span>
-                        <span class="topshop-topi">
-                                <img src="__PUBLIC__/pc/images/jdzq_img_shop.png" />
-                            </span>
-                    </div>
-                    <p>我要刷单</p>
-                </a>
-                <a href="#" class="topshop-box fl">
-                    <div class="topshop-img">
-                            <span class="topshop-i">
-                                <img src="__PUBLIC__/pc/images/">
-                            </span>
-                        <span class="topshop-topi">
-                                <img src="__PUBLIC__/pc/images/jdzq_img_shop.png" />
-                            </span>
-                    </div>
-                    <p>我要刷单</p>
-                </a>
-                <a href="#" class="topshop-box fl">
-                    <div class="topshop-img">
-                            <span class="topshop-i">
-                                <img src="__PUBLIC__/pc/images/">
-                            </span>
-                        <span class="topshop-topi">
-                                <img src="__PUBLIC__/pc/images/jdzq_img_shop.png" />
-                            </span>
-                    </div>
-                    <p>我要刷单</p>
-                </a>
-                <a href="#" class="topshop-box fl">
-                    <div class="topshop-img">
-                            <span class="topshop-i">
-                                <img src="__PUBLIC__/pc/images/">
-                            </span>
-                        <span class="topshop-topi">
-                                <img src="__PUBLIC__/pc/images/jdzq_img_shop.png" />
-                            </span>
-                    </div>
-                    <p>我要刷单</p>
-                </a>
-                <a href="#" class="topshop-box fl">
-                    <div class="topshop-img">
-                            <span class="topshop-i">
-                                <img src="__PUBLIC__/pc/images/">
-                            </span>
-                        <span class="topshop-topi">
-                                <img src="__PUBLIC__/pc/images/jdzq_img_shop.png" />
-                            </span>
-                    </div>
-                    <p>我要刷单</p>
-                </a>
-                <a href="#" class="topshop-box fl">
-                    <div class="topshop-img">
-                            <span class="topshop-i">
-                                <img src="__PUBLIC__/pc/images/">
-                            </span>
-                        <span class="topshop-topi">
-                                <img src="__PUBLIC__/pc/images/jdzq_img_shop.png" />
-                            </span>
-                    </div>
-                    <p>我要刷单</p>
-                </a>
-                <a href="#" class="topshop-box fl">
-                    <div class="topshop-img">
-                            <span class="topshop-i">
-                                <img src="__PUBLIC__/pc/images/">
-                            </span>
-                        <span class="topshop-topi">
-                                <img src="__PUBLIC__/pc/images/jdzq_img_shop.png" />
-                            </span>
-                    </div>
-                    <p>我要刷单</p>
-                </a>
-                <a href="#" class="topshop-box fl">
-                    <div class="topshop-img">
-                            <span class="topshop-i">
-                                <img src="__PUBLIC__/pc/images/">
-                            </span>
-                        <span class="topshop-topi">
-                                <img src="__PUBLIC__/pc/images/jdzq_img_shop.png" />
-                            </span>
-                    </div>
-                    <p>我要刷单</p>
-                </a>
-                <a href="#" class="topshop-box fl">
-                    <div class="topshop-img">
-                            <span class="topshop-i">
-                                <img src="__PUBLIC__/pc/images/">
-                            </span>
-                        <span class="topshop-topi">
-                                <img src="__PUBLIC__/pc/images/jdzq_img_shop.png" />
-                            </span>
-                    </div>
-                    <p>我要刷单</p>
-                </a>
-                <a href="#" class="topshop-box fl">
-                    <div class="topshop-img">
-                            <span class="topshop-i">
-                                <img src="__PUBLIC__/pc/images/">
-                            </span>
-                        <span class="topshop-topi">
-                                <img src="__PUBLIC__/pc/images/jdzq_img_shop.png" />
-                            </span>
-                    </div>
-                    <p>我要刷单</p>
-                </a>
-                <a href="#" class="topshop-box fl">
-                    <div class="topshop-img">
-                            <span class="topshop-i">
-                                <img src="__PUBLIC__/pc/images/">
-                            </span>
-                        <span class="topshop-topi">
-                                <img src="__PUBLIC__/pc/images/jdzq_img_shop.png" />
-                            </span>
-                    </div>
-                    <p>我要刷单</p>
-                </a>
-            </div>
-        </div>
-        <div class="sess-wapper">
-            <div class="seach-wapper">
-                <input type="text" placeholder="请输入搜索内容">
-                <button class="iconfont icon-jdzq_icon_search seach-btn">
-                    搜索
-                </button>
-            </div>
-            <ul class="class-wapper">
-                <li class="cf">
-                        <span class="class-name fl">
-                            分类
-                        </span>
-                    <div class="class-type fl">
-                        <span class="class-type-active">全部</span>
-                        <span class="">注册</span>
-                        <span class="">投票</span>
-                        <span class="">浏览</span>
-                        <span class="">加粉</span>
-                        <span class="">转发</span>
-                        <span class="">发帖</span>
-                        <span class="">评论</span>
-                        <span class="">高价</span>
-                        <span class="">特单</span>
-                        <span class="">长单</span>
-                        <span class="">电商</span>
-                        <span class="">其他</span>
-                    </div>
-                </li>
-                <li class="cf">
-                        <span class="class-name fl">
-                            排序
-                        </span>
-                    <div class="class-type fl">
-                        <span class="class-type-active">最新</span>
-                        <span class="">综合</span>
-                        <span class="">优先</span>
-                        <span class="">人气</span>
-                        <span class="">苹果</span>
-                    </div>
-                </li>
-            </ul>
-            <ul class="index-wapper">
-                <li class="cf">
-                    <div class="item-wapper fl cf">
-                        <div class="item-i fl">
-                            <img src="__PUBLIC__/pc/images/jdzq_icon_comment.png" />
-                        </div>
-                        <div class="item-sess fl">
-                            <div class="item-h1 cf">
-                                <h1 class="fl">注册</h1>
-                                <span class="item-tips fl">
-                                        <svg class="icon" aria-hidden="true">
-                                            <use xlink:href="#icon-jdzq_icon_top"></use>
-                                        </svg>
-                                        <svg class="icon" aria-hidden="true">
-                                            <use xlink:href="#icon-jdzq_icon_promise"></use>
-                                        </svg>
-                                        <svg class="icon" aria-hidden="true">
-                                            <use xlink:href="#icon-home_jdzq_icon_tuiji"></use>
-                                        </svg>
-                                    </span>
-                                <span class="item-p fl">
-                                        天天快报一秒完成
-                                    </span>
+                    <foreach name="topShop" item="v">
+                        <a href="javascript:;" class="topshop-box fl">
+                            <div class="topshop-img">
+                                <span class="topshop-i"><img src="{$v.shop_img}"></span>
+                                <span class="topshop-topi"><img src="__PUBLIC__/pc/images/jdzq_img_shop.png" /></span>
                             </div>
-                            <div class="item-span">
-                                <span>编号：740006</span>
-                                <span>单价：￥2.5</span>
-                                <span>剩余单数：9</span>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="" class="item-btn fr">查看</a>
+                            <p>{$v.shop_name}</p>
+                        </a>
+                    </foreach>
 
-        </li>
-        </ul>
+                </div>
+            </div>
+            <div class="sess-wapper">
+                <div class="seach-wapper">
+                    <input type="text" placeholder="请输入搜索内容（任务编号/标题）">
+                    <button class="iconfont icon-jdzq_icon_search seach-btn">搜索</button>
+                </div>
+                <ul class="class-wapper">
+                    <li class="cf">
+                        <span class="class-name fl">分类</span>
+                        <div class="class-type fl">
+                            <span class="class-type-active" data-id="0">全部</span>
+
+                            <foreach name="taskCategory" item="v">
+                                <span data-id="{$v['id']}" class="">{$v['category_name']}</span>
+                            </foreach>
+
+                        </div>
+                    </li>
+                    <li class="cf">
+                        <span class="class-name fl">排序</span>
+                        <div class="class-type fl">
+                            <span data-order="1" class="class-type-active">最新</span>
+                            <span data-order="2" class="">综合</span>
+                            <span data-order="3" class="">优先</span>
+                            <span data-order="4" class="">人气</span>
+                            <span data-order="5" class="">苹果</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="index-wapper"></ul>
+            </div>
+            <button class="check-more">查看更多</button>
         </div>
-        <button class="check-more">
-            查看更多
-        </button>
     </div>
-</div>
-</div>
+    </div>
 </body>
 </block>
 <block name="script">
-    <script>
+    <script type="text/javascript">
         $(".class-type span").click(function () {
             $(this).parent().children().removeClass("class-type-active");
             $(this).addClass("class-type-active");
