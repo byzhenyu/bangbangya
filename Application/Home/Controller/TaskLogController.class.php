@@ -10,7 +10,6 @@
  */
 
 namespace Home\Controller;
-use Common\Controller\CommonController;
 use Common\Controller\UserCommonController;
 class TaskLogController extends UserCommonController{
 
@@ -65,7 +64,7 @@ class TaskLogController extends UserCommonController{
             $this->ajaxReturn(V(1,'删除成功'));
         }
         else{
-            $this->ajaxReturn(V(0, $this->TaskLogModel->getDbError()));
+            $this->ajaxReturn(V(0, '删除失败'));
         }
     }
 
@@ -76,8 +75,9 @@ class TaskLogController extends UserCommonController{
      */
     public function taskLogFail(){
         $taskLog_id = I('id', 0, 'intval');
-        $taskLogInfo = $this->TaskLogModel->field('id, user_id, task_id, valid_pic')->where('id = '.$taskLog_id)->find();
+        $taskLogModel = D('Home/TaskLog');
         $chatModel = D('Home/Chat');
+        $taskLogInfo = $taskLogModel->field('id, user_id, task_id, valid_pic')->where('id = '.$taskLog_id)->find();
         $taskLogInfo['userChat']  = $chatModel ->field('content')->where('user_id  = '.$taskLogInfo['user_id'].'  and task_log_id =  '.$taskLogInfo['id'])->select();
         $taskLogInfo['taskChat']  = $chatModel ->field('content')->where('task_user_id = '.$taskLogInfo['user_id'].'  and task_log_id =  '.$taskLogInfo['id'])->select();
         if(strpos($taskLogInfo['valid_pic'], ',')  !== false){
@@ -88,6 +88,7 @@ class TaskLogController extends UserCommonController{
         $this->assign('taskLogInfo',$taskLogInfo);
         $this->display();
     }
+
     /**
      * @desc  放弃任务
      * @param tasklog_id
@@ -97,8 +98,9 @@ class TaskLogController extends UserCommonController{
         $taskLog_id = I('id', 0, 'intval');
         $task_id = I('task_id', 0, 'intval');
         $taskModel = D('Home/Task');
+        $taskLogModel = D('Home/TaskLog');
         M()->startTrans();
-        $taskLogRes = $this->TaskLogModel->where('id = '.$taskLog_id)->save(array('valid_status' => 4));
+        $taskLogRes = $taskLogModel->where('id = '.$taskLog_id)->save(array('valid_status' => 4));
         /*放弃任务 释放单子 数*/
         $taskRes = $taskModel->where('id = '.$task_id)->setInc('task_num');
         if($taskLogRes && $taskRes){
@@ -116,7 +118,6 @@ class TaskLogController extends UserCommonController{
     public function taskLogDetail() {
         $id = I('id', 0, 'intval');
         $info = D('Home/TaskLog')->getTaskLogDetail(array('l.id'=>$id));
-
         $this->assign('taskDetail', $info);
         $this->display();
     }
@@ -127,12 +128,11 @@ class TaskLogController extends UserCommonController{
      */
     public function reDoLog() {
         $log_id = I('log_id', 0 , 'intval');
-
         $new_id = D('Home/TaskLog')->reDoTaskLog($log_id);
-
         if ($new_id === false) {
             $this->ajaxReturn(V(0, '操作失败'));
-        } else {
+        }
+        else {
             $this->ajaxReturn(V(1, '操作成功',$new_id));
         }
 
