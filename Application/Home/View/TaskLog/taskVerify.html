@@ -20,35 +20,26 @@
                         <li>
                             <span>
                                 <i>发布方</i>
-                                <img src="./images/user.png" />
-                                697953
+
+                                <if condition="$info['head_pic']">
+                                    <img src="{$info['head_pic']}">
+                                    <else/>
+                                    <img src="__PUBLIC__/pc/images/user.png" />
+                                </if>
+
+                                <span>{$info['task_user_id']}</span>
                             </span>
                         </li>
                         <li>
-                            <span>
-                                <i>编号</i>
-                                754616
-                            </span>
-                            <span>
-                                <i>类别</i>
-                                加粉
-                            </span>
-                            <span>
-                                <i>单价</i>
-                                ￥0.3
-                            </span>
+                            <span><i>编号</i>{$info['task_id']}</span>
+                            <span><i>类别</i>{$info['category_name']}</span>
+                            <span><i>单价</i>￥{:fen_to_yuan($info['task_price'])}</span>
                         </li>
                         <li>
-                            <span>
-                                <i>文字验证</i>
-                                微信名字
-                            </span>
+                            <span><i>文字验证</i>{$info['validate_words']}</span>
                         </li>
                         <li>
-                            <span>
-                                <i>备注</i>
-                                一个手机验证一次
-                            </span>
+                            <span><i>备注</i>{$info['remark']}</span>
                         </li>
                     </ul>
                     <div class="upload-wapper">
@@ -59,25 +50,18 @@
                             </div>
                             <div class="upload-imgb cf">
                                 <div class="upload-img fl">
-                                    <img src="./images/">
+                                    <img src="__PUBLIC__/pc/images/">
                                     <input type="file">
                                     <button class="upload-delete iconfont icon-common_icon_close"></button>
                                 </div>
-                                <div class="upload-img fl">
-                                    <img src="./images/">
-                                    <input type="file">
-                                    <button class="upload-delete iconfont icon-common_icon_close"></button>
-                                </div>
-                                <div class="upload-img fl">
-                                    <!-- <img src="./images/"> -->
-                                    <input type="file">
-                                    <!-- <button class="upload-delete iconfont icon-common_icon_close"></button> -->
-                                </div>
                             </div>
-                            <div class="upload-text cf">
-                                <span>文字验证</span>
-                                <textarea placeholder="请输入文字验证"></textarea>
-                            </div>
+                            <if condition="$info['validate_words'] neq ''">
+                                <div class="upload-text cf">
+                                    <span>文字验证</span>
+                                    <textarea placeholder="请输入文字验证"></textarea>
+                                </div>
+                                <else/>
+                            </if>
                             <div class="upload-btng">
                                 <button>取消</button>
                                 <button>确认提交</button>
