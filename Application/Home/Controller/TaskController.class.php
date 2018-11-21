@@ -156,8 +156,8 @@ class TaskController extends UserCommonController{
 
     /**
      * @desc  接单任务详情  && 我的任务上传验证页面
-     * @param  $id
-     * @param  $user_id
+     * @param  id
+     * @param  user_id
      * @return mixed
      */
     public  function taskDetail(){
@@ -211,7 +211,7 @@ class TaskController extends UserCommonController{
             $this->ajaxReturn(V(1, 'success', $data));
         }
     }
-    
+
     /**
      * 删除oss上指定文件
      * @param  string $object 文件路径 例如删除 /Public/README.md文件  传Public/README.md 即可
