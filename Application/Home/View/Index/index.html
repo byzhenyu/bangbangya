@@ -1,6 +1,20 @@
 <extend name="Public/base"/>
 <block name="style">
     <link rel="stylesheet" href="__PUBLIC__/pc/css/home.css">
+    <style>
+        #upload{
+            border: none;
+            z-index: 99;
+            position: absolute;
+            overflow: hidden;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            width: 60px;
+            height: 60px;
+            top: 0;
+            left: 0;
+        }
+    </style>
 </block>
 <block name="body">
     <body class="home">
@@ -14,7 +28,7 @@
                 <else />
                 <div class="h-user fr cf">
                     <div class="user-i fl">
-                        <span><img src="{$userList['head_pic']}"></span>
+                        <span style="position:relative;" ><img  id="head-img"  src="{$userList['head_pic']}"><input type="file" id="upload" accept="image/jpeg, image/gif" /></span>
                         <p>{$userList['nick_name']}</p>
                     </div>
                     <i class="iconfont icon-nav_icon_dropdown fl">
@@ -83,6 +97,10 @@
 <block name="script">
     <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js" type="text/javascript" charset="utf-8"></script>
     <script src="__PUBLIC__/pc/js/swiper.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/pc/js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/fileupload/js/vendor/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.iframe-transport.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.fileupload.js"></script>
     <script>
         var swiper = new Swiper('.swiper-container', {
             spaceBetween: 0,
@@ -122,6 +140,14 @@
         if(login == 1){
             mui.toast('登录成功');
         }
+        $('#upload').fileupload({
+            url: "{:U('User/uploadImg')}",
+            dataType: 'json',
+            done: function (e, data) {
+                $('#head-img').attr('src',data.result.data.nameosspath);
+                mui.toast('更换成功');
+            }
+        });
     </script>
 </block>
 </html>

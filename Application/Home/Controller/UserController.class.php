@@ -44,7 +44,7 @@ class UserController extends UserCommonController {
      */
     public function personalCenter(){
         $login  = I('login', 0, 'intval');
-        $login  = I('id_band', 0, 'intval');
+        $id_band  = I('id_band', 0, 'intval');
         $user_id = UID;
         $where['u.user_id'] = $user_id;
         $field = 'u.head_pic, u.nick_name,u.alipay_num,u.alipay_name,u.invitation_uid,u.register_time, u.total_money,u.bonus_money,s.shop_type, u.task_suc_money,u.user_id, s.shop_accounts,s.take_task';
@@ -151,6 +151,7 @@ class UserController extends UserCommonController {
                 $oss->deleteObject($bucket,$object);
             }
             $this->user->where('user_id = '.UID)->save(array('head_pic'=>$data['nameosspath']));
+            session('user_auth')['head_pic'] =  $data['nameosspath'];
             $this->ajaxReturn(V(1, '更换头像成功', $data));
         }
     }

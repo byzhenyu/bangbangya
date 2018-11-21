@@ -8,8 +8,8 @@
             overflow: hidden;
             opacity: 0;
             -ms-filter: 'alpha(opacity=0)';
-            width: 100px;
-            height: 100px;
+            width: 60px;
+            height: 60px;
             top: 0;
             left: 0;
         }
@@ -23,8 +23,7 @@
             <else />
             <div class="h-user fr cf">
                 <div class="user-i fl">
-                    <span><img id="head-img" src="{:session('user_auth')['head_pic']}"></span>
-                    <input type="file" id="upload" accept="image/jpeg, image/gif" />
+                    <span style="position:relative;"><img id="head-img"  src="{:session('user_auth')['head_pic']}"><input type="file" id="upload" accept="image/jpeg, image/gif" /></span>
                     <p>{:session('user_auth')['nick_name']}</p>
                 </div>
                 <i class="iconfont icon-nav_icon_dropdown fl">
