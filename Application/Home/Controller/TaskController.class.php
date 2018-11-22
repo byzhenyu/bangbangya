@@ -25,11 +25,13 @@ class TaskController extends UserCommonController{
      */
     public function listTask()
     {
+
         $shopWhere['s.top_time'] = array('gt', NOW_TIME);
         $shopField = 's.user_id, s.shop_img, s.shop_name';
         $topShop = D('Home/Shop')->getAllShop($shopWhere, $shopField);
         /*任务类别*/
         $taskCategory = D('Home/TaskCategory')->getTaskCategory();
+        p($taskCategory);
         $this->assign('topShop',$topShop['shopList']);
         $this->assign('taskCategory',$taskCategory);
         $this->display();
@@ -312,7 +314,7 @@ class TaskController extends UserCommonController{
                     $taskData['top_time'] = $data['topNum'] * 3600  + NOW_TIME;
                     $taskData['top'] = 1;
                 }
-            }else{
+            } else {
                 $type = 9;
                 $desc = '任务推荐';
                 if($taskData['re_time'] > NOW_TIME){
