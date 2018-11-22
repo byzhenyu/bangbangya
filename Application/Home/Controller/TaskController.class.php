@@ -16,6 +16,7 @@ class TaskController extends UserCommonController{
         $this->Task = D("Home/Task");
     }
 
+
     /**
      * 首页接单信息页面
      * @param UID
