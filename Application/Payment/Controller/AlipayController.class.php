@@ -19,7 +19,6 @@ class AlipayController extends CommonController {
         }else{
             $data['order_sn'] = 'B'.$order_sn;
         }
-        $data['order_sn'] = makeOrderSn($data['user_id']);
         M('recharge')->add($data);
         $data['body'] = C('APP_NAME').'网页充值';
         $data['subject'] = C('APP_NAME').'网页充值';
@@ -37,8 +36,8 @@ class AlipayController extends CommonController {
         require_once("./Plugins/AliPay/AliPay.php");
         $alipay = new \AliPay();
         //验证是否是支付宝发送
-//        $flag = $alipay->AliPayNotifyCheck();
-//        if ($flag) {
+        $flag = $alipay->AliPayNotifyCheck();
+        if ($flag) {
             if ($_POST['trade_status'] == 'TRADE_FINISHED' || $_POST['trade_status'] == 'TRADE_SUCCESS') {
                 $out_trade_no = trim($_POST['out_trade_no']); //商户订单号
                 $total_amount = trim($_POST['total_amount']); //支付的金额
@@ -52,9 +51,9 @@ class AlipayController extends CommonController {
                     LL($result);
                 }
             }
-//        }
-//        echo "fail"; //验证失败
-//        die;
+        }
+        echo "fail"; //验证失败
+        die;
     }
 
     //提现转账 示例
