@@ -218,7 +218,26 @@ class TaskController extends UserCommonController{
         $this->display();
     }
 
-    //我的任务详情
+    /**
+     * @desc  接单任务详情  && 我的任务上传验证页面
+     * @param  id
+     * @param  user_id
+     * @return mixed
+     */
+    public  function taskDetail(){
+        $id = I('id', 0, 'intval');
+        $where['t.id'] = $id;
+        $taskModel = D('Home/Task');
+        $taskDetail = $taskModel->getTaskDetail($where);
+        //p($taskDetail);
+        $this->assign('id', $id);
+        $this->assign('taskDetail', $taskDetail);
+        $this->display();
+    }
+
+    /**
+     * @desc  我的任务详情
+     */
     public function myTaskDetail() {
         $id = I('id', 0, 'intval');
         $where['t.id'] = $id;
@@ -330,5 +349,12 @@ class TaskController extends UserCommonController{
         $bucket=$config['BUCKET'];
         $test=$oss->deleteObject($bucket,$object);
         $this->ajaxReturn(V(1, '删除成功'));
+    }
+
+    //丢弃任务
+    public function discardTask() {
+        $id = I('id', 0, 'intval');
+        $res = D('Home/Task')->discardTask($id);
+        $this->ajaxReturn($res);
     }
 }
