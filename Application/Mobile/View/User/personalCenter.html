@@ -54,7 +54,7 @@
                 <else />
                 <a  href="{:U('User/securityDeposit')}">
                     <div class="personal-application-protect">
-                        <p>保障金</p>
+                        <p>保证金</p>
                     </div>
                 </a>
             </if>
@@ -304,7 +304,7 @@
             mui.toast('更换成功');
         }
     });
-    var login  = {$login};
+    var login  = "{$login}";
     if(login == 1){
         mui.toast('登录成功');
     }

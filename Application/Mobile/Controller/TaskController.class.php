@@ -218,6 +218,7 @@ class TaskController extends UserCommonController {
         $where['t.id'] = $id;
         $taskModel = D('Home/Task');
         $taskDetail = $taskModel->getTaskDetail($where);
+        p($taskDetail);
         $this->assign('id', $id);
         $this->assign('taskDetail', $taskDetail);
         $this->display();
@@ -288,6 +289,7 @@ class TaskController extends UserCommonController {
         $where['t.user_id'] = array('eq', UID);
         $field = 't.id,t.end_time, t.top,t.top_time , t.recommend, t.re_time, t.title, t.audit_info,t.price,t.task_zong, t.task_num, t.total_price, t.audit_status, t.is_show, t.add_time, c.category_name ';
         $taskList = D('Home/Task')->getMyTask($where, $field);
+
         $total_money = D('Home/User')->where(array('user_id'=>UID))->getField('total_money');
         $this->assign('taskList', $taskList);
         $this->assign('total_money', $total_money);
