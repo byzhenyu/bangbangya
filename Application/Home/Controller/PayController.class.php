@@ -28,18 +28,29 @@ class PayController extends UserCommonController{
         $data['user_id'] = UID;
         $data['recharge_money'] = I('recharge_money',0 , 'intval');
         $data['order_sn'] = makeOrderSn($data['user_id']);
-//        $this->ajaxReturn(V(1, '充值5555成功',$data));
-        $result = M('recharge')->add($data);
+        M('recharge')->add($data);
+        $data['body'] =  '网页充值';
+        $data['subject'] = '网页充值';
+        $data['out_trade_no'] =  $data['order_sn'];
+        $data['total_amount'] = '0.01';
+        require_once("./Plugins/AliPay/AliPay.php");
+        $alipay = new \AliPay();
+        echo '页面跳转中, 请稍后...';
+        echo $alipay->AliPayWeb($data);
         /*支付宝回调用*/
-        $userModel = D('Home/User');
-        account_log($data['user_id'],$data['recharge_money'],0,'充值',$data['order_sn']);
-        $userModel -> where('user_id = '.$data['user_id'])->setInc('total_money',$data['recharge_money']);
-        $invitation_uid  =  is_inviter($data['user_id']);
-        if($invitation_uid  != 0){
-            inviterBonus($data['user_id'], $invitation_uid ,$data['recharge_money']);
-        }
-        /*end */
-        $this->ajaxReturn(V(1, '充值成功',$data['user_id']));
+//        $userModel = D('Home/User');
+//        account_log($data['user_id'],$data['recharge_money'],0,'充值',$data['order_sn']);
+//        $userModel -> where('user_id = '.$data['user_id'])->setInc('total_money',$data['recharge_money']);
+//        $invitation_uid  =  is_inviter($data['user_id']);
+//        if($invitation_uid  != 0){
+//            inviterBonus($data['user_id'], $invitation_uid ,$data['recharge_money']);
+//        }
+//        /*end */
+//        $this->ajaxReturn(V(1, '充值成功',$data['user_id']));
+    }
+    function AlipayReturn(){
+        $data =  $_POST;
+        p($data);
     }
     /**
      * @desc 我的钱包
