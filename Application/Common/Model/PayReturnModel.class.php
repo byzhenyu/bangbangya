@@ -5,12 +5,6 @@
 namespace Common\Model;
 use Think\Model;
 class PayReturnModel extends Model{
-    public function _initialize()
-    {
-        $this->recharge = M("Recharge");
-        $this->user = D('Home/User');
-    }
-
     /**
      * 支付成功后回调
      * @param $out_trade_no string 自家定单号
@@ -38,21 +32,25 @@ class PayReturnModel extends Model{
      * 订单成功支付处理
      */
     public function pcMoneyPay($out_trade_no, $total_amount, $trade_no) {
-        $recharge =  $this->recharge->where('order_sn="'. $out_trade_no .'"')->find();
+        $rechargeModel = M('recharge');
+        $userModel = D('Home/User');
+        $recharge =  $rechargeModel->where('order_sn="'. $out_trade_no .'"')->find();
         if (!$recharge) {
             return V(0, '定单不存在, 未知原因!');
         }
         M()->startTrans();
-        $rechargeRes =  $this->recharge->where('order_sn= "'. $out_trade_no .'"')->save(array('pay_status' => 1,'trade_no' => $trade_no));
-        $userRes = $this->user-> where('user_id = '.$recharge['user_id'])->setInc('total_money',$total_amount);
+        $rechargeRes =  $rechargeModel->where('order_sn= "'. $out_trade_no .'"')->save(array('pay_status' => 1,'trade_no' => $trade_no));
+        $userRes = $userModel-> where('user_id = '.$recharge['user_id'])->setInc('total_money',$total_amount);
         $invitation_uid  =  is_inviter($recharge['user_id']);
         if($invitation_uid  != 0){
             inviterBonus($recharge['user_id'], $invitation_uid ,$total_amount);
         }
         account_log($recharge['user_id'],$total_amount,0,'充值',$out_trade_no);
         if($rechargeRes  && $userRes){
+            M()->commit();
             return V(1, '定单支付成功, 状态已更新!');
         }else{
+            M()->rollback();
             return V(2, '定单异常!');
         }
     }
