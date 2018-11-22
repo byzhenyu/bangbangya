@@ -14,7 +14,7 @@ class AlipayController extends CommonController {
         $data['user_id'] = UID;
         $data['recharge_money'] = I('recharge_money',0 , 'intval');
         $order_sn = makeOrderSn($data['user_id']);
-        if($type == 1){
+        if($type == 0){
             $data['order_sn'] = 'T'.$order_sn;
         }else{
             $data['order_sn'] = 'B'.$order_sn;
@@ -24,7 +24,7 @@ class AlipayController extends CommonController {
         $data['subject'] = C('APP_NAME').'网页充值';
         $data['out_trade_no'] =  $data['order_sn'];
         $data['total_amount'] = '0.01';
-        header("Content-type: text/html; charset=utf-8");
+//        header("Content-type: text/html; charset=utf-8");
         require_once("./Plugins/AliPay/AliPay.php");
         $alipay = new \AliPay();
         echo '页面跳转中, 请稍后...';
