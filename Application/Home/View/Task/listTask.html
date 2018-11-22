@@ -28,7 +28,7 @@
             </div>
             <div class="sess-wapper">
                 <div class="seach-wapper">
-                    <input type="text" placeholder="请输入搜索内容（任务编号/标题）">
+                    <input type="text" name="keyword" placeholder="请输入搜索内容（任务编号/标题）">
                     <button class="iconfont icon-jdzq_icon_search seach-btn">搜索</button>
                 </div>
                 <ul class="class-wapper">
@@ -96,6 +96,14 @@
             typeOrder = $('#get-order-choose .class-type-active').data('order');
             category_id = $('#get-order-list .class-type-active').data('id');
             ajax_listTask({'taskCategoryId':category_id,'typeOrder':typeOrder},2);
+        });
+
+        /*搜索加载*/
+        $('.seach-btn').click(function () {
+            var keyword = $("input[name='keyword']").val();
+            if (keyword) {
+                ajax_listTask({'keyword':keyword},'');
+            }
         });
 
         /*开始加载*/
