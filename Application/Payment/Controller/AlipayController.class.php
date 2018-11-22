@@ -21,8 +21,8 @@ class AlipayController extends CommonController {
         }
         $data['order_sn'] = makeOrderSn($data['user_id']);
         M('recharge')->add($data);
-        $data['body'] = '网页充值';
-        $data['subject'] = '网页充值';
+        $data['body'] = C('APP_NAME').'网页充值';
+        $data['subject'] = C('APP_NAME').'网页充值';
         $data['out_trade_no'] =  $data['order_sn'];
         $data['total_amount'] = '0.01';
         header("Content-type: text/html; charset=utf-8");

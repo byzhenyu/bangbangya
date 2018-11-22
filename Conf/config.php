@@ -107,6 +107,6 @@
             /*用于web支付返回地址*/
             'returnUrl'    => 'http://bby.host5.liuniukeji.net/index.php/Payment/Alipay/alipayNotify',
         ),
-
+        'APP_NAME' => '帮帮鸭',
 
     );
