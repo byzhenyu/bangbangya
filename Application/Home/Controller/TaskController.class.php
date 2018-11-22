@@ -31,7 +31,7 @@ class TaskController extends UserCommonController{
         $topShop = D('Home/Shop')->getAllShop($shopWhere, $shopField);
         /*任务类别*/
         $taskCategory = D('Home/TaskCategory')->getTaskCategory();
-        p($taskCategory);
+
         $this->assign('topShop',$topShop['shopList']);
         $this->assign('taskCategory',$taskCategory);
         $this->display();
