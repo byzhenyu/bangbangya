@@ -1,7 +1,7 @@
 <head name="header">
 <div class="header">
     <style>
-        #upload{
+        #upload-head{
             border: none;
             z-index: 99;
             position: absolute;
@@ -23,7 +23,7 @@
             <else />
             <div class="h-user fr cf">
                 <div class="user-i fl">
-                    <span style="position:relative;"><img id="head-img"  src="{:session('user_auth')['head_pic']}"><input type="file" id="upload" accept="image/jpeg, image/gif" /></span>
+                    <span style="position:relative;"><img id="head-img"  src="{:session('user_auth')['head_pic']}"><input type="file" id="upload-head" accept="image/jpeg, image/gif" /></span>
                     <p>{:session('user_auth')['nick_name']}</p>
                 </div>
                 <i class="iconfont icon-nav_icon_dropdown fl">
@@ -70,7 +70,7 @@
 
         })
     }
-    $('#upload').fileupload({
+    $('#upload-head').fileupload({
         url: "{:U('User/uploadImg')}",
         dataType: 'json',
         done: function (e, data) {

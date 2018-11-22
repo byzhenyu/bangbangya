@@ -277,7 +277,6 @@
             url: "{:U('TaskLog/uploadImg')}",
             dataType: 'json',
             done: function (e, data) {
-                alert(JSON.stringify(data));
                 $('.up-img fl').prepend('<div class="user-upload-imgs"><img class="user-upload-img"src="'+data.result.data.nameosspath+'"><img class="user-upload-del"src="__PUBLIC__/mobile/images/common_icon_closebox.png" onclick="delPic(this)"><input  type="hidden" name="valid_img[]" value="'+data.result.data.nameosspath+'"></div>');
                 count++;
                 if (count>2) {
