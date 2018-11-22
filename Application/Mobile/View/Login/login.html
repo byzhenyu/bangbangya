@@ -7,21 +7,18 @@
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
     <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js" type="text/javascript" charset="utf-8"></script>
     <style>
-        .index-login-boom {
+        #login_container {
             position: fixed;
-            top: 40%;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: none;
+            background: #f0f0f0;
+
         }
-        .index-login-boom .wrp-code {
-            width: 180px;
-            height: 180px;
-        }
-        .qrcode-box {
-            max-height: 180px;
-            max-width: 180px;
-        }
-        .wrp_code img{
-            width: 100px;
-            height: 100px;
+        #login_container iframe {
+            width: 100%;
         }
     </style>
 </head>
@@ -32,13 +29,7 @@
         <img class="help_duck_font" src="__PUBLIC__/mobile/images/login_font.png">
     </div>
 
-    <div class="index-login-boom">
-        <p class="login-boom-title">微信登录</p>
-        <div class="qrcode-box">
-            <div id="login_container" class="wrp-code"></div>
-        </div>
-    </div>
-
+    <div id="login_container" class="wrp-code" onclick="$(this).css('display','none')"></div>
     <div class="login-index-middle">
         <p>投票、关注、浏览也可以赚钱</p>
         <p>需要投票、需要粉丝、需要流量？</p>
@@ -59,8 +50,6 @@
         </a>
     </div>
 
-    <div class="login-index-bottom"></div>
-
 </body>
 <script src="__PUBLIC__/mobile/js/mui.min.js"></script>
 <script src="__PUBLIC__/mobile/js/url.js"></script>
@@ -76,36 +65,10 @@
         style: "black",
         href: ""
     });
-    // function dologin()
-    // {
-    //     mui.ajax(url + 'Mobile/Login/dologin',{
-    //         data:{
-    //             open_id:'123456'
-    //         },
-    //         dataType:'json',//服务器返回json格式数据
-    //         type:'post',//HTTP请求类型
-    //         timeout:10000,//超时时间设置为10秒；
-    //         // headers:{'Content-Type':'application/json'},
-    //         success:function(data){
-    //             mui.toast(data['info']);
-    //             // alert(JSON.stringify(data));
-    //             if(data['data'] == 1){
-    //                 setTimeout(function(){
-    //                     mui.openWindow({
-    //                         url:  url + '/Mobile/User/Invitation'
-    //                     });
-    //                 }, 1500);
-    //             }
-    //         },
-    //         error:function(xhr,type,errorThrown){
-    //             //异常处理；
-    //             console.log(type);
-    //         }
-    //     });
-    // }
     function dologin(){
-
+        $('#login_container').css('display', 'block');
     }
+
 </script>
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
