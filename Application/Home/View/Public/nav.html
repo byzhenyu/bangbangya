@@ -12,7 +12,7 @@
             <i class="iconfont icon-leftbar_icon_invitef"></i>
             邀请好友
         </a>
-        <a href="{:U('TaskLog/getTaskLog')}" <if condition="ACTION_NAME eq 'getTaskLog'">  class="nav-link nav-active"<else /> class="nav-link"</if>>
+        <a href="{:U('TaskLog/getTaskLog')}" <if condition="(ACTION_NAME eq 'getTaskLog') OR (ACTION_NAME eq 'taskLogDetail')">  class="nav-link nav-active"<else /> class="nav-link"</if>>
             <i class="iconfont icon-leftbar_icon_mytask_"></i>
             我的任务
         </a>

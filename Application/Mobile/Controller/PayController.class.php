@@ -106,11 +106,11 @@ class PayController  extends CommonController{
         $user_id = UID;
         if(IS_POST){
             $data = I('post.', 2);
-            $userRes = $this->user->where('alipay_num ='.$data['alipay_num'])->find();
-            if($userRes){
+            $userRes = $this->user->where(array('alipay_num'=>$data['alipay_num']))->find();
+            if ($userRes) {
                 $this->ajaxReturn(V(0, '绑定失败,已有账号绑定该支付宝!'));
             }
-            $result = $this->user->where('user_id = '.UID)->save($data);
+            $result = $this->user->where(array('user_id'=>UID))->save($data);
             if($result){
                 $this->ajaxReturn(V(1, '绑定成功',$data['user_id']));
             }else{
@@ -119,7 +119,7 @@ class PayController  extends CommonController{
         }
         $where['user_id'] = $user_id;
         $is_bind = is_bind($where);
-        $alipay = $this->user->field('alipay_num, alipay_name')->where('user_id ='.$user_id)->find();
+        $alipay = $this->user->field('alipay_num, alipay_name')->where(array('user_id'=>UID))->find();
         $this->assign('alipay',$alipay);
         $this->assign('is_bind',$is_bind);
         $this->display();

@@ -1,269 +1,295 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="css/cur.css">
-    <link rel="stylesheet" href="css/iconfont.css">
-    <link rel="stylesheet" href="css/store-detail.css">
-</head>
-<body class="bg">
-<div class="header">
-    <div class="head w1200 cf">
-        <a class="h-logo fl">
-            <img src="./images/logo.png"/>
-        </a>
-        <div class="h-user fr cf">
-            <div class="user-i fl">
-                <span><img src="./images/"></span>
+<extend name="Public/base"/>
+<block name="style">
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/store-detail.css">
+    <style>
+        .fix-content {
+            position: absolute;
+            width: 100px;
+            height: 150px;
+            top: 85%;
+            right: 5%;
+            z-index: 5;
+        }
+        .jd_alertw {
+            position: absolute;
+            left: 35%;
+            top: 50%;
+            display: block;
+            background: white;
+            width: 500px;
+            height: 250px;
+            border: 1px solid #999999;
+            z-index: 10000;
+            border-radius: 8px;
+            padding: 26px;
+        }
+        .jd_uop1 {
+            width: 80px;
+            display: block;
+        }
+        .grap-order-gray {
+            position: fixed;
+            z-index: -1;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            -webkit-transition-duration: 400ms;
+            transition-duration: 400ms;
+            opacity: 0;
+            background: rgba(0,0,0,.4);
+        }
+        .grap-order-boom {
+            position: fixed;
+            top: 36.4%;
+            left: 35%;
+            width: 310px;
+            height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            display: none;
+            border-radius: 5px;
+        }
+        .grap-order-boom .grap-order-title {
+            width: 100%;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-                <p>图图</p>
+        }
+        .grap-order-boom .grap-order-title p {
+            height: 20px;
+            font-size: 18px;
+            line-height: 20px;
+            text-align: center;
+            padding: 2px;
+        }
+        .grap-order-boom .grap-order-details {
+            font-size: 16px;
+            color: #888;
+            padding: 15px;
+        }
+        .grap-order-boom .grap-order-details span {
+            color: #f65454;
+        }
+        .grap-order-boom .grap-order-btnbox {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .grap-order-boom .grap-order-btnbox button {
+            background: #6f75ef;
+            color: #fff;
+            font-size: 18px;
+            text-align: center;
+            line-height: 18px;
+            width: 110px;
+            height: 40px;
+        }
+        .active {
+            z-index: 998;
+            opacity: 1;
+        }
+    </style>
+</block>
+<block name="body">
+    <body class="bg">
+    <include file="Public/head"/>
+    <div class="session">
+        <div class="w1200">
+            <include file="Public/nav"/>
+            <div class="nav-bred">
+                <a href="#">接单赚钱 ></a>
+                <a href="#">任务详情</a>
             </div>
-            <i class="iconfont icon-nav_icon_dropdown fl">
-                <button class="h-outbtn">退出</button>
-            </i>
-        </div>
-    </div>
-</div>
-<div class="session">
-    <div class="w1200">
-        <div class="nav">
-            <a class="nav-link nav-active">
-                <i class="iconfont icon-leftbar_icon_jdzq_n"></i>
-                接单赚钱
-            </a>
-            <a class="nav-link">
-                <i class="iconfont icon-leftbar_icon_publish"></i>
-                发布任务
-            </a>
-            <a class="nav-link">
-                <i class="iconfont icon-leftbar_icon_invitef"></i>
-                邀请好友
-            </a>
-            <a class="nav-link">
-                <i class="iconfont icon-leftbar_icon_mytask_"></i>
-                我的任务
-            </a>
-            <a class="nav-link">
-                <i class="iconfont icon-leftbar_icon_rank_n"></i>
-                排行榜
-            </a>
-            <a class="nav-link">
-                <i class="iconfont icon-leftbar_icon_my_n"></i>
-                个人中心
-            </a>
-            <a class="nav-link">
-                <i class="iconfont icon-leftbar_icon_mypubli"></i>
-                我的发布
-            </a>
-            <a class="nav-link">
-                <i class="iconfont icon-leftbar_icon_mywalle"></i>
-                我的钱包
-            </a>
-            <a class="nav-link">
-                <i class="iconfont icon-leftbar_icon_income_"></i>
-                收入分红
-            </a>
-            <a class="nav-link">
-                <i class="iconfont icon-leftbar_icon_coopera"></i>
-                合作商
-            </a>
-            <a class="nav-link">
-                <i class="iconfont icon-leftbar_icon_questio"></i>
-                常见问题
-            </a>
-            <a class="nav-link">
-                <i class="iconfont icon-leftbar_icon_opinion"></i>
-                意见反馈
-            </a>
-            <a class="nav-link">
-                <i class="iconfont icon-leftbar_icon_useragr"></i>
-                用户协议
-            </a>
-        </div>
-        <div class="nav-bred">
-            <a href="#">接单赚钱 ></a>
-            <a href="#">任务详情</a>
-        </div>
-        <div class="sess-wapper">
-            <div class="jd_detail">
-                <div class="jd_info">
-                    <div class="jd_utitle">标题</div>
-                    <div class="jd_uvalue">天天快报一秒完成</div>
-                    <div class="jd_gz">接单规则</div>
-                </div>
-                <div class="jd_info">
-                    <div class="jd_utitle">发布方</div>
-                    <div class="jd_pub">
+            <div class="sess-wapper">
+                <div class="jd_detail">
+                    <div class="jd_info">
+                        <div class="jd_utitle">标题</div>
+                        <div class="jd_uvalue">{$taskDetail['title']}</div>
+                        <a href="{:U('Article/articleDetail',array('category_id'=>1))}" class="jd_gz">接单规则</a>
+                    </div>
+                    <div class="jd_info">
+                        <div class="jd_utitle">发布方</div>
+                        <div class="jd_pub">
                         <span>
-                            <img src="./images/user.png"/>
+                            <img src="{$taskDetail['head_pic']}"/>
                         </span>
-                        697953
+                            {$taskDetail['nick_name']}
+                        </div>
+                        <if condition="$taskDetail['shop_accounts'] neq 0">
+                            <div class="jd_price">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-jdzq_icon_promise"></use>
+                                </svg>
+                                ￥{:fen_to_yuan($taskDetail['shop_accounts'])}
+                            </div>
+                        </if>
+                        <div onclick="shopInfo({$taskDetail['user_id']})" class="jd_store">店铺</div>
                     </div>
-                    <div class="jd_price">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-jdzq_icon_promise"></use>
-                        </svg>
-                        ￥2000
+                    <div class="jd_info">
+                        <div class="jd_utitle">编号</div>
+                        <div class="jd_uvalue">{$taskDetail['id']}</div>
+                        <div class="jd_utitle jd_ulb">类别</div>
+                        <div class="jd_uvalue">{$taskDetail['category_name']}</div>
+                        <div class="jd_utitle jd_ulb">单价</div>
+                        <div class="jd_uvalue">￥ {:fen_to_yuan($taskDetail['price'])}</div>
                     </div>
-                    <div class="jd_store">店铺</div>
-                </div>
-                <div class="jd_info">
-                    <div class="jd_utitle">编号</div>
-                    <div class="jd_uvalue">754616</div>
-                    <div class="jd_utitle jd_ulb">类别</div>
-                    <div class="jd_uvalue">加粉</div>
-                    <div class="jd_utitle jd_ulb">单价</div>
-                    <div class="jd_uvalue">￥ 0.3</div>
-                </div>
-                <div class="jd_info">
-                    <div class="jd_utitle">文字验证</div>
-                    <div class="jd_uvalue">微信名字</div>
-                </div>
-                <div class="jd_info">
-                    <div class="jd_utitle">链接</div>
-                    <div class="jd_uvalue">单价</div>
-                </div>
-                <div class="jd_info">
-                    <div class="jd_utitle">备注</div>
-                    <div class="jd_uvalue">单价</div>
-                </div>
-                <div class="jd_info">
-                    <div class="jd_utitle">置顶到期</div>
-                    <div class="jd_uvalue">单价</div>
-                </div>
-                <div class="jd_info">
-                    <div class="jd_utitle">截止时间</div>
-                    <div class="jd_uvalue">单价</div>
-                </div>
-                <div class="jd_ubottom">
+                    <div class="jd_info">
+                        <div class="jd_utitle">文字验证</div>
+                        <div class="jd_uvalue">{$taskDetail['validate_words']}</div>
+                    </div>
+                    <div class="jd_info">
+                        <div class="jd_utitle">链接</div>
+                        <div class="jd_uvalue">{$taskDetail['link_url']}</div>
+                    </div>
+                    <div class="jd_info">
+                        <div class="jd_utitle">备注</div>
+                        <div class="jd_uvalue">{$taskDetail['remark']}</div>
+                    </div>
+                    <if condition="$taskDetail['top_time'] gt 0">
+                        <div class="jd_info">
+                            <div class="jd_utitle">置顶到期</div>
+                            <div class="jd_uvalue">{$taskDetail['top_time']|time_format}</div>
+                        </div>
+                    </if>
+                    <div class="jd_info">
+                        <div class="jd_utitle">截止时间</div>
+                        <div class="jd_uvalue">{$taskDetail['end_time']|time_format}</div>
+                    </div>
+                    <div class="jd_ubottom">
 
+                    </div>
                 </div>
-            </div>
 
-            <div class="jd_uyanz">
-                <div class="">
-                    验证图
+                <div class="jd_uyanz">
+                    <div class="">
+                        验证图
+                    </div>
+                    <div class="jd_gez">
+                        (共{:count($taskDetail['check_info'])}张)
+                    </div>
+                    <div>
+
+                        <volist name="taskDetail['check_info']" id="v" key="k">
+                            <img src="{$v}">
+                        </volist>
+                    </div>
+                    <div class="jd_ubottom">
+                    </div>
                 </div>
-                <div class="jd_gez">
-                    (共2张)
-                </div>
+
                 <div>
-                    <img src="./images/wxjt.jpg">
-                    <img src="./images/wxjt.jpg">
+                    <div class="js_op">操作说明</div>
+                    <volist name="taskDetail['step_info']" id="v" key="k">
+                        <div class="jd_ut">
+                            <div class="jd_ubh">
+                                <span>{$k}</span>
+                            </div>
+                            <div>{$v['step_text']}</div>
+                        </div>
+                        <div class="jd_ewms">
+                            <div class="jd_ewm">
+                                <img src="{$v['step_img']}">
+                            </div>
+                        </div>
+                    </volist>
+
+                    <div class="jd_ubottom">
+                    </div>
                 </div>
-                <div class="jd_ubottom">
+                <div class="jd_end">
+                    <input id="task_id" type="hidden" value="{$id}">
+                    完成任务后，请到【我的任务】上传任务截图
                 </div>
             </div>
+            <div class="fix-content">
+                <if condition="($taskDetail['task_log_id'] eq 0) AND ($taskDetail['is_stale'] eq 1)">
 
-            <div>
-                <div class="js_op">操作说明</div>
-                <div class="jd_ut">
-                    <div class="jd_ubh">
-                        <span>1</span>
-                    </div>
-                    <div>扫码添加微信好友并关注</div>
-                </div>
-                <div class="jd_ewms">
-                    <div class="jd_ewm">
-                        <img src="./images/ewm.jpg">
-                    </div>
-
-                    <div class="jd_uop ">
+                    <div class="jd_uop1">
+                        <!--抢单-->
                         <span class="jd_ugrab">
-                        <img src="./images/common_btn_grab@2x.png">
+                            <img id="show-opcity" src="__PUBLIC__/pc/images/common_btn_grab@2x.png">
                         </span>
+                        <!--丢弃-->
                         <span class="jd_ugiveup">
-                        <img src="./images/common_btn_giveup@2x.png">
+                            <img onclick="discardTask()" src="__PUBLIC__/pc/images/common_btn_giveup@2x.png">
                         </span>
                     </div>
-
-                    <div class="jd_ustate jd_alerth">
-                        <span class="jd_uup">
-                        <img src="./images/common_btn_upload@2x.png">
+                    <elseif condition="($taskDetail['task_log_id'] neq 0) AND ($taskDetail['log_valid_status'] eq 0)"/>
+                    <div class="jd_uop1">
+                        <span class="jd_ugrab">
+                            <img onclick="taskVerify()" src="__PUBLIC__/pc/images/common_btn_upload@2x.png">
                         </span>
                     </div>
+                    <else/>
+                </if>
+            </div>
+        </div>
 
-
+        <div class="grap-order-gray">
+            <div class="grap-order-boom" id="grap-order-content">
+                <div class="grap-order-title">
+                    <p>提示</p>
                 </div>
-                <div class="jd_ubottom">
+                <p class="grap-order-details">请按备注及操作说明完成任务，并上传验证图到<span>【我的任务】</span>，有效时长<span>20分钟</span>，超时您将需要重新抢单</p>
+                <div class="grap-order-btnbox">
+                    <button type="button" onclick="getTask()">确定抢单</button>
                 </div>
             </div>
-            <div class="jd_end">
-                完成任务后，请到【我的任务】上传任务截图
-            </div>
-        </div>
-
-    </div>
-
-
-    <div class="jd_alertws jd_alerth">
-        <div class="jd_alertw">
-            <div class="jd_atip">
-                提示
-            </div>
-            <div class="jd_acontent">
-                请按备注及操作说明完成任务，并上传验证图<span>【我的任务】</span>，有效时长<span>20分钟</span>，超时您将需要重新抢单
-            </div>
-            <div class="jd_abtn">
-                <span>
-                    确定抢单
-                </span>
-
-            </div>
         </div>
     </div>
+    </body>
+</block>
+<block name="script">
+    <script>
+        //跳转店铺
+        function shopInfo(user_id) {
+            window.location.href = "{:U('Shop/shopDetail')}/user_id/"+user_id;
+        }
+        //丢弃任务
+        function discardTask() {
+            var delArray = ['取消','确定'];
+            mui.confirm('选择丢弃该任务将不再对您展示，您确定丢弃吗？', '提示', delArray, function(e) {
+                if (e.index == 0) {
 
-    <div class="jd_glertws jd_alerth">
-        <div class="jd_alertw">
-            <div class="jd_atip">
-                提示
-            </div>
-            <div class="jd_acontent">
-                选择丢弃该任务将不再对您展示，您确定丢弃吗？
-            </div>
-            <div class="jd_gbtn">
-                <span class="jd_gok">
-                    确定
-                </span>
-                <span class="jd_gno">
-                    取消
-                </span>
-            </div>
-        </div>
-    </div>
+                } else {
+                    var task_id = $("#task_id").val();
+                    $.post("{:U('Task/discardTask')}",{'id':task_id}, function (data) {
+                        mui.toast(data.info);
+                        if (data.status == 1) {
+                            window.location.href = "{:U('Task/listTask')}";
+                        }
+                    })
+                }
+            })
+        }
+        //确认抢单弹窗
+        $(".fix-content").on('tap', '#show-opcity', function () {
+            $(".grap-order-gray").addClass("active");
+            $("#grap-order-content").css("display","block");
+        })
 
-</div>
+        //抢单
+        function getTask() {
+            var id = $('#task_id').val();
+            $.post("{:U('TaskLog/getTask')}", {'id':id}, function (data) {
+                mui.toast(data.info);
+                if (data.status == 1) {
 
-
-
-<script src="js/iconfont.js"></script>
-<script src="js/jquery-3.1.1.min.js"></script>
-<script>
-    $(".class-type span").click(function () {
-        $(this).parent().children().removeClass("class-type-active");
-        $(this).addClass("class-type-active");
-    })
-
-    $(".jd_ugrab").click(function () {
-        $(".jd_alertws").removeClass("jd_alerth");
-    })
-    $(".jd_abtn").click(function () {
-        $(".jd_alertws").addClass("jd_alerth");
-        $(".jd_uop").addClass("jd_alerth");
-        $(".jd_ustate").removeClass("jd_alerth");
-
-    })
-
-    $(".jd_ugiveup").click(function () {
-        $(".jd_glertws").removeClass("jd_alerth");
-    })
-    $(".jd_gok").click(function () {
-        $(".jd_glertws").addClass("jd_alerth");
-    })
-    $(".jd_gno").click(function () {
-        $(".jd_glertws").addClass("jd_alerth");
-    })
-</script>
-</body>
+                    window.location.reload();
+                }
+            })
+        }
+        //上传验证
+        function taskVerify() {
+            window.location.href = "{:U('TaskLog/taskVerify', array('id'=>$taskDetail['task_log_id']))}";
+        }
+    </script>
+</block>
 </html>

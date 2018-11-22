@@ -1,0 +1,132 @@
+<extend name="Public/base"/>
+<block name="style">
+    <link rel="stylesheet" href="__PUBLIC__/pc/css/store-detail.css">
+    <style>
+
+    </style>
+</block>
+<block name="body">
+    <body class="bg">
+    <include file="Public/head"/>
+    <div class="session">
+        <div class="w1200">
+            <include file="Public/nav"/>
+            <div class="nav-bred">
+                <a href="#">接单赚钱 ></a>
+                <a href="#">任务详情</a>
+            </div>
+            <div class="sess-wapper">
+                <div class="jd_detail">
+                    <div class="jd_info">
+                        <div class="jd_utitle">标题</div>
+                        <div class="jd_uvalue">{$taskDetail['task_name']}</div>
+                        <a href="{:U('Article/articleDetail',array('category_id'=>1))}" class="jd_gz">接单规则</a>
+                    </div>
+                    <div class="jd_info">
+                        <div class="jd_utitle">发布方</div>
+                        <div class="jd_pub">
+                        <span>
+                            <img src="{$taskDetail['head_pic']}"/>
+                        </span>
+                            {$taskDetail['nick_name']}
+                        </div>
+                        <if condition="$taskDetail['shop_accounts'] neq 0">
+                            <div class="jd_price">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-jdzq_icon_promise"></use>
+                                </svg>
+                                ￥{:fen_to_yuan($taskDetail['shop_accounts'])}
+                            </div>
+                        </if>
+                        <div onclick="shopInfo({$taskDetail['user_id']})" class="jd_store">店铺</div>
+                    </div>
+                    <div class="jd_info">
+                        <div class="jd_utitle">编号</div>
+                        <div class="jd_uvalue">{$taskDetail['id']}</div>
+                        <div class="jd_utitle jd_ulb">类别</div>
+                        <div class="jd_uvalue">{$taskDetail['category_name']}</div>
+                        <div class="jd_utitle jd_ulb">单价</div>
+                        <div class="jd_uvalue">￥ {:fen_to_yuan($taskDetail['price'])}</div>
+                    </div>
+                    <div class="jd_info">
+                        <div class="jd_utitle">文字验证</div>
+                        <div class="jd_uvalue">{$taskDetail['validate_words']}</div>
+                    </div>
+                    <div class="jd_info">
+                        <div class="jd_utitle">链接</div>
+                        <div class="jd_uvalue">{$taskDetail['link_url']}</div>
+                    </div>
+                    <div class="jd_info">
+                        <div class="jd_utitle">备注</div>
+                        <div class="jd_uvalue">{$taskDetail['remark']}</div>
+                    </div>
+                    <if condition="$taskDetail['top_time'] gt 0">
+                        <div class="jd_info">
+                            <div class="jd_utitle">置顶到期</div>
+                            <div class="jd_uvalue">{$taskDetail['top_time']|time_format}</div>
+                        </div>
+                    </if>
+                    <div class="jd_info">
+                        <div class="jd_utitle">截止时间</div>
+                        <div class="jd_uvalue">{$taskDetail['end_time']|time_format}</div>
+                    </div>
+                    <div class="jd_ubottom">
+
+                    </div>
+                </div>
+
+                <div class="jd_uyanz">
+                    <div class="">
+                        验证图
+                    </div>
+                    <div class="jd_gez">
+                        (共{:count($taskDetail['check_info'])}张)
+                    </div>
+                    <div>
+                        <volist name="taskDetail['check_info']" id="v" key="k">
+                            <img src="{$v}">
+                        </volist>
+                    </div>
+                    <div class="jd_ubottom">
+                    </div>
+                </div>
+
+                <div>
+                    <div class="js_op">操作说明</div>
+                    <volist name="taskDetail['step_info']" id="v" key="k">
+                        <div class="jd_ut">
+                            <div class="jd_ubh">
+                                <span>{$k}</span>
+                            </div>
+                            <div>{$v['step_text']}</div>
+                        </div>
+                        <div class="jd_ewms">
+                            <div class="jd_ewm">
+                                <img src="{$v['step_img']}">
+                            </div>
+                        </div>
+                    </volist>
+
+                    <div class="jd_ubottom">
+                    </div>
+                </div>
+                <div class="jd_end">
+                    <input id="task_id" type="hidden" value="{$id}">
+                    完成任务后，请到【我的任务】上传任务截图
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    </body>
+</block>
+<block name="script">
+    <script>
+        //跳转店铺
+        function shopInfo(user_id) {
+            window.location.href = "{:U('Shop/shopDetail')}/user_id/"+user_id;
+        }
+    </script>
+</block>
+</html>

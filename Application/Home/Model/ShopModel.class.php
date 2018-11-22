@@ -147,7 +147,7 @@ class ShopModel extends Model{
     public function shopDetail($user_id = 0, $field = "") {
         $where['u.user_id'] = array('eq', $user_id);
         if ($field =='') {
-            $field = 'u.user_id,u.nick_name,u.head_pic,s.shop_accounts,s.take_task,s.task_count,s.task_num,s.vol,appeal_num,be_appeal_num,complain_num,be_complain_num';
+            $field = 'u.user_id,u.nick_name,u.head_pic,s.shop_accounts,s.partner_time,s.shop_type,s.top_time,s.take_task,s.task_count,s.task_num,s.vol,appeal_num,be_appeal_num,complain_num,be_complain_num';
         }
         $info = M('User')->alias('u')
             ->join('__SHOP__ s on s.user_id = u.user_id')

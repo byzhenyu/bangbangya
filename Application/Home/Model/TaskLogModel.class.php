@@ -66,7 +66,7 @@ class TaskLogModel extends  Model{
     * @return mixed
     */
     public function  getTaskLogDetail($where = [], $field = null) {
-        if(is_null($field)) $field = 'l.*, t.category_id, t.remark,t.validate_words, c.category_name,t.user_id as task_user_id, u.head_pic,u.nick_name,s.shop_accounts,s.top_time,s.shop_type,s.partner_time';
+        if(is_null($field)) $field = 'l.*, t.category_id, t.remark,t.title, t.link_url,t.validate_words, c.category_name,t.user_id as task_user_id, u.head_pic,u.nick_name,s.shop_accounts,s.top_time,s.shop_type,s.partner_time';
         $taskDetail  = $this->alias('l')
                       ->join('__TASK__ as t on t.id = l.task_id', 'LEFT')
                       ->join('__TASK_CATEGORY__ as c on c.id = t.category_id')
