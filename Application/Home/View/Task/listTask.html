@@ -34,23 +34,23 @@
                 <ul class="class-wapper">
                     <li class="cf">
                         <span class="class-name fl">分类</span>
-                        <div class="class-type fl">
-                            <span class="class-type-active" data-id="0">全部</span>
+                        <div class="class-type fl" id="get-order-list">
+                            <span class="taskCategory class-type-active" data-id="0">全部</span>
 
                             <foreach name="taskCategory" item="v">
-                                <span data-id="{$v['id']}" class="">{$v['category_name']}</span>
+                                <span data-id="{$v['id']}" class="taskCategory">{$v['category_name']}</span>
                             </foreach>
 
                         </div>
                     </li>
                     <li class="cf">
                         <span class="class-name fl">排序</span>
-                        <div class="class-type fl">
-                            <span data-order="1" class="class-type-active">最新</span>
-                            <span data-order="2" class="">综合</span>
-                            <span data-order="3" class="">优先</span>
-                            <span data-order="4" class="">人气</span>
-                            <span data-order="5" class="">苹果</span>
+                        <div class="class-type fl" id="get-order-choose">
+                            <span data-order="1" class="sorts class-type-active">最新</span>
+                            <span data-order="2" class="sorts">综合</span>
+                            <span data-order="3" class="sorts">优先</span>
+                            <span data-order="4" class="sorts">人气</span>
+                            <span data-order="5" class="sorts">苹果</span>
                         </div>
                     </li>
                 </ul>
@@ -58,7 +58,7 @@
                 <ul class="index-wapper" id="ajax_return"></ul>
             </div>
             <button class="check-more" id="more">查看更多</button>
-            <button class="check-more" id="no" style="display: none;">没有更更多了</button>
+            <button class="check-more" id="no" style="display: none;">没有更多了</button>
         </div>
     </div>
     </div>
@@ -66,19 +66,58 @@
 </block>
 <block name="script">
     <script type="text/javascript">
+        var category_id = "{:I('taskCategoryId', 0, 'intval');}";
+        var typeOrder = "{:I('typeOrder', 0, 'intval');}";
+
+        /*选择分类加载*/
+        $(document).on("click",".taskCategory",function(){
+            //样式改变
+            $('.taskCategory').removeClass('class-type-active');
+            $(this).addClass("class-type-active");
+
+            category_id = $(this).data('id');
+            typeOrder = $('#get-order-choose .class-type-active').data('order');
+            ajax_listTask(1,{'taskCategoryId':category_id,'typeOrder':typeOrder});
+        });
+
+        /*选择排序加载*/
+        $(document).on("click",".sorts",function(){
+            //样式改变
+            $('.sorts').removeClass('class-type-active');
+            $(this).addClass("class-type-active");
+
+            typeOrder = $(this).data('order');
+            category_id = $('#get-order-list .class-type-active').data('id');
+            ajax_listTask(1,{'taskCategoryId':category_id,'typeOrder':typeOrder});
+        });
+
+        /*查看更多加载*/
+        $(document).on("click","#more",function(){
+            typeOrder = $('#get-order-choose .class-type-active').data('order');
+            category_id = $('#get-order-list .class-type-active').data('id');
+            ajax_listTask('',{'taskCategoryId':category_id,'typeOrder':typeOrder});
+        });
+
         /*开始加载*/
         $(document).ready(function(){
             ajax_listTask();
         });
         /**
-         * ajax 抓取任务页面(点击查看更多)
+         * ajax 抓取任务页面
          **/
         var cur_page = 1;
-        function ajax_listTask(type){
+        function ajax_listTask(p,json_data){
+            if(!p){
+                p = cur_page;
+            }
+            else{
+                cur_page = p;
+                $("#ajax_return").html('');
+            }
             $.ajax({
-                url:"{:U('ajax_listTask')}/p/"+cur_page,
+                url:"{:U('ajax_listTask')}/p/"+p,
                 type: 'POST',
-                data : {type:type},
+                data : json_data,
                 success:function(data){
                     if(!data) {
                         $('#more').hide();
@@ -94,9 +133,5 @@
             });
         }
 
-        $(".class-type span").click(function () {
-            $(this).parent().children().removeClass("class-type-active");
-            $(this).addClass("class-type-active");
-        })
     </script>
 </block>
