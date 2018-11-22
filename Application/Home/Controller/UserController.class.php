@@ -145,7 +145,7 @@ class UserController extends UserCommonController {
                 $data['name'] =$local_path;
             }
             $this->user->where('user_id = '.UID)->save(array('head_pic'=>$data['nameosspath']));
-            session('user_auth')['head_pic'] =  $data['nameosspath'];
+            session('user_auth.head_pic', $data['nameosspath']);
             $this->ajaxReturn(V(1, '更换头像成功', $data));
         }
     }
