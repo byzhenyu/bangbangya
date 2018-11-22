@@ -60,7 +60,7 @@
             if((/^(\+|-)?\d+$/.test( money ))&&money>0){
                 mui.confirm('是否充值'+money+'元', '提示', '', function(e) {
                     if (e.index == 1) {
-                        mui.ajax(url + 'Home/Pay/alipay',{
+                        mui.ajax(url + 'Payment/Alipay/alipay',{
                             data:{
                                 recharge_money:money * 100,
                                 recharge_type: 0

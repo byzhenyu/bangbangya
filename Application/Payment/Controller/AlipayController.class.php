@@ -10,19 +10,14 @@ class AlipayController extends CommonController {
 
     // alipay 定单支付
     public function alipay(){
-        $order_sn = I('order_sn', '');
-
-        // 判断商品是否可以购买
-        $result = D('Home/Order')->checkOrder($order_sn);
-        if ($result['status'] !== 1) {
-            exit( $result['info'] );
-        }
-
-        $data['body'] = C('WEB_TITLE') . '商品';
-        $data['subject'] = C('WEB_TITLE') . '商品';
-        $data['out_trade_no'] = $order_sn;
-        $data['total_amount'] = fen_to_yuan($result['data']);
-
+        $data['user_id'] = UID;
+        $data['recharge_money'] = I('recharge_money',0 , 'intval');
+        $data['order_sn'] = makeOrderSn($data['user_id']);
+        M('recharge')->add($data);
+        $data['body'] = '网页充值';
+        $data['subject'] = '网页充值';
+        $data['out_trade_no'] =  $data['order_sn'];
+        $data['total_amount'] = '0.01';
         require_once("./Plugins/AliPay/AliPay.php");
         $alipay = new \AliPay();
         echo '页面跳转中, 请稍后...';
