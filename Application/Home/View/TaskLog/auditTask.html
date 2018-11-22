@@ -69,24 +69,25 @@
                         <div class="review-swiper">
                             <!-- Swiper -->
                             <div class="swiper-container">
-                                <div class="swiper-wrapper">
-                                    <foreach name="taskLogInfo['list'][0]['valid_img']" item="v" key="k">
-                                        <div class="swiper-slide">
+                                <div class="swiper-slide">
+                                    <foreach name="taskLogInfo['list'][0]['valid_img']" item="v">
                                         <span class="slide-img">
-                                            <img src="{$v}" />
-                                        </span>
-                                            图{$k + 1}
-                                        </div>
+                                        <img src="{$v}" />
+                                       </span>
                                     </foreach>
                                 </div>
-                                <!-- Add Pagination -->
-                                <!-- <div class="swiper-pagination"></div> -->
-                                <!-- Add Arrows -->
                             </div>
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
+                            <div class="btng">
+                                <button>
+                                    <img src="__PUBLIC__/pc/images/mypublish_check_icon_previous.png">
+                                </button>
+
+                                <button>
+                                    <img src="__PUBLIC__/pc/images/mypublish_check_icon_next.png">
+                                </button>
+                            </div>
                         </div>
-                        <if condition="$valid_status  eq 1">
+                        <if condition="$taskLogInfo['list'][0]['valid_status']  eq 1">
                             <div class="upload-btng">
                                 <button onclick="fail({$taskLogInfo['list'][0]['tid']})" >不合格</button>
                                 <button  onclick="pass({$taskLogInfo['list'][0]['tid']})" >合格</button>
@@ -115,33 +116,47 @@
             </button>
         </div>
     </div>
+    <div class="model" id="model">
+        <div class="pop-no">
+            <h1>不合格原因</h1>
+            <textarea placeholder="请输入不合格的原因" id="valid_text"></textarea>
+            <div class="pop-up cf">
+                <div class="up-img fl">
+                    <img src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">
+                    <input id="upload" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                </div>
+            </div>
+            <p class="pop-tips">
+                上传相关截图说明
+            </p>
+            <div class="up-btn">
+                <button onclick="off()">
+                    取消
+                </button>
+                <button onclick="">
+                    确定
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 </block>
 <block name="script">
     <script src="__PUBLIC__/pc/js/iconfont.js"></script>
     <script src="__PUBLIC__/pc/js/jquery-3.1.1.min.js"></script>
-    <script src="__PUBLIC__/pc/js/swiper.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/fileupload/js/vendor/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.iframe-transport.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.fileupload.js"></script>
     <script>
-        var swiper = new Swiper('.swiper-container', {
-            slidesPerView: 2,
-            spaceBetween: 30,
-            loop: true,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-        });
         $(".review-complaint").click(function () {
             $(".pop-ups").show();
-        })
+        });
         $("#close").click(function () {
             $(".pop-ups").hide();
-            // $(".model").hide();
-        })
+        });
+        function off() {
+            $(".model").hide();
+        }
         function  reply(user_id,task_log_id) {
             var btnArray = ['取消', '确定'];
             mui.prompt('', '请输入回复的信息', '信息交流', btnArray, function (e) {
@@ -213,11 +228,10 @@
                 }
             })
         }
-        // function fail(task_id){
-        //     $("#unqualified-boom-btn").attr('name',task_id);
-        //     $("#grap-order-gray").addClass("mui-popup-backdrop mui-active");
-        //     $("#unqualified-window").css("display","block");
-        // }
+        function fail(task_id){
+            $("#model").attr('name',task_id);
+            $("#model").css("display","block");
+        }
         function pass(tid){
             mui.confirm('是否通过这个任务', '提示', '', function(e) {
                 if (e.index == 1) {
@@ -257,6 +271,22 @@
                 }
             })
         }
+        var count = 1;
+        //单图上传
+        $('#upload').fileupload({
+            url: "{:U('TaskLog/uploadImg')}",
+            dataType: 'json',
+            done: function (e, data) {
+                alert(JSON.stringify(data));
+                $('.up-img fl').prepend('<div class="user-upload-imgs"><img class="user-upload-img"src="'+data.result.data.nameosspath+'"><img class="user-upload-del"src="__PUBLIC__/mobile/images/common_icon_closebox.png" onclick="delPic(this)"><input  type="hidden" name="valid_img[]" value="'+data.result.data.nameosspath+'"></div>');
+                count++;
+                if (count>2) {
+                    mui.toast('只能添加两张图片!');
+                    $('#upload').attr('disabled','disabled');
+                }
+            }
+        }).prop('disabled', !$.support.fileInput)
+            .parent().addClass($.support.fileInput ? undefined : 'disabled');
     </script>
 </block>
 </html>

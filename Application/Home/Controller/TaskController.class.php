@@ -255,4 +255,5 @@ class TaskController extends UserCommonController{
         $test=$oss->deleteObject($bucket,$object);
         $this->ajaxReturn(V(1, '删除成功'));
     }
+
 }
