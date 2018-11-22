@@ -28,7 +28,7 @@
             </div>
             <div class="sess-wapper">
                 <div class="seach-wapper">
-                    <input type="text" placeholder="请输入搜索内容（任务编号/标题）">
+                    <input type="text" name="keyword" placeholder="请输入搜索内容（任务编号/标题）">
                     <button class="iconfont icon-jdzq_icon_search seach-btn">搜索</button>
                 </div>
                 <ul class="class-wapper">
@@ -77,7 +77,7 @@
 
             category_id = $(this).data('id');
             typeOrder = $('#get-order-choose .class-type-active').data('order');
-            ajax_listTask(1,{'taskCategoryId':category_id,'typeOrder':typeOrder});
+            ajax_listTask({'taskCategoryId':category_id,'typeOrder':typeOrder},'');
         });
 
         /*选择排序加载*/
@@ -88,32 +88,40 @@
 
             typeOrder = $(this).data('order');
             category_id = $('#get-order-list .class-type-active').data('id');
-            ajax_listTask(1,{'taskCategoryId':category_id,'typeOrder':typeOrder});
+            ajax_listTask({'taskCategoryId':category_id,'typeOrder':typeOrder},'');
         });
 
         /*查看更多加载*/
         $(document).on("click","#more",function(){
             typeOrder = $('#get-order-choose .class-type-active').data('order');
             category_id = $('#get-order-list .class-type-active').data('id');
-            ajax_listTask('',{'taskCategoryId':category_id,'typeOrder':typeOrder});
+            ajax_listTask({'taskCategoryId':category_id,'typeOrder':typeOrder},2);
+        });
+
+        /*搜索加载*/
+        $('.seach-btn').click(function () {
+            var keyword = $("input[name='keyword']").val();
+            if (keyword) {
+                ajax_listTask({'keyword':keyword},'');
+            }
         });
 
         /*开始加载*/
         $(document).ready(function(){
             ajax_listTask();
         });
+
         /**
          * ajax 抓取任务页面
          **/
-        var cur_page = 1;
-        function ajax_listTask(p,json_data){
-            if(!p){
-                p = cur_page;
-            }
-            else{
-                cur_page = p;
+        function ajax_listTask(json_data,type){
+            if(!type){
+                p = 1;
+                cur_page = 2;
                 $("#ajax_return").html('');
             }
+            if(type == 2) p = cur_page;
+
             $.ajax({
                 url:"{:U('ajax_listTask')}/p/"+p,
                 type: 'POST',
@@ -124,7 +132,7 @@
                         $('#no').show();
                     }
                     else{
-                        cur_page++;
+                        if(type == 2) cur_page++;
                         $("#ajax_return").append(data);
                         $('#more').show();
                         $('#no').hide();
