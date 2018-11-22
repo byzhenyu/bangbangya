@@ -14,12 +14,11 @@ class AlipayController extends CommonController {
         $data['user_id'] = UID;
         $data['recharge_money'] = I('recharge_money',0 , 'intval');
         $order_sn = makeOrderSn($data['user_id']);
-        if($type == 1){
+        if($type == 0){
             $data['order_sn'] = 'T'.$order_sn;
         }else{
             $data['order_sn'] = 'B'.$order_sn;
         }
-        $data['order_sn'] = makeOrderSn($data['user_id']);
         M('recharge')->add($data);
         $data['body'] = C('APP_NAME').'网页充值';
         $data['subject'] = C('APP_NAME').'网页充值';
@@ -36,6 +35,7 @@ class AlipayController extends CommonController {
     public function alipayNotify() {
         require_once("./Plugins/AliPay/AliPay.php");
         $alipay = new \AliPay();
+        //p($_POST);
         //验证是否是支付宝发送
         $flag = $alipay->AliPayNotifyCheck();
         if ($flag) {
@@ -44,7 +44,7 @@ class AlipayController extends CommonController {
                 $total_amount = trim($_POST['total_amount']); //支付的金额
                 $trade_no = trim($_POST['trade_no']); //商户订单号
                 //成功后的业务逻辑处理
-                $result = D('Common/PayReturn')->paySuccess($out_trade_no, $total_amount, $trade_no, 1);
+                $result = D('Common/Recharge')->paySuccess($out_trade_no, $total_amout, $trade_no, 1);
                 if ($result['status'] == 1) {
                     echo "success"; //  告诉支付宝支付成功 请不要修改或删除
                     die;
