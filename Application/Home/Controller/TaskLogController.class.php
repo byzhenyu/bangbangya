@@ -264,4 +264,20 @@ class TaskLogController extends UserCommonController{
             $this->ajaxReturn(V(1, 'success', $data));
         }
     }
+    /**
+     * 删除oss上指定文件
+     * @param  string $object 文件路径 例如删除 /Public/README.md文件  传Public/README.md 即可
+     */
+    public function oss_delet_object(){
+
+        // 实例化oss类
+        $files = I('img_src', '','trim');
+        $object = explode('com/',$files)[1];
+        vendor('Alioss.autoload');
+        $config=C('ALIOSS_CONFIG');
+        $oss=new \OSS\OssClient($config['KEY_ID'],$config['KEY_SECRET'],$config['END_POINT']);
+        $bucket=$config['BUCKET'];
+        $test=$oss->deleteObject($bucket,$object);
+        $this->ajaxReturn(V(1, '删除成功'));
+    }
 }
