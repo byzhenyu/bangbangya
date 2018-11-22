@@ -17,11 +17,11 @@ class UserCommonController extends CommonController
         parent::__construct();
         if( !UID ){// 还没登录 跳转到登录页面
 
-//            if (MODULE_NAME =='Home') {
-//                $this->redirect('Index/index');
-//            } else {
-//                $this->redirect('Login/login');
-//            }
+            if (MODULE_NAME == 'Home') {
+                $this->redirect('Index/index');
+            } else {
+                $this->redirect('Login/login');
+            }
 
         }
         // 禁用刷新就下线
