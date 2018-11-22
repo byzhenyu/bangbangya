@@ -99,31 +99,7 @@
             /*签名方式*/
             'signType'    => 'RSA2',
             /*应用密钥，与应用公钥一组，公钥填写到支付宝上*/
-            'rsaPrivateKey'    => 'MIIEpQIBAAKCAQEAtrUAF0kBBA/Cra4OXTp4aJtt1K3vWHoACpnxFshTDc9ODwQD
-                                    nlXZXTWZ4K6WJSzW9awIbB/bjm4pawVUE1ScF316u3UAjC0zlWe+QerkYsHtGOw9
-                                    1bH8Kb3jG3tz6GeVCqtCopLU9zfQqXFMpGC/sA58yimcGYd56+BLT6CqeXeNSmWJ
-                                    F/4UhM5SCl+sK8aDm0CCkNPOhbcBBb970PfcFKDQy4+/Yf6OXYJe8JlKKaGOHMkK
-                                    Ok9usbCSXLB4TqpAz/Cip4Nn41yI2poxEQZCKv2m13egS180qupGkvoQbPxNurW9
-                                    1PBe6kXl7ZkuYpkPOxBpe/6UG/Zwg9cZRY0+wQIDAQABAoIBACJ1MHczxYVGk6i9
-                                    0ueyR1MzPRuHUkSVfbyCG/33+fH4zvf2AdiyyDPUEBlX0+le84uRzmTV/Up3bEhK
-                                    0Ph0VJv5hlQkVN4bCEd9MVytODWH7Xdt1pue3bfhoBtmxQ1nu6wvcHnIx3F4jVnn
-                                    jFTUClLh6JcYEeCetFfQDWQPIReXKsEvC+p0uBaMP7G7xNRQ411iueIMJ7LJcXih
-                                    ONLZlig6Bzh9ZDSbdM0+iDe1UhmMCDGe5U15nvGbE7PnE6ioWRxkUs2IuWEf9ii6
-                                    tTQoDLZpTAkbft270crrV6bZkOB2XVmCfXpd1DMoxyxP/2FDyht6YRPoUdXXr/rj
-                                    O2njTyECgYEA57cH9JrlgMX4cJtex/WBxhbQBTkzl5dcLrHo0BkGqtaEVCNk/Yid
-                                    jAe+AQhym8dbZJN0GADekOZluPXTWCQetwDFS9EsQSS8NfY+JsqHsxEvx5exQTR/
-                                    XJOi9fcV8Uh3t1mN/eADShuEKLJdAxXsfIhmVMAtBwxHUuRJwSyQ4qcCgYEAydsT
-                                    E7Y/doPsc558h8CBjqlDb32cXg6kTWWDIUc4FtwD+bR/qXNRPSR8geY2t1rbQJ3l
-                                    nvReN4jOd6mU5DCXw1+LIMgu6Obc0U25XqNXRWXmWChBe+UcKsyb7qMoEAW21qwN
-                                    l0K8EKUQZXkOhrzI1lEkb5IIxkOuVRP4QMtNCFcCgYEAq/kr7l8H9or32Jt3vPB5
-                                    YIuN2FKb9+ZehEmGgOwSBrkvfULHsWOzijo0yo96gCN1sS+++hGrHd/hn2TTdpdY
-                                    NHpd8+dK8Q5SobogZqnqDPy0eW4cIEjWPd9VEzhPEMS4FVxiBgo8ZsQFUi8O2Tts
-                                    SQDy8fOvd4ulY+AK3VQ2NAECgYEAiEj5YF20C3iWtJlUyvMWhhOSDDxqzrZkCD15
-                                    g4ZqQETcCkPrzaSmPPnddnbQios1bTMuTVwAIM6lV/WPKWIFlUt0y/VcdrMoc8he
-                                    V59A1QIvu2WykMvncJ4kycIu0mKJR/dyVaYhA7vujhRl0mKz1r+CMjIO6o3XrmmF
-                                    O3oH0JECgYEAg1ShMKj3FIY53p1bu3Sohq4njv34vLSZ7eUzrlGs1XnVTBZN5KND
-                                    uiyq6/SpuLrAZIFQyh9MzPoN9cdeLa/6NpkBJmN9hyb3KraCGVien6mdF47fwWNS
-                                    TssWqyYIS8HqKylY0bLhVmQJlLS/kCJFrLmkKVnkpWcQpEpgw7bFCF0=',
+            'rsaPrivateKey'    => 'MIIEowIBAAKCAQEAsMjBKFh7GXw5O3gyARjDTXEuYJQUw1Xvs7MnDsmTe7Cuz+RYFx5FFCKdMsxcyqTsu3kc2c+mdyfZx5pIF7z0ApMdVnUvKdb37vp6jlfBqiEvKKRpie7MsPsg1vMRACXpHbF6sryCb5tC68FXvZB16GcYzlSH1U7llxJNot1WTEhE7b8/OMUgu1t9zItqnl4uyHhXf8P41e4xZejaVPxbJlsTfVWgDxM3Y1+iwW8oHOG/khE6j5pq40PrUjzq1yRFr7j1RLuJSI2koWVw6qVTd5eIzHE0ON15RlSMepraJ6Qz26QkKz3m2AMulYwRDZ76tP2LTr6OZh7rwuk9iVcBvQIDAQABAoIBADUsLOz1sBD6TDyW6nNp/1RLtqdV4ujd8Dscp6LK/pE1k170T4qkkCJ+RsoArehFsu6wfv0EeA1e7yIaRZTeQIaFuU1H8eejwO8gZ7xoqNeDI6wVx6i1KtwQrM/6TCK/RF6qAz2/dXwcNwSyIrHhwZUlbVCiHDkMggHuf2t9J3fJxOvEoR3REEi/GvWTdm77HRfXLN7+jLP/qlTfZ58iq8ydSCv50e5xCr4pzPWQYQJDODfmwwOz4VrYB5O2b1OzLWf+hvBb9B6dJYU73VXkv4OytEK5TysUGT8r+TjazT+TSx+phHCbkoQ3k0JKBgJb/a9RzQ5rjP9mkzWbboT/zAECgYEA2rZ3Sg2EO85kHv8+7GKLsaq8cE7bjTVYUbbfan6x36NdfVbYq8ynMcnCFLjoLsAhFC9mjd3tJBlCya6cb4/1XJhiQuGMqo9IqrNKEq/Qd4zRQYBBZ1HGlDQ82+4eVBCzfVr00haSme4IvQsTvYo2HqTUpZ5D0g9JbkNreIKmqmMCgYEAzuxaE3mQFnXoxthVEHzXUaYysvR/9PHhHcEyNayZTS7ssXVsW6H3vys4Af1XTeZBkoOC2DHLjGqBg/rs6NxYdF/pNEWjl1BRY9+LIH4hDG5HNs/AMQBlzLdtZhixo6tMAKVnXwpHhQVGmy3UemrdOQHUKkIHrabJnLdnsKgqTV8CgYAU0+V+PtVF4Ly2GvaCCkxlSe4R/+B2jQrxFSoneRM1SdhgVEHj8mRFoIID+SvbL962jmEEx4qKsoEitaceFKZ3/+bzmYkMwQJZhyNZrjZ6/AT9aNpRnX78pBDbnMx0kvaUzHGeBBpH4FwirIhft2a5+lZpwy2QNnZ2sqLsYfy/IwKBgQC0H6hVlZdpBeDI315FCPeCWtN9VjrgpYGaHigv8vxL5NIjtBzMM1Tvc5bAnKDX7d0cxiArREV1CO2PTunV1qGlRCxD1W8Pc9o1v01jzofEQ2b4fqZFwZvcNbwkiNBxsdZqJZGzeMZDNBF/WcjBe67xRfdDhdEbR7nvEvRPIkQYrwKBgCv4HdLb6/mbn2xdwzKvGoAxbG+VAHzNH1gVbubfo0bYuoG9AWEjWk4KKrHrG0fErYpRkcwdL2oF3GJCq+/F7SfvEd4cwcmD8ucMBBgWe5tq3KpR5Ne3z9TbJr8zmSV7NhCaiM5LNbSk4MQg6ACLM3azWpof7X3DD9DsS9kNP2Bk',
             /*支付宝公钥，在支付宝上获取*/
             'alipayrsaPublicKey'    => 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAicQEk3C9NvoGm+nlVdswq7sJSIBp61U7YCBhqbYMrdZ2lZl8Gj3LKuFQywRjEDcEOhbLvp7tiVgh0Sy+d9KggW03DQ6Axxr9Y6T/647L4gJ604aiBFgJoFJTTHhMnSWDL61XAKkJuLM41hh0hzHRa/tjw8y/BJ9IxVf3ZavRxNlssGa6hpJZuBXDHIxfr4WkL7wOV/pBeuoFlP+BCgh1W5kLYHwM4jAKwjLPSIBuKRhDqzv9tcaaofRTFT/vGbSXIWTZxk0oechtWQXJJaZtSA1zzK/qvARpOP5qwHTTrIJ+IVHQDrLtrbmgVO1pcuwAehZYzsI/prr2SY3ZlwSLLwIDAQAB',
             /*支付宝回调地址*/
