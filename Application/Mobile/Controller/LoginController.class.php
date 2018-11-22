@@ -98,17 +98,19 @@ class LoginController extends CommonController {
         $userModel = D('Home/User');
         $select = 'u.user_id,u.head_pic,u.nick_name,u.invitation_code,u.open_id,s.shop_accounts,s.top_time,s.shop_type,s.partner_time,s.take_task,s.task_count,s.task_num,s.vol,s.appeal_num,s.be_appeal_num,s.complain_num,s.be_complain_num';
         $user = $userModel->getUserInfo(array('open_id'=>$open_id), $select);
+
         unset($where);
-        if (!empty($user)) {
+        if (empty($user['user_id'])) {
             $map['nick_name'] = $nick_name;
             $map['head_pic'] = $head_pic;
+            $map['open_id'] = $open_id;
             $map['register_time'] = time();
 
             $userid = $userModel->add($map);
             if ($userid) {
                 $invitation_code = $userModel->createCode($userid);
                 $userModel->where(array('user_id'=>$userid))->setField('invitation_code',$invitation_code);
-                if ($userid) {
+
                     $shopDate = array(
                         'user_id' => $userid,
                         'shop_name' => $nick_name . '的店铺',
@@ -119,9 +121,9 @@ class LoginController extends CommonController {
                     $userInfo = $userModel->doLogin($open_id);
                     session('user_auth', $userInfo['data']);
                     define(UID, session('user_auth')['user_id']);
-                }
 
-                $this->ajaxReturn(V(1, '登录成功', $user['user_id']));
+
+                $this->ajaxReturn(V(1, '登录成功', $userInfo['data']['user_id']));
             } else {
                 $this->ajaxReturn(V(0, '登录失败'));
             }
