@@ -105,7 +105,7 @@
             /*支付宝回调地址*/
             'notifyUrl'    => 'http://bby.host5.liuniukeji.net/index.php/Payment/Alipay/alipayNotify',
             /*用于web支付返回地址*/
-            'returnUrl'    => 'http://bby.host5.liuniukeji.net/index.php/Payment/Alipay/alipayNotify',
+            'returnUrl'    => 'http://bby.host5.liuniukeji.net/index.php/Home/Pay/myWallet',
         ),
         'APP_NAME' => '帮帮鸭',
 
