@@ -24,7 +24,7 @@ class AlipayController extends CommonController {
         $data['subject'] = C('APP_NAME').'网页充值';
         $data['out_trade_no'] =  $data['order_sn'];
         $data['total_amount'] = '0.01';
-//        header("Content-type: text/html; charset=utf-8");
+        header("Content-type: text/html; charset=utf-8");
         require_once("./Plugins/AliPay/AliPay.php");
         $alipay = new \AliPay();
         echo '页面跳转中, 请稍后...';
@@ -38,21 +38,18 @@ class AlipayController extends CommonController {
         //p($_POST);
         //验证是否是支付宝发送
         $flag = $alipay->AliPayNotifyCheck();
-        $flag=1;
         if ($flag) {
             if ($_POST['trade_status'] == 'TRADE_FINISHED' || $_POST['trade_status'] == 'TRADE_SUCCESS') {
                 $out_trade_no = trim($_POST['out_trade_no']); //商户订单号
                 $total_amount = trim($_POST['total_amount']); //支付的金额
                 $trade_no = trim($_POST['trade_no']); //商户订单号
                 //成功后的业务逻辑处理
-                $result = D('Common/PayReturn')->paySuccess($out_trade_no, $total_amount, $trade_no, 1);
+                $result = D('Common/Recharge')->paySuccess($out_trade_no, $total_amout, $trade_no, 1);
                 if ($result['status'] == 1) {
                     echo "success"; //  告诉支付宝支付成功 请不要修改或删除
                     die;
                 } else {
-                    P($result);
-                    echo 1;
-                    die;
+                    LL($result);
                 }
             }
         }

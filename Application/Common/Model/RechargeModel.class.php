@@ -4,7 +4,7 @@
  */
 namespace Common\Model;
 use Think\Model;
-class PayReturnModel extends Model{
+class RechargeModel extends Model{
     /**
      * 支付成功后回调
      * @param $out_trade_no string 自家定单号
@@ -39,8 +39,8 @@ class PayReturnModel extends Model{
             return V(0, '定单不存在, 未知原因!');
         }
         M()->startTrans();
-        $rechargeRes =  $rechargeModel->where('order_sn= "'. $out_trade_no .'"')->save(array('pay_status' => 1,'trade_no' => $trade_no));
-        $userRes = $userModel-> where('user_id = '.$recharge['user_id'])->setInc('total_money',$total_amount);
+        $rechargeRes =  $rechargeModel->where(array('order_sn' => $out_trade_no))->save(array('pay_status' => 1,'trade_no' => $trade_no));
+        $userRes = $userModel-> where('user_id = '.$recharge['user_id'])->setInc('total_money',$total_amount * 100);
         $invitation_uid  =  is_inviter($recharge['user_id']);
         if($invitation_uid  != 0){
             inviterBonus($recharge['user_id'], $invitation_uid ,$total_amount);
