@@ -151,6 +151,7 @@ class TaskLogController extends UserCommonController{
     public function taskLogDetail() {
         $id = I('id', 0, 'intval');
         $info = D('Home/TaskLog')->getTaskLogDetail(array('l.id'=>$id));
+        p($info);
         $this->assign('taskDetail', $info);
         $this->display();
     }
@@ -191,5 +192,38 @@ class TaskLogController extends UserCommonController{
         $this->assign('p',$p);
         $this->assign('taskLogInfo',$taskLogInfo);
         $this->display();
+    }
+    //接单
+    public function getTask() {
+        $task_id = I('id', 0, 'intval');
+        $where['t.id'] = $task_id;
+        $taskInfo = D('Home/Task')->getTaskDetail($where);
+        if (empty($taskInfo)) {
+            $this->ajaxReturn(V(0, '任务不存在，或被删除'));
+        }
+        if ($taskInfo['task_num'] < 1) {
+            $this->ajaxReturn(V(0, '任务数量已经空了!请稍后再试!'));
+        }
+        $TaskLogModel = D('Home/TaskLog');
+        $logStatus = $TaskLogModel->activateTask(UID, $task_id);
+        if ($logStatus) {
+            $this->ajaxReturn(V(0, '存在未完成任务,请勿重复接单'));
+        }
+
+        $data['user_id'] = UID;
+        $data['task_id'] = $taskInfo['id'];
+        $data['task_name'] = $taskInfo['title'];
+        $data['task_price'] = $taskInfo['price'];
+        if ($TaskLogModel->create($data) ===false) {
+            $this->ajaxReturn(V(0, $TaskLogModel->getError()));
+        }
+        $taskLogId = $TaskLogModel->add();
+        $this->ajaxReturn(V(1, '接单成功', $taskLogId));
+        if ($taskLogId) {
+            $this->ajaxReturn(V(1, '接单成功', $taskLogId));
+        } else {
+            $this->ajaxReturn(V(0, '操作失败请重试'));
+        }
+
     }
 }

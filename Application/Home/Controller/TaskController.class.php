@@ -28,6 +28,74 @@ class TaskController extends UserCommonController{
        }
 
     /**
+     * @desc 获取任务列表展示
+     **/
+    public function ajax_listTask(){
+        $keyword = I('keyword', '');
+        /* order 接单赚钱的条件查询 */
+        $typeOrder = I('typeOrder',0,'intval');
+
+        switch ($typeOrder) {
+            case 1:
+                $order = 't.top_time DESC,t.re_time DESC,t.add_time DESC';
+                break;
+            case 2:
+                $order = 't.top_time DESC, re_time DESC, t.end_time DESC';
+                break;
+            case 3:
+                $order = 't.top_time DESC,t.re_time DESC,s.top_time DESC, s.partner_time DESC, t.add_time ASC';
+                break;
+            case 4:
+                $order = 't.look_num DESC';
+                break;
+            case 5:
+                $where['t.mobile_type'] = '苹果';
+                $order = 't.top_time DESC,t.re_time DESC,t.add_time DESC';
+                break;
+            default:
+                $order = 't.top_time DESC, t.re_time DESC, t.add_time DESC';
+                break;
+        }
+
+        /*选择任务类型*/
+        $taskCategoryId = I('taskCategoryId', 0, 'intval');
+        if($taskCategoryId)
+        {
+            $where['t.category_id'] = $taskCategoryId;
+        }
+        /*任务标题查询  标题  任务id号*/
+        if ($keyword) {
+            $where['t.title|t.id'] = array('like', '%'.$keyword.'%');
+        }
+        $where['t.user_id'] = array('NEQ',UID);
+        //需要判断 是否已接单
+        $log_ids = M('TaskLog')->where(array('user_id'=>UID,'valid_status'=>0,'status'=>1))->getField('task_id',true);
+
+        if (!empty($log_ids)) {
+            $where['t.id'] = array('not in', $log_ids);
+        }
+        /*任务信息*/
+        $where['t.end_time'] = array('gt', NOW_TIME); //未结束
+        $where['t.audit_status'] = array('eq', 1);//审核通过
+        $taskInfo = D('Home/Task')->getTaskList($where, '', $order);
+        $list = $taskInfo['list'];
+        if (!empty($list)) {
+            foreach ($list as $k=>$v) {
+                $list[$k]['price'] = fen_to_yuan($v['price']);
+                if ($list[$k]['top_time'] > NOW_TIME) {
+                    $list[$k]['top'] = 1;
+                }
+                if ($list[$k]['re_time'] > NOW_TIME) { //推荐 暂时缺少图片未判断
+                    $list[$k]['ret'] = 1;
+                }
+            }
+        }
+        $this->assign('taskInfo', $list);
+        $this->assign('page', $taskInfo['page']);
+        $this->display();
+    }
+
+    /**
      * @desc 发布任务
      * @param $POST['data']
      * @return mixed       发布任务只需要判断用户现在的余额  不冻结资金 改动   用户审批一个扣一个的钱
@@ -142,7 +210,26 @@ class TaskController extends UserCommonController{
         $this->display();
     }
 
-    //我的任务详情
+    /**
+     * @desc  接单任务详情  && 我的任务上传验证页面
+     * @param  id
+     * @param  user_id
+     * @return mixed
+     */
+    public  function taskDetail(){
+        $id = I('id', 0, 'intval');
+        $where['t.id'] = $id;
+        $taskModel = D('Home/Task');
+        $taskDetail = $taskModel->getTaskDetail($where);
+        //p($taskDetail);
+        $this->assign('id', $id);
+        $this->assign('taskDetail', $taskDetail);
+        $this->display();
+    }
+
+    /**
+     * @desc  我的任务详情
+     */
     public function myTaskDetail() {
         $id = I('id', 0, 'intval');
         $where['t.id'] = $id;
@@ -254,5 +341,12 @@ class TaskController extends UserCommonController{
         $bucket=$config['BUCKET'];
         $test=$oss->deleteObject($bucket,$object);
         $this->ajaxReturn(V(1, '删除成功'));
+    }
+
+    //丢弃任务
+    public function discardTask() {
+        $id = I('id', 0, 'intval');
+        $res = D('Home/Task')->discardTask($id);
+        $this->ajaxReturn($res);
     }
 }
