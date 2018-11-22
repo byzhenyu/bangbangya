@@ -51,6 +51,8 @@ class AlipayController extends CommonController {
                     die;
                 } else {
                     P($result);
+                    echo 1;
+                    die;
                 }
             }
         }
