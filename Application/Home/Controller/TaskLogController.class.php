@@ -226,4 +226,42 @@ class TaskLogController extends UserCommonController{
         }
 
     }
+    // 上传图片
+    public function uploadImg() {
+
+        //$this->_uploadImg();  //调用父类的方法
+        $config = array(
+            'rootPath' => '.'.C('UPLOAD_URL').'Task/',
+            'savePath' => '',
+            'maxSize' => C('UPLOAD_SIZE'),
+            'exts' => 'jpg,jpeg,png,gif',
+        );
+
+        $Upload = new \Think\Upload($config);
+        $info = $Upload->upload();
+
+        if ($info === false) {
+            $this->ajaxReturn(V(0, $Upload->getError()));
+        } else {
+            vendor('Alioss.autoload');
+            $config = C('ALIOSS_CONFIG');
+
+            $oss=new \OSS\OssClient($config['KEY_ID'],$config['KEY_SECRET'],$config['END_POINT']);
+            $bucket=$config['BUCKET'];
+
+            // 返回成功信息
+            foreach($info as $file){
+                $path = '.'.C('UPLOAD_URL').'Task/'.$file['savepath'].$file['savename'];
+                $oss_path = trim($path, './');
+                $local_path = trim($path, '.');
+                $oss->uploadFile($bucket,$oss_path,$path);
+
+                unlink($path);
+                $data['nameosspath'] ='http://'.$bucket.'.'.$config['END_POINT'].'/'.$oss_path;
+                $data['name'] =$local_path;
+
+            }
+            $this->ajaxReturn(V(1, 'success', $data));
+        }
+    }
 }
