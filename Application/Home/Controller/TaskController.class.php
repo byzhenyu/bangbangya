@@ -15,15 +15,24 @@ use Common\Controller\UserCommonController;
 
 class TaskController extends UserCommonController{
        public function _initialize() {
-           $this->user = D("Home/User");
            $this->Task = D("Home/Task");
        }
+    /**
+     * 首页接单信息页面
+     * @param UID
+     * @param  [order] 排序方式 未定
+     * @return array
+     */
        public function listTask()
        {
-           if(UID !== 'UID'){
-               $userList = $this->user->field('head_pic,nick_name')->where('user_id ='.UID)->find();
-           }
-           $this->assign('userList',$userList);
+
+           $shopWhere['s.top_time'] = array('gt', NOW_TIME);
+           $shopField = 's.user_id, s.shop_img, s.shop_name';
+           $topShop = D('Home/Shop')->getAllShop($shopWhere, $shopField);
+           /*任务类别*/
+           $taskCategory = D('Home/TaskCategory')->getTaskCategory();
+           $this->assign('topShop',$topShop['shopList']);
+           $this->assign('taskCategory',$taskCategory);
        	   $this->display();
        }
 
