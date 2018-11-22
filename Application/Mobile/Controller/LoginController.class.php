@@ -52,8 +52,6 @@ class LoginController extends CommonController {
                 'nick_name' => $weiChatData['nickname'],
                 'head_pic' => $weiChatData['headimgurl'],
                 'open_id' => $weiChatData['openid'],
-                'open_id' => $weiChatData['openid'],
-                'invitation_code' => $weiChatData['openid'],
                 'register_time' => NOW_TIME
             );
             $userid = $userModel->add($userData);
