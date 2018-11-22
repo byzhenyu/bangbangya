@@ -16,7 +16,12 @@ class UserCommonController extends CommonController
     {
         parent::__construct();
         if( !UID ){// 还没登录 跳转到登录页面
-            $this->redirect('Index/index');
+            if (MODULE_NAME =='Home') {
+                $this->redirect('Index/index');
+            } else {
+                $this->redirect('Login/login');
+            }
+
         }
         // 禁用刷新就下线
         $where['user_id'] = array('eq', UID);
@@ -24,7 +29,11 @@ class UserCommonController extends CommonController
         unset($where);
         if ($disabled == 0) {
             session(null);
-            $this->redirect('Index/index');
+            if (MODULE_NAME =='Home') {
+                $this->redirect('Index/index');
+            } else {
+                $this->redirect('Login/login');
+            }
         }
     }
 
