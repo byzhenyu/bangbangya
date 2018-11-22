@@ -50,7 +50,7 @@ class AlipayController extends CommonController {
                     echo "success"; //  告诉支付宝支付成功 请不要修改或删除
                     die;
                 } else {
-                    LL($result);
+                    P($result);
                 }
             }
         }
