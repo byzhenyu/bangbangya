@@ -16,6 +16,10 @@
             width: 17%;
             margin: 4px;
         }
+        .mui-segmented-control.mui-scroll-wrapper {
+            height: 1.4rem;
+            padding-top: .1rem;
+        }
     </style>
 </head>
 <body style="background: #F6F6F6">
@@ -47,14 +51,20 @@
 
     <div class="get-order-topshop">
         <p class="topshop-title"><span>置顶</span><span>店铺</span></p>
-        <div class="topshop-headimg">
-            <foreach name="topShop" item="v">
-                <a class="topshop-single">
-                    <img class="headimg-show" src="__PUBLIC__/mobile/images/home_jdzq_img_shop.png">
-                    <img src="{$v.shop_img}">
-                    <p>{$v.shop_name}</p>
-                </a>
-            </foreach>
+        <div class="topshop-headimg mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+            <div class="mui-scroll">
+                <div class="topshop-headimg">
+                    <foreach name="topShop" item="v">
+                        <a class="topshop-single">
+                            <img class="headimg-show" src="__PUBLIC__/mobile/images/home_jdzq_img_shop.png">
+                            <img src="{$v.shop_img}">
+                            <p>{$v.shop_name}</p>
+                        </a>
+                    </foreach>
+                </div>
+
+            </div>
+
         </div>
     </div>
 
