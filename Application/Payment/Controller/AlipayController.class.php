@@ -31,18 +31,19 @@ class AlipayController extends CommonController {
         //验证是否是支付宝发送
         $flag = $alipay->AliPayNotifyCheck();
         if ($flag) {
+            p($_POST);
             if ($_POST['trade_status'] == 'TRADE_FINISHED' || $_POST['trade_status'] == 'TRADE_SUCCESS') {
-                $out_trade_no = trim($_POST['out_trade_no']); //商户订单号
-                $total_amount = trim($_POST['total_amount']); //支付的金额
-                $trade_no = trim($_POST['trade_no']); //商户订单号
-                //成功后的业务逻辑处理
-                $result = D('Common/PayReturn')->paySuccess($out_trade_no, $total_amount, $trade_no, 1);
-                if ($result['status'] == 1) {
-                    echo "success"; //  告诉支付宝支付成功 请不要修改或删除
-                    die;
-                } else {
-                    LL($result);
-                }
+//                $out_trade_no = trim($_POST['out_trade_no']); //商户订单号
+//                $total_amount = trim($_POST['total_amount']); //支付的金额
+//                $trade_no = trim($_POST['trade_no']); //商户订单号
+//                //成功后的业务逻辑处理
+//                $result = D('Common/PayReturn')->paySuccess($out_trade_no, $total_amount, $trade_no, 1);
+//                if ($result['status'] == 1) {
+//                    echo "success"; //  告诉支付宝支付成功 请不要修改或删除
+//                    die;
+//                } else {
+//                    LL($result);
+//                }
             }
         }
         echo "fail"; //验证失败
