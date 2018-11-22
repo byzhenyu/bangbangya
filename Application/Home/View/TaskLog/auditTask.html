@@ -126,7 +126,7 @@
                     <!--<img src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">-->
                     <!--<input class="weui-uploader__input" type="file" accept="image/*" multiple="">-->
                 <!--</div>-->
-                <div class="up-img fl"  id="apendImg">
+                <div class="up-img fl">
                     <img src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">
                     <input id="upload" class="weui-uploader__input" type="file" accept="image/*" multiple="">
                 </div>
@@ -282,7 +282,7 @@
             url: "{:U('TaskLog/uploadImg')}",
             dataType: 'json',
             done: function (e, data) {
-                $('#apendImg').prepend('<div class="up-img fl" ><button class="iconfont icon-common_icon_close" onclick="delPic(this)" ></button><img src="'+data.result.data.nameosspath+'"><input class="weui-uploader__input" type="file" name="valid_img[]" value="'+data.result.data.nameosspath+'" ></div>');
+                $('#apendImg').prepend('<div class="up-img fl" ><button data-url="'+data.result.data.nameosspath+'" class="iconfont icon-common_icon_close" onclick="delPic(this)" ></button><img src="'+data.result.data.nameosspath+'"><input class="weui-uploader__input" type="file" name="valid_img[]" value="'+data.result.data.nameosspath+'" ></div>');
                 count++;
                 if (count>2) {
                     mui.toast('只能添加两张图片!');
@@ -293,10 +293,8 @@
             .parent().addClass($.support.fileInput ? undefined : 'disabled');
         function delPic(obj) {
             var obj = obj;
-            var img_src = $(obj).next().next('input').val();
-            console.log($(obj).next().next('input'));
-            alert(img_src);
-            return
+            var img_src = $(obj).data('url');
+
             $.post("{:U('oss_delet_object')}",{'img_src':img_src}, function (data) {
                 if (data.status == 1) {
                     count-- ;
