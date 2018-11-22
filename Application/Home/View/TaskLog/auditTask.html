@@ -121,11 +121,6 @@
             <h1>不合格原因</h1>
             <textarea placeholder="请输入不合格的原因" id="valid_text"></textarea>
             <div class="pop-up cf"  id="apendImg">
-                <!--<div class="up-img fl" >-->
-                    <!--<button class="iconfont icon-common_icon_close"></button>-->
-                    <!--<img src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">-->
-                    <!--<input class="weui-uploader__input" type="file" accept="image/*" multiple="">-->
-                <!--</div>-->
                 <div class="up-img fl">
                     <img src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">
                     <input id="upload" class="weui-uploader__input" type="file" accept="image/*" multiple="">
@@ -138,7 +133,7 @@
                 <button onclick="off()">
                     取消
                 </button>
-                <button onclick="">
+                <button onclick="failBtn()">
                     确定
                 </button>
             </div>
@@ -221,7 +216,6 @@
                         timeout:10000,//超时时间设置为10秒；
                         success:function(data){
                             mui.toast(data['info']);
-                            // alert(JSON.stringify(data));
                         },
                         error:function(xhr,type,errorThrown){
                             //异常处理；
@@ -236,6 +230,56 @@
         function fail(task_id){
             $("#model").attr('name',task_id);
             $("#model").css("display","block");
+        }
+        function failBtn() {
+            var tid = $("#model").attr('name');
+            var valid_text = $("#valid_text").val();
+            var valid_img = $(" input[ name='valid_img[]']");
+            var img = '';
+            for(var i = 0; i < valid_img.length; i++){
+                img += valid_img[i].defaultValue + ',';
+            }
+            if(valid_text.length == 0 ){
+                mui.toast('请您输入字符!');
+                return
+            }else if(valid_text.length  > 255){
+                mui.toast('您输入的字符太多!');
+                return
+            }
+             mui.ajax(url + 'Home/TaskLog/fail',{
+                        data:{
+                            id : tid,
+                            valid_text : valid_text,
+                            valid_pic : img
+
+                        },
+                        dataType:'json',//服务器返回json格式数据
+                        type:'post',//HTTP请求类型
+                        timeout:10000,//超时时间设置为10秒；
+                        success:function(data){
+                            mui.toast(data['info']);
+                            // alert(JSON.stringify(data));
+                            if(data['status'] == 1){
+                                setTimeout(function(){
+                                    window.location.reload()
+                                }, 500);
+                            }else if(data['status'] == 2){
+                                mui.confirm('您的余额不足,是否去充值?', '提示', '', function(e) {
+                                    if (e.index == 1) {
+                                        mui.openWindow({
+                                            url:  url + 'Home/Pay/topUpsPage'
+                                        });
+                                    }else{
+                                        mui.toast('您取消了操作');
+                                    }
+                                });
+                            }
+                        },
+                        error:function(xhr,type,errorThrown){
+                            //异常处理；
+                            console.log(type);
+                        }
+                    });
         }
         function pass(tid){
             mui.confirm('是否通过这个任务', '提示', '', function(e) {
@@ -294,7 +338,6 @@
         function delPic(obj) {
             var obj = obj;
             var img_src = $(obj).data('url');
-
             $.post("{:U('oss_delet_object')}",{'img_src':img_src}, function (data) {
                 if (data.status == 1) {
                     count-- ;

@@ -95,17 +95,41 @@
         /* 支付宝支付相关配置 */
         'AliPay' => array(
             /*应用ID，在支付宝上获取*/
-            'appId'    => '2018071260608046',
+            'appId'    => '2018110962095545',
             /*签名方式*/
             'signType'    => 'RSA2',
             /*应用密钥，与应用公钥一组，公钥填写到支付宝上*/
-            'rsaPrivateKey'    => 'MIIEowIBAAKCAQEAwFLJE177vhgpb4Oi2hJRQr6CXWZq/KjT52PBijASI6BaSWkPrY112FPuSqU66Wjt5S6Isgzw5tMpltFh/VIsl/BElxy0XatZwnp/qDlAicuDK/A2jqEYb/AOO7e7hUNdo+9hvzSEEivd3oMk/EeLOQPF8rOMH9/11Yqr0jhXd0CFyuOkU7wUaizHlw60MNB6A6FuxfheZCsXfnOq5bzaLbQIRQdPdRvtmudHYhEfferS8Nzw1LUDN6rWJaSrqYLV5gBMlXT94V21tQsTfmifNT6av6k0Gm4B7+rB5SSQfPk/RLC/y59lRJLtMwnZeZbfLRV6EltNS+gjN4CuqOmvrwIDAQABAoIBAAF84ndW5cWrtC5bq1faimxkwudsEmnP+Iuytt2Vz54c8HXe7TMfhAjfZVmIe7Mwj56VRJN0DC0M9yZmikaGazflsPImU7Lhz3j0r6Yig0BNpb8iRZnG30SGa+XEXxwB0GijQnNTOa5WTooZI6EcAJS5Vb+x6eSZO/Kh9wBSVULj5nYT+/TI8hwZDahZYZ634SfP4KezeUGcpP1pmHg3n/rRCG43RURXS+rS3V8FVNeYY0SFwxw/ZeP5g8vm9jUDl3597Qdt7x8pAECwVMTOea3B3mhQxUcnjfyLnFeAGw5fIbh+vQXQO742znerk5H1WPOgKMttzlTakGrvEAyUGvECgYEA4VcMDQp2rq5Hhp5XbNmAolgznLw6QnThGDwUhn+fGAqOwxwMxobQVdrEiZGOmt9uH1wn6efd3ySf76C2zFC3/dQOv13Wi21+IA0je2suMETGr2U7DzSADxskm6bmSr1HQHfn18T0AEoSpmdQm4gnhX0sfDyZuXQlc9bQLX8EXGcCgYEA2n23QhHHN8NjGuYDifEQSO4QLCDniPTktQFx4ljwuFIZBu2MN1QBvhCHoRdZsBSGXUhyj8GqId3R9XTkun/GCwaffWKOhBPf4Y1afL1ESXT9I066FsxDNe+9Hhuul05+81/+Kuc8B1chgqRRGtUzTxjhNJNOkwE3sSVett4UBXkCgYEAwHO7kxewrRejdtGdERXhysVRrzcC+ucfp7cIQKaWlc3Oh8xZDOTu4aRp3qQ2Cwdv4dCvNhIVaBK7lcjI1k7KFTsbLU1TgtkMswsFls6/L/JNTldCzYWlKUGhTl6IqKRnSiQeGiXXzrd0njH2oh7ywgtaBvEqyTztD7YTLgghDVkCgYB5Rb4qFeQVt4WSsIjWT89SK5EebUUWZ5dqQFsN33/9TtRFXCSvsRkmfdZKO8O0UDAkJsovsLbWBWE8dJ1gRvuNsydjWQjxlnZ1oxfOlN8KRr0ak+AGN2o2zdKSm5rUsOUWAPn6pk5TZLFc6gd6dUv9YzndDMZYIhzfXnar2agTQQKBgD902db0lZpTOZBYtR+7ugPvIv+nwgIgbm3+IFJETVn6UfdE/3IskHIHoBgMcbIQ01cSQjA49x9frbs+Xdrmg7lu3RyPQUZtrspE420/iw17931UiDSDKs1GguNLDuobKSToyOnKTRtpMz9KrIQBfjEf4i+Fbg9+44Oeu1qqbvCG',
+            'rsaPrivateKey'    => 'MIIEowIBAAKCAQEA2n2INzvggKlIVWYUeVjmztQXyFzC2EeBVl8Aq2mZt+hXHXT+
+                                    yitf+7ae+k+tvN0OphN6TbqXlbeFZDRXcCSNolUe7pji5VPuXRBhDIcGw/sYQsTy
+                                    kFE6zpWc3yxerFhQSg0PEUlcL+V3udgvgK2b3fOa6dS8794ZLXqsrXahgoIS6x4S
+                                    qDFRnOC7+5GbJmmGxA2jXpojl9Vsuv1RBsPSWaDdjHMyR6B43GA8R2UMtJ5RSJPa
+                                    +aEc16TZC8vxLbk4m25ARJd7Y50zhL4f1rN4oh2+JzpAt6D4iN4CCIr99CmOive3
+                                    Bp542kKvehOMp5Y0yyLyoW2w4l7BhgivQcrpIQIDAQABAoIBADKKh0//kdcxUYIv
+                                    sty/K+T8OuQmUQwmvkx0fXspWl2oaT5vKeEqV3GqtOvCMrZVjGXua4Q/fYEsira7
+                                    RN60Fe9PMXCP/Sx/VcxBVbHIKlB7bQlE9bdckvXmtfsKEHxdkXUPwESHa8PImQFs
+                                    eNCTWFLnXxZoF6yE+94BWqBlqMa/UqV8DpzNrZR20mFcqo6dNaAtcu/gcITk8yD4
+                                    Vt1GqFoZhKM3T903NVynTHdgXgDnlfmaABIASZ9PWPfaAzCMQbEQc9HZTHYggI2n
+                                    iMmlJA4jko19Y6kljIX2rLyhSwTzFwAgW1Vwr5A/V52q4B7FYZSQHhMLclvmh665
+                                    xYJHQGECgYEA7jboQQkGGDV1+xKIGUdeJg/BYwTHy5IAZt409jY0nUMDwx69HjQT
+                                    zS3sfLAdAZ4fpSZwYg5hQRb0Wwol2eLc5xIbZtZQsPyiYvunSp3bC5w9nTZHHXMs
+                                    Um44EmYNxx1MrCeujoC+aitdst60/MUwOFq1I1AEcdc517wD211MKEMCgYEA6s2h
+                                    JeekF3Wpl0x7MFrtlfmMXh3InEoYtCqsH4ymWSUsDWE3T04x+upavMbAlwWmI2Zc
+                                    UWeHQtW/WQExdHaBOnsaTFsByXdgj7jpEBo25O34bwGzwpDlwq8yHcfO0N/PlB10
+                                    Mb8WJRe+n3GVcmgMAjcfAadwczNAaVzW9bt7VMsCgYAVjBHmEBLlDbDmTP7SiooR
+                                    l0s+0afg2gv/Qgo4Wx7XOsCUXattl/hSjtzdSnDVPKBQJ/HybKqPYKwpr/lMhCDH
+                                    JfQkkS4rVC68FVdEgJLXsgJAvjAgkdJogl/ACkskv5m32L8JVMvkfpezHkHwu0Vp
+                                    U4se7pX4Vid9RBx1MzM4UQKBgQCbQkMndEcduBDe2ZSvgcCOJce6SAlpxtkU8Q6F
+                                    ghRQ5/J8GmdfSj5kQuii4O1iLzsPN1UeAs3+1KXFLbPM5btHtzTJfnftBsHT5xo9
+                                    KohX0j8u77o0kmlK1VvXM1K+7O8uald1uXvkJRJIDewbDU+7e0VGa7hAhIg340rE
+                                    jCbeBwKBgHtjbU7q76bCXWxiIGtQvfAOamHMIQoL7eSd1nos/GheMknMOpgC49ox
+                                    lCz7D2MsWj0BU4TLKFuuZht4in5HW8i3IOxw0WZkNZ89pEByFj6cptWxZHNwgrXO
+                                    C5z712JnkbeKYEkCM7DHDYPwuqnr/WAB3peW7ZJpWGGoGezSg0oV',
             /*支付宝公钥，在支付宝上获取*/
-            'alipayrsaPublicKey'    => 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjoMejr7d55Bw9nQHqxtVSgC/3XT8HGJofNvfChDwj+7kRs6QPelfsY1G+DZwh3lnbCWNnrChAO57bVCQCpEQavjbW0T91MfYGiSkisKXketr9o66WjBSgJLpL5AsLP/tXapWmfEqKR2KSmaHWQISjuAWA2y0i6oQ3wNlyBQ5oxh0l/nF4RRKoWvzPdvph2D4laiwSTY8efdMGY5P6os14ntUHFYql601R8Br5yau8McOpKw77J5LnT1qPPoSREZtWBLhweb1KPNRjvW5AzCxVo7sqlDYbfMGsxEoofYiXOwx3PWsGrmrSSN9QESBeMam4SZFaWQJ+6o7LNEEA1JRVwIDAQAB',
+            'alipayrsaPublicKey'    => 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAicQEk3C9NvoGm+nlVdswq7sJSIBp61U7YCBhqbYMrdZ2lZl8Gj3LKuFQywRjEDcEOhbLvp7tiVgh0Sy+d9KggW03DQ6Axxr9Y6T/647L4gJ604aiBFgJoFJTTHhMnSWDL61XAKkJuLM41hh0hzHRa/tjw8y/BJ9IxVf3ZavRxNlssGa6hpJZuBXDHIxfr4WkL7wOV/pBeuoFlP+BCgh1W5kLYHwM4jAKwjLPSIBuKRhDqzv9tcaaofRTFT/vGbSXIWTZxk0oechtWQXJJaZtSA1zzK/qvARpOP5qwHTTrIJ+IVHQDrLtrbmgVO1pcuwAehZYzsI/prr2SY3ZlwSLLwIDAQAB',
             /*支付宝回调地址*/
             'notifyUrl'    => 'http://bby.host5.liuniukeji.net/index.php/Payment/Alipay/alipayNotify',
             /*用于web支付返回地址*/
-            'returnUrl'    => 'http://exam.host5.liuniukeji.com/index.php/Payment/AlipayReturn/index',
+            'returnUrl'    => 'http://bby.host5.liuniukeji.net/index.php/Payment/AlipayReturn/index',
         ),
 
 

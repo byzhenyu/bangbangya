@@ -185,7 +185,6 @@ class TaskLogController extends UserCommonController{
         $where['task_id'] = $task_id;
         $field =  'u.user_id, u.head_pic, u.nick_name, t.task_id,t.id as tid, t.valid_info, t.valid_img, t.valid_status  ';
         $taskLogInfo = $this->TaskLogModel->auditTask($where, $field);
-         p($taskLogInfo);
         $taskAudit = $this->TaskLogModel->taskAudit($task_id);
         $this->assign('taskAudit',$taskAudit);
         $this->assign('task_id',$task_id);
@@ -225,6 +224,36 @@ class TaskLogController extends UserCommonController{
             $this->ajaxReturn(V(0, '操作失败请重试'));
         }
 
+    }
+    /**
+     * @desc 任务审核不通过
+     * @param  taskLog id
+     * @param  valid_text 审核备注
+     * @param  valid_pic 审核图片
+     * @return mixed
+     */
+    public function fail(){
+        $data  = I('post.', 3);
+        $data['valid_status']  = 2;
+        $data['valid_pic']  = rtrim($data['valid_pic'], ',');
+        $tasklogInfo = $this->TaskLogModel->where('id = '.$data['id'])->find();
+        M()->startTrans();
+        $tasklogRes = $this->TaskLogModel->where('id = '.$data['id'])->save($data);
+        $ChatModel = D('Home/Chat');
+        $CharData['user_id'] = $tasklogInfo['user_id'];
+        $CharData['task_user_id'] = UID;
+        $CharData['task_log_id'] = $tasklogInfo['id'];
+        $CharData['content'] = $data['valid_text'];
+        $chatRes = $ChatModel->add($CharData);
+        if($tasklogRes  && $chatRes ){
+            D('Common/Push')->push('任务处理通知',$tasklogInfo['user_id'],'亲，您的做的任务审核未通过!','任务名称:'.$tasklogInfo['task_name'],'通知类型：失败',$data['valid_text']);
+            M()->commit();
+            $this->ajaxReturn(V(1, '完成'));
+        }else{
+            M()->rollback();
+            $this->ajaxReturn(V(0, '失败'));
+        }
+        $this->ajaxReturn(V(0, $this->TaskLogModel->getError()));
     }
     // 上传图片
     public function uploadImg() {
