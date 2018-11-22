@@ -144,12 +144,6 @@ class UserController extends UserCommonController {
                 $data['nameosspath'] ='http://'.$bucket.'.'.$config['END_POINT'].'/'.$oss_path;
                 $data['name'] =$local_path;
             }
-            $user_pic = $this->user->where('user_id = '.UID)->getField('head_pic');
-            /*删除OSS文件*/
-            if(strpos($user_pic,'http://bangbangya.oss') !== false) {
-                $object = $object = explode('com/',$user_pic)[1];
-                $oss->deleteObject($bucket,$object);
-            }
             $this->user->where('user_id = '.UID)->save(array('head_pic'=>$data['nameosspath']));
             session('user_auth')['head_pic'] =  $data['nameosspath'];
             $this->ajaxReturn(V(1, '更换头像成功', $data));
