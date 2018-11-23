@@ -134,14 +134,16 @@ class PayController  extends CommonController{
      */
        public function incomeDividends(){
         $user_id = UID;
+        $type = I('type', 0, 'intval');
         $bonus_money = $this->user->where('user_id = '.$user_id)->getField('bonus_money');
         $where['user_id'] = $user_id;
-        $where['change_type']  = 2;
+        if($type == 0){
+            $where['change_type']  = 2;
+        }else{
+            $where['change_type']  = 8;
+        }
         $pmoney = getAccount($where);
-        $where['change_type']  = 8;
-        $tmoney = getAccount($where);
         $this->assign('bonus_money',$bonus_money);
-        $this->assign('tmoney',$tmoney);
         $this->assign('pmoney',$pmoney);
         $this->display();
       }
