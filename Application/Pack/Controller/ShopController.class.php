@@ -49,7 +49,7 @@ class ShopController extends CommonController {
     * @return mixed
     */
     public function myTopShop(){
-        $total_money = D('Home/User')->where('user_id = '.UID)->getField('total_money');
+        $total_money = D('Home/User')->where(array('user_id'=>UID))->getField('total_money');
         if(IS_POST){
             $data = I('post.', '', 'strip_tags');
             $res  =  user_money(UID, $data['zong']);
@@ -65,6 +65,9 @@ class ShopController extends CommonController {
                 }
             }
         }
+        $topPriceInfo = C('TOP_CONF'); //店铺置顶费用
+        p($topPriceInfo);
+        $this->assign('topPriceInfo', $topPriceInfo);
         $this->assign('total_money', $total_money);
         $this->display();
     }

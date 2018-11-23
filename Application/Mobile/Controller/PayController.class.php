@@ -143,6 +143,9 @@ class PayController  extends CommonController{
             $where['change_type']  = 8;
         }
         $pmoney = getAccount($where);
+        if (IS_POST) {
+            $this->ajaxReturn(V(1, '收入分红'))
+        }
         $this->assign('bonus_money',$bonus_money);
         $this->assign('pmoney',$pmoney);
         $this->display();

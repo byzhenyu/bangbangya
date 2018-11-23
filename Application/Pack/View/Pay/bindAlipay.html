@@ -58,30 +58,16 @@
               var delArray = ['取消','确定'];
               mui.confirm('请核对您的支付宝账号姓名', '提示', delArray, function(e) {
                   if (e.index == 1) {
-                      mui.ajax(url + 'mobile/Pay/bindAlipay',{
-                          data:{
-                              alipay_num:alipay_num,
-                              alipay_name:alipay_name
-                          },
-                          dataType:'json',//服务器返回json格式数据
-                          type:'post',//HTTP请求类型
-                          timeout:10000,//超时时间设置为10秒；
-                          success:function(data){
-                              mui.toast(data['info']);
-                              // alert(JSON.stringify(data));
-                              if(data['status'] == 1){
-                                  setTimeout(function(){
-                                      mui.openWindow({
-                                          url:  url + 'Mobile/User/personalCenter'
-                                      });
-                                  }, 1500);
-                              }
-                          },
-                          error:function(xhr,type,errorThrown){
-                              //异常处理；
-                              console.log(type);
+                      $.post("{:U('Pay/bindAlipay')}", {"alipay_num":alipay_num,"alipay_name":alipay_name}, function (data) {
+                          mui.toast(data['info']);
+                          // alert(JSON.stringify(data));
+                          if(data['status'] == 1){
+                              setTimeout(function(){
+                                  window.location.href = "{:U('User/personalCenter')}"
+                              }, 1500);
                           }
-                      });
+                      })
+
                   } else {
                       mui.toast('您取消了操作');
                   }

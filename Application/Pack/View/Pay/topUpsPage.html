@@ -53,30 +53,21 @@
         if((/^(\+|-)?\d+$/.test( money ))&&money>0){
             mui.confirm('是否充值'+money+'元', '提示', '', function(e) {
                 if (e.index == 1) {
-                    mui.ajax(url + 'Pack/Pay/alipay',{
-                        data:{
-                            recharge_money:money * 100,
-                            recharge_type: 0
-                        },
-                        dataType:'json',//服务器返回json格式数据
-                        type:'post',//HTTP请求类型
-                        timeout:10000,//超时时间设置为10秒；
-                        success:function(data){
-                            mui.toast(data['info']);
-                            // alert(JSON.stringify(data));
-                            if(data['status'] == 1){
-                                setTimeout(function(){
-                                    mui.openWindow({
-                                        url:  url + 'Pack/Pay/myWallet'
-                                    });
-                                }, 1500);
-                            }
-                        },
-                        error:function(xhr,type,errorThrown){
-                            //异常处理；
-                            console.log(type);
+                    var json_data = {
+                        "recharge_money": money * 100,
+                        "recharge_type":0
+                    };
+                    $.post("{:U('Pay/alipay')}", json_data, function (data) {
+                        mui.toast(data['info']);
+
+                        if(data['status'] == 1){
+                            setTimeout(function(){
+
+                                window.location.href = "{:U('Pay/myWallet')}";
+                            }, 1500);
                         }
-                    });
+                    })
+
                 }else{
                     mui.toast('您取消了操作');
                 }

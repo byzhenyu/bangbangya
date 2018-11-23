@@ -73,10 +73,6 @@
     mui.init();
 </script>
 <script>
-    //mui初始化
-    mui.init({
-        swipeBack: true //启用右滑关闭功能
-    });
     $("#num").focusout(function() {
         var topMoney = $('input[name="my-top-price"]:checked').val();
         var num = $('#num').val();
@@ -105,14 +101,13 @@
                       top_time =  2592000 * num;
                 }
                 // alert(top_time);
-                var total_money = {$total_money};
+                var total_money = "{$total_money}";
                 var zong = $('#zong').val();
                 if(total_money < zong){
                     mui.confirm('您的金额不足!是否去充值?', '提示', '', function(e) {
                         if (e.index == 1) {
-                            mui.openWindow({
-                                url:url + 'Mobile/Pay/topUpsPage',
-                            });
+                            window.location.href = "{:U('Pay/topUpsPage')}";
+
                         }else{
                             mui.toast('您取消了操作');
                         }
@@ -122,30 +117,20 @@
                         mui.toast('请您选择置顶时间');
                         return;
                     }
-                    mui.ajax(url + 'Mobile/Shop/myTopShop',{
-                        data:{
-                            top_time:top_time,
-                            zong:zong
-                        },
-                        dataType:'json',//服务器返回json格式数据
-                        type:'post',//HTTP请求类型
-                        timeout:10000,//超时时间设置为10秒；
-                        success:function(data){
-                            mui.toast(data['info']);
-                            // alert(JSON.stringify(data));
-                            if(data['status'] == 1){
-                                setTimeout(function(){
-                                    mui.openWindow({
-                                        url:  url + 'Mobile/Shop/myShopInfo/user_id/' + data['data']
-                                    });
-                                }, 1500);
-                            }
-                        },
-                        error:function(xhr,type,errorThrown){
-                            //异常处理；
-                            console.log(type);
+                    var json_data = {
+                        "top_time":top_time,
+                        "zong":zong
+                    }
+                    $.post("{:U('Shop/myTopShop')}", json_data, function (data) {
+                        mui.toast(data['info']);
+                        // alert(JSON.stringify(data));
+                        if(data['status'] == 1){
+                            setTimeout(function(){
+
+                                window.location.href = "{:U('Shop/myShopInfo')}/user_id/"+data['data'];
+                            }, 1500);
                         }
-                    });
+                    })
                 }
             }else{
                 mui.toast('您取消了操作');
