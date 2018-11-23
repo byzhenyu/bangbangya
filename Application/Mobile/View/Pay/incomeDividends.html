@@ -81,9 +81,39 @@
         $('#my-fans-info').on('tap', '.mui-control-item',function () {
             var type =  $(this).data('type');
             alert(type);
-        })
-        function ajaxGetInfo() {
-            $.post("{:U('Pay/')}")
+        });
+        var p = 1;
+        //滚动加载
+        function loadMore() {
+            $(window).on('scroll', function() {
+                if($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                    p++;
+                    var type = $('#my-fans-info').data('type');
+                    mui.ajax(url + 'Mobile/Pay/incomeDividends/type/'+ type + '/p/' + p ,{
+                        dataType:'json',//服务器返回json格式数据
+                        type:'get',//HTTP请求类型
+                        timeout:10000,//超时时间设置为10秒；
+                        success:function(data){
+                            alert(JSON.stringify(data));
+                            if(data.data.length){
+                                mui.toast(data['info']);
+                                var html = '';
+                                // for (var i=0; i < data.data.length; i++) {
+                                //     html +=  '<div class="message-item"><div class="message-item-title"><p>'+data.data[i].title+'</p><div><span>'+data.data[i].add_time+'</span></div></div><p>'+data.data[i].content1+'</p><p>'+data.data[i].content2+'</p><p>'+data.data[i].content3+'</p><p>'+data.data[i].content4+'</p></div>';
+                                // }
+                                $(".message-list").append(html);
+                            }else{
+                                $(window).off('scroll');
+                            }
+                        },
+                        error:function(xhr,type,errorThrown){
+                            //异常处理；
+                            console.log(type);
+                        }
+                    });
+                }
+            });
         }
+        loadMore();
     </script>
 </html>

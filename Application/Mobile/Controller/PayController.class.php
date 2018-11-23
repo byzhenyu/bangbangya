@@ -134,6 +134,7 @@ class PayController  extends CommonController{
      */
        public function incomeDividends(){
         $user_id = UID;
+        $p = I('p', 0, 'intval');
         $type = I('type', 0, 'intval');
         $bonus_money = $this->user->where('user_id = '.$user_id)->getField('bonus_money');
         $where['user_id'] = $user_id;
@@ -144,7 +145,12 @@ class PayController  extends CommonController{
         }
         $pmoney = getAccount($where);
         if (IS_POST) {
-            $this->ajaxReturn(V(1, '收入分红'))
+            $pmoney = getAccount($where, $p);
+            if($pmoney){
+                $this->ajaxReturn(V(1, '加载成功',$pmoney));
+            }else{
+                $this->ajaxReturn(V(0, '加载完毕'));
+            }
         }
         $this->assign('bonus_money',$bonus_money);
         $this->assign('pmoney',$pmoney);
