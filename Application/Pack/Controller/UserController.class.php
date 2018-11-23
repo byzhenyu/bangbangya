@@ -10,7 +10,7 @@
  * @CreateBy       PhpStorm
  */
 
-namespace Mobile\Controller;
+namespace Pack\Controller;
 use Common\Controller\CommonController;
 use Common\Controller\UserCommonController;
 

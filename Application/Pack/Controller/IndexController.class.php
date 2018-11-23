@@ -8,7 +8,7 @@
  * @Date           2018/11/5 0005 8:59
  * @CreateBy       PhpStorm
  */
-namespace Mobile\Controller;
+namespace Pack\Controller;
 use Common\Controller\UserCommonController;
 
 class IndexController extends UserCommonController {

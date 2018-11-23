@@ -9,7 +9,7 @@
  * @Date           2018/10/28 0031 16:41
  * @CreateBy       PhpStorm
  */
-namespace Mobile\Controller;
+namespace Pack\Controller;
 use Common\Controller\CommonController;
 class LoginController extends CommonController {
     /**
@@ -17,7 +17,7 @@ class LoginController extends CommonController {
      **/
     public function login(){
         if(is_login()) {
-            $this->redirect('Mobile/User/personalCenter');
+            $this->redirect('User/personalCenter');
         } else{
             $this->display();
         }
@@ -32,7 +32,7 @@ class LoginController extends CommonController {
         $userInfo = $userModel->doLogin('123456');
         session('user_auth', $userInfo['data']);
         define(UID, session('user_auth')['user_id']);
-        $this->redirect('Mobile/User/Invitation/user_id/'.UID);
+        $this->redirect('Pack/User/Invitation/user_id/'.UID);
         $this->ajaxReturn(V(1, '登录成功',$userInfo));
         $code = $_GET['code'];
         $weiChat_token = $this->getWeiChat($code);
@@ -69,9 +69,9 @@ class LoginController extends CommonController {
                 session('user_auth', $userInfo['data']);
                 define(UID, session('user_auth')['user_id']);
             }
-            $this->redirect('Mobile/User/Invitation');
+            $this->redirect('User/Invitation');
         }
-        $this->redirect('Mobile/User/personalCenter/login/1');
+        $this->redirect('User/personalCenter/login/1');
     }
     /**
      * 退出登录

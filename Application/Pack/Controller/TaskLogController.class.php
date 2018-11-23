@@ -8,7 +8,7 @@
  * @Date           2018/11/1 0001 13:12
  * @CreateBy       PhpStorm
  */
-namespace Mobile\Controller;
+namespace Pack\Controller;
 use Common\Controller\CommonController;
 class TaskLogController extends CommonController {
     public function _initialize() {

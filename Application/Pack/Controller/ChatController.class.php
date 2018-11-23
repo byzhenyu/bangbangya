@@ -8,7 +8,7 @@
  * @Date           2018/11/15 0015 8:57
  * @CreateBy       PhpStorm
  */
-namespace Mobile\Controller;
+namespace Pack\Controller;
 use Common\Controller\CommonController;
 class ChatController extends CommonController{
     public function _initialize()

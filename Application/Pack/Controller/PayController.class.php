@@ -9,7 +9,7 @@
  * @CreateBy       PhpStorm
  */
 
-namespace Mobile\Controller;
+namespace Pack\Controller;
 use Common\Controller\CommonController;
 class PayController  extends CommonController{
     public function _initialize() {

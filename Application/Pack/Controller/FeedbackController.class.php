@@ -8,7 +8,7 @@
  * @Date           2018/11/8 0008 18:20
  * @CreateBy       PhpStorm
  */
-namespace Mobile\Controller;
+namespace Pack\Controller;
 use Common\Controller\CommonController;
 class FeedbackController extends CommonController {
     public function _initialize() {

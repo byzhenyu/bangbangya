@@ -36,9 +36,11 @@
         </p>
     </div>
 </body>
+
+
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
-<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
 <script src="__PUBLIC__/mobile/js/url.js"></script>
 <script type="text/javascript" charset="utf-8">
     mui.init();
@@ -52,29 +54,17 @@
             }
             mui.confirm('是否缴纳'+money+'元的保证金', '提示', '', function(e) {
                 if (e.index == 1) {
-                    mui.ajax(url + 'Mobile/User/accountsUpsPage',{
-                        data:{
-                            shop_accounts:money * 100,
-                        },
-                        dataType:'json',//服务器返回json格式数据
-                        type:'post',//HTTP请求类型
-                        timeout:10000,//超时时间设置为10秒；
-                        success:function(data){
-                            mui.toast(data['info']);
-                            // alert(JSON.stringify(data));
-                            if(data['status'] == 1){
-                                setTimeout(function(){
-                                    mui.openWindow({
-                                        url:  url + 'Mobile/User/securityDeposit'
-                                    });
-                                }, 1000);
-                            }else  if(data['status'] == 2){
-                                mui.alert('余额不足,请充值余额缴纳保证金!');
-                            }
-                        },
-                        error:function(xhr,type,errorThrown){
-                            //异常处理；
-                            console.log(type);
+                    var json_data = {
+                        'shop_accounts': money * 100
+                    }
+                    $.post("{:U('User/accountsUpsPage')}", {'shop_accounts': money*100}, function(data){
+                        mui.toast(data['info']);
+                        if(data['status'] == 1){
+                            setTimeout(function(){
+                                window.location.href("{:U('User/securityDeposit')}");
+                            }, 1000);
+                        }else if(data['status'] == 2){
+                            mui.alert('余额不足,请充值余额缴纳保证金!');
                         }
                     });
                 }else{
@@ -86,12 +76,12 @@
             return;
         }
     }
-    $("#money").blur(function(){
-            var value = $(this).val();
-            if((/^(\+|-)?\d+$/.test( value ))&&value>0){
-            }else{
-                mui.alert("请输入整数充值");;
-            }
-        });
+//    $("#money").blur(function(){
+//            var value = $(this).val();
+//            if((/^(\+|-)?\d+$/.test( value ))&&value>0){
+//            }else{
+//                mui.alert("请输入整数充值");;
+//            }
+//        });
 </script>
 </html>

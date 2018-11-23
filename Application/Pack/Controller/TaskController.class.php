@@ -9,7 +9,7 @@
  * @Date           2018/10/31 0031 15:16
  * @CreateBy       PhpStorm
  */
-namespace Mobile\Controller;
+namespace Pack\Controller;
 use Common\Controller\UserCommonController;
 class TaskController extends UserCommonController {
     public function _initialize() {

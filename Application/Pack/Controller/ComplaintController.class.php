@@ -8,7 +8,7 @@
  * @Date           2018/11/14 0014 14:44
  * @CreateBy       PhpStorm
  */
-namespace Mobile\Controller;
+namespace Pack\Controller;
 use Common\Controller\CommonController;
 class ComplaintController extends CommonController{
     public function _initialize()

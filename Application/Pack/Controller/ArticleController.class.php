@@ -9,7 +9,7 @@
  * @Date           2018/11/13
  * @CreateBy       PhpStorm
  */
-namespace Mobile\Controller;
+namespace Pack\Controller;
 use Think\Controller;
 class ArticleController extends Controller{
 

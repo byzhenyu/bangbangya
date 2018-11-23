@@ -9,7 +9,7 @@
  * @Date           2018/10/29 0031 09:41
  * @CreateBy       PhpStorm
  */
-namespace Mobile\Controller;
+namespace Pack\Controller;
 use Think\Controller;
 class HelpController extends Controller{
     public function _initialize() {

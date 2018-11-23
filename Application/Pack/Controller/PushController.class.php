@@ -8,7 +8,7 @@
  * @Date           2018/11/16 0016 16:53
  * @CreateBy       PhpStorm
  */
-namespace Mobile\Controller;
+namespace Pack\Controller;
 use Common\Controller\CommonController;
 class PushController extends CommonController {
     public function _initialize() {

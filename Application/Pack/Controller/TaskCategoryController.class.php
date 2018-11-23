@@ -9,7 +9,7 @@
  * @Date           2018/10/31 0031 15:16
  * @CreateBy       PhpStorm
  */
-namespace Mobile\Controller;
+namespace Pack\Controller;
 use Common\Controller\CommonController;
 class TaskCategoryController extends CommonController{
       /**

@@ -13,8 +13,8 @@
             overflow: hidden;
             opacity: 0;
             -ms-filter: 'alpha(opacity=0)';
-            width: 100px;
-            height: 100px;
+            width: 1.5rem;
+            height: 1.5rem;
             top: 0;
             left: 0;
         }
@@ -270,26 +270,15 @@
     {
         mui.confirm('您是否退出登录?', '提示', '', function(e) {
             if (e.index == 1) {
-                mui.ajax(url + 'Mobile/Login/logOut',{
-                    dataType:'json',//服务器返回json格式数据
-                    type:'get',//HTTP请求类型
-                    timeout:10000,//超时时间设置为10秒；
-                    headers:{'Content-Type':'application/json'},
-                    success:function(data){
-                        mui.toast(data['info']);
-                        if(data['status'] == 1){
-                            setTimeout(function(){
-                                mui.openWindow({
-                                    url:  url + '/Mobile/Login/login'
-                                });
-                            }, 1500);
-                        }
-                    },
-                    error:function(xhr,type,errorThrown){
-                        //异常处理；
-                        console.log(type);
+                $.post("{:U('Login/logOut')}" , {}, function (data) {
+                    mui.toast(data['info']);
+                    if(data['status'] == 1){
+                        setTimeout(function(){
+                            window.location.href = "{:U('Login/login')}";
+                        }, 1500);
                     }
-                });
+                })
+
             }else{
                 mui.alert('您取消了操作');
             }
