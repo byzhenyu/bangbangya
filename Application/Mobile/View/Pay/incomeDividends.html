@@ -26,10 +26,10 @@
 
     <div class="mui-content" id="top-shop-content">
         <div id="my-fans-info" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary top-shop-choose my-fans-attention" >
-            <a class="mui-control-item mui-active my-fans" href="#item1">
+            <a class="mui-control-item mui-active my-fans" href="{:U('Pay/withdraw',array('type' => 0))}">
                 <p>分红记录</p>
             </a>
-            <a class="mui-control-item my-attention" href="#item2">
+            <a class="mui-control-item my-attention" href="{:U('Pay/withdraw',array('type' => 1))}">
                 <p>提现记录</p>
             </a>
         </div>
@@ -66,32 +66,32 @@
                 </div>
             </div>
 
-            <div id="item2" class="mui-control-content">
-                <ul class="mui-table-view my-fans-view">
-                    <foreach name="tmoney" item="v">
-                        <li class="mui-table-view-cell my-fans-li">
-                            <a class="my-fans-item">
-                                <div class="my-fans-user">
-                                    <div class="my-wallet-left">
-                                        <img src="__PUBLIC__/mobile/images/my_wallet_icon_in.png">
-                                        <div class="fans-user-info">
-                                            <p>{$v['change_desc']}</p>
-                                            <div>
-                                                <span>{:time_format($v['change_time'])}</span>
+            <!--<div id="item2" class="mui-control-content">-->
+                <!--<ul class="mui-table-view my-fans-view">-->
+                    <!--<foreach name="tmoney" item="v">-->
+                        <!--<li class="mui-table-view-cell my-fans-li">-->
+                            <!--<a class="my-fans-item">-->
+                                <!--<div class="my-fans-user">-->
+                                    <!--<div class="my-wallet-left">-->
+                                        <!--<img src="__PUBLIC__/mobile/images/my_wallet_icon_in.png">-->
+                                        <!--<div class="fans-user-info">-->
+                                            <!--<p>{$v['change_desc']}</p>-->
+                                            <!--<div>-->
+                                                <!--<span>{:time_format($v['change_time'])}</span>-->
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="my-cz-money">-<span>{:fen_to_yuan($v['user_money'])}</span></p>
-                                </div>
-                            </a>
-                        </li>
-                    </foreach>
-                </ul>
-                <div class="mui-scrollbar mui-scrollbar-vertical">
-                    <div class="mui-scrollbar-indicator"></div>
-                </div>
-            </div>
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<p class="my-cz-money">-<span>{:fen_to_yuan($v['user_money'])}</span></p>-->
+                                <!--</div>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</foreach>-->
+                <!--</ul>-->
+                <!--<div class="mui-scrollbar mui-scrollbar-vertical">-->
+                    <!--<div class="mui-scrollbar-indicator"></div>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
 
