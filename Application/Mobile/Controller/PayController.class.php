@@ -154,7 +154,6 @@ class PayController  extends CommonController{
           $shop_accounts = I('shop_accounts', 0 , 'intval');
           M()->startTrans();
           $shopRes = D('Home/Shop')->where('user_id  = '.UID)->setDec('shop_accounts',$shop_accounts);
-          account_log(UID, $shop_accounts, 12 , '解冻保证金(待审核)',UID);
           if(!$shopRes){
               $this->ajaxReturn(V(2, '保证金不足'));
           }
@@ -171,6 +170,7 @@ class PayController  extends CommonController{
           $insData['brank_user_name'] = $userInfo['alipay_name'];
           $insData['type'] = 2;
           $insRes = D('Home/UserAccount')->add($insData);
+          account_log(UID, $shop_accounts, 12 , '解冻保证金(待审核)',$insRes);
           if($shopRes && $insRes){
               M()->commit();
               $this->ajaxReturn(V(1, '解冻成功'));
