@@ -73,7 +73,6 @@ class UserAccountModel extends Model{
             $saveData['frozen_money'] = array('exp', "frozen_money +".$data['money']);
         }
         $userRes  = $userModel ->where('user_id = '.$data['user_id'])->save($saveData);
-        account_log($data['user_id'],$data['money'],$type, $changeDesc, '');
         /*根据权限 算出提现应到的钱数*/
         if($this->userAuth == 0){
              $serviceCharge  = C(BASE_WITHDRAW_FEE) / 100;
@@ -90,6 +89,7 @@ class UserAccountModel extends Model{
         $insData['brank_user_name'] = $userInfo['alipay_name'];
         $insData['type'] = $data['type'];
         $insRes = $this->add($insData);
+        account_log($data['user_id'],$data['money'],$type, $changeDesc, $insRes);
         /*查看分红比例 以及添加分红*/
 //        $inviter   =  is_inviter($data['user_id']);
 //        if($inviter  != 0){
