@@ -393,6 +393,7 @@ class TaskController extends UserCommonController {
             $this->ajaxReturn(V(0, $this->Task->getError()));
         }
     }
+
     /**
     * @desc 任务下架
     * @param  $task_id

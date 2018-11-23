@@ -290,6 +290,44 @@ class TaskController extends UserCommonController{
         }
     }
     /**
+     * @desc 暂停任务
+     * @param  id
+     * @param  audit_status
+     * @return json
+     */
+    public function pause() {
+        $data = I('post.', 2);
+        $taskPause = $this->Task->where(array('id'=>$data['id']))->save($data);
+        if ($taskPause) {
+            $this->ajaxReturn(V(1, $data['audit_status'] == 1 ? '开启成功':'暂停成功'));
+        }
+        $this->ajaxReturn(V(0, $this->Task->getError()));
+    }
+    /**
+     * @desc  追加任务价格
+     * @param
+     * @return mixed
+     */
+    public function addTaskPrice(){
+        $data = I('post.', 3);
+        $res  =  user_money(UID, $data['money']);
+        if(!$res){
+            $this->ajaxReturn(V(2, '余额不足'));
+        }else{
+            M()->startTrans();
+            $taskRes = $this->Task->where(array('id'=>$data['id']))->save($data);
+            if($taskRes){
+                M()->commit();
+                $this->ajaxReturn(V(1, '上调成功'));
+            }else{
+                M()->rollback();
+                $this->ajaxReturn(V(2, '上调失败'));
+            }
+            $this->ajaxReturn(V(0, $this->Task->getError()));
+        }
+    }
+
+    /**
      * @desc  推荐置顶
      * @param  $task_id
      * @return mixed
@@ -333,6 +371,53 @@ class TaskController extends UserCommonController{
                 $this->ajaxReturn(V(2, $desc.'失败'));
             }
             $this->ajaxReturn(V(0, $this->Task->getError()));
+        }
+    }
+    /**
+     * @desc 任务下架
+     * @param  $task_id
+     * @return mixed
+     */
+    public function taskSold(){
+        $taskLogModel = D('Home/TaskLog');
+        $where['task_id'] = I('id', 0 ,'intval');
+        $where['valid_status']  = array('in','1,2');
+        /*计算正在进行时  和未审核的 钱数*/
+        $taskLogInfo = $taskLogModel->field('task_price,user_id, task_id')->where($where)->select();
+        $money = 0;
+        foreach ($taskLogInfo as $key=>$value){
+            $money += $value['task_price'];
+        }
+        $res  = user_money(UID,$money);
+        if(!$res){
+            $this->ajaxReturn(V(2, '您的余额余额不足,下架失败'));
+        }else{
+            //开启事务
+            M()->startTrans();
+            $userModel = D('Home/User');
+            if($money != 0){
+                $userRes  = $userModel->where(array('user_id'=>UID))->fetchSql(true)->setDec('total_money',$money);
+            }else{
+                $userRes = true;
+            }
+            account_log(UID, $money, 3,'任务结算',$where['task_id']);
+            foreach ($taskLogInfo as $key=>$value){
+                $userMoney = array(
+                    'task_suc_money' => array('exp','task_suc_money + '.$value['task_price']),
+                    'total_money' => array('exp','total_money + '.$value['task_price'])
+                );
+                $userModel ->where('user_id = '.$value['user_id'])->save($userMoney);
+                account_log( $value['user_id'], $value['task_price'], 4,'完成任务',$where['task_id']);
+                $taskLogModel->where('task_id = '.$value['task_id'])->save(array('valid_status' => 3));
+            }
+            $taskRes = $this->Task->where('id = '.$where['task_id'])->save(array('audit_status' => 3,'end_time' => NOW_TIME));
+            if($userRes && $taskRes){
+                M()->commit();
+                $this->ajaxReturn(V(1, '下架成功'));
+            }else{
+                M()->rollback();
+                $this->ajaxReturn(V(2, '下架失败'));
+            }
         }
     }
     /**

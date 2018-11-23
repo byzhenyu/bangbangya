@@ -38,12 +38,14 @@ class AlipayController extends CommonController {
         //p($_POST);
         //验证是否是支付宝发送
         $flag = $alipay->AliPayNotifyCheck();
-        LL($flag,'./log/log1.txt');
+        
+        LL($_POST,'./log/log2.txt');
         if ($flag) {
             if ($_POST['trade_status'] == 'TRADE_FINISHED' || $_POST['trade_status'] == 'TRADE_SUCCESS') {
                 $out_trade_no = trim($_POST['out_trade_no']); //商户订单号
                 $total_amount = trim($_POST['total_amount']); //支付的金额
                 $trade_no = trim($_POST['trade_no']); //商户订单号
+                LL($total_amount,'./log/log1.txt');
                 //成功后的业务逻辑处理
                 $result = D('Common/Recharge')->paySuccess($out_trade_no, $total_amout, $trade_no, 1);
                 if ($result['status'] == 1) {
