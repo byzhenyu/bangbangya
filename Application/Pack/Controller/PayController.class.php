@@ -9,7 +9,7 @@
  * @CreateBy       PhpStorm
  */
 
-namespace Pack\Controller;
+namespace Mobile\Controller;
 use Common\Controller\CommonController;
 class PayController  extends CommonController{
     public function _initialize() {
@@ -132,16 +132,32 @@ class PayController  extends CommonController{
      * @param UID
      * @return mixed
      */
-       public function incomeDividends(){
-        $user_id = UID;
-        $bonus_money = $this->user->where('user_id = '.$user_id)->getField('bonus_money');
-        $where['user_id'] = $user_id;
-        $where['change_type']  = 2;
-        $pmoney = getAccount($where);
-        $where['change_type']  = 8;
-        $tmoney = getAccount($where);
+        public function incomeDividends(){
+            $user_id = UID;
+            $p = I('p', 0, 'intval');
+            $type = I('type', 0, 'intval');
+
+            $where['user_id'] = $user_id;
+            if ($type == 0) {
+                $where['change_type']  = 2;
+            } else {
+                $where['change_type']  = 8;
+            }
+            $pmoney = D('Home/AccountLog')->getAccountLog($where);
+            if (IS_POST) {
+
+                if ($pmoney) {
+                    foreach ($pmoney as $k=>$v) {
+                        $pmoney[$k]['change_time'] = time_format($v['change_time']);
+                        $pmoney[$k]['user_money'] = fen_to_yuan($v['user_money']);
+                    }
+                    $this->ajaxReturn(V(1, '加载成功',$pmoney));
+                } else {
+                    $this->ajaxReturn(V(1, '加载完毕'));
+                }
+            }
+        $bonus_money = $this->user->where(array('user_id'=>UID))->getField('bonus_money');
         $this->assign('bonus_money',$bonus_money);
-        $this->assign('tmoney',$tmoney);
         $this->assign('pmoney',$pmoney);
         $this->display();
       }
@@ -154,7 +170,6 @@ class PayController  extends CommonController{
           $shop_accounts = I('shop_accounts', 0 , 'intval');
           M()->startTrans();
           $shopRes = D('Home/Shop')->where('user_id  = '.UID)->setDec('shop_accounts',$shop_accounts);
-          account_log(UID, $shop_accounts, 12 , '解冻保证金(待审核)',UID);
           if(!$shopRes){
               $this->ajaxReturn(V(2, '保证金不足'));
           }
@@ -165,12 +180,13 @@ class PayController  extends CommonController{
           /*添加提现信息*/
           $insData['user_id'] = UID;
           $insData['drawmoney'] = $shop_accounts;
-          $insData['account_fee'] = 0.01;
+          $insData['account_fee'] = 0.01 * $shop_accounts;
           $insData['money'] = $shop_accounts * 0.99;
           $insData['brank_no'] = $userInfo['alipay_num'];
           $insData['brank_user_name'] = $userInfo['alipay_name'];
           $insData['type'] = 2;
           $insRes = D('Home/UserAccount')->add($insData);
+          account_log(UID, $shop_accounts, 12 , '解冻保证金(待审核)',$insRes);
           if($shopRes && $insRes){
               M()->commit();
               $this->ajaxReturn(V(1, '解冻成功'));
