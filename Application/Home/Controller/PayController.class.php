@@ -48,10 +48,6 @@ class PayController extends UserCommonController{
 //        /*end */
 //        $this->ajaxReturn(V(1, '充值成功',$data['user_id']));
     }
-    function AlipayReturn(){
-        $data =  $_POST;
-        p($data);
-    }
     /**
      * @desc 我的钱包
      * @param uid
@@ -178,7 +174,7 @@ class PayController extends UserCommonController{
      */
     public function incomeDividends(){
         $user_id = UID;
-        $bonus_money = $this->user->where('user_id = '.$user_id)->getField('bonus_money');
+        $bonus_money = $this->user->where(array('user_id = ' => $user_id))->getField('bonus_money');
         $where['user_id'] = $user_id;
         $where['change_type']  = 2;
         $pmoney = getAccount($where);
