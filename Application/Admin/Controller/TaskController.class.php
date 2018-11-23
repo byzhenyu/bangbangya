@@ -18,8 +18,15 @@ class TaskController extends CommonController {
         if ($keyword) {
             $where['t.title'] = array('like','%'.$keyword.'%');
         }
+        $category_id = I('category_id', 0, 'intval');
+        if ($category_id > 0) {
+            $where['t.category_id'] = array('eq', $category_id);
+        }
+        $catlist = M('TaskCategory')->where(array('status'=>1))->select();
+        $this->assign('catlist', $catlist);
         $where['t.status'] = array('eq', 1);
         $this->assign('keyword', $keyword);
+        $this->assign('category_id', $category_id);
         $data = D('Admin/Task')->getTaskList($where);
         $this->assign('list', $data['list']);
         $this->assign('page', $data['page']);
