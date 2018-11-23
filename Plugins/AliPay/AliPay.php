@@ -1,6 +1,8 @@
 <?php
+
 /**
- * 支付宝插件 使用需 require_once("./Plugins/AliPay/AliPay.php");
+ * 支付宝插件 使用方法请查看同文件夹下的demo
+ * 目前已经支持电脑网站支付，手机APP支付，支付回调校验，用户提现等功能，如需拓展请联系作者
  * @author Jack_YanTC <627495692@qq.com>
  */
 class AliPay {
@@ -23,7 +25,7 @@ class AliPay {
      * @param $options ['notifyUrl'] 支付宝回调地址
      * @param $options ['returnUrl'] 用于web支付返回地址
      */
-    public function __construct($options = array()) {
+    public function __construct($options = null) {
         $this->appId = isset ($options ['appId']) ? $options ['appId'] : C('AliPay')['appId'];
         $this->rsaPrivateKey = isset ($options ['rsaPrivateKey']) ? $options ['rsaPrivateKey'] : C('AliPay')['rsaPrivateKey'];
         $this->signType = isset ($options ['signType']) ? $options ['signType'] : C('AliPay')['signType'];
@@ -33,12 +35,16 @@ class AliPay {
     }
 
     /**
-     * 支付宝app支付
+     * 支付宝app支付 需要签约 APP支付
      * @param string $data 业务参数 body subject out_trade_no total_amount
+     * @param string $data['out_trade_no'] 订单号  必填
+     * @param string $data['total_amount'] 订单金额  必填
+     * @param string $data['subject'] 订单标题  必填
+     * @param string $data['body'] 订单详情  可选
      * @return $response 返回app所需字符串
      */
     public function AliPayApp($data) {
-        if(empty($this->appId))
+        if (empty($this->appId))
             return false;
         $aliPayPath = './Plugins/AliPay/alipay-sdk/';
         require_once($aliPayPath . "aop/AopClient.php");
@@ -73,12 +79,16 @@ class AliPay {
     }
 
     /**
-     * 支付宝web支付
+     * 支付宝web支付 需要签约 电脑网站支付
      * @param string $data 业务参数
-     * @return $result 返回form表单，插入到当前网页即跳转到支付宝
+     * @param string $data['out_trade_no'] 订单号  必填
+     * @param string $data['total_amount'] 订单金额  必填
+     * @param string $data['subject'] 订单标题  必填
+     * @param string $data['body'] 订单详情  可选
+     * @return $result 返回form表单，插入到当前网页即跳转到支付宝付款界面
      */
     public function AliPayWeb($data) {
-        if(empty($this->appId))
+        if (empty($this->appId))
             return false;
         $aliPayPath = './Plugins/AliPay/alipay-sdk/';
         require_once($aliPayPath . "aop/AopClient.php");
@@ -107,6 +117,16 @@ class AliPay {
         //返回form提交表单
         return $result;
     }
+
+    /**
+     * 支付宝MobileWeb支付 需要签约 手机网站支付
+     * @param string $data 业务参数
+     * @param string $data['out_trade_no'] 订单号  必填
+     * @param string $data['total_amount'] 订单金额  必填
+     * @param string $data['subject'] 订单标题  必填
+     * @param string $data['body'] 订单详情  可选
+     * @return $result 返回form表单，插入到当前网页即跳转到支付宝付款界面
+     */
     public function AliPayMobileWeb($data) {
         if (empty($this->appId))
             return false;
@@ -138,6 +158,7 @@ class AliPay {
         //返回form提交表单
         return $result;
     }
+
     /**
      * 支付宝支付回调签名验证
      * @param string $data 业务参数
