@@ -9,7 +9,7 @@
  * @CreateBy       PhpStorm
  */
 
-namespace Mobile\Controller;
+namespace Pack\Controller;
 use Common\Controller\CommonController;
 class PayController  extends CommonController{
     public function _initialize() {
@@ -48,14 +48,27 @@ class PayController  extends CommonController{
     public function myWallet(){
         $userModel = D('Home/User');
         $where['user_id'] = UID;
+        $type = I('type', 0, 'intval');
+        if ($type == 1) {
+            $where['change_type'] = array('IN','1,3,5,6,7,9,10,12');
+
+        } else {
+            $where['change_type'] = 0;
+        }
+
+        $record = D('Home/AccountLog')->getAccountLog($where);
+
+        if (IS_POST) {
+            foreach ($record as $k=>$v) {
+                $record[$k]['change_time'] = time_format($v['change_time']);
+                $record[$k]['user_money'] = fen_to_yuan($v['user_money']);
+            }
+            $this->ajaxReturn(V(1,'资金变动记录', $record));
+        }
         $total_money = $userModel->getUserField($where, 'total_money');
-        $where['change_type'] = 0;
-        $payRecord = getAccount($where);
-        $where['change_type'] = array('IN','1,3,5,6,7,9,10,12');
-        $expendRecord = getAccount($where);
         $this->assign('total_money', $total_money);
-        $this->assign('payRecord',$payRecord);
-        $this->assign('expendRecord',$expendRecord);
+        $this->assign('payRecord',$record);
+
         $this->display();
     }
       /**
