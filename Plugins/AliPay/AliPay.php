@@ -107,7 +107,37 @@ class AliPay {
         //返回form提交表单
         return $result;
     }
-
+    public function AliPayMobileWeb($data) {
+        if (empty($this->appId))
+            return false;
+        $aliPayPath = './Plugins/AliPay/alipay-sdk/';
+        require_once($aliPayPath . "aop/AopClient.php");
+        require_once($aliPayPath . 'aop/request/AlipayTradeWapPayRequest.php');
+        $aop = new \AopClient();
+        $aop->gatewayUrl = "https://openapi.alipay.com/gateway.do";
+        $aop->appId = $this->appId;
+        $aop->rsaPrivateKey = $this->rsaPrivateKey;
+        $aop->signType = $this->signType;
+        $aop->alipayrsaPublicKey = $this->alipayrsaPublicKey;
+        $aop->apiVersion = '1.0';
+        $aop->postCharset = 'UTF-8';
+        $aop->format = 'json';
+        $request = new \AlipayTradeWapPayRequest ();
+        $bizcontent = json_encode([
+            'body' => $data['body'],
+            'subject' => $data['subject'],
+            'out_trade_no' => $data['out_trade_no'],//此订单号为商户唯一订单号
+            'total_amount' => $data['total_amount'],//保留两位小数
+            'timeout_express' => '90m',
+            'product_code' => 'QUICK_WAP_WAY'
+        ]);
+        $request->setNotifyUrl($this->notifyUrl);
+        $request->setReturnUrl($this->returnUrl);
+        $request->setBizContent($bizcontent);
+        $result = $aop->pageExecute($request);
+        //返回form提交表单
+        return $result;
+    }
     /**
      * 支付宝支付回调签名验证
      * @param string $data 业务参数
