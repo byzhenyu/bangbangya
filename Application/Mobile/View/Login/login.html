@@ -5,7 +5,7 @@
     <title>登录</title>
     <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
-    <!-- <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js" type="text/javascript" charset="utf-8"></script> -->
+    <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js" type="text/javascript" charset="utf-8"></script>
     <style>
         #login_container {
             position: fixed;
@@ -55,40 +55,18 @@
 <script src="__PUBLIC__/mobile/js/url.js"></script>
 <script type="text/javascript" charset="utf-8">
     mui.init();
-    // var obj = new WxLogin({
-    //     self_redirect:false,
-    //     id:"login_container",
-    //     appid: "wxabfa47477f012987",
-    //     scope: "snsapi_login",
-    //     redirect_uri: "http%3a%2f%2fbby.host5.liuniukeji.net%2fHome%2fLogin%2fdologin",
-    //     state: "Mobile",
-    //     style: "black",
-    //     href: ""
-    // });
+    var obj = new WxLogin({
+        self_redirect:false,
+        id:"login_container",
+        appid: "wxabfa47477f012987",
+        scope: "snsapi_login",
+        redirect_uri: "http%3a%2f%2fbby.host5.liuniukeji.net%2fHome%2fLogin%2fdologin",
+        state: "Mobile",
+        style: "black",
+        href: ""
+    });
     function dologin(){
-        // $('#login_container').css('display', 'block');
-
-        setupWebViewJavascriptBridge(function (bridge) {
-            bridge.registerHandler('JS Echo', function(data, responseCallback) {
-                console.log("JS Echo called with:", data);
-                responseCallback(data);
-            });
-
-            bridge.callHandler('ObjC Echo', {'key': 'value'}, function responseCallback(responseData) {
-                console.log("JS received response:", responseData);
-            });
-        });
-    }
-
-    function setupWebViewJavascriptBridge(callback) {
-        if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
-        if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
-        window.WVJBCallbacks = [callback];
-        var WVJBIframe = document.createElement('iframe');
-        WVJBIframe.style.display = 'none';
-        WVJBIframe.src = 'https://__bridge_loaded__';
-        document.documentElement.appendChild(WVJBIframe);
-        setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
+        $('#login_container').css('display', 'block');
     }
 
 </script>
