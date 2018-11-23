@@ -55,7 +55,7 @@
             <div class="mui-scroll">
                 <div class="topshop-headimg">
                     <foreach name="topShop" item="v">
-                        <a class="topshop-single">
+                        <a href="{:U('Shop/shopDetail',array('user_id'=>$v['user_id']))}" class="topshop-single">
                             <img class="headimg-show" src="__PUBLIC__/mobile/images/home_jdzq_img_shop.png">
                             <img src="{$v.shop_img}">
                             <p>{$v.shop_name}</p>
