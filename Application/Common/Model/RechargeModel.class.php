@@ -45,7 +45,7 @@ class RechargeModel extends Model{
         if($invitation_uid  != 0){
             inviterBonus($recharge['user_id'], $invitation_uid ,$total_amount);
         }
-        account_log($recharge['user_id'],$total_amount,0,'充值',$out_trade_no);
+        account_log($recharge['user_id'], $total_amount * 100 ,0,'充值',$out_trade_no);
         if($rechargeRes  && $userRes){
             M()->commit();
             return V(1, '定单支付成功, 状态已更新!');
