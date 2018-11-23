@@ -290,6 +290,20 @@ class TaskController extends UserCommonController{
         }
     }
     /**
+     * @desc 暂停任务
+     * @param  id
+     * @param  audit_status
+     * @return json
+     */
+    public function pause() {
+        $data = I('post.', 2);
+        $taskPause = $this->Task->where(array('id'=>$data['id']))->save($data);
+        if ($taskPause) {
+            $this->ajaxReturn(V(1, $data['audit_status'] == 1 ? '开启成功':'暂停成功'));
+        }
+        $this->ajaxReturn(V(0, $this->Task->getError()));
+    }
+    /**
      * @desc  推荐置顶
      * @param  $task_id
      * @return mixed
