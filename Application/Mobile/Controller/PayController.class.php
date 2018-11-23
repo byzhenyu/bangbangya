@@ -132,26 +132,31 @@ class PayController  extends CommonController{
      * @param UID
      * @return mixed
      */
-       public function incomeDividends(){
-        $user_id = UID;
-        $p = I('p', 0, 'intval');
-        $type = I('type', 0, 'intval');
-        $bonus_money = $this->user->where('user_id = '.$user_id)->getField('bonus_money');
-        $where['user_id'] = $user_id;
-        if($type == 0){
-            $where['change_type']  = 2;
-        }else{
-            $where['change_type']  = 8;
-        }
-        $pmoney = getAccount($where);
-        if (IS_POST) {
-            $pmoney = getAccount($where, $p);
-            if($pmoney){
-                $this->ajaxReturn(V(1, '加载成功',$pmoney));
-            }else{
-                $this->ajaxReturn(V(0, '加载完毕'));
+        public function incomeDividends(){
+            $user_id = UID;
+            $p = I('p', 0, 'intval');
+            $type = I('type', 0, 'intval');
+
+            $where['user_id'] = $user_id;
+            if ($type == 0) {
+                $where['change_type']  = 2;
+            } else {
+                $where['change_type']  = 8;
             }
-        }
+            $pmoney = D('Home/AccountLog')->getAccountLog($where);
+            if (IS_POST) {
+
+                if ($pmoney) {
+                    foreach ($pmoney as $k=>$v) {
+                        $pmoney[$k]['change_time'] = time_format($v['change_time']);
+                        $pmoney[$k]['user_money'] = fen_to_yuan($v['user_money']);
+                    }
+                    $this->ajaxReturn(V(1, '加载成功',$pmoney));
+                } else {
+                    $this->ajaxReturn(V(1, '加载完毕'));
+                }
+            }
+        $bonus_money = $this->user->where(array('user_id'=>UID))->getField('bonus_money');
         $this->assign('bonus_money',$bonus_money);
         $this->assign('pmoney',$pmoney);
         $this->display();
