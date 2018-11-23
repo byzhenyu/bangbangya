@@ -15,7 +15,7 @@
                 <div class="topshop-wapper fl cf">
 
                     <foreach name="topShop" item="v">
-                        <a href="javascript:;" class="topshop-box fl">
+                        <a href="{:U('Shop/shopDetail',array('user_id'=>$v['user_id']))}" class="topshop-box fl">
                             <div class="topshop-img">
                                 <span class="topshop-i"><img src="{$v.shop_img}"></span>
                                 <span class="topshop-topi"><img src="__PUBLIC__/pc/images/jdzq_img_shop.png" /></span>
