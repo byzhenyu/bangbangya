@@ -174,7 +174,7 @@ class PayController extends UserCommonController{
      */
     public function incomeDividends(){
         $user_id = UID;
-        $bonus_money = $this->user->where(array('user_id = ' => $user_id))->getField('bonus_money');
+        $bonus_money = $this->user->where(array('user_id' => $user_id))->getField('bonus_money');
         $where['user_id'] = $user_id;
         $where['change_type']  = 2;
         $pmoney = getAccount($where);
