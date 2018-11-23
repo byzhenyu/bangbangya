@@ -393,29 +393,7 @@ class TaskController extends UserCommonController {
             $this->ajaxReturn(V(0, $this->Task->getError()));
         }
     }
-    /**
-     * @desc  追加任务价格
-     * @param
-     * @return mixed
-     */
-    public function addTaskPrice(){
-        $data = I('post.', 3);
-        $res  =  user_money(UID, $data['money']);
-        if(!$res){
-            $this->ajaxReturn(V(2, '余额不足'));
-        }else{
-            M()->startTrans();
-            $taskRes = $this->Task->where(array('id'=>$data['id']))->save($data);
-            if($taskRes){
-                M()->commit();
-                $this->ajaxReturn(V(1, '上调成功'));
-            }else{
-                M()->rollback();
-                $this->ajaxReturn(V(2, '上调失败'));
-            }
-            $this->ajaxReturn(V(0, $this->Task->getError()));
-        }
-    }
+
     /**
     * @desc 任务下架
     * @param  $task_id
