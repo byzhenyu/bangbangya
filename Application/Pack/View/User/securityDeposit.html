@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>保证金</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body style="background: #f6f6f6;">
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a class=" mui-icon mui-icon-left-nav mui-pull-left" href="{:U('User/personalCenter')}"></a>
+        <p class="mui-title">保证金</p>
+        <a></a>
+    </header>
+
+    <div class="security-deposit-top">
+        <div class="security-deposit-info">
+            <span>保证金金额</span>
+            <p>￥<span>{:fen_to_yuan($shop_accounts)}</span></p>
+            <div class="security-deposit-btn">
+                <input type="button" onclick="pay()" value="充值">
+                <if condition = "$unfreeze  eq 1">
+                    <input type="button" onclick="unfreeze({$shop_accounts})"  value="解冻">
+                </if>
+            </div>
+        </div>
+    </div>
+    <div class="security-deposit-content">
+        <span>保证金说明</span>
+       <p>
+            1、保证金最低金额为1000元，保证金越高，您发布任务的可信度越高，有利于任务的快速完成;<br>
+            2、缴纳保证金的商家发布的任务在前台将显示特殊标识，提高商家的信誉度，增加成交机会;<br>
+            3、充值保证金的商家将享受一定的优待政策，包括但不限于独立展示任务列表等;<br>
+            4、部分金融类任务，只有缴纳保证金才可以发布;<br>
+            5、如果被投诉，平台将根据相关规定和证据进行仲裁，并依照相应任务金额及用户损失进行保证金处罚;<br>
+            6、保证金可申请退还，提交申请后20个工作日(即为除去周六周日及法定节假日后的天数)，经审核无违规行为及投诉，保证金将全额退还，退还时收取1%的手续费。
+       </p>
+    </div>
+
+</body>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/url.js"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+</script>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+       function pay(){
+           mui.openWindow({
+               url:url + 'Pack/User/accountsUpsPage',
+           });
+       }
+       function unfreeze(shop_accounts){
+           mui.confirm('您是否解冻保证金?', '提示', '', function(e) {
+               if (e.index == 1) {
+                   mui.ajax(url + 'Pack/Pay/unfreeze',{
+                       data : {
+                           shop_accounts : shop_accounts
+                       },
+                       dataType:'json',//服务器返回json格式数据
+                       type:'post',//HTTP请求类型
+                       timeout:10000,//超时时间设置为10秒；
+                       // headers:{'Content-Type':'application/json'},
+                       success:function(data){
+                           mui.toast(data['info']);
+                           // alert(JSON.stringify(data));
+                           if(data['status'] == 1){
+                               setTimeout(function(){
+                                   mui.openWindow({
+                                       url:  url + 'Pack/User/securityDeposit'
+                                   });
+                               }, 1000);
+                           }
+                       },
+                       error:function(xhr,type,errorThrown){
+                           //异常处理；
+                           console.log(type);
+                       }
+                   });
+               }else{
+                   mui.alert('您取消了操作');
+               }
+
+           })
+       }
+</script>
+</html>

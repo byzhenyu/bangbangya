@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>我的钱包</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body style="background: #f6f6f6">
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a class="mui-icon mui-icon-left-nav mui-pull-left" href="{:U('User/personalCenter')}"></a>
+        <p class="mui-title">我的钱包</p>
+        <a></a>
+    </header>
+
+    <div class="my-wallet-top">
+        <span>余额</span>
+        <p>￥<span>{:fen_to_yuan($total_money)}</span></p>
+        <div class="my-wallet-btns">
+            <a href="{:U('Pay/topUpsPage')}">
+                <input type="button" value="充值">
+            </a>
+            <a href="{:U('Pay/withdraw',array('type' => 0))}">
+                <input type="button" value="提现">
+            </a>
+        </div>
+    </div>
+
+    <div class="mui-content" id="top-shop-content">
+        <div id="my-fans-info" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary top-shop-choose my-fans-attention" >
+            <a class="mui-control-item mui-active my-fans" href="#item1">
+                <p>充值记录</p>
+            </a>
+            <a class="mui-control-item my-attention" href="#item2">
+                <p>支出记录</p>
+            </a>
+        </div>
+
+        <div>
+            <div id="item1" class="mui-control-content mui-active">
+                <div class="mui-scroll-content">
+                    <div class="mui-scroll">
+                        <ul class="mui-table-view my-fans-view">
+                            <foreach name="payRecord" item="v">
+                                <li class="mui-table-view-cell my-fans-li">
+                                    <a class="my-fans-item">
+                                        <div class="my-fans-user">
+                                            <div class="my-wallet-left">
+                                                <img src="__PUBLIC__/mobile/images/my_wallet_icon_in.png">
+                                                <div class="fans-user-info">
+                                                    <p>充值</p>
+                                                    <div>
+                                                        <span>{:time_format($v['change_time'])}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="my-cz-money">+<span>{:fen_to_yuan($v['user_money'])}</span></p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </foreach>
+                        </ul>
+                    </div>
+                    <div class="mui-scrollbar mui-scrollbar-vertical">
+                        <div class="mui-scrollbar-indicator"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="item2" class="mui-control-content">
+                <ul class="mui-table-view my-fans-view">
+                    <foreach name="expendRecord" item="v">
+                        <li class="mui-table-view-cell my-fans-li">
+                            <a class="my-fans-item">
+                                <div class="my-fans-user">
+                                    <div class="my-wallet-left">
+                                        <img src="__PUBLIC__/mobile/images/my_wallet_icon_out.png">
+                                        <div class="fans-user-info">
+                                            <p>{$v.change_desc}</p>
+                                            <div>
+                                                <span>{:time_format($v['change_time'])}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="my-cz-money">-<span>{:fen_to_yuan($v['user_money'])}</span></p>
+                                </div>
+                            </a>
+                        </li>
+                    </foreach>
+                </ul>
+                <div class="mui-scrollbar mui-scrollbar-vertical">
+                    <div class="mui-scrollbar-indicator"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+</script>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+</html>
