@@ -81,17 +81,7 @@
         'TMPL_ACTION_ERROR'     =>  THINK_PATH.'Tpl/dispatch_jump.tpl', // 默认错误跳转对应的模板文件
         'TMPL_ACTION_SUCCESS'   =>  THINK_PATH.'Tpl/dispatch_jump.tpl', // 默认成功跳转对应的模板文件
 
-        /* 短信账号 */
-        'SMS_SIGN' => '一起背单词',
-        'SMS_USERID' => '233',
-        'SMS_USERNAME' => 'ln_yqbdc',
-        'SMS_PASSWORD' => 'lnkj123',
-        'ALIOSS_CONFIG' => [
-            'KEY_ID'=>'xR6v3xsAOAFiPiPy',
-            'KEY_SECRET'=>'l7dpek8hyfPZX7edNJ3I3cPrPu9baL',
-            'END_POINT'=>'oss-cn-beijing.aliyuncs.com',
-            'BUCKET'=>'bangbangya'
-        ],
+
         /* 支付宝支付相关配置 */
         'AliPay' => array(
             /*应用ID，在支付宝上获取*/
@@ -99,7 +89,7 @@
             /*签名方式*/
             'signType'    => 'RSA2',
             /*应用密钥，与应用公钥一组，公钥填写到支付宝上*/
-            'rsaPrivateKey'    => 'MIIEpQIBAAKCAQEAtrUAF0kBBA/Cra4OXTp4aJtt1K3vWHoACpnxFshTDc9ODwQDnlXZXTWZ4K6WJSzW9awIbB/bjm4pawVUE1ScF316u3UAjC0zlWe+QerkYsHtGOw91bH8Kb3jG3tz6GeVCqtCopLU9zfQqXFMpGC/sA58yimcGYd56+BLT6CqeXeNSmWJF/4UhM5SCl+sK8aDm0CCkNPOhbcBBb970PfcFKDQy4+/Yf6OXYJe8JlKKaGOHMkKOk9usbCSXLB4TqpAz/Cip4Nn41yI2poxEQZCKv2m13egS180qupGkvoQbPxNurW91PBe6kXl7ZkuYpkPOxBpe/6UG/Zwg9cZRY0+wQIDAQABAoIBACJ1MHczxYVGk6i90ueyR1MzPRuHUkSVfbyCG/33+fH4zvf2AdiyyDPUEBlX0+le84uRzmTV/Up3bEhK0Ph0VJv5hlQkVN4bCEd9MVytODWH7Xdt1pue3bfhoBtmxQ1nu6wvcHnIx3F4jVnnjFTUClLh6JcYEeCetFfQDWQPIReXKsEvC+p0uBaMP7G7xNRQ411iueIMJ7LJcXihONLZlig6Bzh9ZDSbdM0+iDe1UhmMCDGe5U15nvGbE7PnE6ioWRxkUs2IuWEf9ii6tTQoDLZpTAkbft270crrV6bZkOB2XVmCfXpd1DMoxyxP/2FDyht6YRPoUdXXr/rjO2njTyECgYEA57cH9JrlgMX4cJtex/WBxhbQBTkzl5dcLrHo0BkGqtaEVCNk/YidjAe+AQhym8dbZJN0GADekOZluPXTWCQetwDFS9EsQSS8NfY+JsqHsxEvx5exQTR/XJOi9fcV8Uh3t1mN/eADShuEKLJdAxXsfIhmVMAtBwxHUuRJwSyQ4qcCgYEAydsTE7Y/doPsc558h8CBjqlDb32cXg6kTWWDIUc4FtwD+bR/qXNRPSR8geY2t1rbQJ3lnvReN4jOd6mU5DCXw1+LIMgu6Obc0U25XqNXRWXmWChBe+UcKsyb7qMoEAW21qwNl0K8EKUQZXkOhrzI1lEkb5IIxkOuVRP4QMtNCFcCgYEAq/kr7l8H9or32Jt3vPB5YIuN2FKb9+ZehEmGgOwSBrkvfULHsWOzijo0yo96gCN1sS+++hGrHd/hn2TTdpdYNHpd8+dK8Q5SobogZqnqDPy0eW4cIEjWPd9VEzhPEMS4FVxiBgo8ZsQFUi8O2TtsSQDy8fOvd4ulY+AK3VQ2NAECgYEAiEj5YF20C3iWtJlUyvMWhhOSDDxqzrZkCD15g4ZqQETcCkPrzaSmPPnddnbQios1bTMuTVwAIM6lV/WPKWIFlUt0y/VcdrMoc8heV59A1QIvu2WykMvncJ4kycIu0mKJR/dyVaYhA7vujhRl0mKz1r+CMjIO6o3XrmmFO3oH0JECgYEAg1ShMKj3FIY53p1bu3Sohq4njv34vLSZ7eUzrlGs1XnVTBZN5KNDuiyq6/SpuLrAZIFQyh9MzPoN9cdeLa/6NpkBJmN9hyb3KraCGVien6mdF47fwWNSTssWqyYIS8HqKylY0bLhVmQJlLS/kCJFrLmkKVnkpWcQpEpgw7bFCF0=',
+            'rsaPrivateKey'    => 'MIIEpAIBAAKCAQEA2py19em3L2u5UI12KeR6S2AVsM9OBDta7a8YgkzblsBro61aBqDhXx+smgMmEgDqk93kAoJN5p7cfT9fquXPEOkgz33yrn9csz9Wv+uBQRrGfME5yXq/cKlm1lFlsDBY+p9bLjVTL9aWit7Fj4RLlNxjKJhzqOgFccg03kyPdMrYdVlzEDgfswHu7CPKcaqPjTWA19TNPCnLk3Js+4yX+NmVITcAFH3KQS1pgtkz1fJ/75jSFETDHyBg3UI+8jRuOQEQAdBN/E+IlzvxJtqe6Zgr6JeMCII8CeexoICaDEGuYVAyiB+CzXRu5m1iCnXVa2/cJMFUS7ulFVzkpTLyKQIDAQABAoIBAGtW9RVY+4RCPYyq2PE66T1nYV8eeu0jA8Oe7MbV3CBKPM/yRzjn96EQWVyJ3UCLyKJwGguNVZi+Of8ZhezQx/pCrcSTz/wUNz0gBYVYqm+AKSOKcMhYB/XWh9MFxotbQeVVJ50pu73KfMKVHaYZTE88Y0fEi03NFxdGOYdJSksKgY2MsqNs3e62xauBSNKRbpuFap9rL23NqpkzuDjRps55GYZvKoddjoK9j0pQ18d0fEWZwLu1Yh2TrWUHwKtkwVZOewumfgxKGRnmf6z7UZ0B/smUu/MdapZVXqk6xZtTPf/PdH1GhAm+5iEzaZRpuFmC4pr0L3akXvJ8nii6pgECgYEA/m4YLY24ApO1hgQWUyA4Os4dr2X4grd0JWQIYbYiI/YZdfu4AYBnuAf8quMr40SlvIWlo0drar6tmlAU14/aCIcG1HHbjdOy3447rLKyx2CP9ZVj+Lfl/Lbl4DA8sYGyHgTEgTZSg3dkn3wyIgdWn4/HJT3kf45eWpEcoGm29UECgYEA2/YJirCXMJe7Ldm/vP5be0BepRH/jxxdTt/pk0Qgx7/UXlEcTojypXYe+tDnknPg2WLin/CLXef4z2Be7eDyEiuB0smQxK/i1zFm+ew8aP2z3JchG0SB0lHq4/I7FkbSKCTgn4h+qkIL1V1pK8JGNcrlGo29JBTN++bIigHdOukCgYAmqsSx55/XhGtJ+sUJzRO+nCSWy4CBHTBhnlpHv05g+L3V2HOWhtU8erpDnlLFL2GgzQ7nSathhakMkq8YM5yHPz4ie0tKuqmsoAkhrebNtjcqs5GF8yzYw1McRzhyIavYNBFJMeBIapS4SD+2PDdF+KvjVQys9g4Q5YzcNDTCAQKBgQC73I3Xsuzd5qlKBrCY1NEDGj37U7zl2H7kz55pVYV9tJvHlhTMCnDa2mCpLOSrE2cVozwVB9ev82BwlUled4Gn/RqbEeYf5myiCCKAD8CklxIXs8flxwPtwmMQHiFS7FevS5fBCU3NUi1TJL2fTwSyCsDThfzlpRMsMrZSEDeHiQKBgQDJlAMwyJJqnWG/Kyap2XR/Gr6/6KIQNOncDDI59MtEqdeHzFi9A0TwhlxRiH1prAIL9WP/9cOKk9IlXlwgGXXJNwFShbzDz4Cqv7K9MPwm5B4DXilxbMQrqXh0Os+e/aYD5ogPbfhqfpfcpSJbEvDaEkDoY8IWFiNGc7ADd7Pxtw==',
             /*支付宝公钥，在支付宝上获取*/
             'alipayrsaPublicKey'    => 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAicQEk3C9NvoGm+nlVdswq7sJSIBp61U7YCBhqbYMrdZ2lZl8Gj3LKuFQywRjEDcEOhbLvp7tiVgh0Sy+d9KggW03DQ6Axxr9Y6T/647L4gJ604aiBFgJoFJTTHhMnSWDL61XAKkJuLM41hh0hzHRa/tjw8y/BJ9IxVf3ZavRxNlssGa6hpJZuBXDHIxfr4WkL7wOV/pBeuoFlP+BCgh1W5kLYHwM4jAKwjLPSIBuKRhDqzv9tcaaofRTFT/vGbSXIWTZxk0oechtWQXJJaZtSA1zzK/qvARpOP5qwHTTrIJ+IVHQDrLtrbmgVO1pcuwAehZYzsI/prr2SY3ZlwSLLwIDAQAB',
             /*支付宝回调地址*/
