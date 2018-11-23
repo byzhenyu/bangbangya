@@ -165,7 +165,7 @@ class PayController  extends CommonController{
           /*添加提现信息*/
           $insData['user_id'] = UID;
           $insData['drawmoney'] = $shop_accounts;
-          $insData['account_fee'] = 0.01;
+          $insData['account_fee'] = 0.01 * $shop_accounts;
           $insData['money'] = $shop_accounts * 0.99;
           $insData['brank_no'] = $userInfo['alipay_num'];
           $insData['brank_user_name'] = $userInfo['alipay_name'];
