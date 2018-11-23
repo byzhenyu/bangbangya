@@ -20,7 +20,7 @@ class TaskCategoryController extends CommonController{
             $field = 'category_name, category_explain';
             $categoryModel = D('Home/TaskCategory');
             $categoryInfo =  $categoryModel ->gettaskCategoryExplain('', $field);
-            p($categoryInfo);
+            //p($categoryInfo);
             $this->assign('category', $categoryInfo);
             $this->display();
       }
