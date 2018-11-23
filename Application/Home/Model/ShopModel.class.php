@@ -76,7 +76,7 @@ class ShopModel extends Model{
         /*开启事务*/
         M() ->startTrans();
         $user_total = $userModel->getUserField($where , 'total_money');
-        if($user_total < $money){
+        if($user_total < $data['zong']){
             return false;
         }
         $userRes =  D('Home/User')->where($where)->setDec('total_money',$data['zong']);
