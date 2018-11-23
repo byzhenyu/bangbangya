@@ -188,7 +188,7 @@
             mui.toast(data.info);
             if (data.status == 1) {
 
-               window.location.reload();
+                window.location.href = "{:U('TaskLog/taskLogDetail')}/id/"+data.data;
             }
         })
 
