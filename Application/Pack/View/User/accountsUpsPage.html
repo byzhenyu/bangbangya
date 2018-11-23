@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>缴纳保证金</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body style="background: #f6f6f6">
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <p class="mui-title">缴纳保证金</p>
+        <a></a>
+    </header>
+
+    <div class="top-ups">
+        <div class="top-ups-money">
+            <p>缴纳金额</p>
+            <input type="number" name="money" id="money" placeholder="请缴纳你的保证金,缴纳为整数">
+            <p>元</p>
+        </div>
+    </div>
+
+    <div class="top-ups-sure">
+        <button onclick="pay()">缴纳</button>
+    </div>
+    <div class="top-ups-red-font">
+        <span>温馨提示</span>
+        <p>
+            1.保证金最低为1000元，如果因违规被扣除部分或全部保证金，您需要补足金额至1000及以上，相应标识才会展示，保证金无上限限制，提高保障金金额可以提高信誉度，可根据需要合理调整;<br>
+            2.充值保证金金额以百元为单位，不支持小额零充;<br>
+            3.只有缴纳保证金的商户才可以发布金融理财支付类任务;<br>
+            4.保证金可以申请退还，审核周期为20个工作日，经审核无违规行为及投诉，保证金可全额退还(收取1%手续费)，从申请退还之时起，所有前端标识将不再展示;<br>
+            5.充值保证金前请先仔细阅读保证金协议，并确保能够遵从本协议，如有异议请勿充值，一旦充值即表明您已同意该协议。
+        </p>
+    </div>
+</body>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/url.js"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+
+    function pay(){
+        var money = $('#money').val();
+        if((/^(\+|-)?\d+$/.test( money ))&&money>0){
+            if(money < 1000){
+                mui.toast('缴纳保证金不能低于1000元');
+                return
+            }
+            mui.confirm('是否缴纳'+money+'元的保证金', '提示', '', function(e) {
+                if (e.index == 1) {
+                    mui.ajax(url + 'Mobile/User/accountsUpsPage',{
+                        data:{
+                            shop_accounts:money * 100,
+                        },
+                        dataType:'json',//服务器返回json格式数据
+                        type:'post',//HTTP请求类型
+                        timeout:10000,//超时时间设置为10秒；
+                        success:function(data){
+                            mui.toast(data['info']);
+                            // alert(JSON.stringify(data));
+                            if(data['status'] == 1){
+                                setTimeout(function(){
+                                    mui.openWindow({
+                                        url:  url + 'Mobile/User/securityDeposit'
+                                    });
+                                }, 1000);
+                            }else  if(data['status'] == 2){
+                                mui.alert('余额不足,请充值余额缴纳保证金!');
+                            }
+                        },
+                        error:function(xhr,type,errorThrown){
+                            //异常处理；
+                            console.log(type);
+                        }
+                    });
+                }else{
+                    mui.toast('您取消了操作');
+                }
+            })
+        }else {
+            mui.alert("请输入整数充值");
+            return;
+        }
+    }
+    $("#money").blur(function(){
+            var value = $(this).val();
+            if((/^(\+|-)?\d+$/.test( value ))&&value>0){
+            }else{
+                mui.alert("请输入整数充值");;
+            }
+        });
+</script>
+</html>

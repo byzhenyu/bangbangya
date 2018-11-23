@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>任务详情</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav help-duck-head">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <p class="mui-title">任务详情</p>
+    <a href="{:U('Article/articleDetail', array('category_id'=>1))}">接单规则</a>
+</header>
+
+<div class="task-details-top">
+    <div class="task-details-title">
+        <p>标题</p>
+        <span>{$taskDetail['title']}</span>
+    </div>
+    <div class="task-publish-info">
+        <p>发布方</p>
+        <img src="{$taskDetail['head_pic']}">
+        <span>{$taskDetail['nick_name']}</span>
+        <if condition="$taskDetail['shop_accounts'] neq 0">
+            <img src="__PUBLIC__/mobile/images/home_jdzq_icon_promise.png">
+            <i>￥{:fen_to_yuan($taskDetail['shop_accounts'])}</i>
+        </if>
+
+        <input type="button" onclick="shopInfo({$taskDetail['user_id']})" value="店铺">
+    </div>
+    <div class="task-no-type">
+        <p>编号</p>
+        <span>{$taskDetail['id']}</span>
+        <p>类别</p>
+        <span>{$taskDetail['category_name']}</span>
+    </div>
+    <div class="task-price">
+        <p>单价</p>
+        <span>￥{:fen_to_yuan($taskDetail['price'])}</span>
+    </div>
+    <div class="task-font-verification">
+        <p>文字验证</p>
+        <span>{$taskDetail['validate_words']}</span>
+    </div>
+    <div class="task-link">
+        <p>链接</p>
+        <div>
+            <span id="url1">{$taskDetail['link_url']}</span>
+            <button onclick="copyUrl2()">复制</button>
+        </div>
+    </div>
+    <div class="task-details-remarks">
+        <p>备注</p>
+        <span>{$taskDetail['remark']}</span>
+    </div>
+    <if condition="$taskDetail['top_time'] gt 0">
+        <div class="task-top-time">
+            <p>置顶到期</p>
+            <span>{$taskDetail['top_time']|time_format}</span>
+        </div>
+    </if>
+
+    <div class="task-last-time">
+        <p>截止时间</p>
+        <span>{$taskDetail['end_time']|time_format}</span>
+    </div>
+</div>
+
+<div class="task-details-middle">
+    <div>
+        <p>验证图</p>
+        <span>（共{:count($taskDetail['check_info'])}张）</span>
+    </div>
+    <volist name="taskDetail['check_info']" id="v" key="k">
+        <img src="{$v}">
+        <span>图{$k}</span>
+    </volist>
+
+</div>
+
+<div class="task-details-bottom">
+    <div class="task-bottom-title">
+        <p>操作说明</p>
+    </div>
+    <volist name="taskDetail['step_info']" id="v" key="k">
+        <div class="task-bottom-step1">
+            <p>{$k}</p>
+            <span>{$v['step_text']}</span>
+        </div>
+        <div class="task-bottom-qr">
+            <img src="{$v['step_img']}">
+
+        </div>
+    </volist>
+
+</div>
+
+<div class="task-details-tip">
+    <input id="task_id" type="hidden" value="{$id}">
+    <p>完成任务后，请到【我的任务】上传任务截图</p>
+</div>
+
+</body>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+</script>
+<script>
+    //跳转店铺
+    function shopInfo(user_id) {
+        window.location.href = "{:U('Shop/shopDetail')}/user_id/"+user_id;
+    }
+</script>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>登录</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+    <style>
+        #login_container {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: none;
+            background: #f0f0f0;
+
+        }
+        #login_container iframe {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-index-top">
+        <img class="help_duck_logo" src="__PUBLIC__/mobile/images/logoin_img_logo.png">
+        <img class="help_duck_font" src="__PUBLIC__/mobile/images/login_font.png">
+    </div>
+
+    <div id="login_container" class="wrp-code" onclick="$(this).css('display','none')"></div>
+    <div class="login-index-middle">
+        <p>投票、关注、浏览也可以赚钱</p>
+        <p>需要投票、需要粉丝、需要流量？</p>
+        <p>帮帮鸭帮你实现</p>
+    </div>
+
+    <div class="login-index-agree">
+        <label class="login-index-check">
+            <input checked="checked" class="check-login" name="user_agreement" type="checkbox">
+            <i></i>
+            <a href="{:U('Article/articleDetail',array('category_id'=>4))}"><span>同意《帮帮鸭用户协议》</span></a>
+        </label>
+    </div>
+
+    <div  class="login-index-wx">
+        <a>
+            <img onclick="dologin()" src="__PUBLIC__/mobile/images/login_btn_wechat.png">
+        </a>
+    </div>
+
+</body>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/url.js"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+
+    function dologin(){
+        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+
+
+        } else if (/(Android)/i.test(navigator.userAgent)) {
+
+            window.Android.wechatLogin();
+
+        }
+    }
+
+</script>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+</html>
