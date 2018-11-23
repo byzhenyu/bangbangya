@@ -46,7 +46,7 @@ class AlipayController extends CommonController {
         $data['subject'] = C('APP_NAME').'网页充值';
         $data['out_trade_no'] =  $data['order_sn'];
         $data['total_amount'] = '0.01';
-        require_once("Plugins/AliPay/AliPay.php");
+        require_once("./Plugins/AliPay/AliPay.php");
         $alipay =new \AliPay();
         $result =$alipay->AliPayMobileWeb($data);
         return $result;
