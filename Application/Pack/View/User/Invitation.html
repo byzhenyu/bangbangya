@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>登录</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+</head>
+<body style="background: #f6f6f6;">
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a></a>
+        <p class="mui-title">邀请码</p>
+        <a href="{:U('User/personalCenter')}">跳过</a>
+    </header>
+
+    <div class="mui-input-row login-invit-num">
+        <label>邀请码</label>
+        <input type="text"  id="invitation_code" placeholder="邀请码注意大小写，如不清楚可不填">
+    </div>
+
+    <div class="login-invot-btn">
+        <button onclick="btn()">确定</button>
+    </div>
+
+</body>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/url.js"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+   function btn(){
+       var invitation_code  = $('#invitation_code').val();
+       if(invitation_code == ''){
+           mui.toast('请您输入邀请码,可以选择跳过');
+           return
+       }
+       mui.ajax(url + 'Mobile/User/Invitation',{
+           data:{
+               invitation_code: invitation_code
+           },
+           dataType:'json',//服务器返回json格式数据
+           type:'post',//HTTP请求类型
+           timeout:10000,//超时时间设置为10秒；
+           // headers:{'Content-Type':'application/json'},
+           success:function(data){
+               mui.toast(data['info']);
+               // alert(JSON.stringify(data));
+               if(data['status'] == 1){
+                   setTimeout(function(){
+                       mui.openWindow({
+                           url:  url + 'Mobile/User/personalCenter/login/1'
+                       });
+                   }, 1000);
+               }
+           },
+           error:function(xhr,type,errorThrown){
+               //异常处理；
+               console.log(type);
+           }
+       });
+   }
+</script>
+
+</html>

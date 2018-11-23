@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="__Mobile__/css/base.css">
+    <script type="text/javascript" src="__Mobile__/js/jquery-3.1.1.min.js"></script>
+    <block name="style">
+        <title>{:C('WEB_TITLE')}</title>
+    </block>
+</head>
+<body class="body-bg1 view">
+<!-- 内容 -->
+<block name="body"></block>
+<script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+<script type="text/javascript" src="__ADMIN__/js/common.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ajaxForm.js"></script>
+<script>
+    // 定义全局变量
+    RECYCLE_URL = "{:U('recycle')}"; // 默认逻辑删除操作执行的地址
+    RESTORE_URL = "{:U('restore')}"; // 默认逻辑删除恢复执行的地址
+    DELETE_URL = "{:U('del')}"; // 默认删除操作执行的地址
+    UPLOAD_IMG_URL = "{:U('uploadImg')}"; // 默认上传图片地址
+    UPLOAD_FIELD_URL = "{:U('uploadField')}"; // 默认上传图片地址
+    DELETE_FILE_URL = "{:U('delFile')}"; // 默认删除图片执行的地址
+    CHANGE_STAUTS_URL = "{:U('changeDisabled')}"; // 修改数据的启用状态
+</script>
+<block name="script"></block>
+</body>
+</html>

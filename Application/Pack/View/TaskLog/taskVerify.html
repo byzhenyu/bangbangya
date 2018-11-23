@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>上传验证</title>
+    <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+    <style type="text/css">
+
+        .weui-uploader__bd{width: 100%;}
+        .weui-uploader__files{  overflow: hidden;  width: 98%;  margin: auto;  text-align: center;  }
+        .weui-uploader__file{  float: left;  width: 33%;  text-align: center;  position: relative;  }
+        .weui-uploader__file img{  width: 2rem;  height:2rem;  }
+        .weui-uploader__file .file-del{  position: absolute;  top:1px;  right: 0;  }
+        .weui-uploader__file .file-del a{  color: #fff;  background-color: rgba(0,0,0,.3);  padding: 2px 7px;  border-radius: 15px;cursor:pointer  }
+        .weui-uploader__input-box{ position: relative;
+            overflow: hidden; float: left;}
+        #upload{
+            border: none;
+            z-index: 99;
+            position: absolute;
+            overflow: hidden;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            width: 100px;
+            height: 100px;
+            top: 0;
+            left: 0;
+        }
+        .task-submit-detail textarea{
+            background: #fff;
+            padding: .2rem .3rem;
+            width: 100%;
+            height: 3.4rem;
+            border: none;
+        }
+        .uploader-img {
+            border: none;
+            z-index: 99;
+            position: absolute;
+            overflow: hidden;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            left: 1.5rem;
+            width: 1.1rem;
+            height: 1.1rem;
+            margin-right: .24rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="mui-bar mui-bar-nav help-duck-head">
+        <a href="{:U('TaskLog/taskLogDetail',array('id'=>$info['id']))}" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <p class="mui-title">上传验证</p>
+        <a href="{:U('TaskLog/taskLogDetail',array('id'=>$info['id']))}">任务详情</a>
+    </header>
+    <form action="{:U('taskVerify')}" method="post">
+    <div class="upload-verification-top">
+        <div class="upload-top-left">
+            <div>
+                <p>发布方</p>
+                <img src="{$info['head_pic']}">
+                <span>{$info['task_user_id']}</span>
+            </div>
+            <div>
+                <p>类别</p>
+                <span>{$info['category_name']}</span>
+            </div>
+            <if condition="$info['valid_text'] neq ''">
+                <div>
+                    <p>文字验证</p>
+                    <span>{$info['validate_words']}</span>
+                </div>
+            </if>
+            <div>
+                <p>备注</p>
+                <span>{$info['remark']}</span>
+            </div>
+        </div>
+
+        <div class="upload-top-right">
+            <div>
+                <p>编号</p>
+                <span>{$info['task_id']}</span>
+            </div>
+            <div>
+                <p>单价</p>
+                <span>￥{:fen_to_yuan($info['task_price'])}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="upload-verification-middle">
+        <div class="upload-middle-title">
+            <p>验证图</p>
+            <span>（最多5张）</span>
+        </div>
+        <div class="weui-uploader__bd task-audit-imgs-add">
+            <ul class="weui-uploader__files" id="uploaderFiles">
+                <li class="weui-uploader__input-box" >
+                    <img src="__PUBLIC__/mobile/images/common_icon_addpicture.png">
+                    <input id="upload" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+        <div class="upload-verification-bottom">
+            <if condition="$info['validate_words'] neq ''">
+                <div class="upload-bottom-title">
+                    <p>文字验证</p>
+                </div>
+                <div class="upload-bottom-textarea">
+                    <textarea id="v-info" name="valid_info" rows="2" placeholder="请输入文字验证"></textarea>
+                </div>
+            </if>
+            <div class="upload-bottom-btns">
+                <input type="hidden" name="id" value="{$info['id']}">
+                <button type="button" class="upload-bottom-cacle">取消</button>
+                <button type="submit" class="upload-bottom-sure">确定提交</button>
+            </div>
+        </div>
+
+
+    <div class="upload-tip">
+        <p>提示：请诚信做单，骗单将被罚款，严重者封号</p>
+    </div>
+
+</form>
+</body>
+<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+<script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="__PUBLIC__/fileupload/js/vendor/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.fileupload.js"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+    var count = 0;
+    //单图上传
+    $('#upload').fileupload({
+        url: "{:U('uploadImg')}",
+        dataType: 'json',
+        done: function (e, data) {
+
+            $('#uploaderFiles').append('<li class="weui-uploader__file" ><img src="'+data.result.data.nameosspath+'"><div class="file-del"><a href="javascript:void(0)" onclick="delPic(this)">X</a></div>'+
+                '<input type="hidden" name="valid_img[]" value="'+data.result.data.nameosspath+'">'+
+                '</li>');
+
+            count++;
+            if (count>4) {
+
+                $('#upload').attr('disabled','disabled');
+            }
+        }
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+    function delPic(obj) {
+        var obj = obj;
+        var img_src = $(obj).parent().next('input').val();
+        $.post("{:U('Task/oss_delet_object')}",{'img_src':img_src}, function (data) {
+
+            if (data.status == 1) {
+                $(obj).parent().parent().remove();
+                count--;
+                $('#upload').attr('disabled',false);
+            }
+        })
+
+    }
+
+    $('.upload-bottom-cacle').on('click', function () {
+        window.history.back(-1);
+    });
+
+    $(".upload-bottom-sure").on('click', function () {
+        submitForm();
+    })
+    $(document)
+        .ajaxStart(function(){
+            $("button:submit").attr("disabled", true);
+        })
+        .ajaxStop(function(){
+            $("button:submit").attr("disabled", false);
+        });
+    function submitForm() {
+
+        $("form").submit(function(){
+            var self = $(this);
+            var data = self.serialize();
+
+            $.post(self.attr("action"), data, function(data){
+                mui.toast(data.info);
+                if(data.status == 1){
+                    setTimeout(function() {
+                        window.location.href = "{:U('TaskLog/getTaskLog')}";
+                    },1000);
+                }
+            }, "json");
+
+            return false;
+        });
+    }
+</script>
+
+</html>

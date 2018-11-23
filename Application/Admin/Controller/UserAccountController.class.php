@@ -62,11 +62,20 @@ class UserAccountController extends CommonController {
                         $this->ajaxReturn(V(0, '操作失败'));
                     }
                     $where['id'] = $id;
-                    $accountInfo = $UserAccountModel->getUserAccountDetail($where, 'id, user_id, money, drawmoney,type');
+                    $accountInfo = $UserAccountModel->getUserAccountDetail($where, 'id, user_id, money, account_fee, drawmoney,type');
                     $user_where['user_id'] = array('eq', $accountInfo['user_id']);
                     if ($state == 1) { //完成审核
 
                         if ($accountInfo['type'] == 2) { //保证金
+
+                            $acc_where['change_type'] = 12;
+                            $acc_where['order_sn'] = array('eq', $accountInfo['id']);
+                            $change_desc = "解冻保证金已通过:手续费:".(fen_to_yuan($accountInfo['account_fee']));
+                            $logRes = M('AccountLog')->where($acc_where)->setField('change_desc', $change_desc);
+                            if ($logRes === false) {
+                                M()->rollback(); // 事务回滚
+                                $this->ajaxReturn(V(0, '修改日志操作失败'));
+                            }
 
                         } else { //余额和分红提现
                             //减少会员冻结余额
@@ -77,14 +86,22 @@ class UserAccountController extends CommonController {
                             }
                             if ($accountInfo['type'] == 0) {
                                 //修改count日志
-                                $change_desc = '余额提现';
+                                $change_desc = '余额提现已到账:手续费'.(fen_to_yuan($accountInfo['account_fee']));
                                 $change_type = 1;
+                                $acc_where['change_type'] = array('eq', 1);
+                                $acc_where['order_sn'] = array('eq', $accountInfo['id']);
                             } elseif ($accountInfo['type'] == 1) {
-                                $change_desc = '分红提现';
+                                $change_desc = '分红提现已到账：手续费'.(fen_to_yuan($accountInfo['account_fee']));
                                 $change_type = 8;
+                                $acc_where['change_type'] = 8;
+                                $acc_where['order_sn'] = array('eq', $accountInfo['id']);
+                            }
+                            $logRes = M('AccountLog')->where($acc_where)->setField('change_desc', $change_desc);
+                            if ($logRes === false) {
+                                M()->rollback(); // 事务回滚
+                                $this->ajaxReturn(V(0, '修改日志操作失败'));
                             }
 
-                            account_log($accountInfo['user_id'], $accountInfo['drawmoney'], $change_type,$change_desc,'');
                             //分红
                             $invi_uid = is_inviter($accountInfo['user_id']);
                             if ($invi_uid) {
@@ -94,12 +111,21 @@ class UserAccountController extends CommonController {
 
 
                     } else if ($state == 2) { //驳回
-                        if ($accountInfo['type'] == 2) {
+                        if ($accountInfo['type'] == 2) { //保证金驳回
                             $res = M('Shop')->where(array('user_id'=>$accountInfo['user_id']))->setInc('shop_accounts', $accountInfo['drawmoney']);
                             if ($res === false) {
                                 M()->rollback();
                                 $this->ajaxReturn(V(0, '操作失败'));
                             }
+                            $acc_where['change_type'] = 12;
+                            $acc_where['order_sn'] = array('eq', $accountInfo['id']);
+                            $change_desc = "解冻保证金(被拒绝)";
+                            $logRes = M('AccountLog')->where($acc_where)->setField('change_desc', $change_desc);
+                            if ($logRes === false) {
+                                M()->rollback(); // 事务回滚
+                                $this->ajaxReturn(V(0, '修改日志操作失败'));
+                            }
+
                         } else {
                             //减少会员冻结余额
                             $setUserForzenMoney = D('Admin/User')->where($user_where)->setDec('frozen_money', $accountInfo['drawmoney']);
@@ -110,14 +136,19 @@ class UserAccountController extends CommonController {
                             if ($accountInfo['type'] == 1) { //分红提现
                                 $saveData['total_money'] = array('exp', "total_money+".$accountInfo['drawmoney']);
                                 $saveData['bonus_money'] = array('exp', "bonus_money+".$accountInfo['drawmoney']);
-                                $change_desc = '分红提现（审核未通过余额退回）';
+                                $change_desc = '分红提现（未通过，已退回）';
                                 $change_type = 8;
+                                $acc_where['change_type'] = 8;
+                                $acc_where['order_sn'] = array('eq', $accountInfo['id']);
 
                             } elseif ($accountInfo['type'] == 0) { //余额
                                 $saveData['total_money'] = array('exp', "total_money+".$accountInfo['drawmoney']);
                                 $saveData['task_money'] = array('exp', "task_money+".$accountInfo['drawmoney']);
-                                $change_desc = '余额提现（审核未通过余额退回）';
+                                $change_desc = '余额提现（未通过，已退回）';
                                 $change_type = 1;
+                                $acc_where['change_type'] = 1;
+                                $acc_where['order_sn'] = array('eq', $accountInfo['id']);
+
                             }
                             //增加会员余额
                             $setUserMoney = D('Admin/User')->where($user_where)->save($saveData);
@@ -126,7 +157,13 @@ class UserAccountController extends CommonController {
                                 M()->rollback(); // 事务回滚
                                 $this->ajaxReturn(V(0, '操作失败'));
                             }
-                            account_log($accountInfo['user_id'], $accountInfo['drawmoney'], $change_type,$change_desc,'');
+
+                            $logRes = M('AccountLog')->where($acc_where)->setField('change_desc', $change_desc);
+                            if ($logRes === false) {
+                                M()->rollback(); // 事务回滚
+                                $this->ajaxReturn(V(0, '修改日志操作失败'));
+                            }
+
                         }
 
                     }
