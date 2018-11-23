@@ -80,8 +80,13 @@
 
         'TMPL_ACTION_ERROR'     =>  THINK_PATH.'Tpl/dispatch_jump.tpl', // 默认错误跳转对应的模板文件
         'TMPL_ACTION_SUCCESS'   =>  THINK_PATH.'Tpl/dispatch_jump.tpl', // 默认成功跳转对应的模板文件
-
-
+        /*阿里云OSS配置*/
+        'ALIOSS_CONFIG' => [
+            'KEY_ID'=>'xR6v3xsAOAFiPiPy',
+            'KEY_SECRET'=>'l7dpek8hyfPZX7edNJ3I3cPrPu9baL',
+            'END_POINT'=>'oss-cn-beijing.aliyuncs.com',
+            'BUCKET'=>'bangbangya'
+        ],
         /* 支付宝支付相关配置 */
         'AliPay' => array(
             /*应用ID，在支付宝上获取*/
