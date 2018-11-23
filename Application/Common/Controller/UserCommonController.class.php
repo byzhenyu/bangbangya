@@ -21,7 +21,7 @@ class UserCommonController extends CommonController
             if (MODULE_NAME == 'Home') {
                 $this->redirect('Home/Index/index');
             } else {
-                $this->redirect('Mobile/Login/login');
+                $this->redirect('Login/login');
             }
 
         }
@@ -34,7 +34,7 @@ class UserCommonController extends CommonController
             if (MODULE_NAME =='Home') {
                 $this->redirect('Home/Index/index');
             } else {
-                $this->redirect('Mobile/Login/login');
+                $this->redirect('Login/login');
             }
         }
     }
