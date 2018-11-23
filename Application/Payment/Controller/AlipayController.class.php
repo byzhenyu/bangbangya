@@ -30,7 +30,27 @@ class AlipayController extends CommonController {
         echo '页面跳转中, 请稍后...';
         echo $alipay->AliPayWeb($data);
     }
-
+    //移动web支付 示例
+    public function mobileWebPay() {
+        $type =  I('type', 0, 'intval');
+        $data['user_id'] = UID;
+        $data['recharge_money'] = I('recharge_money',0 , 'intval');
+        $order_sn = makeOrderSn($data['user_id']);
+        if($type == 0){
+            $data['order_sn'] = 'T'.$order_sn;
+        }else{
+            $data['order_sn'] = 'B'.$order_sn;
+        }
+        M('recharge')->add($data);
+        $data['body'] = C('APP_NAME').'网页充值';
+        $data['subject'] = C('APP_NAME').'网页充值';
+        $data['out_trade_no'] =  $data['order_sn'];
+        $data['total_amount'] = '0.01';
+        require_once("Plugins/AliPay/AliPay.php");
+        $alipay =new \AliPay();
+        $result =$alipay->AliPayMobileWeb($data);
+        return $result;
+    }
     // 定单支付回调
     public function alipayNotify() {
         require_once("./Plugins/AliPay/AliPay.php");
