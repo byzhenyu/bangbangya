@@ -19,25 +19,25 @@
         <div class="top-shop-price-details">
             <div>
                 <div class="top-shop-single">
-                    <input name="my-top-price" type="radio" value="30" checked>
-                    <label>￥30/小时</label>
+                    <input name="my-top-price" type="radio" value="{:C(TOP_CONF)[0]}" checked>
+                    <label>￥{:C(TOP_CONF)[0]}/小时</label>
                 </div>
 
                 <div class="top-shop-single">
-                    <input name="my-top-price" type="radio" value="288">
-                    <label>￥288/天</label>
+                    <input name="my-top-price" type="radio" value="{:C(TOP_CONF)[1]}">
+                    <label>￥{:C(TOP_CONF)[1]}/天</label>
                 </div>
             </div>
 
             <div>
                 <div class="top-shop-single">
-                    <input name="my-top-price" type="radio" value="1588">
-                    <label>￥1588/周</label>
+                    <input name="my-top-price" type="radio" value="{:C(TOP_CONF)[2]}">
+                    <label>￥{:C(TOP_CONF)[2]}/周</label>
                 </div>
 
                 <div class="top-shop-single">
-                    <input name="my-top-price" type="radio" value="4888">
-                    <label>￥4888/月</label>
+                    <input name="my-top-price" type="radio" value="{:C(TOP_CONF)[3]}">
+                    <label>￥{:C(TOP_CONF)[3]}/月</label>
                 </div>
             </div>
         </div>
@@ -94,16 +94,6 @@
             if (e.index == 1) {
                 var topMoney = $('input[name="my-top-price"]:checked').val();
                 var num = $('#num').val();
-                var top_time = 0;
-                if(topMoney == 30){
-                      top_time =  3600 * num;
-                }else if(topMoney == 1588){
-                      top_time =  604800 * num;
-                }else if(topMoney == 288){
-                      top_time =  86400 * num;
-                }else{
-                      top_time =  2592000 * num;
-                }
                 // alert(top_time);
                 var total_money = {$total_money};
                 var zong = $('#zong').val();
@@ -118,13 +108,14 @@
                         }
                     })
                 }else{
-                    if(zong == 0 || top_time ==0 ){
+                    if(zong == 0){
                         mui.toast('请您选择置顶时间');
                         return;
                     }
                     mui.ajax(url + 'Mobile/Shop/myTopShop',{
                         data:{
-                            top_time:top_time,
+                            topMoney : topMoney,
+                            num:num,
                             zong:zong
                         },
                         dataType:'json',//服务器返回json格式数据
