@@ -4125,13 +4125,14 @@ input[type="checkbox"]:checked + i {
             height: .3rem;
         }
 .mui-bar .mui-title {
-    right: 80px;
+    right: 40px;
     left: 40px;
     display: inline-block;
     overflow: hidden;
     width: auto;
     margin: 0;
     text-overflow: ellipsis;
+    z-index: -1;
 }
 
 
