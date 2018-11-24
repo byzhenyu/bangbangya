@@ -24,21 +24,21 @@
         <div class="my-fans-data">
             <div>
                 <span>我的粉丝</span>
-                <p><span>{$fanslist['fans_count']}</span>人</p>
+                <p><span>{$fansCount}</span>人</p>
             </div>
             <div>
                 <span>我的关注</span>
-                <p><span>{$focuslist['fans_count']}</span>人</p>
+                <p><span>{$focusCount}</span>人</p>
             </div>
         </div>
     </div>
 
     <div class="mui-content" id="top-shop-content">
         <div id="my-fans-info" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary top-shop-choose my-fans-attention" >
-            <a class="mui-control-item mui-active my-fans" href="#item1">
+            <a data-type="0" class="mui-control-item mui-active my-fans">
                 <p>我的粉丝</p>
             </a>
-            <a class="mui-control-item my-attention" href="#item2">
+            <a data-type="1" class="mui-control-item my-attention">
                 <p>我的关注</p>
             </a>
         </div>
@@ -47,10 +47,10 @@
             <div id="item1" class="mui-control-content mui-active">
                 <div class="mui-scroll-content">
                     <div class="mui-scroll">
-                        <ul class="mui-table-view my-fans-view">
-                            <foreach name="fanslist['list']" item="v">
+                        <ul class="mui-table-view my-fans-view msg-list">
+                            <foreach name="fanslist" item="v">
                                 <li class="mui-table-view-cell my-fans-li">
-                                    <a class="my-fans-item">
+                                    <a data-user="{$v['user_id']}" class="my-fans-item">
                                         <div class="my-fans-user">
                                             <div class="my-fans-left">
                                                 <img src="{$v.head_pic}">
@@ -67,6 +67,9 @@
                                 </li>
                             </foreach>
                         </ul>
+                        <div class="top-ups-sure">
+                            <button id="load">加载更多</button>
+                        </div>
                     </div>
                     <div class="mui-scrollbar mui-scrollbar-vertical">
                         <div class="mui-scrollbar-indicator"></div>
@@ -74,31 +77,6 @@
                 </div>
             </div>
 
-            <div id="item2" class="mui-control-content">
-                <ul class="mui-table-view my-fans-view">
-                    <foreach  name="focuslist['list']" item="v">
-                        <li class="mui-table-view-cell my-fans-li">
-                            <a class="my-fans-item">
-                                <div class="my-fans-user">
-                                    <div class="my-fans-left">
-                                        <img src="{$v.head_pic}">
-                                        <div class="fans-user-info">
-                                            <p>{$v.nick_name}</p>
-                                            <div>
-                                                <span>{:time_format($v['add_time'])}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <img src="__PUBLIC__/mobile/images/common_icon_more.png">
-                                </div>
-                            </a>
-                        </li>
-                    </foreach>
-                </ul>
-                <div class="mui-scrollbar mui-scrollbar-vertical">
-                    <div class="mui-scrollbar-indicator"></div>
-                </div>
-            </div>
         </div>
 
     </div>
@@ -110,4 +88,95 @@
 </script>
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    var p = 1;
+    var type = 0;
+    $('#top-shop-content').on('tap', '.mui-control-item',function () {
+        type =  $(this).data('type');
+        p = 1;
+        var json_data = {
+            "type":type,
+            "p":p
+        };
+        //console.log(json_data);
+        $.post("{:U('Fans/myFans')}/p/"+p, json_data, function (data) {
+            if (data.status == 1) {
+                $(".msg-list").html('');
+                if (data.data.length) {
+
+                    var html1 = '';
+                    for (var i=0; i < data.data.length; i++) {
+                        html1 += '<li class="mui-table-view-cell my-fans-li">'+
+                            '<a data-user="'+data.data[i].user_id+'" class="my-fans-item">'+
+                            '<div class="my-fans-user">'+
+                            '<div class="my-fans-left">'+
+                            '<img src="'+data.data[i].head_pic+'">'+
+                            '<div class="fans-user-info">'+
+                            '<p>'+data.data[i].nick_name+'</p>'+
+                        '<div>'+
+                        '<span>'+data.data[i].add_time+'</span>'+
+                        '</div>'+
+                        '</div>'+
+                        '</div>'+
+                        '<img src="__PUBLIC__/mobile/images/common_icon_more.png">'+
+                            '</div>'+
+                            '</a>'+
+                            '</li>';
+                    }
+
+                    $(".msg-list").append(html1);
+                } else {
+                    mui.toast('没有更多了');
+
+                }
+            }
+        })
+    });
+    //加载更多
+    $('#load').on('click', function () {
+        p++;
+        var json_data = {
+            "type":type,
+            "p":p
+        };
+        $.post("{:U('Fans/myFans')}/p/"+p, json_data, function (data) {
+            if (data.status == 1) {
+
+                if (data.data.length) {
+
+                    var html1 = '';
+                    for (var i=0; i < data.data.length; i++) {
+                        html1 += '<li class="mui-table-view-cell my-fans-li">'+
+                            '<a data-user="'+data.data[i].user_id+'" class="my-fans-item">'+
+                            '<div class="my-fans-user">'+
+                            '<div class="my-fans-left">'+
+                            '<img src="'+data.data[i].head_pic+'">'+
+                            '<div class="fans-user-info">'+
+                            '<p>'+data.data[i].nick_name+'</p>'+
+                            '<div>'+
+                            '<span>'+data.data[i].add_time+'</span>'+
+                            '</div>'+
+                            '</div>'+
+                            '</div>'+
+                            '<img src="__PUBLIC__/mobile/images/common_icon_more.png">'+
+                            '</div>'+
+                            '</a>'+
+                            '</li>';
+                    }
+
+                    $(".msg-list").append(html1);
+                } else {
+                    mui.toast('没有更多了');
+
+                }
+            }
+        })
+    })
+    //跳转店铺
+
+    $('.msg-list').on('tap', '.my-fans-item', function () {
+        var user_id = $(this).data('user');
+        window.location.href = "{:U('Shop/shopDetail')}/user_id/"+user_id;
+    });
+</script>
 </html>

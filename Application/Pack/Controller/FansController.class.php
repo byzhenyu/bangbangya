@@ -20,18 +20,29 @@ class FansController extends CommonController {
      */
     public function myFans()
     {
-        $user_id = UID;
-    	$where['f.fans_user_id']  =  $user_id;
-    	$field = 'f.user_id,u.head_pic,u.nick_name,f.add_time';
-        /*我的粉丝*/
-        $fanslist =  $this->Fans->getFansList($where, $field, '', 0);
-        /*我的关注*/
-        unset($where);
-        $where['f.user_id']  =  $user_id;
-        $focuslist = $this->Fans->getFansList($where, $field, '', 1);
+        $type = I('type', 0, 'intval');
+        if ($type == 0) {
+            $where['f.fans_user_id']  =  array('eq', UID);
+        } else {
+            $where['f.user_id']  =  array('eq', UID);
+        }
+
+        $field = 'f.user_id,u.head_pic,u.nick_name,f.add_time';
+
+        $list =  $this->Fans->getFansList($where, $field, '', $type);
+        if (IS_POST) {
+            if ($list) {
+                foreach ($list as $k=>$v) {
+                    $list[$k]['add_time'] = time_format($v['add_time']);
+                }
+            }
+            $this->ajaxReturn(V(1,'列表', $list));
+        }
+        $count = $this->Fans->getFansCount();
         $this->assign('userInfo', $this->userInfo);
-        $this->assign('fanslist',$fanslist);
-        $this->assign('focuslist',$focuslist);
+        $this->assign('fanslist',$list);
+        $this->assign('fansCount', $count['fansCount']);
+        $this->assign('focusCount', $count['focusCount']);
         $this->display();
     }
     /**
