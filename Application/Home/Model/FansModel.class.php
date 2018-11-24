@@ -21,9 +21,8 @@ class FansModel extends Model
 	 * @param  $type  类型 0 我的粉丝 1 我的关注 
 	 * @return [arr]   
 	 */
-	public function getFansList($where= [],$field = null, $sort = ' f.add_time DESC', $type)
-	{ 
-        if(is_null($field)) $field = $this->selectFields;
+	public function getFansList($where=[], $field='', $sort = 'f.add_time DESC', $type) {
+        if(!$field) $field = $this->selectFields;
         /*判断是我的粉丝还是我的关注*/
         $user_id = $type == 0 ? 'user_id' :  'fans_user_id';
         /*粉丝条件*/
@@ -42,8 +41,27 @@ class FansModel extends Model
                 ->limit($page['limit'])
                 ->order($sort)
                 ->select();
-        return array('list'=>$list,'page'=>$page['page'],'fans_count'=>$count);
-	}
+        //粉丝数量
+
+        return $list;
+    }
+    //获取粉丝关注数量
+    public function getFansCount() {
+        $fansCount = $this->alias('f')
+            ->join('__USER__ as u  on f.user_id = u.user_id','LEFT')
+            ->where(array('f.fans_user_id'=>UID,'f.status'=>1))
+            ->count();
+        //关注数量
+        $focusCount = $this->alias('f')
+            ->join('__USER__ as u  on f.fans_user_id = u.user_id','LEFT')
+            ->where(array('f.user_id'=>UID,'f.status'=>1))
+            ->count();
+
+        return array(
+            'fansCount'=>$fansCount,
+            'focusCount'=>$focusCount
+        );
+    }
 	/**
      * 数据插入前操作
      * @param $data
