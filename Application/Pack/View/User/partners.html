@@ -84,6 +84,14 @@
     function buy(money,type,time){
               mui.confirm('是否成为合作商', '提示', '', function(e) {
                   if (e.index == 1) {
+                      var json_data = {
+                          "money":money,
+                          "type":type,
+                          "time" : time
+                      };
+                      $.post("{:U('Shop/vip')}", json_data, function (data) {
+
+                      })
                       mui.ajax(url + 'Mobile/Shop/vip',{
                           data:{
                               money:money,
@@ -98,16 +106,14 @@
                               // alert(JSON.stringify(data));
                               if(data['status'] == 1){
                                   setTimeout(function(){
-                                      mui.openWindow({
-                                          url:  url + 'Mobile/User/partners'
-                                      });
+                                      window.location.href = "{:U('User/partners')}";
+
                                   }, 1500);
                               }else{
                                   mui.confirm('您的余额不足,是否去充值?', '提示', '', function(e) {
                                       if (e.index == 1) {
-                                              mui.openWindow({
-                                                  url:  url + 'Mobile/Pay/topUpsPage'
-                                              });
+                                          window.location.href = "{:U('Pay/topUpsPage')}"
+
                                       }else{
                                           mui.toast('您取消了操作');
                                       }

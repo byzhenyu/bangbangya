@@ -2,14 +2,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>每周排名</title>
+    <title>排行榜</title>
     <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
 </head>
 <body>
     <header class="mui-bar mui-bar-nav help-duck-head">
         <a></a>
-        <p class="mui-title">每周排名</p>
+        <p class="mui-title">排行榜</p>
         <!--<a href="rank-history.html">历史榜单</a>-->
     </header>
 
@@ -71,7 +71,7 @@
                        <p>{$k + 1}</p>
                        <img src="{$v['head_pic']}">
                        <p>{$v.nick_name}</p>
-                       <p>ID：{$v.id}</p>
+                       <p>ID：{$v.user_id}</p>
                    </div>
                    <p>￥{:fen_to_yuan($v['task_suc_money'])}</p>
                </div>
