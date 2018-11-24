@@ -93,6 +93,7 @@
                             </div>
                         </if>
                     </ul>
+
                 </div>
                 <div class="mui-scrollbar mui-scrollbar-vertical">
                     <div class="mui-scrollbar-indicator"></div>
@@ -132,9 +133,8 @@
                         // alert(JSON.stringify(data));
                         if(data['status'] == 1){
                             setTimeout(function(){
-                                mui.openWindow({
-                                    url:  url + 'Mobile/TaskLog/getTaskLog/type/5'
-                                });
+                                window.location.href = "{:U('TaskLog/getTaskLog',array('type'=>5))}"
+
                             }, 1000);
                         }
                     },
@@ -155,9 +155,8 @@
     }
     /*不合格*/
     function fail(id){
-        mui.openWindow({
-            url:  url + 'Mobile/TaskLog/taskLogFail/id/' + id
-        });
+        window.location.href = "{:U('TaskLog/taskLogFail')}/id/"+id;
+
     }
     function taskDetail (log_id) {
         window.location.href = "{:U('TaskLog/taskLogDetail')}/id/"+log_id;
@@ -220,10 +219,6 @@
         });
     }
     loadMore();
-    function taskLogInfo(id){
-        mui.openWindow({
-            url:  url + 'Mobile/Task/myTaskDetail/id/' + id
-        });
-    }
+
 </script>
 </html>
