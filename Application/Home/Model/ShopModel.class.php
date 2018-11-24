@@ -79,12 +79,23 @@ class ShopModel extends Model{
         if($user_total < $data['zong']){
             return false;
         }
+        $topTime = array_flip(C(TOP_CONF));
+        $timeType  = $topTime[$data['topMoney']];
+        if($timeType == 0){
+            $topTime  = $data['num'] *  (strtotime('+1hour') - NOW_TIME);
+        }else if($timeType == 1){
+            $topTime  = $data['num'] * (strtotime('+1day') - NOW_TIME);
+        }else if($timeType == 2){
+            $topTime  = $data['num'] * (strtotime('+1week')  - NOW_TIME);
+        }else{
+            $topTime  = $data['num'] * (strtotime('+1year')  - NOW_TIME) ;
+        }
         $userRes =  D('Home/User')->where($where)->setDec('total_money',$data['zong']);
         $shopTopTime = $this->where($where)->getField('top_time');
-        if($shopTopTime < NOW_TIME){
-              $changeTime = NOW_TIME + $data['top_time'];
+        if($shopTopTime > NOW_TIME){
+            $changeTime = $shopTopTime + $topTime;
         }else{
-              $changeTime = $shopTopTime + $data['top_time'];
+            $changeTime = NOW_TIME + $topTime;
         }
         account_log($data['user_id'], $data['zong'], 6, '置顶店铺','');
         $shopRes = $this->where($where)->save(array('top_time' => $changeTime));
