@@ -84,9 +84,9 @@ class LoginController extends CommonController {
 
     //微信登陆
     public function thirdLogin() {
-        $open_id = I('id', '');
-        $nick_name = I('name', '');
-        $head_pic = I('image', '');
+        $open_id = I('open_id', '');
+        $nick_name = I('nick_name', '');
+        $head_pic = I('head_pic', '');
 
         if (!$open_id){
             $this->ajaxReturn(V(0, '参数有误'));
