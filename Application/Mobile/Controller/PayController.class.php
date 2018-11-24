@@ -48,14 +48,27 @@ class PayController  extends CommonController{
     public function myWallet(){
         $userModel = D('Home/User');
         $where['user_id'] = UID;
+        $type = I('type', 0, 'intval');
+        if ($type == 1) {
+            $where['change_type'] = array('IN','1,3,5,6,7,9,10,12');
+
+        } else {
+            $where['change_type'] = 0;
+        }
+
+        $record = D('Home/AccountLog')->getAccountLog($where);
+
+        if (IS_POST) {
+            foreach ($record as $k=>$v) {
+                $record[$k]['change_time'] = time_format($v['change_time']);
+                $record[$k]['user_money'] = fen_to_yuan($v['user_money']);
+            }
+            $this->ajaxReturn(V(1,'资金变动记录', $record));
+        }
         $total_money = $userModel->getUserField($where, 'total_money');
-        $where['change_type'] = 0;
-        $payRecord = getAccount($where);
-        $where['change_type'] = array('IN','1,3,5,6,7,9,10,12');
-        $expendRecord = getAccount($where);
         $this->assign('total_money', $total_money);
-        $this->assign('payRecord',$payRecord);
-        $this->assign('expendRecord',$expendRecord);
+        $this->assign('payRecord',$record);
+
         $this->display();
     }
       /**
@@ -132,26 +145,31 @@ class PayController  extends CommonController{
      * @param UID
      * @return mixed
      */
-       public function incomeDividends(){
-        $user_id = UID;
-        $p = I('p', 0, 'intval');
-        $type = I('type', 0, 'intval');
-        $bonus_money = $this->user->where('user_id = '.$user_id)->getField('bonus_money');
-        $where['user_id'] = $user_id;
-        if($type == 0){
-            $where['change_type']  = 2;
-        }else{
-            $where['change_type']  = 8;
-        }
-        $pmoney = getAccount($where);
-        if (IS_POST) {
-            $pmoney = getAccount($where, $p);
-            if($pmoney){
-                $this->ajaxReturn(V(1, '加载成功',$pmoney));
-            }else{
-                $this->ajaxReturn(V(0, '加载完毕'));
+        public function incomeDividends(){
+            $user_id = UID;
+            $p = I('p', 0, 'intval');
+            $type = I('type', 0, 'intval');
+
+            $where['user_id'] = $user_id;
+            if ($type == 0) {
+                $where['change_type']  = 2;
+            } else {
+                $where['change_type']  = 8;
             }
-        }
+            $pmoney = D('Home/AccountLog')->getAccountLog($where);
+            if (IS_POST) {
+
+                if ($pmoney) {
+                    foreach ($pmoney as $k=>$v) {
+                        $pmoney[$k]['change_time'] = time_format($v['change_time']);
+                        $pmoney[$k]['user_money'] = fen_to_yuan($v['user_money']);
+                    }
+                    $this->ajaxReturn(V(1, '加载成功',$pmoney));
+                } else {
+                    $this->ajaxReturn(V(1, '加载完毕'));
+                }
+            }
+        $bonus_money = $this->user->where(array('user_id'=>UID))->getField('bonus_money');
         $this->assign('bonus_money',$bonus_money);
         $this->assign('pmoney',$pmoney);
         $this->display();

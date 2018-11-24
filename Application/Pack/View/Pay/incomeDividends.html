@@ -26,10 +26,10 @@
 
     <div class="mui-content" id="top-shop-content">
         <div id="my-fans-info" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary top-shop-choose my-fans-attention" >
-            <a class="mui-control-item mui-active my-fans" href="#item1">
+            <a data-type="0" class="mui-control-item mui-active my-fans">
                 <p>分红记录</p>
             </a>
-            <a class="mui-control-item my-attention" href="#item2">
+            <a data-type="1" class="mui-control-item my-attention">
                 <p>提现记录</p>
             </a>
         </div>
@@ -38,7 +38,7 @@
             <div id="item1" class="mui-control-content mui-active">
                 <div class="mui-scroll-content">
                     <div class="mui-scroll">
-                        <ul class="mui-table-view my-fans-view">
+                        <ul class="mui-table-view my-fans-view msg-list">
                                 <foreach name="pmoney" item="v">
                                     <li class="mui-table-view-cell my-fans-li">
                                         <a class="my-fans-item">
@@ -59,6 +59,9 @@
                                     </li>
                                 </foreach>
                         </ul>
+                        <div class="top-ups-sure">
+                            <button id="load">加载更多</button>
+                        </div>
                     </div>
                     <div class="mui-scrollbar mui-scrollbar-vertical">
                         <div class="mui-scrollbar-indicator"></div>
@@ -66,32 +69,6 @@
                 </div>
             </div>
 
-            <div id="item2" class="mui-control-content">
-                <ul class="mui-table-view my-fans-view">
-                    <foreach name="tmoney" item="v">
-                        <li class="mui-table-view-cell my-fans-li">
-                            <a class="my-fans-item">
-                                <div class="my-fans-user">
-                                    <div class="my-wallet-left">
-                                        <img src="__PUBLIC__/mobile/images/my_wallet_icon_in.png">
-                                        <div class="fans-user-info">
-                                            <p>{$v['change_desc']}</p>
-                                            <div>
-                                                <span>{:time_format($v['change_time'])}</span>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="my-cz-money">-<span>{:fen_to_yuan($v['user_money'])}</span></p>
-                                </div>
-                            </a>
-                        </li>
-                    </foreach>
-                </ul>
-                <div class="mui-scrollbar mui-scrollbar-vertical">
-                    <div class="mui-scrollbar-indicator"></div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -103,4 +80,116 @@
 </script>
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        var p = 1;
+        var type = 0;
+        $('#my-fans-info').on('tap', '.mui-control-item',function () {
+            type =  $(this).data('type');
+            p = 1;
+            var json_data = {
+                "type":type,
+                "p":p
+            };
+            $.post("{:U('Pay/incomeDividends')}/p/"+p, json_data, function (data) {
+                if (data.status == 1) {
+                    $(".msg-list").html('');
+                    if (data.data.length) {
+
+                        var html1 = '';
+                        for (var i=0; i < data.data.length; i++) {
+                            html1 += '<li class="mui-table-view-cell my-fans-li">'+
+                                        '<a class="my-fans-item">'+
+                                            '<div class="my-fans-user">'+
+                                                '<div class="my-wallet-left">';
+                                                    if (type == 0) {
+                                                        html1 +='<img src="__PUBLIC__/mobile/images/my_wallet_icon_in.png">';
+                                                    } else {
+                                                        html1 +='<img src="__PUBLIC__/mobile/images/my_wallet_icon_out.png">';
+                                                    }
+
+                                                    html1 +='<div class="fans-user-info">'+
+                                                            '<p>'+data.data[i].change_desc+'</p>'+
+                                                                '<div>'+
+                                                                    '<span>'+data.data[i].change_time+'</span>'+
+                                                                '</div>'+
+                                                            '</div>'+
+                                                    '</div>'+
+                                                '<p class="my-cz-money">';
+                                                    if (type == 0) {
+                                                        html1 +=' +';
+                                                    }else {
+                                                        html1 +=' -';
+                                                    }
+
+                                                    html1+='<span>'+data.data[i].user_money+'</span></p>'+
+                                            '</div>'+
+                                        '</a>'+
+                                    '</li>';
+                        }
+
+                        $(".msg-list").append(html1);
+                    } else {
+                        mui.toast('没有更多了');
+                        $(window).off('scroll');
+                    }
+                }
+
+            })
+
+        });
+
+        //加载更多
+        $('#load').on('click', function () {
+            p++;
+            var json_data = {
+                "type":type,
+                "p":p
+            };
+            $.post("{:U('Pay/incomeDividends')}/p/"+p, json_data, function (data) {
+                if (data.status == 1) {
+
+                    if (data.data.length) {
+
+                        var html1 = '';
+                        for (var i=0; i < data.data.length; i++) {
+                            html1 += '<li class="mui-table-view-cell my-fans-li">'+
+                                '<a class="my-fans-item">'+
+                                '<div class="my-fans-user">'+
+                                '<div class="my-wallet-left">';
+                            if (type == 0) {
+                                html1 +='<img src="__PUBLIC__/mobile/images/my_wallet_icon_in.png">';
+                            } else {
+                                html1 +='<img src="__PUBLIC__/mobile/images/my_wallet_icon_out.png">';
+                            }
+
+                            html1 +='<div class="fans-user-info">'+
+                                '<p>'+data.data[i].change_desc+'</p>'+
+                                '<div>'+
+                                '<span>'+data.data[i].change_time+'</span>'+
+                                '</div>'+
+                                '</div>'+
+                                '</div>'+
+                                '<p class="my-cz-money">';
+                            if (type == 0) {
+                                html1 +=' +';
+                            }else {
+                                html1 +=' -';
+                            }
+
+                            html1+='<span>'+data.data[i].user_money+'</span></p>'+
+                                '</div>'+
+                                '</a>'+
+                                '</li>';
+                        }
+
+                        $(".msg-list").append(html1);
+                    } else {
+                        mui.toast('没有更多了');
+
+                    }
+                }
+            })
+        })
+
+    </script>
 </html>
