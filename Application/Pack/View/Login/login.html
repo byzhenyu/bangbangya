@@ -94,12 +94,9 @@
     }
     //js登录
 
-     function getWechatLoginInfo(open_id, nick_name, head_pic) {
-        var json_data = {
-            'open_id':open_id,
-            'nick_name':nick_name,
-            'head_pic':head_pic
-        }
+     function getWechatLoginInfo(json_data) {
+         var json_data = JSON.parse(json_data);
+         console.log(json_data);
          $.post('Login/thirdLogin', json_data,function (data) {
 
              if (data.status == 1) {
