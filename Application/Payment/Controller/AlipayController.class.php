@@ -16,8 +16,10 @@ class AlipayController extends CommonController {
         $order_sn = makeOrderSn($data['user_id']);
         if($type == 0){
             $data['order_sn'] = 'T'.$order_sn;
+            $data['recharge_type'] = 0;
         }else{
             $data['order_sn'] = 'B'.$order_sn;
+            $data['recharge_type'] = 1;
         }
         M('recharge')->add($data);
         $data['body'] = C('APP_NAME').'网页充值';
@@ -41,8 +43,10 @@ class AlipayController extends CommonController {
         $order_sn = makeOrderSn($data['user_id']);
         if($type == 0){
             $data['order_sn'] = 'T'.$order_sn;
+            $data['recharge_type'] = 0;
         }else{
             $data['order_sn'] = 'B'.$order_sn;
+            $data['recharge_type'] = 1;
         }
         M('recharge')->add($data);
         $data['body'] = C('APP_NAME').'H5充值';
@@ -64,8 +68,10 @@ class AlipayController extends CommonController {
         $order_sn = makeOrderSn($data['user_id']);
         if ($type == 0) {
             $data['order_sn'] = 'T'.$order_sn;
+            $data['recharge_type'] = 0;
         } else {
             $data['order_sn'] = 'B'.$order_sn;
+            $data['recharge_type'] = 1;
         }
 
         M('recharge')->add($data);
