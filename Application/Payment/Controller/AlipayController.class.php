@@ -85,7 +85,7 @@ class AlipayController extends CommonController {
         $alipay = new \AliPay();
         $result = $alipay->AliPayApp($data);
      
-        return $result;
+        $this->ajaxReturn(V(1, '成功', $result));
     }
     // 定单支付回调
     public function alipayNotify() {
