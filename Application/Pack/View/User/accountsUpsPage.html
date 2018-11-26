@@ -55,9 +55,10 @@
             mui.confirm('是否缴纳'+money+'元的保证金', '提示', '', function(e) {
                 if (e.index == 1) {
                     var json_data = {
-                        'shop_accounts': money * 100
+                        'shop_accounts': money * 100,
+                        'type':1
                     }
-                    $.post("{:U('User/accountsUpsPage')}", {'shop_accounts': money*100}, function(data){
+                    $.post("{:U('Payment/Alipay/mobileWebPay')}", json_data, function(data){
                         mui.toast(data['info']);
                         if(data['status'] == 1){
                             setTimeout(function(){
