@@ -95,9 +95,6 @@
     //js登录
 
      function getWechatLoginInfo(json_data) {
-        alert(json_data);
-         alert(JSON.parse(json_data));
-         var json_data = JSON.parse(json_data);
 
          $.post('Login/thirdLogin', json_data,function (data) {
 
