@@ -1056,7 +1056,7 @@ function getAccount($where = [], $field = null ,$sort = 'change_time DESC'){
          $field = 'user_money, change_time, change_desc, change_type, order_sn';
      }
      $count = M('AccountLog')->where($where)->order($sort)->count();
-     $page = get_page($count, 5);
+     $page = get_page($count, 15);
      $result = M('AccountLog')->where($where)->order($sort)->limit($page['limit'])->select();
      return $result;
 }
