@@ -33,7 +33,7 @@ class AlipayController extends CommonController {
     //移动web支付 示例
     public function mobileWebPay() {
         $type =  I('type', 0, 'intval');
-        $data['user_id'] = UID;
+        $data['user_id'] = 1;
         $recharge_money = I('recharge_money',0 , 'intval');
         $type = 1;
         $recharge_money = 1000;
