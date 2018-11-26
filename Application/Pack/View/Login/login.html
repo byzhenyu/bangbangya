@@ -39,7 +39,7 @@
 
     <div class="login-index-agree">
         <label class="login-index-check">
-            <input checked="checked" class="check-login" name="user_agreement" type="checkbox">
+            <input id="check-agree" checked="checked" class="check-login" name="user_agreement" type="checkbox">
             <i></i>
             <a href="{:U('Article/articleDetail',array('category_id'=>4))}"><span>同意《帮帮鸭用户协议》</span></a>
         </label>
@@ -58,7 +58,11 @@
     mui.init();
 
     function dologin() {
-
+        var agree = $(this).attr('checked');
+        if (!agree) {
+            mui.toast('请勾选协议');
+            return false;
+        }
         if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
             setupWebViewJavascriptBridge(function (bridge) {
 
