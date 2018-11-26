@@ -96,7 +96,7 @@
 
      function getWechatLoginInfo(json_data) {
         alert(JSON.stringify(json_data));
-         $.post('Login/thirdLogin', json_data,function (data) {
+         $.post('Login/thirdLogin', JSON.stringify(json_data),function (data) {
 
              if (data.status == 1) {
                  if (/(Android)/i.test(navigator.userAgent)) {
