@@ -35,6 +35,8 @@ class AlipayController extends CommonController {
         $type =  I('type', 0, 'intval');
         $data['user_id'] = UID;
         $recharge_money = I('recharge_money',0 , 'intval');
+        $type = 1;
+        $recharge_money = 1000;
         $data['recharge_money'] = $recharge_money;
         $order_sn = makeOrderSn($data['user_id']);
         if($type == 0){
@@ -61,10 +63,10 @@ class AlipayController extends CommonController {
         $order_sn = makeOrderSn($data['user_id']);
         if($type == 0){
             $data['order_sn'] = 'T'.$order_sn;
-        }else{
+        } else {
             $data['order_sn'] = 'B'.$order_sn;
         }
-        p($data);die();
+
         M('recharge')->add($data);
         $data['body'] = C('APP_NAME').'充值';
         $data['subject'] = C('APP_NAME').'充值';
