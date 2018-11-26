@@ -273,8 +273,10 @@
                 $.post("{:U('Login/logOut')}" , {}, function (data) {
                     mui.toast(data['info']);
                     if(data['status'] == 1){
+
                         setTimeout(function(){
                             window.location.href = "{:U('Login/login')}";
+                            window.AndroidJS.Logout();
                         }, 1500);
                     }
                 })
