@@ -37,8 +37,7 @@ class AlipayController extends CommonController {
         $type =  I('type', 0, 'intval');
         $data['user_id'] = 1;
         $recharge_money = I('recharge_money',0 , 'intval');
-        $type = 1;
-        $recharge_money = 1000;
+
         $data['recharge_money'] = $recharge_money;
         $order_sn = makeOrderSn($data['user_id']);
         if($type == 0){
@@ -56,10 +55,9 @@ class AlipayController extends CommonController {
 
         require_once("./Plugins/AliPay/AliPay.php");
         $alipay =new \AliPay();
-        $result =$alipay->AliPayMobileWeb($data);
-        p($result);
-        exit;
-        return $result;
+        echo '页面跳转中, 请稍后...';
+        echo $alipay->AliPayMobileWeb($data);
+
     }
     //原生支付
     public function appPay() {
