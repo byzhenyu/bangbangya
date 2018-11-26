@@ -21,6 +21,7 @@ class AlipayController extends CommonController {
             $data['order_sn'] = 'B'.$order_sn;
             $data['recharge_type'] = 1;
         }
+        $data['add_time'] = NOW_TIME;
         M('recharge')->add($data);
         $data['body'] = C('APP_NAME').'网页充值';
         $data['subject'] = C('APP_NAME').'网页充值';
@@ -48,6 +49,7 @@ class AlipayController extends CommonController {
             $data['order_sn'] = 'B'.$order_sn;
             $data['recharge_type'] = 1;
         }
+        $data['add_time'] = NOW_TIME;
         M('recharge')->add($data);
         $data['body'] = C('APP_NAME').'H5充值';
         $data['subject'] = C('APP_NAME').'H5充值';
@@ -73,7 +75,7 @@ class AlipayController extends CommonController {
             $data['order_sn'] = 'B'.$order_sn;
             $data['recharge_type'] = 1;
         }
-
+        $data['add_time'] = NOW_TIME;
         M('recharge')->add($data);
         $data['body'] = C('APP_NAME').'充值';
         $data['subject'] = C('APP_NAME').'充值';
