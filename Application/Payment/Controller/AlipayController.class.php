@@ -82,8 +82,7 @@ class AlipayController extends CommonController {
         require_once("./Plugins/AliPay/AliPay.php");
         $alipay = new \AliPay();
         $result = $alipay->AliPayApp($data);
-        p($result);
-        exit;
+     
         return $result;
     }
     // 定单支付回调
