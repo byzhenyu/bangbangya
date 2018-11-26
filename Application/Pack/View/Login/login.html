@@ -92,7 +92,27 @@
         document.documentElement.appendChild(WVJBIframe);
         setTimeout(function () { document.documentElement.removeChild(WVJBIframe) }, 0)
     }
+    //js登录
 
+     function getWechatLoginInfo(open_id, nick_name, head_pic) {
+        var json_data = {
+            'open_id':open_id,
+            'nick_name':nick_name,
+            'head_pic':head_pic
+        }
+         $.post('Login/thirdLogin', json_data,function (data) {
+
+             if (data.status == 1) {
+                 if (/(Android)/i.test(navigator.userAgent)) {
+                     window.AndroidJS.sendUserId(data.data);
+                 } else if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+
+                 }
+
+             }
+
+         })
+     }
     function reloadPage() {
         alert(111);
         window.location.href = "{:U('User/personalCenter')}";
