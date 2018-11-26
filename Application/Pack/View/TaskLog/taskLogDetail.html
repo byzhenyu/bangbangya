@@ -219,8 +219,9 @@
         var img = $(this).attr('src');
 
         if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+            alert(0);
             setupWebViewJavascriptBridge(function (bridge) {
-
+                alert(1);
                 bridge.callHandler('showShare', {"img":img}, function responseCallback(responseData) {
 
                 })
