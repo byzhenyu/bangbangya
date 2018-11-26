@@ -26,9 +26,9 @@ class PayController  extends CommonController{
         $data['recharge_money'] = I('recharge_money',0 , 'intval');
         $data['order_sn'] = makeOrderSn($data['user_id']);
         $result = M('recharge')->add($data);
-        $p =  $this->mobileWebPay();
-        p($p);
-        die;
+//        $p =  $this->mobileWebPay();
+//        p($p);
+//        die;
         /*支付宝回调用*/
         $userModel = D('Home/User');
         account_log($data['user_id'],$data['recharge_money'],0,'充值',$data['order_sn']);
