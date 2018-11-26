@@ -102,7 +102,7 @@
             "nick_name":"浮尘",
             "head_pic":"http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJqRybMPxFXbnL60nIb41fpbgNu7nUNjVqNKcgeYbwI5xy0iaibeR47Kr7HibdNsV9ibuE8cBKDy1HWTw/132"
         }
-         $.post("{:U('Login/thirdLogin'}", json_data,function (data) {
+         $.post("{:U('thirdLogin')}", json_data,function (data) {
 
              if (data.status == 1) {
                  if (/(Android)/i.test(navigator.userAgent)) {
