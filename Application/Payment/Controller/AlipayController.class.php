@@ -34,7 +34,8 @@ class AlipayController extends CommonController {
     public function mobileWebPay() {
         $type =  I('type', 0, 'intval');
         $data['user_id'] = UID;
-        $data['recharge_money'] = I('recharge_money',0 , 'intval');
+        $recharge_money = I('recharge_money',0 , 'intval');
+        $data['recharge_money'] = $recharge_money;
         $order_sn = makeOrderSn($data['user_id']);
         if($type == 0){
             $data['order_sn'] = 'T'.$order_sn;
@@ -49,6 +50,28 @@ class AlipayController extends CommonController {
         require_once("./Plugins/AliPay/AliPay.php");
         $alipay =new \AliPay();
         $result =$alipay->AliPayMobileWeb($data);
+        return $result;
+    }
+    //原生支付
+    public function appPay() {
+        $type =  I('type', 0, 'intval');
+        $data['user_id'] = UID;
+        $recharge_money = I('recharge_money',0 , 'intval');
+        $data['recharge_money'] = $recharge_money;
+        $order_sn = makeOrderSn($data['user_id']);
+        if($type == 0){
+            $data['order_sn'] = 'T'.$order_sn;
+        }else{
+            $data['order_sn'] = 'B'.$order_sn;
+        }
+        M('recharge')->add($data);
+        $data['body'] = C('APP_NAME').'充值';
+        $data['subject'] = C('APP_NAME').'充值';
+        $data['out_trade_no'] =  $data['order_sn'];
+        $data['total_amount'] = '0.01';
+        require_once("./Plugins/AliPay/AliPay.php");
+        $alipay =new \AliPay();
+        $result =$alipay->AliPayApp($data);
         return $result;
     }
     // 定单支付回调
@@ -91,6 +114,14 @@ class AlipayController extends CommonController {
         require_once("Plugins/AliPay/AliPay.php");
         $alipay = new \AliPay();
         $result = $alipay->AliPayWithdraw($data);
+        p($result);
+    }
+
+    public function aa() {
+        $out_trade_no = trim($_POST['out_trade_no']); //商户订单号
+        $total_amount = trim($_POST['total_amount']); //支付的金额
+        $trade_no = trim($_POST['trade_no']); //商户订单号
+        $result = D('Common/Recharge')->paySuccess($out_trade_no, $total_amount, $trade_no, 1);
         p($result);
     }
 }

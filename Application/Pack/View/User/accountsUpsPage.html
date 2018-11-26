@@ -58,14 +58,11 @@
                         'recharge_money': money,
                         'type':1
                     }
-                    $.post("{:U('Payment/Alipay/mobileWebPay')}", json_data, function(data){
-                        mui.toast(data['info']);
-                        if(data['status'] == 1){
-                            setTimeout(function(){
-                                window.location.href("{:U('User/securityDeposit')}");
-                            }, 1000);
-                        }else if(data['status'] == 2){
-                            mui.alert('余额不足,请充值余额缴纳保证金!');
+                    $.post("{:U('Payment/Alipay/appPay')}", json_data, function(data){
+                        if (/(Android)/i.test(navigator.userAgent)) {
+                            window.AndroidJS.alipay(data);
+                        } else if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+
                         }
                     });
                 }else{

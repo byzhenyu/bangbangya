@@ -273,11 +273,17 @@
                 $.post("{:U('Login/logOut')}" , {}, function (data) {
                     mui.toast(data['info']);
                     if(data['status'] == 1){
-
-                        setTimeout(function(){
-                            window.location.href = "{:U('Login/login')}";
+                        if (/(Android)/i.test(navigator.userAgent)) {
                             window.AndroidJS.Logout();
-                        }, 1500);
+                        } else if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+
+                        } else {
+                            setTimeout(function(){
+                                window.location.href = "{:U('Login/login')}";
+
+                            }, 1500);
+                        }
+
                     }
                 })
 
