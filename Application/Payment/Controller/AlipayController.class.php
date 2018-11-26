@@ -67,7 +67,7 @@ class AlipayController extends CommonController {
                 $trade_no = trim($_POST['trade_no']); //商户订单号
                 LL($total_amount,'./log/log1.txt');
                 //成功后的业务逻辑处理
-                $result = D('Common/Recharge')->paySuccess($out_trade_no, $total_amout, $trade_no, 1);
+                $result = D('Common/Recharge')->paySuccess($out_trade_no, $total_amount, $trade_no, 1);
                 if ($result['status'] == 1) {
                     echo "success"; //  告诉支付宝支付成功 请不要修改或删除
                     die;
