@@ -49,8 +49,7 @@ class AlipayController extends CommonController {
         $data['subject'] = C('APP_NAME').'H5充值';
         $data['out_trade_no'] =  $data['order_sn'];
         $data['total_amount'] = '0.01';
-        p($data);
-        exit;
+
         require_once("./Plugins/AliPay/AliPay.php");
         $alipay =new \AliPay();
         $result =$alipay->AliPayMobileWeb($data);
@@ -63,7 +62,7 @@ class AlipayController extends CommonController {
         $recharge_money = I('recharge_money',0 , 'intval');
         $data['recharge_money'] = $recharge_money;
         $order_sn = makeOrderSn($data['user_id']);
-        if($type == 0){
+        if ($type == 0) {
             $data['order_sn'] = 'T'.$order_sn;
         } else {
             $data['order_sn'] = 'B'.$order_sn;
