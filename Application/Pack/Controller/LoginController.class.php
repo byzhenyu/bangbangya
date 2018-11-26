@@ -132,7 +132,7 @@ class LoginController extends CommonController {
             session('user_auth', $user);
             define(UID, session('user_auth')['user_id']);
 
-            $this->ajaxReturn(V(1, '登录成功', session('user_auth')));
+            $this->ajaxReturn(V(1, '登录成功', $user['user_id']));
         }
 
     }
