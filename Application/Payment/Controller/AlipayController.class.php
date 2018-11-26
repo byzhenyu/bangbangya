@@ -64,6 +64,7 @@ class AlipayController extends CommonController {
         }else{
             $data['order_sn'] = 'B'.$order_sn;
         }
+        p($data);die();
         M('recharge')->add($data);
         $data['body'] = C('APP_NAME').'充值';
         $data['subject'] = C('APP_NAME').'充值';
