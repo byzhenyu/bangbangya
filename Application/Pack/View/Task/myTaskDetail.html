@@ -90,7 +90,9 @@
             <span>{$v['step_text']}</span>
         </div>
         <div class="task-bottom-qr">
-            <img src="{$v['step_img']}">
+            <if condition="$v['step_img'] neq ''">
+                <img src="{$v['step_img']}">
+            </if>
 
         </div>
     </volist>
