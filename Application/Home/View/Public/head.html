@@ -19,7 +19,7 @@
             <img  src="__PUBLIC__/pc/images/logo.png" />
         </a>
         <if condition="empty(session('user_auth'))">
-            <if condition="(ACTION_NAME neq 'articleDetail')">
+            <if condition="(ACTION_NAME not in ['articleDetail','userAgreement'])">
                 <button class="login fr">登录</button>
             </if>
 
