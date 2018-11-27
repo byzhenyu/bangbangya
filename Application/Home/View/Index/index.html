@@ -55,22 +55,22 @@
             </div>
         </div>
         <div class="item-wapper cf">
-            <a href="{:U('Task/listTask')}" class="item-box fl">
+            <a data-url ="{:U('Task/listTask')}" class="item-box fl">
                 <img src="__PUBLIC__/pc/images/item-i1.png" />
                 <h1>接单赚钱</h1>
                 <p>投票、关注、浏览也可以赚钱</p>
             </a>
-            <a href="{:U('Task/addTask')}" class="item-box fl">
+            <a data-url ="{:U('Task/addTask')}" class="item-box fl">
                 <img src="__PUBLIC__/pc/images/item-i2.png" />
                 <h1>发布任务</h1>
                 <p>要投票？要粉丝？还是品牌推广？</p>
             </a>
-            <a href="{:U('User/friendQequest')}" class="item-box fl">
+            <a data-url ="{:U('User/friendQequest')}" class="item-box fl">
                 <img src="__PUBLIC__/pc/images/item-i3.png" />
                 <h1>好友邀请</h1>
                 <p>推荐好友返利多多</p>
             </a>
-            <a href="{:U('TaskLog/getTaskLog')}" class="item-box fl">
+            <a data-url ="{:U('TaskLog/getTaskLog')}" class="item-box fl">
                 <img src="__PUBLIC__/pc/images/item-i4.png" />
                 <h1>我的任务</h1>
                 <p>已接单的任务在这里</p>
@@ -140,6 +140,14 @@
         if(login == 1){
             mui.toast('登录成功');
         }
+        $('.item-wapper').on('click', 'a', function () {
+            if (login != 1) {
+                mui.toast('请登录');
+                return false;
+            }
+            var urls = $(this).data('url');
+            window.location.href = urls;
+        })
         $('#upload').fileupload({
             url: "{:U('User/uploadImg')}",
             dataType: 'json',
