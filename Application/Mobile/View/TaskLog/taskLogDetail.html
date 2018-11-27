@@ -167,11 +167,11 @@
     })
     //上传验证
     $(".fix-content").on('tap', '.up-task', function () {
-        window.location.href = "{:U('TaskLog/taskVerify', array('id'=>$taskDetail['task_log_id']))}";
+        window.location.href = "{:U('TaskLog/taskVerify', array('id'=>$taskDetail['id']))}";
     })
     //放弃任务
     $(".fix-content").on('tap', '.re-task', function () {
-        window.location.href = "{:U('TaskLog/delTaskLog', array('id'=>$taskDetail['task_log_id']))}";
+        window.location.href = "{:U('TaskLog/delTaskLog', array('id'=>$taskDetail['id']))}";
     })
 
     $("#grap-order-btn").on('tap', function () {
