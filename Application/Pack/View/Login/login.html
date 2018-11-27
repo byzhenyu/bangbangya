@@ -59,10 +59,10 @@
 
     function dologin() {
         var agree = $(this).attr('checked');
-        if (!agree) {
-            mui.toast('请勾选用户协议');
-            return false;
-        }
+//        if (!agree) {
+//            mui.toast('请勾选用户协议');
+//            return false;
+//        }
         if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
             setupWebViewJavascriptBridge(function (bridge) {
 
