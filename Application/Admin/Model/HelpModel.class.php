@@ -31,7 +31,7 @@ class HelpModel extends Model {
      * @param $sort string 排序顺序
      * @return mixed
      */
-    public function getHelpList($where, $field = false, $sort = 'sort asc , add_time desc')
+    public function getHelpList($where, $field = false, $sort = 'sort asc, id desc')
     {
         if(is_null($field)){
             $field = $this->selectFields;
