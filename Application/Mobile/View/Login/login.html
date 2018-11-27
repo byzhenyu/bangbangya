@@ -66,6 +66,11 @@
         href: ""
     });
     function dologin(){
+        var agree = $(this).attr('checked');
+        if (!agree) {
+            mui.toast('请勾选用户协议');
+            return false;
+        }
         $('#login_container').css('display', 'block');
     }
 

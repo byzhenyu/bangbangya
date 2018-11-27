@@ -16,9 +16,12 @@ class AlipayController extends CommonController {
         $order_sn = makeOrderSn($data['user_id']);
         if($type == 0){
             $data['order_sn'] = 'T'.$order_sn;
+            $data['recharge_type'] = 0;
         }else{
             $data['order_sn'] = 'B'.$order_sn;
+            $data['recharge_type'] = 1;
         }
+        $data['add_time'] = NOW_TIME;
         M('recharge')->add($data);
         $data['body'] = C('APP_NAME').'网页充值';
         $data['subject'] = C('APP_NAME').'网页充值';
@@ -33,23 +36,56 @@ class AlipayController extends CommonController {
     //移动web支付 示例
     public function mobileWebPay() {
         $type =  I('type', 0, 'intval');
-        $data['user_id'] = UID;
-        $data['recharge_money'] = I('recharge_money',0 , 'intval');
+        $data['user_id'] = 1;
+        $recharge_money = I('recharge_money',0 , 'intval');
+
+        $data['recharge_money'] = $recharge_money;
         $order_sn = makeOrderSn($data['user_id']);
         if($type == 0){
             $data['order_sn'] = 'T'.$order_sn;
+            $data['recharge_type'] = 0;
         }else{
             $data['order_sn'] = 'B'.$order_sn;
+            $data['recharge_type'] = 1;
         }
+        $data['add_time'] = NOW_TIME;
         M('recharge')->add($data);
         $data['body'] = C('APP_NAME').'H5充值';
         $data['subject'] = C('APP_NAME').'H5充值';
         $data['out_trade_no'] =  $data['order_sn'];
         $data['total_amount'] = '0.01';
+
         require_once("./Plugins/AliPay/AliPay.php");
         $alipay =new \AliPay();
-        $result =$alipay->AliPayMobileWeb($data);
-        return $result;
+        echo '页面跳转中, 请稍后...';
+        echo $alipay->AliPayMobileWeb($data);
+
+    }
+    //原生支付
+    public function appPay() {
+        $type =  I('type', 0, 'intval');
+        $data['user_id'] = UID;
+        $recharge_money = I('recharge_money',0 , 'intval');
+        $data['recharge_money'] = $recharge_money;
+        $order_sn = makeOrderSn($data['user_id']);
+        if ($type == 0) {
+            $data['order_sn'] = 'T'.$order_sn;
+            $data['recharge_type'] = 0;
+        } else {
+            $data['order_sn'] = 'B'.$order_sn;
+            $data['recharge_type'] = 1;
+        }
+        $data['add_time'] = NOW_TIME;
+        M('recharge')->add($data);
+        $data['body'] = C('APP_NAME').'充值';
+        $data['subject'] = C('APP_NAME').'充值';
+        $data['out_trade_no'] =  $data['order_sn'];
+        $data['total_amount'] = '0.01';
+        require_once("./Plugins/AliPay/AliPay.php");
+        $alipay = new \AliPay();
+        $result = $alipay->AliPayApp($data);
+     
+        $this->ajaxReturn(V(1, '成功', $result));
     }
     // 定单支付回调
     public function alipayNotify() {
@@ -91,6 +127,14 @@ class AlipayController extends CommonController {
         require_once("Plugins/AliPay/AliPay.php");
         $alipay = new \AliPay();
         $result = $alipay->AliPayWithdraw($data);
+        p($result);
+    }
+
+    public function aa() {
+        $out_trade_no = trim($_POST['out_trade_no']); //商户订单号
+        $total_amount = trim($_POST['total_amount']); //支付的金额
+        $trade_no = trim($_POST['trade_no']); //商户订单号
+        $result = D('Common/Recharge')->paySuccess($out_trade_no, $total_amount, $trade_no, 1);
         p($result);
     }
 }

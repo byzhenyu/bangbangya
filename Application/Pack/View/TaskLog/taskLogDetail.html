@@ -217,14 +217,31 @@
 
     $('.task-details-bottom').on('tap', 'img', function () {
         var img = $(this).attr('src');
+
         if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
 
+            setupWebViewJavascriptBridge(function (bridge) {
+
+                bridge.callHandler('showShare', {"img":img}, function responseCallback(responseData) {
+
+                })
+            })
 
         } else if (/(Android)/i.test(navigator.userAgent)) {
 
-            window.Android.showShare(img);
+            window.AndroidJS.showShare(img);
 
         }
     });
+    function setupWebViewJavascriptBridge(callback) {
+        if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+        if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+        window.WVJBCallbacks = [callback];
+        var WVJBIframe = document.createElement('iframe');
+        WVJBIframe.style.display = 'none';
+        WVJBIframe.src = 'https://__bridge_loaded__';
+        document.documentElement.appendChild(WVJBIframe);
+        setTimeout(function () { document.documentElement.removeChild(WVJBIframe) }, 0)
+    }
 </script>
 </html>

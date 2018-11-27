@@ -39,7 +39,7 @@
 
     <div class="login-index-agree">
         <label class="login-index-check">
-            <input checked="checked" class="check-login" name="user_agreement" type="checkbox">
+            <input id="check-agree" checked="checked" class="check-login" name="user_agreement" type="checkbox">
             <i></i>
             <a href="{:U('Article/articleDetail',array('category_id'=>4))}"><span>同意《帮帮鸭用户协议》</span></a>
         </label>
@@ -58,21 +58,21 @@
     mui.init();
 
     function dologin() {
+        var agree = $(this).attr('checked');
+        if (!agree) {
+            mui.toast('请勾选用户协议');
+            return false;
+        }
         if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
             setupWebViewJavascriptBridge(function (bridge) {
 
                 /* Initialize your app here */
 
-                bridge.registerHandler('JS Echo', function (data, responseCallback) {
-                    console.log("JS Echo called with:", data)
+                bridge.registerHandler('Refresh Login Page', function (data, responseCallback) {
                     window.location.reload();
                     responseCallback(data)
                 })
-                bridge.callHandler('ObjC Echo', { 'key': 'value' }, function responseCallback(responseData) {
-                    console.log("JS received response:", responseData)
-                })
                 bridge.callHandler('WeChat Login', null, function responseCallback(responseData) {
-                    console.log("JS received response:", responseData)
                 })
             })
         } else if (/(Android)/i.test(navigator.userAgent)) {
@@ -92,10 +92,26 @@
         document.documentElement.appendChild(WVJBIframe);
         setTimeout(function () { document.documentElement.removeChild(WVJBIframe) }, 0)
     }
+    //js登录
+
+     function getWechatLoginInfo(json_data) {
+         $.post("{:U('thirdLogin')}", json_data,function (data) {
+
+             if (data.status == 1) {
+                 if (/(Android)/i.test(navigator.userAgent)) {
+                     window.AndroidJS.sendUserId(data.data);
+                 } else if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+
+                 }
+
+             }
+
+         })
+     }
 
     function reloadPage() {
-        alert(111);
-        window.location.href = "{:U('User/personalCenter')}";
+
+        window.location.reload();
     }
 </script>
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>

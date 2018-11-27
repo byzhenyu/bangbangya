@@ -66,7 +66,7 @@ class ShopController extends CommonController {
             }
         }
         $topPriceInfo = C('TOP_CONF'); //店铺置顶费用
-        p($topPriceInfo);
+        // p($topPriceInfo);
         $this->assign('topPriceInfo', $topPriceInfo);
         $this->assign('total_money', $total_money);
         $this->display();

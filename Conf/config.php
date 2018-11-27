@@ -90,18 +90,21 @@
         /* 支付宝支付相关配置 */
         'AliPay' => array(
             /*应用ID，在支付宝上获取*/
-            'appId'    => '2018110962095545',
+            'appId'    => '2018112262292235',
             /*签名方式*/
             'signType'    => 'RSA2',
             /*应用密钥，与应用公钥一组，公钥填写到支付宝上*/
-            'rsaPrivateKey'    => 'MIIEowIBAAKCAQEA0i8SEOUmH+NhG1L5lQNlJUnPlzGNY2ZizfUvnfyVjDLCtKboIZL1EtZ/xyHEMaXV+X+69rMAgzDS9JQJ1SYBlzn/6FWmGb38Bbr0zbSfBsZ14RY2C/O/hJ/YlEhGLQ5DWRbDF4dFezbEQEbRhRmnYxP/Rkz6JRKrDDcee1ilA9bu1GpcVP+7fHE/PgBQ5b7FahF2u3HMIxMxWnxlDWT2FqfARAi2oQwQNH3rPsRaNzZlEYYjToucrJmAbtY1q/NZovA69wKraNNdNKp3W/mhBj30qrV4izFfIGjAq8+jCyzcspedJ5oF5ba2YhKiQggsTZ7M3nPCO0nV7B5gnFleWQIDAQABAoIBAApctbhNg86oqB3vvkxBaZgoBmr+z2iqII7k2p8gV8McsYq0e9dD5n8yQgRwPrrv4Re222HUO188ZfoW3lE62XM6McqjhlfYjPc/W1hU4k40NJWPQcTfFH8WXlgZJBSOknVu8NlVGvDTJ2O/2g6E0ELLNpehredr/zDP+tm76g7BUA9Gp7NdHgBq7TI6prJmm43ag0/0EWybWam/e7VRj8+IWQlrZPypxnOdMY6uew0ENlnyr/CIG77TiQ6/aE+vYK2R6FVKQlFZ5Mhao5UFUcCGh7yC5L5UoQaNuK/oXg5tiruHRUAzFxle2D3nrdez6tDywz/S6Bii3oCdWVCaTM0CgYEA6tEAi4BnQ01C2IiHcvE4MTbYiX+PnZSkUsnN3dHhK3Zz372s6Cz87EXKWpEzZgtGRUrr6k6zntn+uWE3stn1xDBCk76yvMMxHQuwk4OvLkVcafWx9XKj2GgopGGsv0fbjSHGAzxOM7E438vGy/EzHS/E9tn32TZ4tW1en1exGx8CgYEA5SUwX8OnfqOUUyBKIDB7A7kKZ3Pe50XfwRU53KkmruMP8IxYmt5UJIkTBtLNbemZfnIjOXUamqD7m9leP7P8ch1McVOFcfdOQO7JPxGBIvqKNPlrrrw3sHXz8vWrkYkxXg9GAt1nSoXJ2lSys2xYTlrQZEXCWqyiSiIPEnw6z4cCgYAH2pW6FMFfbuYdd/OP1KGcg8kaUDnte1tDqZxJHwv4+C1H/oAaA+cxv+PUw6aEczwWdTsOyzMWzRPH/4htYvzlYvfXGTnBNoYeApYVWQIy+f7tTFp3ay4vvswdM2cjvrOJNOf6k7nJ4NOWKKqth5O+FirwVroDed7vsojHq5cw4QKBgAGQGl9c10Se2wEiJD9J9VzWI0MHYErViCwp9+YQZUomFFLAsk4EHDDPmoieYXZRdJGPN7xJly/czzqF5gWrNZqVppLTTgKz/B2nQ0oh1W6mpNCtrtVXRU33z/0lPdFVTTfmBMU6O10fwnuxvjJJF+UY63jznNq/eK/mwZGPtVr7AoGBAMi18Ch5H6RUHQJAAiFQBlOF2esyqE90LWczVuXd2LccbRxh7CF4vrpW+l55NcYl5CkS+3uhT3OdIPRsZ+6LopICMd+5Na2p7lIhC/nYMSAbRC8q27dPiyVLGEUFJyyEFSJsmjMcSpYlP14PxecsxhZ11kbq56JsV4QQlk3pj+vj',
+            'rsaPrivateKey'    => 'MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC6kNM+1XoEzDn2fYB1/dYVbh/tCJVw6rSfAbSX0HrpU7akhwH6T+H4y0Gu9/UKOdzlqPi9BJFhNsmWVNk0mXsIBk40KGd+fUvrJDeohhERTNneCjJzmtQjxbWnCSuv+Bw+OCNFZzoL8HbqrJNX6gggE6veVyY9JSTI6fm4mA2Llyi6Oq+papvr2R6CtmwTiCB8W7bIy03eWgyLC5eZ/nj35WDvvPMBVAq3nSsof0cr/MEDc4USjMy0dZtsjJXbRBnXVNXMtzLGCHfsIcSQxrruwKbrveCk2U1unPYGEtmLemphG6Rgv9t6ChARTo8ts2lQLMiF4DZj+lMP4FO7w3AhAgMBAAECggEAGqJKRhIb1UuCitnn2PBf+7c4/5HWI8Sd/IU1zuaIZX75+Ar+EUoOLIJ34g6sAMW5719sAy//wS0dIkUCrSusEL01tOR/weMJT4xgFcLt9NZP1A8InNBhsKmtASeiAQEepxNElcfi1YmCsIXqkwZqGoo0Yw11/Aytb7FXYS7z4BV553u8TeugxTskQHnsuUxtlUr85xRmZS5ktqd84C+gXlb7FFVm66R/Vl3UAQtkmIXW1pjqS6ie1WxIIM6cXaIgqVDLSgJ/UOWRTrn5B/jl0KZ0mpfQeaxFQJa+MTm6Uokf9CEpdI788T+qCl2MYClc1Y+rtBBWat+gc789S0B48QKBgQDdd2RWZRn3NgUMjQqr44znEiZrwVaE1ZTxolcz3z8G+ccpbJ+jYswUCumPGyWMKekoK5aVYiacg+iKVORYt3om+tnRAv4Lj75dNGq+GabkO4e5szGLTDTaoGaVSHh8oUIidGX3M+iAM1ApmIhsZ7TpGqFGo+i7KqbU6EaGjLDpewKBgQDXqEBM9pvCyPv6cE2XmnF1kH/geqt4G8raolLiQsdPdmty2hzkxNqgBcLCD8ZeMrbpYqaEFeM4O6EpsENLlI/g0UbnmRRJmHDJ78Wyrxv1ha80xYGiB2lEKC3fz6oGxZHZ5QSLowiROleGihP894bYrEhhfkIOrDDs7wY8iMWUEwKBgQC2SmfUlTNiQJy3UADQq2R3boEhgOpuPD91BWMx1zhRzZcZicd8/P1uIe1NVdL6JCU+Y2J3Y2rUud7WvjmWrK9nFmPjnsrtSUwv+81A3Gx6wGVffRfyyK9YpV7K0fQa4cFGCvlDGP7vR01cb6kbUeGfXcQSGSifpuPbq7UhWvzjsQKBgCMRcAtT2rZM+nSaCHQLoEGO0syNBg8M7eqplLLISyLHzecqQqKMxERbS3VFHWu58XZ4HT3DVWSShb2CtR64NMFJJq+Ie/0Ptd+QhuRshy5go8IAD/lqHRsBMZyAZ1SckgANtrSCOWVsSElPcLqlAZ+APHDmGBXMuFP+9lOnpgFTAoGADvsji14PW0JFxRWC/J5sbodJiYSeCTvHbPN875ezoh36OyOBUixa7He58WksIT6wKkRJ9CjBInW5FJCw+/JMh4PRQQd73wl8VYKksgv9lPLsA+OL3YJHFR5New4rIT7xrRAjtcxXddHj8Ke5vdw8K6iWjhuRxAPeYNyrrP23d6Y=',
             /*支付宝公钥，在支付宝上获取*/
-            'alipayrsaPublicKey'    => 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0i8SEOUmH+NhG1L5lQNlJUnPlzGNY2ZizfUvnfyVjDLCtKboIZL1EtZ/xyHEMaXV+X+69rMAgzDS9JQJ1SYBlzn/6FWmGb38Bbr0zbSfBsZ14RY2C/O/hJ/YlEhGLQ5DWRbDF4dFezbEQEbRhRmnYxP/Rkz6JRKrDDcee1ilA9bu1GpcVP+7fHE/PgBQ5b7FahF2u3HMIxMxWnxlDWT2FqfARAi2oQwQNH3rPsRaNzZlEYYjToucrJmAbtY1q/NZovA69wKraNNdNKp3W/mhBj30qrV4izFfIGjAq8+jCyzcspedJ5oF5ba2YhKiQggsTZ7M3nPCO0nV7B5gnFleWQIDAQAB',
+            'alipayrsaPublicKey'    => 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAicQEk3C9NvoGm+nlVdswq7sJSIBp61U7YCBhqbYMrdZ2lZl8Gj3LKuFQywRjEDcEOhbLvp7tiVgh0Sy+d9KggW03DQ6Axxr9Y6T/647L4gJ604aiBFgJoFJTTHhMnSWDL61XAKkJuLM41hh0hzHRa/tjw8y/BJ9IxVf3ZavRxNlssGa6hpJZuBXDHIxfr4WkL7wOV/pBeuoFlP+BCgh1W5kLYHwM4jAKwjLPSIBuKRhDqzv9tcaaofRTFT/vGbSXIWTZxk0oechtWQXJJaZtSA1zzK/qvARpOP5qwHTTrIJ+IVHQDrLtrbmgVO1pcuwAehZYzsI/prr2SY3ZlwSLLwIDAQAB',
             /*支付宝回调地址*/
             'notifyUrl'    => 'http://bby.host5.liuniukeji.net/index.php/Payment/Alipay/alipayNotify',
             /*用于web支付返回地址*/
             'returnUrl'    => 'http://bby.host5.liuniukeji.net/index.php/Home/Pay/myWallet',
         ),
         'APP_NAME' => '帮帮鸭',
+        //极光推送 key secret
+        'USER_PUSH_APIKEY'=>'6acce159b66e2c31030ae9a6',
+        'USER_PUSH_SECRETKEY'=>'25480972b24efa1559349ebf'
 
     );

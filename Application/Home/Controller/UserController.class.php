@@ -70,7 +70,7 @@ class UserController extends UserCommonController {
      */
     public function friendQequest()
     {
-        $userInfo = $this->user->field('head_pic, nick_name, invitation_code')->find();
+        $userInfo = $this->user->where(array('user_id'=>UID))->field('head_pic, nick_name, invitation_code')->find();
         $this->assign('userInfo', $userInfo);
         $this->display();
     }
