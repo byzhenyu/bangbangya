@@ -64,7 +64,7 @@
                             <if condition="$v['is_show'] eq 0">
 
                                 <a href="{:U('addTask',array('id'=>$v['id']))}" class="btn-red">修改</a>
-                                <button class="btn-red">发布</button>
+                                <button onclick="fabu()" class="btn-red">发布</button>
 
                                 <else/>
                                 <switch name="v['audit_status']">
@@ -586,6 +586,15 @@
                             window.location.reload();
                         }
                     })
+                }
+            })
+        }
+
+        function fabu(task_id) {
+            $.post("{:U('Task/changeShowStatus')}", {'id':task_id}, function (data) {
+                mui.toast(data.info);
+                if (data.status == 1) {
+                    window.location.reload();
                 }
             })
         }
