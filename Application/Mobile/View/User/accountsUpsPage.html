@@ -52,31 +52,9 @@
             }
             mui.confirm('是否缴纳'+money+'元的保证金', '提示', '', function(e) {
                 if (e.index == 1) {
-                    mui.ajax(url + 'Mobile/User/accountsUpsPage',{
-                        data:{
-                            shop_accounts:money * 100,
-                        },
-                        dataType:'json',//服务器返回json格式数据
-                        type:'post',//HTTP请求类型
-                        timeout:10000,//超时时间设置为10秒；
-                        success:function(data){
-                            mui.toast(data['info']);
-                            // alert(JSON.stringify(data));
-                            if(data['status'] == 1){
-                                setTimeout(function(){
-                                    mui.openWindow({
-                                        url:  url + 'Mobile/User/securityDeposit'
-                                    });
-                                }, 1000);
-                            }else  if(data['status'] == 2){
-                                mui.alert('余额不足,请充值余额缴纳保证金!');
-                            }
-                        },
-                        error:function(xhr,type,errorThrown){
-                            //异常处理；
-                            console.log(type);
-                        }
-                    });
+                    var newurl = "{:U('Payment/Alipay/mobileWebPay')}/recharge_money/"+money + '/type/1';
+                    window.open(newurl);
+
                 }else{
                     mui.toast('您取消了操作');
                 }
