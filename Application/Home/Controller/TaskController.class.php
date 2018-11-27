@@ -470,10 +470,7 @@ class TaskController extends UserCommonController{
 
     public function del(){
         $id = I('id', 0 , 'intval');
-        $taskDel = M('Task')->where(array('id'=>$id))->save(array('status' => 0));
-        if ($taskDel !== false) {
-            $this->ajaxReturn(V(1, '删除成功'));
-        }
-        $this->ajaxReturn(V(0, '删除失败'));
+        $info = D('Home/Task')->delTask($id);
+        $this->ajaxReturn($info);
     }
 }

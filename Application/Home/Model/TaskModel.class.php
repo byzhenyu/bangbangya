@@ -265,4 +265,21 @@ class TaskModel extends Model{
             return V(1, '操作成功');
         }
     }
+    //删除任务
+    public function delTask($id) {
+        $logWhere['task_id'] = array('eq', $id);
+        $logWhere['status'] = array('eq', 1);
+        $logWhere['valid_time'] = array('gt', NOW_TIME);
+        $logWhere['valid_status'] = array('in', array(0,1));
+        $taskLogRes = M('TaskLog')->where($logWhere)->count();
+        if ($taskLogRes > 0) {
+            return V(0, '存在未审核任务不能删除');
+        }
+        $res = $this->where(array('id'=>$id))->setField('status', 0);
+        if ($res ===false) {
+            return V(0, '删除失败');
+        }else {
+            return V(1, '删除成功');
+        }
+    }
 }
