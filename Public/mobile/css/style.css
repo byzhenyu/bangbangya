@@ -1523,7 +1523,7 @@ input[type="checkbox"]:checked + i {
 }
 
 .task-link p {
-    width: 3.5rem;
+    /*width: 3.5rem;*/
 }
 
 .task-link div span{
@@ -2726,7 +2726,7 @@ input[type="checkbox"]:checked + i {
 .partners-level-info p {
     font-size: .28rem;
     color: #666;
-    width: 1.4rem;
+    width: 1.8rem;
 }
 
 .app-partners {
@@ -2779,14 +2779,14 @@ input[type="checkbox"]:checked + i {
 }
 
 .app-partners-info .partners-month {
-    width: 1.66rem;
+    /*width: 1.66rem;*/
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
 
 .app-partners-info:last-child .partners-month {
-    margin-left: .16rem;
+    /*margin-left: .16rem;*/
 }
 
 .app-partners-info .partners-month p {

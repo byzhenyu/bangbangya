@@ -45,13 +45,13 @@ class RechargeModel extends Model{
         }
         M()->startTrans();
         $rechargeRes =  $rechargeModel->where(array('order_sn' => $out_trade_no))->save(array('pay_status' => 1,'trade_no' => $trade_no));
-        $userRes = $userModel-> where('user_id = '.$recharge['user_id'])->setInc('total_money',$total_amount * 100);
+        $userRes = $userModel-> where('user_id = '.$recharge['user_id'])->setInc('total_money',$recharge['recharge_money']);
 
         $invitation_uid  =  is_inviter($recharge['user_id']);
         if($invitation_uid  != 0){
-            inviterBonus($recharge['user_id'], $invitation_uid ,$total_amount);
+            inviterBonus($recharge['user_id'], $invitation_uid ,fen_to_yuan($recharge['recharge_money']));
         }
-        $accountRes = account_log($recharge['user_id'], $total_amount * 100 ,0,'充值',$out_trade_no);
+        $accountRes = account_log($recharge['user_id'], $recharge['recharge_money'] ,0,'充值',$out_trade_no);
         if($rechargeRes === false || $userRes === false){
             M()->rollback();
             return V(0, '订单支付失败');
@@ -81,7 +81,7 @@ class RechargeModel extends Model{
         $PayData['pay_status'] = 1;
         $PayData['trade_no'] = $trade_no;
         $payRes = $rechargeModel->where(array('order_sn'=>$out_trade_no))->save($PayData);
-        $shopRes = $shopModel->where(array('user_id'=>$rechargeInfo['user_id']))->setField('shop_accounts', $rechargeInfo['recharge_money']);
+        $shopRes = $shopModel->where(array('user_id'=>$rechargeInfo['user_id']))->setInc('shop_accounts', $rechargeInfo['recharge_money']);
         if ($payRes === false || $shopRes ===false) {
             M()->rollback(); // 事务回滚
             return V(0, '充值失败');

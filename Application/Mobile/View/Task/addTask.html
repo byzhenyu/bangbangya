@@ -465,10 +465,17 @@
 
     }
     $("#save-btn").on('click', function () {
+        if ($(this).prop('disabled')) {
+            return false;
+        }
         $('#is_show').val('0');
         submitForm();
+
     })
 $('#balance-insufficient').on('click', function() {
+    if ($(this).prop('disabled')) {
+        return false;
+    }
     $('#is_show').val('1');
     var zong = $('#total_price').val();
     if (zong > (user_total/100)) {
@@ -490,7 +497,10 @@ $('#balance-insufficient').on('click', function() {
                 $("button:submit").attr("disabled", true);
             })
             .ajaxStop(function(){
-                $("button:submit").attr("disabled", false);
+                setTimeout(function () {
+                    $("button:submit").attr("disabled", false);
+                },1000);
+
             });
         $("form").submit(function(){
             if (typeof(validate) != 'undefined' && $.isFunction(validate)) {

@@ -221,7 +221,7 @@ class TaskController extends UserCommonController {
         $where['t.id'] = $id;
         $taskModel = D('Home/Task');
         $taskDetail = $taskModel->getTaskDetail($where);
-        p($taskDetail);
+        //p($taskDetail);
         $this->assign('id', $id);
         $this->assign('taskDetail', $taskDetail);
         $this->display();
