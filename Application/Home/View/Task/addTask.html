@@ -485,7 +485,15 @@
             $('#price').attr('placeholder', '最低出价'+limit_money+' 元');
             $('#task_num').attr('placeholder', '最少'+limit_num+'单');
         });
-
+        $(document)
+            .ajaxStart(function(){
+                $("button:submit").attr("disabled", true);
+            })
+            .ajaxStop(function(){
+                setTimeout(function () {
+                    $("button:submit").attr("disabled", false);
+                },1000);
+            });
         function validate() {
             var agree = $("#agree").prop('checked');
             if (!agree) {
@@ -541,15 +549,7 @@
             submitForm();
         });
         function submitForm() {
-            $(document)
-                .ajaxStart(function(){
-                    $("button:submit").attr("disabled", true);
-                })
-                .ajaxStop(function(){
-                    setTimeout(function () {
-                        $("button:submit").attr("disabled", false);
-                    },1000);
-                });
+
             $("form").submit(function(){
                 if (typeof(validate) != 'undefined' && $.isFunction(validate)) {
                     if ( eval(validate)() == false ) {
