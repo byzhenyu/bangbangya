@@ -514,11 +514,17 @@
 
         }
         $("#save-btn").on('click', function () {
+            if ($(this).prop('disabled')) {
+                return false;
+            }
             $('#is_show').val('0');
             submitForm();
         })
         $('#balance-insufficient').on('click', function() {
             console.log(1);
+            if ($(this).prop('disabled')) {
+                return false;
+            }
             $('#is_show').val('1');
             var zong = $('#total_price').val();
             if (zong > (user_total/100)) {
