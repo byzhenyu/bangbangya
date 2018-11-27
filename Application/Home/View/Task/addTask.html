@@ -114,7 +114,7 @@
             <a href="#">发布任务</a>
         </div>
         <div class="sess-wapper">
-            <form action="{:U('addTask')}" method="post">
+            <form method="post">
                 <div class="pj_items">
                     <span class="pj_item">
                         选择类型
@@ -559,7 +559,7 @@
                 var self = $(this);
                 var data = self.serialize();
 
-                $.post(self.attr("action"), data, function(data){
+                $.post("{:U('Task/addTask')}", data, function(data){
                     mui.toast(data.info);
                     if(data.status == 1){
                         setTimeout(function() {
