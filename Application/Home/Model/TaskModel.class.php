@@ -43,6 +43,7 @@ class TaskModel extends Model{
     }
 
     protected function checkEndTime($data) {
+        p($data);die();
         if ($data < NOW_TIME) {
             return false;
         } else {
