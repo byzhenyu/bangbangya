@@ -67,9 +67,8 @@
                            // alert(JSON.stringify(data));
                            if(data['status'] == 1){
                                setTimeout(function(){
-                                   mui.openWindow({
-                                       url:  url + '/Mobile/User/securityDeposit'
-                                   });
+                                   window.location.href="{:U('User/securityDeposit')}";
+
                                }, 1000);
                            }
                        },
