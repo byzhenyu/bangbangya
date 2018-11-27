@@ -20,7 +20,7 @@ class TaskModel extends Model{
         array('category_id', 'number', '任务分类不能为空！', 1, 'regex', 3),
         array('mobile_type', 'require', '支持设备不能为空！', 1, 'regex', 3),
         array('end_time', 'require', '任务截止时间不能为空！', 1, 'regex', 3),
-        array('end_time', 'checkEndTime', '任务截止时间已过期！', 1, 'regex', 3),
+        array('end_time', 'checkEndTime', '任务截止时间已过期！', 1, 'callback', 3),
         array('price', 'require', '任务价格不能为空！', 1, 'regex', 3),
         array('task_num', 'number', '任务数量必须是一个数字！', 1, 'regex', 3),
         array('validate_words', 'checkTitleLength', '文字验证说明30个字以内', 2, 'callback', 3),
@@ -43,7 +43,7 @@ class TaskModel extends Model{
     }
 
     protected function checkEndTime($data) {
-        p($data);die();
+
         if ($data < NOW_TIME) {
             return false;
         } else {
