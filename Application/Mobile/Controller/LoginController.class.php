@@ -35,6 +35,9 @@ class LoginController extends CommonController {
 //        $this->redirect('Mobile/User/Invitation/user_id/'.UID);
 //        $this->ajaxReturn(V(1, '登录成功',$userInfo));
         $code = $_GET['code'];
+        if (empty($code)) {
+            $this->redirect('Login/login');
+        }
         $weiChat_token = $this->getWeiChat($code);
         $weiChatData = $this->getWeiChatInfo($weiChat_token['access_token'], $weiChat_token['openid']);
         $userModel = D('Home/User');
