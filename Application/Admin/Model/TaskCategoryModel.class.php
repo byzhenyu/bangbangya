@@ -34,7 +34,7 @@ class TaskCategoryModel extends Model {
      * @param $status    0删除  1 正常
      * @return $list  arr
      */
-    public function getTaskCategoryList($where = [], $field = '', $order = '',$status = null) {
+    public function getTaskCategoryList($where = [], $field = '', $order = 'id desc',$status = null) {
         if(is_null($status))
         {
              $where['status'] = 1;
