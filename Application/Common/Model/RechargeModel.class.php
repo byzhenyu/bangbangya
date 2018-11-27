@@ -81,7 +81,7 @@ class RechargeModel extends Model{
         $PayData['pay_status'] = 1;
         $PayData['trade_no'] = $trade_no;
         $payRes = $rechargeModel->where(array('order_sn'=>$out_trade_no))->save($PayData);
-        $shopRes = $shopModel->where(array('user_id'=>$rechargeInfo['user_id']))->setField('shop_accounts', $rechargeInfo['recharge_money']);
+        $shopRes = $shopModel->where(array('user_id'=>$rechargeInfo['user_id']))->setInc('shop_accounts', $rechargeInfo['recharge_money']);
         if ($payRes === false || $shopRes ===false) {
             M()->rollback(); // 事务回滚
             return V(0, '充值失败');
