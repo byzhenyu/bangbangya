@@ -23,36 +23,77 @@ class RechargeModel extends Model{
         //根据订单号查看支付类型
         $pay_type = substr($out_trade_no, 0, 1);
         
-        if ($pay_type == 'T') {
-            return $this->pcMoneyPay($out_trade_no, $total_amount, $trade_no);
+        if ($pay_type == 'T') {//余额
+            return $this->rechargeUserMoneyPay($out_trade_no, $total_amount, $trade_no);
+        } else {//保证金
+            return $this->rechargeShopMoneyPay($out_trade_no, $total_amount, $trade_no);
         }
     }
 
     /**
      * 订单成功支付处理
      */
-    public function pcMoneyPay($out_trade_no, $total_amount, $trade_no) {
+    public function rechargeUserMoneyPay($out_trade_no, $total_amount, $trade_no) {
         $rechargeModel = M('recharge');
         $userModel = D('Home/User');
-        $recharge =  $rechargeModel->where('order_sn="'. $out_trade_no .'"')->find();
+        $recharge =  $rechargeModel->where(array('order_sn'=>$out_trade_no))->find();
         if (!$recharge) {
             return V(0, '定单不存在, 未知原因!');
+        }
+        if ($recharge['pay_status'] != 0) {
+            return V(0, '订单支付状态已改变, 不能再改变');
         }
         M()->startTrans();
         $rechargeRes =  $rechargeModel->where(array('order_sn' => $out_trade_no))->save(array('pay_status' => 1,'trade_no' => $trade_no));
         $userRes = $userModel-> where('user_id = '.$recharge['user_id'])->setInc('total_money',$total_amount * 100);
+
         $invitation_uid  =  is_inviter($recharge['user_id']);
         if($invitation_uid  != 0){
             inviterBonus($recharge['user_id'], $invitation_uid ,$total_amount);
         }
-        account_log($recharge['user_id'], $total_amount * 100 ,0,'充值',$out_trade_no);
-        if($rechargeRes  && $userRes){
-            M()->commit();
-            return V(1, '定单支付成功, 状态已更新!');
-        }else{
+        $accountRes = account_log($recharge['user_id'], $total_amount * 100 ,0,'充值',$out_trade_no);
+        if($rechargeRes === false || $userRes === false){
             M()->rollback();
-            return V(2, '定单异常!');
+            return V(0, '订单支付失败');
         }
+        if ($accountRes ===false) {
+            M()->rollback();
+            return V(0, '订单日志失败');
+        }
+        M()->commit();
+        return V(1 ,'支付成功');
+
+    }
+    //保证金支付
+    public function rechargeShopMoneyPay($out_trade_no, $total_amount, $trade_no) {
+        $rechargeModel = M('recharge');
+        $shopModel = D('Shop');
+        $rechargeInfo = $rechargeModel->where(array('order_sn'=>$out_trade_no))->find();
+        if (empty($rechargeInfo)) {
+            LL('订单有误','./log/a.txt');
+            return V(0, '订单不存在, 未知原因!');
+        }
+        if ($rechargeInfo['pay_status'] != 0) {
+            return V(0, '订单支付状态已改变, 不能再改变');
+        }
+        M()->startTrans();
+        //修改支付状态
+        $PayData['pay_status'] = 1;
+        $PayData['trade_no'] = $trade_no;
+        $payRes = $rechargeModel->where(array('order_sn'=>$out_trade_no))->save($PayData);
+        $shopRes = $shopModel->where(array('user_id'=>$rechargeInfo['user_id']))->setField('shop_accounts', $rechargeInfo['recharge_money']);
+        if ($payRes === false || $shopRes ===false) {
+            M()->rollback(); // 事务回滚
+            return V(0, '充值失败');
+        }
+        $account_log = account_log($rechargeInfo['user_id'], $rechargeInfo['recharge_money'], 11, '保证金充值', $out_trade_no);
+        if ($account_log === false) {
+            M()->rollback(); // 事务回滚
+            return V(0, '充值失败');
+        }
+            M()->commit();
+        return V(1, '充值成功');
+
     }
 
 }
