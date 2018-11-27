@@ -64,7 +64,7 @@
                             <if condition="$v['is_show'] eq 0">
 
                                 <a href="{:U('addTask',array('id'=>$v['id']))}" class="btn-red">修改</a>
-                                <button onclick="fabu()" class="btn-red">发布</button>
+                                <button onclick="fabu({$v['id']})" class="btn-red">发布</button>
 
                                 <else/>
                                 <switch name="v['audit_status']">
