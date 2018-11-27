@@ -446,4 +446,25 @@ class TaskController extends UserCommonController{
         $res = D('Home/Task')->discardTask($id);
         $this->ajaxReturn($res);
     }
+
+    //发布
+    public function changeShowStatus() {
+        $id = I('id', 0, 'intval');
+        $where['id'] = array('eq', $id);
+        $taskModel = M('Task');
+        $is_show = $taskModel->where($where)->getField('is_show');
+
+        if ($is_show == 0) {
+            $data['is_show'] = 1;
+            $data['audit_status'] = 0;
+        } else {
+            $data['is_show'] = 0;
+        }
+        $res = $taskModel->where($where)->save($data);
+        if ($res === false) {
+            $this->ajaxReturn(V(0, '操作失败'));
+        } else {
+            $this->ajaxReturn(V(1, '操作成功'));
+        }
+    }
 }

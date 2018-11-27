@@ -58,11 +58,14 @@
                         "type":0
                     };
                     $.post("{:U('Payment/Alipay/appPay')}", json_data, function(data){
-                        alert(JSON.stringify(data));
-                        if (/(Android)/i.test(navigator.userAgent)) {
-                            window.AndroidJS.alipay(data.data);
-                        } else if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
 
+                        if (/(Android)/i.test(navigator.userAgent)) {
+                            window.AndroidJS.alipay(JSON.stringify(data));
+                        } else if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                            setupWebViewJavascriptBridge(function (bridge) {
+                                bridge.callHandler('aliPay', {"data":data.data}, function responseCallback(responseData) {
+                                })
+                            })
                         }
                     });
 
@@ -74,6 +77,16 @@
             mui.alert("请输入整数充值");
             return;
         }
+    }
+    function setupWebViewJavascriptBridge(callback) {
+        if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+        if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+        window.WVJBCallbacks = [callback];
+        var WVJBIframe = document.createElement('iframe');
+        WVJBIframe.style.display = 'none';
+        WVJBIframe.src = 'https://__bridge_loaded__';
+        document.documentElement.appendChild(WVJBIframe);
+        setTimeout(function () { document.documentElement.removeChild(WVJBIframe) }, 0)
     }
 
 </script>
