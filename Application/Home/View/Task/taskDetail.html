@@ -271,11 +271,13 @@
             })
         }
         //确认抢单弹窗
-        $(".fix-content").on('tap', '#show-opcity', function () {
+        $(".fix-content").on('click', '#show-opcity', function () {
             $(".grap-order-gray").addClass("active");
             $("#grap-order-content").css("display","block");
         })
-
+        $(".grap-order-gray").on('click', function () {
+            $(this).removeClass('active');
+        })
         //抢单
         function getTask() {
             var id = $('#task_id').val();

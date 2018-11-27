@@ -55,7 +55,10 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    {:time_format($info['top_time'])}
+                                    <if condition="$info['top_time'] gt 0">
+                                        {:time_format($info['top_time'])}
+                                    </if>
+
                                     <small></small>
                                 </div>
                             </div>
@@ -82,7 +85,10 @@
                                     <span class="tpl-form-line-small-title must-input">*</span>
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
-                                    {:time_format($info['partner_time'])}
+                                    <if condition="$info['partner_time'] gt 0">
+                                        {:time_format($info['partner_time'])}
+                                    </if>
+
                                     <small></small>
                                 </div>
                             </div>
