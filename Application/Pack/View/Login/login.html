@@ -58,11 +58,11 @@
     mui.init();
 
     function dologin() {
-        var agree = $(this).prop('checked');
-//        if (!agree) {
-//            mui.toast('请勾选用户协议');
-//            return false;
-//        }
+        var agree = $('#check-agree').prop('checked');
+        if (!agree) {
+            mui.toast('请勾选用户协议');
+            return false;
+        }
         if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
             setupWebViewJavascriptBridge(function (bridge) {
 
