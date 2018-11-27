@@ -58,9 +58,9 @@
                         "type":0
                     };
                     $.post("{:U('Payment/Alipay/appPay')}", json_data, function(data){
-                        alert(JSON.stringify(data));
+
                         if (/(Android)/i.test(navigator.userAgent)) {
-                            window.AndroidJS.alipay(data.data);
+                            window.AndroidJS.alipay(JSON.stringify(data));
                         } else if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
 
                         }
