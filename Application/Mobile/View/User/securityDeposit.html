@@ -47,9 +47,7 @@
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
        function pay(){
-           mui.openWindow({
-               url:url + '/mobile/User/accountsUpsPage',
-           });
+           windo.location.href = "{:U('User/accountsUpsPage')}";
        }
        function unfreeze(shop_accounts){
            mui.confirm('您是否解冻保证金?', '提示', '', function(e) {
