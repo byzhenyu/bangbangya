@@ -281,7 +281,7 @@ class TaskLogModel extends  Model{
     public function reDoTaskLog($log_id) {
         $where['id'] = $log_id;
         M()->startTrans();
-        $res = $this->where($where)->setField('valid_status', 4);
+        $res = $this->where($where)->setField('status', 0);
         if ($res === false) {
             M()->rollback();
             return false;
