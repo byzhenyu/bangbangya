@@ -18,7 +18,7 @@ class UserController extends CommonController {
         $keyword = I('keyword', '');
         $userModel = D('Admin/User');
         if ($keyword) {
-            $where['nick_name|mobile|user_name'] = array('like','%'.$keyword.'%');
+            $where['nick_name|user_id'] = array('like','%'.$keyword.'%');
         }
 
         $field = 'user_id, nick_name,total_money, register_time, disabled, invitation_code';
