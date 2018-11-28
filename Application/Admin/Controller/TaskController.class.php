@@ -38,6 +38,7 @@ class TaskController extends CommonController {
         $taskModel = D('Admin/Task');
         if (IS_POST) {
             $data = I('post.', '');
+
             if($data['audit_status'] == 0){
                 $this->ajaxReturn(V(0, '请您审核!'));
             }
@@ -67,7 +68,14 @@ class TaskController extends CommonController {
                         M()->rollback();
                         $this->ajaxReturn($pushRes);
                     }
-
+                    //更新店铺订单数量
+                    $saveData['task_count'] = array('exp', 'task_count+1');
+                    $saveData['task_num'] = array('exp', 'task_num+'.$data['task_num']);
+                    $numRes= D('Admin/Shop')->updateTaskNum(array('user_id'=>$data['user_id']),$saveData);
+                    if (!$numRes) {
+                        M()->rollback();
+                        $this->ajaxReturn(V(0, '更新发单数量失败'));
+                    }
                 } else if ($data['audit_status'] == 2) {
                     $pushRes = D('Common/Push')->push("任务处理结果", $data['user_id'], '任务审核未通过', '任务名称: '.$id, '通知类型： 代办', $data['audit_info']);
                     if ($pushRes['status'] == 0) {

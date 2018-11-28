@@ -119,9 +119,9 @@
             var img_src = $(obj).parent().next('input').val();
             $.post(OSS_DELET_OBJECT,{'img_src':img_src}, function (data) {
                 if (data.status == 1) {
-                    $(obj).parent().parent().remove();
+                    $(obj).parent().remove();
                     count--;
-                    $('#upload').attr('disabled',false);
+                    $('#hide').show();
                 }
             })
 

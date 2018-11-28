@@ -45,4 +45,15 @@ class ShopModel extends Model {
         return $info;
     }
 
+    //更新订单数量
+    public function updateTaskNum($where=[], $data=[]) {
+        $res = $this->where($where)->save($data);
+
+        if ($res ===false) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }
