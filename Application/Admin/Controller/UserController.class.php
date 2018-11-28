@@ -25,6 +25,7 @@ class UserController extends CommonController {
         $data = $userModel->getUsersListByPage($where, $field);
         $this->userslist = $data['userslist'];
         $this->page = $data['page'];
+        $this->keyword = $keyword;
         $this->display();
     }
 
