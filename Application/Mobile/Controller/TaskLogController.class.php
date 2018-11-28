@@ -240,10 +240,10 @@ class TaskLogController extends CommonController {
              $data  = I('post.', 3);
              $data['valid_status']  = 2;
              $data['valid_pic']  = rtrim($data['valid_pic'], ',');
-             $tasklogInfo = $this->TaskLogModel->where('id = '.$data['id'])->find();
+             $tasklogInfo = $this->TaskLogModel->where(array('id'=>$data['id']))->find();
              M()->startTrans();
-             $tasklogRes = $this->TaskLogModel->where('id = '.$data['id'])->save($data);
-             $taskRes = $this->Task->where(array('id' =>$tasklogInfo['task_id']))->setInc('task_num');
+             $tasklogRes = $this->TaskLogModel->where(array('id'=>$data['id']))->save($data);
+             $taskRes = $this->TaskModel->where(array('id' =>$tasklogInfo['task_id']))->setInc('task_num');
              $ChatModel = D('Home/Chat');
              $CharData['user_id'] = $tasklogInfo['user_id'];
              $CharData['task_user_id'] = UID;
