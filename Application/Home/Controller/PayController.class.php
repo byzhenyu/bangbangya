@@ -57,7 +57,7 @@ class PayController extends UserCommonController{
         $userModel = D('Home/User');
         $where['user_id'] = UID;
         $total_money = $userModel->getUserField($where, 'total_money');
-        $where['change_type'] = 0;
+        $where['change_type'] =  array('IN','0,4');
         $payRecord = getAccount($where);
         $where['change_type'] = array('IN','1,3,5,6,7,9,10,12');
         $expendRecord = getAccount($where);

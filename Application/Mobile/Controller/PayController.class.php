@@ -53,7 +53,7 @@ class PayController  extends CommonController{
             $where['change_type'] = array('IN','1,3,5,6,7,9,10,12');
 
         } else {
-            $where['change_type'] = 0;
+            $where['change_type'] = array('IN','0,4');
         }
 
         $record = D('Home/AccountLog')->getAccountLog($where);

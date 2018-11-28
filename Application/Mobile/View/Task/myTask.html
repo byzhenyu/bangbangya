@@ -99,7 +99,7 @@
                                     <a>
                                         <input onclick="audit({$v[id]},{$v[is_task_num]})" type="button" value="审核">
                                     </a>
-                                    <input class="my-release-pause" type="button" onclick="pause({$v['id']},5)" value="开启">
+                                    <input id="my-release-pause{$v['id']}" type="button" onclick="pause({$v['id']},5)" value="开启">
                                     <input class="add-num-btn1"  type="button"  value="追加数量" onclick="addNum({$v[id]})">
                                     <input id="add-price-btn" type="button" name="{$v['task_num']}" onclick="addPrice({$v[id]})" value="上调出价">
                                 </div>
@@ -142,7 +142,7 @@
                                    <a>
                                        <input  onclick="audit({$v[id]},{$v[is_task_num]})" type="button" value="审核">
                                    </a>
-                                   <input class="my-release-pause" type="button" onclick="pause({$v['id']},1)" value="暂停">
+                                   <input id="my-release-pause{$v['id']}" type="button" onclick="pause({$v['id']},1)" value="暂停">
                                    <input class="add-num-btn"  type="button" onclick="addNum({$v[id]})"  value="追加数量" >
                                    <input class="add-price-btn" name="{$v['task_num']}" onclick="addPrice({$v[id]})" type="button" value="上调出价">
                                </div>
@@ -276,8 +276,8 @@
     }
 
     function addNum(task_id) {
-            var pause = $('.my-release-pause').val();
-            // alert(pause);
+            var pause = $("#my-release-pause"+task_id).val();
+            alert(pause);
             if(pause == '开启'){
                 $("#add-num-pause1").css('display', 'flex');
                 setTimeout(function () {

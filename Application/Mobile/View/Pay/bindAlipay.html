@@ -16,7 +16,7 @@
     <div class="bind-zfb-box">
         <div class="bind-zfb-info">
             <p>账号</p>
-            <input type="text" name="alipay_num"  id="alipay_num"  value="{$alipay.alipay_num}" placeholder="请输入支付宝账号">
+            <input type="text" name="alipay_num" onkeyup="value=value.replace(/[\u4e00-\u9fa5]/ig,'')"  id="alipay_num"  value="{$alipay.alipay_num}" placeholder="请输入支付宝账号">
         </div>
 
         <div class="bind-zfb-info">
