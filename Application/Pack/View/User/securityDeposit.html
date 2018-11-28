@@ -71,6 +71,10 @@
                                        url:  url + 'Pack/User/securityDeposit'
                                    });
                                }, 1000);
+                           }else if(data['status'] == 3){
+                               setTimeout(function(){
+                                   window.location.href="{:U('Pay/bindAlipay')}";
+                               }, 1000);
                            }
                        },
                        error:function(xhr,type,errorThrown){
