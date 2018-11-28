@@ -42,7 +42,7 @@ class HelpModel extends Model {
         if(is_null($field)){
             $field = $this->selectFields;
         }
-        $Helplist = $this->field($field)->where($where)->order($sort)->select();
+        $Helplist = $this->field($field)->where(array('status'=>1))->where($where)->order($sort)->select();
         return $Helplist;
     }
     /**

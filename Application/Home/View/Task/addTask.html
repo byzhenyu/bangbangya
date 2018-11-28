@@ -114,7 +114,7 @@
             <a href="#">发布任务</a>
         </div>
         <div class="sess-wapper">
-            <form action="{:U('addTask')}" method="post">
+            <form method="post">
                 <div class="pj_items">
                     <span class="pj_item">
                         选择类型
@@ -189,7 +189,7 @@
                     </span>
 
                         <div>
-                            <input id="task_num" name="task[task_num]" type="text" class="pj_input" value="<if condition="$taskInfo['id'] gt 0">{$taskInfo['task_num']}<else/></if>" placeholder="最少{$taskCategoryInfo[0]['limit_num']}单">
+                            <input onkeyup="value=value.replace(/[^\d]/g,'')" id="task_num" name="task[task_num]" type="text" class="pj_input" value="<if condition="$taskInfo['id'] gt 0">{$taskInfo['task_num']}<else/></if>" placeholder="最少{$taskCategoryInfo[0]['limit_num']}单">
                         </div>
                         <span class="">单</span>
                     </div>
@@ -238,7 +238,7 @@
                 </div>
                 <div class="pj_op">
                         <span>
-                            操作说明 <span class="pj_red">*</span>
+                            操作说明
                         </span>
 
                     <div class="pj_opcontent">
@@ -485,7 +485,15 @@
             $('#price').attr('placeholder', '最低出价'+limit_money+' 元');
             $('#task_num').attr('placeholder', '最少'+limit_num+'单');
         });
-
+        $(document)
+            .ajaxStart(function(){
+                $("button:submit").attr("disabled", true);
+            })
+            .ajaxStop(function(){
+                setTimeout(function () {
+                    $("button:submit").attr("disabled", false);
+                },1000);
+            });
         function validate() {
             var agree = $("#agree").prop('checked');
             if (!agree) {
@@ -541,15 +549,7 @@
             submitForm();
         });
         function submitForm() {
-            $(document)
-                .ajaxStart(function(){
-                    $("button:submit").attr("disabled", true);
-                })
-                .ajaxStop(function(){
-                    setTimeout(function () {
-                        $("button:submit").attr("disabled", false);
-                    },1000);
-                });
+
             $("form").submit(function(){
                 if (typeof(validate) != 'undefined' && $.isFunction(validate)) {
                     if ( eval(validate)() == false ) {
@@ -559,7 +559,7 @@
                 var self = $(this);
                 var data = self.serialize();
 
-                $.post(self.attr("action"), data, function(data){
+                $.post("{:U('Task/addTask')}", data, function(data){
                     mui.toast(data.info);
                     if(data.status == 1){
                         setTimeout(function() {

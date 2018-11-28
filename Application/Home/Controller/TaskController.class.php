@@ -467,4 +467,10 @@ class TaskController extends UserCommonController{
             $this->ajaxReturn(V(1, '操作成功'));
         }
     }
+
+    public function del(){
+        $id = I('id', 0 , 'intval');
+        $info = D('Home/Task')->delTask($id);
+        $this->ajaxReturn($info);
+    }
 }

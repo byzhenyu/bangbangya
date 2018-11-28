@@ -22,6 +22,9 @@ class LoginController extends CommonController{
 //        $this->redirect('Home/User/personalCenter/login/1');
 //        $this->ajaxReturn(V(1, '登录成功',$userInfo));
         $code = $_GET['code'];
+        if (empty($code)) {
+            $this->redirect('Index/index');
+        }
         $weiChat_token = $this->getWeiChat($code);
         $weiChatData = $this->getWeiChatInfo($weiChat_token['access_token'], $weiChat_token['openid']);
         $userModel = D('Home/User');

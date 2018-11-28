@@ -20,8 +20,11 @@ class TaskModel extends Model{
         array('category_id', 'number', '任务分类不能为空！', 1, 'regex', 3),
         array('mobile_type', 'require', '支持设备不能为空！', 1, 'regex', 3),
         array('end_time', 'require', '任务截止时间不能为空！', 1, 'regex', 3),
+        array('end_time', 'checkEndTime', '任务截止时间已过期！', 1, 'callback', 3),
         array('price', 'require', '任务价格不能为空！', 1, 'regex', 3),
         array('task_num', 'number', '任务数量必须是一个数字！', 1, 'regex', 3),
+        array('validate_words', 'checkTitleLength', '文字验证说明30个字以内', 2, 'callback', 3),
+        array('remark', 'checkRemarkLength', '备注200个字以内', 2, 'callback', 3),
     );
 
     protected function checkTitleLength($data) {
@@ -30,6 +33,22 @@ class TaskModel extends Model{
             return false;
         }
         return true;
+    }
+    protected function checkRemarkLength($data) {
+        $length = mb_strlen($data, 'utf-8');
+        if ($length > 200) {
+            return false;
+        }
+        return true;
+    }
+
+    protected function checkEndTime($data) {
+
+        if ($data < NOW_TIME) {
+            return false;
+        } else {
+            return true;
+        }
     }
     /**
      * 接单赚钱_任务列表
@@ -244,6 +263,23 @@ class TaskModel extends Model{
             return V(0, '操作失败');
         } else {
             return V(1, '操作成功');
+        }
+    }
+    //删除任务
+    public function delTask($id) {
+        $logWhere['task_id'] = array('eq', $id);
+        $logWhere['status'] = array('eq', 1);
+        $logWhere['valid_time'] = array('gt', NOW_TIME);
+        $logWhere['valid_status'] = array('in', array(0,1));
+        $taskLogRes = M('TaskLog')->where($logWhere)->count();
+        if ($taskLogRes > 0) {
+            return V(0, '存在未审核任务不能删除');
+        }
+        $res = $this->where(array('id'=>$id))->setField('status', 0);
+        if ($res ===false) {
+            return V(0, '删除失败');
+        }else {
+            return V(1, '删除成功');
         }
     }
 }
