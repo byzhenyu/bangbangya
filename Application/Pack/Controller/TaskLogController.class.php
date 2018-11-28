@@ -362,13 +362,8 @@ class TaskLogController extends CommonController {
     public function reDoLog() {
         $log_id = I('log_id', 0 , 'intval');
 
-        $new_id = D('Home/TaskLog')->reDoTaskLog($log_id);
-
-        if ($new_id === false) {
-            $this->ajaxReturn(V(0, '操作失败'));
-        } else {
-            $this->ajaxReturn(V(1, '操作成功',$new_id));
-        }
+        $info = D('Home/TaskLog')->reDoTaskLog($log_id);
+        $this->ajaxReturn($info);
 
     }
 }

@@ -18,7 +18,7 @@ class TaskLogController extends UserCommonController {
         $this->TaskModel = D("Home/Task");
     }
      /**
-     * @desc  接单
+     * @desc  接单(未用)
      * @param
      * @return mixed
      */
@@ -367,13 +367,8 @@ class TaskLogController extends UserCommonController {
     public function reDoLog() {
         $log_id = I('log_id', 0 , 'intval');
 
-        $new_id = D('Home/TaskLog')->reDoTaskLog($log_id);
-
-        if ($new_id === false) {
-            $this->ajaxReturn(V(0, '操作失败'));
-        } else {
-            $this->ajaxReturn(V(1, '操作成功',$new_id));
-        }
+        $info = D('Home/TaskLog')->reDoTaskLog($log_id);
+        $this->ajaxReturn($info);
 
     }
 }
