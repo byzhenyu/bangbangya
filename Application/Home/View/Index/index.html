@@ -44,7 +44,7 @@
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <foreach name="bannerList" item="v">
-                        <div class="swiper-slide" style="width:100%; height:450px; background:url({$v.img_url}) no-repeat center center; background-size: cover;"></div>
+                        <a href="{$v.jump_url}" target="view_window"  class="swiper-slide" style=" display：block;width:100%; height:450px; background:url({$v.img_url}) no-repeat center center; background-size: cover;"></a>
                     </foreach>
                 </div>
                 <!-- Add Pagination -->
@@ -156,6 +156,12 @@
                 mui.toast('更换成功');
             }
         });
+        function openUrl(jump_url){
+             alert(jump_url);
+            if(jump_url != '' || jump_url.length != 0){
+                window.open(jump_url);
+            }
+        }
     </script>
 </block>
 </html>
