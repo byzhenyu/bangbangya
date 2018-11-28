@@ -271,6 +271,7 @@ class TaskLogModel extends  Model{
     */
     public function taskAudit($task_id){
         $where['task_id'] = $task_id;
+        $where['status'] = 1;
         $where['valid_status'] = array('in' ,'2,3');
         $taskAudit['is_audit'] = $this->where($where)->count();
         $where['valid_status'] = 1 ;
