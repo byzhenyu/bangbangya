@@ -96,6 +96,10 @@
             z-index: 998;
             opacity: 1;
         }
+        .check-img img {
+            max-width: 400px;
+            text-align: center;
+        }
     </style>
 </block>
 <block name="body">
@@ -175,7 +179,7 @@
                     <div class="jd_gez">
                         (共{:count($taskDetail['check_info'])}张)
                     </div>
-                    <div>
+                    <div class="check-img">
 
                         <volist name="taskDetail['check_info']" id="v" key="k">
                             <img src="{$v}">
