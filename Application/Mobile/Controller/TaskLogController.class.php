@@ -10,7 +10,9 @@
  */
 namespace Mobile\Controller;
 use Common\Controller\CommonController;
-class TaskLogController extends CommonController {
+use Common\Controller\UserCommonController;
+
+class TaskLogController extends UserCommonController {
     public function _initialize() {
         $this->TaskLogModel = D("Home/TaskLog");
         $this->TaskModel = D("Home/Task");
