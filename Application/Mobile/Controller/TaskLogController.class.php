@@ -345,8 +345,7 @@ class TaskLogController extends UserCommonController {
         M()->startTrans();
         $taskLogRes = $this->TaskLogModel->where('id = '.$taskLog_id)->save(array('valid_status' => 4));
         /*放弃任务 释放单子 数*/
-        $taskRes = $taskModel->where('id = '.$task_id)->setInc('task_num');
-        if($taskLogRes && $taskRes){
+        if($taskLogRes){
             M()->commit();
             $this->ajaxReturn(V(1, '成功'));
         }else{
