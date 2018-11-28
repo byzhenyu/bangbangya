@@ -43,9 +43,9 @@
             <!-- Swiper -->
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide" style="width:100%; height:450px; background:url(__PUBLIC__/pc/images/banner.png) no-repeat center center; background-size: cover;"></div>
-                    <div class="swiper-slide" style="width:100%; height:450px; background:url(__PUBLIC__/pc/images/banner.png) no-repeat center center; background-size: cover;"></div>
-                    <div class="swiper-slide" style="width:100%; height:450px; background:url(__PUBLIC__/pc/images/banner.png) no-repeat center center; background-size: cover;"></div>
+                    <foreach name="bannerList" item="v">
+                        <a href="{$v.jump_url}" target="view_window"><div class="swiper-slide" style="width:100%; height:450px; background:url({$v.img_url}) no-repeat center center; background-size: cover;"></div></a>
+                    </foreach>
                 </div>
                 <!-- Add Pagination -->
                 <div class="swiper-pagination"></div>

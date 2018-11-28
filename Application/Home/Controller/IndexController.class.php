@@ -22,6 +22,8 @@ class IndexController extends CommonController {
                $userList = $this->user->field('head_pic,nick_name')->where('user_id ='.UID)->find();
            }
            $login  = I('login', 0, 'intval');
+           $bannerList = D('Home/Banner')->getBanner(array('type = 1'));
+           $this->assign('bannerList', $bannerList);
            $this->assign('userList',$userList);
            $this->assign('login',$login);
        	   $this->display();

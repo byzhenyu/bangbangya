@@ -41,7 +41,10 @@ class ShopModel extends Model {
 
     //店铺详情
     public function getShopDetail($where) {
-        $info = $this->where($where)->find();
+        $info = $this->alias('s')
+                ->join('__USER__ as u on u.user_id  = s.user_id','LEFT')
+                ->where($where)
+                ->find();
         return $info;
     }
 
