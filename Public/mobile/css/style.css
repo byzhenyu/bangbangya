@@ -2679,11 +2679,12 @@ input[type="checkbox"]:checked + i {
     background-image: url("../images/my_cooperate_icon_title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    padding: .56rem 1.57rem .64rem 2.27rem;
+    padding: .56rem 1.57rem .64rem 1.8rem;
     margin-left: .3rem;
 }
 
 .partners-my-level p {
+    width: 3.8rem;
     font-size: .28rem;
     color: #6f75ef;
 }
