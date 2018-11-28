@@ -31,6 +31,7 @@ class HelpController extends Controller{
         $field = 'id, title';
         $data = $this->Help->getHelpList($where,$field);
         $this->assign('list', $data['Helplist']);
+        $this->assign('type', $type);
         $this->display();
     }
     /**
@@ -41,9 +42,11 @@ class HelpController extends Controller{
     public function getQuestionDetail()
     {
          $id = I('id', 0, 'intval');
+         $type  =  I('type', 0 ,'intval');
          $field = 'title, content, add_time';
          $questionInfo =  $this->Help-> getQuestionDetail($id, $field);
          $this->assign('questionInfo', $questionInfo);
+         $this->assign('type', $type);
          $this->display();
     }
 }

@@ -10,12 +10,12 @@
 <body>
     <header class="mui-bar mui-bar-nav help-duck-head">
         <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-        <p class="mui-title">常见问题</p>
+        <p class="mui-title">{$type == 0? '常见问题': '使用帮助'}</p>
     </header>
 
     <div class="common-problem-list">
         <foreach name="list" item="v">
-            <a href="{:U('Help/getQuestionDetail',array('id' => $v['id']))}">
+            <a href="{:U('Help/getQuestionDetail',array('id' => $v['id'],'type' => $type))}">
                 <div class="common-problem-item">
                     <p>{$v.title}</p>
                     <img src="__PUBLIC__/mobile/images/common_icon_more.png">

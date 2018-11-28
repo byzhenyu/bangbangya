@@ -37,7 +37,7 @@
                     <li class="fl">
                         <div class="inb-wapper">
                             <span>支付宝账号</span>
-                            <input type="text" placeholder="请输入支付宝账号" id="alipay_num" name="alipay_num" value="{$userList['alipay_num']}">
+                            <input type="text" onkeyup="value=value.replace(/[\u4e00-\u9fa5]/ig,'')"  placeholder="请输入支付宝账号" id="alipay_num" name="alipay_num" value="{$userList['alipay_num']}">
                         </div>
                         <p class="inb-tips">一个账号只能绑定一个支付宝账户</p>
                     </li>

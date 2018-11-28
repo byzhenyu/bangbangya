@@ -255,6 +255,39 @@ class TaskLogController extends UserCommonController{
         }
         $this->ajaxReturn(V(0, $this->TaskLogModel->getError()));
     }
+    public function pass(){
+        $tasklog_id = I('id', 0, 'intval');
+        $tasklogInfo = $this->TaskLogModel->where('id = '.$tasklog_id)->find();
+        $res = user_money( UID, $tasklogInfo['task_price']);
+        if(!$res){
+            $this->ajaxReturn(V(2, '您的余额不足,请充值审核!'));
+        }else{
+            $userModel = D('Home/User');
+            $ShopModel = D('Home/Shop');
+            M()->startTrans();
+            /*change shop */
+            $userModel->where('user_id = '.UID)->setDec('total_money',$tasklogInfo['task_price']);
+            account_log( UID,$tasklogInfo['task_price'],3,'任务结算',$tasklog_id);
+            $ShopModel->where('user_id = '.UID)->setInc('vol');
+            $taskUser = array(
+                'task_suc_money' => array('exp','task_suc_money + '.$tasklogInfo['task_price']),
+                'task_zong' => array('exp','task_zong + '.$tasklogInfo['task_price'])
+            );
+            $userModel->where('user_id = '.$tasklogInfo['user_id'])->save($taskUser);
+            account_log($tasklogInfo['user_id'], $tasklogInfo['task_price'], 4,'完成任务', $tasklog_id);
+            $ShopModel->where('user_id = '.$tasklogInfo['user_id'])->setInc('take_task');
+            D('Common/Push')->push('收入提醒',$tasklogInfo['user_id'],'亲，您有一笔收入到账！','任务名称:'.$tasklogInfo['task_name'].'获得','收入金额：￥'.$tasklogInfo['task_price'] /100,'劳动换来的果实特别甜，继续加油吧！');
+            $tasklogRes = $this->TaskLogModel->where('id = '.$tasklog_id)->save(array('valid_status' => 3));
+            if($tasklogRes){
+                M()->commit();
+                $this->ajaxReturn(V(1, '完成'));
+            }else{
+                M()->rollback();
+                $this->ajaxReturn(V(2, '失败'));
+            }
+            $this->ajaxReturn(V(0, $this->TaskLogModel->getError()));
+        }
+    }
     // 上传图片
     public function uploadImg() {
 
