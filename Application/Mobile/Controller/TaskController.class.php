@@ -275,12 +275,15 @@ class TaskController extends UserCommonController {
 
         // 实例化oss类
         $files = I('img_src', '','trim');
-        $object = explode('com/',$files)[1];
-        vendor('Alioss.autoload');
-        $config=C('ALIOSS_CONFIG');
-        $oss=new \OSS\OssClient($config['KEY_ID'],$config['KEY_SECRET'],$config['END_POINT']);
-        $bucket=$config['BUCKET'];
-        $test=$oss->deleteObject($bucket,$object);
+        if ($files) {
+            $object = explode('com/',$files)[1];
+            vendor('Alioss.autoload');
+            $config=C('ALIOSS_CONFIG');
+            $oss=new \OSS\OssClient($config['KEY_ID'],$config['KEY_SECRET'],$config['END_POINT']);
+            $bucket=$config['BUCKET'];
+            $test=$oss->deleteObject($bucket,$object);
+        }
+
         $this->ajaxReturn(V(1, '删除成功'));
     }
     /**

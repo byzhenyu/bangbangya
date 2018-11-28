@@ -66,7 +66,7 @@
 }
 
 .sd_uprice {
-    width: 80px;
+    /*width: 80px;*/
     display: block;
     color: #2DE27B;
 }
@@ -172,11 +172,12 @@
 
 .jd_info {
     display: flex;
-    height: 30px;
+    height: 60px;
     margin: 0px 0px 8px 0px;
 }
 
 .jd_utitle {
+    width: 80px;
     display: block;
     color: #333333;
     font-weight: bold;
@@ -190,7 +191,7 @@
 
 .jd_uvalue {
     margin-left: 20px;
-    height: 20px;
+    /*height: 20px;*/
     padding-top: 3px;
     color: #666666;
 }

@@ -24,7 +24,7 @@ class TaskModel extends Model{
         array('price', 'require', '任务价格不能为空！', 1, 'regex', 3),
         array('task_num', 'number', '任务数量必须是一个数字！', 1, 'regex', 3),
         array('validate_words', 'checkTitleLength', '文字验证说明30个字以内', 2, 'callback', 3),
-        array('remark', 'checkRemarkLength', '备注200个字以内', 2, 'callback', 3),
+        array('remark', 'checkRemarkLength', '备注150个字以内', 2, 'callback', 3),
     );
 
     protected function checkTitleLength($data) {
@@ -36,7 +36,7 @@ class TaskModel extends Model{
     }
     protected function checkRemarkLength($data) {
         $length = mb_strlen($data, 'utf-8');
-        if ($length > 200) {
+        if ($length > 150) {
             return false;
         }
         return true;

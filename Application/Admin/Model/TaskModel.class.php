@@ -21,10 +21,19 @@ class TaskModel extends Model {
     protected $_validate = array(
 
         array('audit_status', array(0,1,2), '审核状态非法', 1, 'in', 5),
-        array('audit_info', 'require', '请输入 审核理由说明 ', 1, 'regex', 5),
-        array('audit_info', '0,30', '您输入的 审核理由过长，超过了30个字符数限制', 1, 'length', 5),
+        array('audit_status,audit_info', 'checkInfo', '请输入拒绝理由说明', 1, 'callback',5),
+//        array('audit_info', 'require', '请输入拒绝理由说明 ', 1, 'regex', 5),
+        array('audit_info', '0,30', '您输入的拒绝理由过长，超过了30个字符数限制', 2, 'length', 5),
 
     );
+
+    protected function checkInfo($data) {
+        if ($data['audit_status'] == 2 && trim($data['audit_info']) == '') {
+            return false;
+        } else {
+            return true;
+        }
+    }
     //审核扣钱
 
     public function getTaskList($where = [], $field = '', $order = 't.add_time desc') {
