@@ -78,13 +78,25 @@
                                 </div>
                             </div>
                             <div class="btng">
-                                <button>
-                                    <img src="__PUBLIC__/pc/images/mypublish_check_icon_previous.png">
-                                </button>
+                                <if condition="$p elt 0">
+                                    <button onclick="none()">
+                                        <img src="__PUBLIC__/pc/images/mypublish_check_icon_previous.png">
+                                    </button>
+                                    <else />
+                                    <button onclick="none()">
+                                        <a href="{:U('TaskLog/auditTask',array('task_id' => $taskLogInfo['list'][0]['task_id'],'p' => $p - 1 ))}"><img src="__PUBLIC__/pc/images/mypublish_check_icon_previous.png"></a>
+                                    </button>
+                                </if>
+                                <if condition="$p lt $taskLogInfo['count']">
+                                    <button>
+                                    <a href="{:U('TaskLog/auditTask',array('task_id' => $taskLogInfo['list'][0]['task_id'],'p' => $p + 1 ))}"><img src="__PUBLIC__/pc/images/mypublish_check_icon_next.png"></a>
+                                    </button>
+                                    <else />
+                                    <button>
+                                    <a onclick="none()"><img src="__PUBLIC__/pc/images/mypublish_check_icon_next.png"></a>
+                                    </button>
+                                </if>
 
-                                <button>
-                                    <img src="__PUBLIC__/pc/images/mypublish_check_icon_next.png">
-                                </button>
                             </div>
                         </div>
                         <if condition="$taskLogInfo['list'][0]['valid_status']  eq 1">
@@ -233,13 +245,17 @@
         }
         function failBtn() {
             var tid = $("#model").attr('name');
-            var valid_text = $("#valid_text").val();
+            var valid_text =  $.trim($("#valid_text").val());
             var valid_img = $(" input[ name='valid_img[]']");
+            if(valid_img.length == 0){
+                mui.toast('请您上传不合格图片!');
+                return
+            }
             var img = '';
             for(var i = 0; i < valid_img.length; i++){
                 img += valid_img[i].defaultValue + ',';
             }
-            if(valid_text.length == 0 ){
+            if(valid_text.length == 0 || valid_text == ''){
                 mui.toast('请您输入字符!');
                 return
             }else if(valid_text.length  > 255){
@@ -345,6 +361,9 @@
                     $('#upload').attr('disabled',false);
                 }
             })
+        }
+        function none(){
+            mui.toast('没有数据了!');
         }
     </script>
 </block>

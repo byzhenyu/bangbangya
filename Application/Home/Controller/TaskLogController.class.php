@@ -185,6 +185,7 @@ class TaskLogController extends UserCommonController{
         $where['task_id'] = $task_id;
         $field =  'u.user_id, u.head_pic, u.nick_name, t.task_id,t.id as tid, t.valid_info, t.valid_img, t.valid_status  ';
         $taskLogInfo = $this->TaskLogModel->auditTask($where, $field);
+//        p($taskLogInfo);
         $taskAudit = $this->TaskLogModel->taskAudit($task_id);
         $this->assign('taskAudit',$taskAudit);
         $this->assign('task_id',$task_id);

@@ -230,7 +230,7 @@ class TaskLogModel extends  Model{
      * @param  task_id
      * @return mixed
      */
-    public  function auditTask($where = [], $field = null, $sort = ' t.valid_status DESC'){
+    public  function auditTask($where = [], $field = null, $sort = ' t.valid_status ASC'){
         $where['t.valid_status']  = array('neq',0);
         $count =  $this->alias('t')
             ->join('__USER__ as u on u.user_id = t.user_id','LEFT')

@@ -254,11 +254,15 @@
         var tid = $("#unqualified-boom-btn").attr('name');
         var valid_text = $("#valid_text").val();
         var valid_img = $(" input[ name='valid_img[]']");
+        if(valid_img.length == 0){
+            mui.toast('请您上传不合格图片!');
+            return
+        }
         var img = '';
         for(var i = 0; i < valid_img.length; i++){
                 img += valid_img[i].defaultValue + ',';
         }
-        if(valid_text.length == 0 ){
+        if(valid_text.length == 0 || valid_text == ''){
             mui.toast('请您输入字符!');
             return
         }else if(valid_text.length  > 255){
