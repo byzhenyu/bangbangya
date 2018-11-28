@@ -209,6 +209,7 @@
     
     function reDoLog(log_id) {
         $.post("{:U('reDoLog')}", {'log_id':log_id}, function (data) {
+            mui.toast(data.info);
             if (data.status == 1) {
                 console.log(data.data);
                 window.location.href = "{:U('taskVerify')}/id/"+data.data;
