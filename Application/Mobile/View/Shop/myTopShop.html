@@ -114,9 +114,9 @@
                     }
                     mui.ajax(url + 'Mobile/Shop/myTopShop',{
                         data:{
-                            topMoney : topMoney,
+                            topMoney : topMoney * 100,
                             num:num,
-                            zong:zong
+                            zong:zong * 100
                         },
                         dataType:'json',//服务器返回json格式数据
                         type:'post',//HTTP请求类型
