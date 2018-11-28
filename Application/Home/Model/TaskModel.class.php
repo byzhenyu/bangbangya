@@ -203,13 +203,13 @@ class TaskModel extends Model{
                  ->where($where)
                  ->count();
 
-          $page = get_web_page($count, 10);
+//          $page = get_web_page($count, 10);
           $taskInfo = $this->alias('t')
                       ->join('__TASK_CATEGORY__ as c on  c.id = t.category_id', 'LEFT')
                       ->where($where)
                       ->field($field)
                       ->order($sort)
-                      ->limit($page['limit'])
+//                      ->limit($page['limit'])
                       ->select();
 
           if(!empty($taskInfo)){
