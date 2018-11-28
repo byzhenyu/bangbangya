@@ -48,8 +48,8 @@
                 <div class="mui-scroll-content">
                     <div class="mui-scroll">
                         <ul class="mui-table-view my-fans-view msg-list">
-                            <foreach name="fanslist" item="v">
-                                <li class="mui-table-view-cell my-fans-li">
+                            <foreach name="fanslist"  item="v">
+                                <li  onclick="shopInfo({$v[user_id]})" class="mui-table-view-cell my-fans-li">
                                     <a data-user="{$v['user_id']}" class="my-fans-item">
                                         <div class="my-fans-user">
                                             <div class="my-fans-left">
@@ -171,12 +171,10 @@
                 }
             }
         })
-    })
-    //跳转店铺
-
-    $('.msg-list').on('tap', '.my-fans-item', function () {
-        var user_id = $(this).data('user');
-        window.location.href = "{:U('Shop/shopDetail')}/user_id/"+user_id;
     });
+    //跳转店铺
+      function shopInfo(user_id){
+          window.location.href = "{:U('Shop/shopDetail')}/user_id/"+user_id;
+      }
 </script>
 </html>
