@@ -241,13 +241,14 @@ class TaskLogController extends CommonController {
              $tasklogInfo = $this->TaskLogModel->where('id = '.$data['id'])->find();
              M()->startTrans();
              $tasklogRes = $this->TaskLogModel->where('id = '.$data['id'])->save($data);
+             $taskRes = $this->TaskModel->where(array('id' =>$tasklogInfo['task_id']))->setInc('task_num');
              $ChatModel = D('Home/Chat');
              $CharData['user_id'] = $tasklogInfo['user_id'];
              $CharData['task_user_id'] = UID;
              $CharData['task_log_id'] = $tasklogInfo['id'];
              $CharData['content'] = $data['valid_text'];
              $chatRes = $ChatModel->add($CharData);
-             if($tasklogRes  && $chatRes ){
+             if($tasklogRes  && $chatRes && $taskRes){
                  D('Common/Push')->push('任务处理通知',$tasklogInfo['user_id'],'亲，您的做的任务审核未通过!','任务名称:'.$tasklogInfo['task_name'],'通知类型：失败',$data['valid_text']);
                  M()->commit();
                  $this->ajaxReturn(V(1, '完成'));

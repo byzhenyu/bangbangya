@@ -254,11 +254,15 @@
         var tid = $("#unqualified-boom-btn").attr('name');
         var valid_text = $("#valid_text").val();
         var valid_img = $(" input[ name='valid_img[]']");
+        if(valid_img.length == 0){
+            mui.toast('请您上传不合格图片!');
+            return
+        }
         var img = '';
         for(var i = 0; i < valid_img.length; i++){
-                img += valid_img[i].defaultValue + ',';
+            img += valid_img[i].defaultValue + ',';
         }
-        if(valid_text.length == 0 ){
+        if(valid_text.length == 0 || valid_text == ''){
             mui.toast('请您输入字符!');
             return
         }else if(valid_text.length  > 255){
@@ -267,7 +271,7 @@
         }
         mui.confirm('这个任务是否不合格?', '提示', '', function(e) {
             if (e.index == 1) {
-                mui.ajax(url + 'Mobile/TaskLog/fail',{
+                mui.ajax(url + 'Pack/TaskLog/fail',{
                     data:{
                         id : tid,
                         valid_text : valid_text,
@@ -288,7 +292,7 @@
                             mui.confirm('您的余额不足,是否去充值?', '提示', '', function(e) {
                                 if (e.index == 1) {
                                     mui.openWindow({
-                                        url:  url + 'Mobile/Pay/topUpsPage'
+                                        url:  url + 'Pack/Pay/topUpsPage'
                                     });
                                 }else{
                                     mui.toast('您取消了操作');
@@ -305,7 +309,7 @@
                 mui.toast('您取消了操作');
             }
         })
-    })
+    });
     function pass(tid){
         mui.confirm('是否通过这个任务', '提示', '', function(e) {
             if (e.index == 1) {
