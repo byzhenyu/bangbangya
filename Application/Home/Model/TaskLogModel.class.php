@@ -286,19 +286,32 @@ class TaskLogModel extends  Model{
         $res = $this->where($where)->setField('status', 0);
         if ($res === false) {
             M()->rollback();
-            return false;
+            return V(0, '操作失败');
         }
         $info = $this->where($where)->field('user_id,task_id,task_name,task_price')->find();
+        unset($where);
+        $where['t.id'] = $info['task_id'];
+        $taskModel = D('Home/Task');
+        $taskInfo = $taskModel->getTaskDetail($where);
+        if (empty($taskInfo)) {
+            M()->rollback();
+            return V(0, '任务不存在，或被删除');
+        }
+        if ($taskInfo['task_num'] < 1) {
+            M()->rollback();
+            return V(0, '任务数量已经空了!请稍后再试!');
+        }
+
         $info['add_time'] = NOW_TIME;
         $info['valid_time'] = NOW_TIME + C('TASK_LIMIT_TIME');
 
         $new_id = $this->data($info)->add();
         if ($new_id === false) {
             M()->rollback();
-            return false;
+            return V(0, '添加失败');
         } else {
             M()->commit();
-            return $new_id;
+            return V(1, '成功', $new_id);
         }
 
     }
