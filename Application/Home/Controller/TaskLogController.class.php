@@ -128,19 +128,11 @@ class TaskLogController extends UserCommonController{
      */
     public function giveUpTask(){
         $taskLog_id = I('id', 0, 'intval');
-        $task_id = I('task_id', 0, 'intval');
-        $taskModel = D('Home/Task');
-        $taskLogModel = D('Home/TaskLog');
-        M()->startTrans();
-        $taskLogRes = $taskLogModel->where('id = '.$taskLog_id)->save(array('valid_status' => 4));
-        /*放弃任务 释放单子 数*/
-        $taskRes = $taskModel->where('id = '.$task_id)->setInc('task_num');
-        if($taskLogRes && $taskRes){
-            M()->commit();
+
+        $taskLogRes = $this->TaskLogModel->where(array('id'=>$taskLog_id))->save(array('status' => 0));
+        if ($taskLogRes) {
             $this->ajaxReturn(V(1, '成功'));
-        }
-        else{
-            M()->rollback();
+        }else{
             $this->ajaxReturn(V(0, '失败'));
         }
     }
