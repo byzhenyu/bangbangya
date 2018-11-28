@@ -316,10 +316,10 @@ class TaskLogController extends CommonController {
      */
     public function taskLogFail(){
         $taskLog_id = I('id', 0, 'intval');
-        $taskLogInfo = $this->TaskLogModel->field('id, user_id, task_id, valid_pic')->where('id = '.$taskLog_id)->find();
+        $taskLogInfo = $this->TaskLogModel->field('id, user_id, task_id, valid_pic')->where(array('id'=>$taskLog_id))->find();
         $chatModel = D('Home/Chat');
-        $taskLogInfo['userChat']  = $chatModel ->field('content')->where('user_id  = '.$taskLogInfo['user_id'].'  and task_log_id =  '.$taskLogInfo['id'])->select();
-        $taskLogInfo['taskChat']  = $chatModel ->field('content')->where('task_user_id = '.$taskLogInfo['user_id'].'  and task_log_id =  '.$taskLogInfo['id'])->select();
+        $taskLogInfo['userChat']  = $chatModel ->field('content')->where(array('user_id'=>$taskLogInfo['user_id'],'task_log_id'=>$taskLogInfo['id']))->select();
+        $taskLogInfo['taskChat']  = $chatModel ->field('content')->where(array('task_user_id'=>$taskLogInfo['user_id'],'task_log_id'=>$taskLogInfo['id']))->select();
         if(strpos($taskLogInfo['valid_pic'], ',')  !== false){
             $taskLogInfo['valid_pic']   =   explode(',',$taskLogInfo['valid_pic']);
         } else {
