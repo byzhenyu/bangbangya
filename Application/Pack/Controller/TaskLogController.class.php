@@ -182,7 +182,7 @@ class TaskLogController extends CommonController {
          $where['task_id'] = $task_id;
          $field =  'u.user_id, u.head_pic, u.nick_name, t.task_id,t.id as tid, t.valid_info, t.valid_img, t.valid_status  ';
          $taskLogInfo = $this->TaskLogModel->auditTask($where, $field);
-        p($taskLogInfo);
+//        p($taskLogInfo);
          $taskAudit = $this->TaskLogModel->taskAudit($task_id);
          $this->assign('taskAudit',$taskAudit);
          $this->assign('task_id',$task_id);
@@ -214,6 +214,7 @@ class TaskLogController extends CommonController {
              );
              $userModel->where('user_id = '.$tasklogInfo['user_id'])->save($taskUser);
              account_log($tasklogInfo['user_id'], $tasklogInfo['task_price'], 4,'完成任务', $tasklog_id);
+             $ShopModel->where('user_id = '.$tasklogInfo['user_id'])->setInc('take_task');
              D('Common/Push')->push('收入提醒',$tasklogInfo['user_id'],'亲，您有一笔收入到账！','任务名称:'.$tasklogInfo['task_name'].'获得','收入金额：￥'.$tasklogInfo['task_price'] /100,'劳动换来的果实特别甜，继续加油吧！');
              $tasklogRes = $this->TaskLogModel->where('id = '.$tasklog_id)->save(array('valid_status' => 3));
              if($tasklogRes){

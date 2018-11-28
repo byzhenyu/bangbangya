@@ -30,7 +30,6 @@ class ShopController extends CommonController {
         $user_id = I('user_id', 0, 'intval');
         $where['u.user_id'] = $user_id;
         $info = D('Shop')->getShopDetail($where);
-        p($info);
         $this->assign('info', $info);
         $this->display();
     }
