@@ -45,38 +45,38 @@
                                 </div>
                             </div>
 
-                            <div class="am-form-group">
-                                <label class="am-u-sm-2 am-form-label">封面图</label>
-                                <div class="am-u-sm-10">
-                                    <div class="row">
-                                        <div class="am-u-sm-3">
-                                            <div class="am-form-group am-form-file">
-                                                <div class="tpl-form-file-img">
-                                                    <img src="{$articleInfo['thumb_img']}" alt="" style="min-height:122px; width: 122px;" id="img_">
-                                                </div>
-                                                <input type="hidden" value="{$articleInfo['thumb_img']}" name="thumb_img" id="img" />
-                                                <button type="button" class="am-btn am-btn-success am-btn-sm" id="btnUpload">上传</button>
-                                                <button type="button" class="am-btn am-btn-danger am-btn-sm" onclick="delFile($('#img').val(), '')" id="btn_delete_">删除</button>
-                                                <if condition="$articleInfo['thumb_img'] eq ''">
-                                                    <script>
-                                                        $("#img_, #btn_delete_").hide();
-                                                    </script>
-                                                </if>
-                                            </div>
-                                        </div>
-                                        <div class="am-u-sm-9"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            <!--<div class="am-form-group">-->
+                                <!--<label class="am-u-sm-2 am-form-label">封面图</label>-->
+                                <!--<div class="am-u-sm-10">-->
+                                    <!--<div class="row">-->
+                                        <!--<div class="am-u-sm-3">-->
+                                            <!--<div class="am-form-group am-form-file">-->
+                                                <!--<div class="tpl-form-file-img">-->
+                                                    <!--<img src="{$articleInfo['thumb_img']}" alt="" style="min-height:122px; width: 122px;" id="img_">-->
+                                                <!--</div>-->
+                                                <!--<input type="hidden" value="{$articleInfo['thumb_img']}" name="thumb_img" id="img" />-->
+                                                <!--<button type="button" class="am-btn am-btn-success am-btn-sm" id="btnUpload">上传</button>-->
+                                                <!--<button type="button" class="am-btn am-btn-danger am-btn-sm" onclick="delFile($('#img').val(), '')" id="btn_delete_">删除</button>-->
+                                                <!--<if condition="$articleInfo['thumb_img'] eq ''">-->
+                                                    <!--<script>-->
+                                                        <!--$("#img_, #btn_delete_").hide();-->
+                                                    <!--</script>-->
+                                                <!--</if>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <!--<div class="am-u-sm-9"></div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
                             
-                            <div class="am-form-group">
-                                <label for="introduce" class="am-u-sm-2 am-form-label">
-                                    文章简介 <span class="tpl-form-line-small-title must-input">*</span>
-                                </label>
-                                <div class="am-u-sm-10">
-                                    <textarea id="introduce" name="introduce" placeholder="请输入简介文字" >{$articleInfo['introduce']}</textarea>
-                                </div>
-                            </div>
+                            <!--<div class="am-form-group">-->
+                                <!--<label for="introduce" class="am-u-sm-2 am-form-label">-->
+                                    <!--文章简介 <span class="tpl-form-line-small-title must-input">*</span>-->
+                                <!--</label>-->
+                                <!--<div class="am-u-sm-10">-->
+                                    <!--<textarea id="introduce" name="introduce" placeholder="请输入简介文字" >{$articleInfo['introduce']}</textarea>-->
+                                <!--</div>-->
+                            <!--</div>-->
 
                             <div class="am-form-group">
                                 <label for="content1" class="am-u-sm-2 am-form-label">
@@ -101,28 +101,28 @@
                                 </div>
                             </div>
 
-                            <div class="am-form-group">
-                                <label class="am-u-sm-2 am-form-label">是否显示</label>
-                                <div class="am-u-sm-10">
-                                    <div class="am-form-group">
-                                        <label class="am-radio-inline">
-                                            <input type="radio" name="display" id="display" value="1" data-am-ucheck> 显示
-                                        </label>
-                                        <label class="am-radio-inline">
-                                            <input type="radio" name="display" id="hide" value="0" data-am-ucheck> 隐藏
-                                        </label>
-                                    </div>
-                                    <if condition="$articleInfo['display'] eq 1 or $articleInfo['display'] eq ''">
-                                        <script>
-                                            $('#display').attr('checked','true');
-                                        </script>
-                                    <else/>
-                                        <script>
-                                            $('#hide').attr('checked','true');
-                                        </script>
-                                    </if>
-                                </div>
-                            </div>
+                            <!--<div class="am-form-group">-->
+                                <!--<label class="am-u-sm-2 am-form-label">是否显示</label>-->
+                                <!--<div class="am-u-sm-10">-->
+                                    <!--<div class="am-form-group">-->
+                                        <!--<label class="am-radio-inline">-->
+                                            <!--<input type="radio" name="display" id="display" value="1" data-am-ucheck> 显示-->
+                                    <!--</label>-->
+                                    <!--<label class="am-radio-inline">-->
+                                        <!--<input type="radio" name="display" id="hide" value="0" data-am-ucheck> 隐藏-->
+                                    <!--</label>-->
+                                <!--</div>-->
+                                    <!--<if condition="$articleInfo['display'] eq 1 or $articleInfo['display'] eq ''">-->
+                                        <!--<script>-->
+                                            <!--$('#display').attr('checked','true');-->
+                                        <!--</script>-->
+                                    <!--<else/>-->
+                                        <!--<script>-->
+                                            <!--$('#hide').attr('checked','true');-->
+                                        <!--</script>-->
+                                    <!--</if>-->
+                                <!--</div>-->
+                            <!--</div>-->
 
                             <div class="am-form-group">
                                 <div class="am-u-sm-10 am-u-sm-push-2">

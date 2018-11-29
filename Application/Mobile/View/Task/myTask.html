@@ -455,8 +455,13 @@ function recommend(task_id){
         var money = topNum * {:C(TASK_TOP_MONEY)[0]};
         $('#zong').text(money);
     });
+    var r = 0;
     //发布任务界面的置顶 ———— 确定按钮
     function  addRecommend() {
+        r ++ ;
+        if(r > 1){
+            return
+        }
         var id = $('#recommend-time-sure').attr('name');
         var topNum = $("#tuijian").val();
         var money = Number($('#zong').text());
@@ -511,7 +516,12 @@ function recommend(task_id){
             $("#top-time").css('display', 'block');
             $('#top-time-sure').attr('name',task_id);
     }
+    var  p =  0;
     function onTop(){
+        p ++ ;
+        if(p > 1){
+            return
+        }
         var id = $('#top-time-sure').attr('name');
         var topNum  =   $("#zhiding").val();
         var money  = Number($('#zong1').text());

@@ -179,7 +179,7 @@
                     </span>
 
                         <div>
-                            <input type="text" class="pj_input" name="task[price]" id="price" value="<if condition="$taskInfo['id'] gt 0">{:fen_to_yuan($taskInfo['price'])}<else/></if>" placeholder="最低出价{$taskCategoryInfo[0]['limit_money']}元">
+                            <input type="text" class="pj_input" name="task[price]" id="price" value="<if condition="$taskInfo['id'] gt 0">{:fen_to_yuan($taskInfo['price'])}<else/></if>" placeholder="请您填写价格/元">
                         </div>
                         <span class="">元</span>
                     </div>
@@ -189,7 +189,7 @@
                     </span>
 
                         <div>
-                            <input onkeyup="value=value.replace(/[^\d]/g,'')" id="task_num" name="task[task_num]" type="text" class="pj_input" value="<if condition="$taskInfo['id'] gt 0">{$taskInfo['task_num']}<else/></if>" placeholder="最少{$taskCategoryInfo[0]['limit_num']}单">
+                            <input onkeyup="value=value.replace(/[^\d]/g,'')" id="task_num" name="task[task_num]" type="text" class="pj_input" value="<if condition="$taskInfo['id'] gt 0">{$taskInfo['task_num']}<else/></if>" placeholder="请您填写单量">
                         </div>
                         <span class="">单</span>
                     </div>
@@ -380,7 +380,7 @@
             var obj = obj;
             var img_src = $(obj).parent().next('input').val();
             $.post("{:U('oss_delet_object')}",{'img_src':img_src}, function (data) {
-
+                mui.toast('删除成功');
                 if (data.status == 1) {
                     $(obj).parent().parent().remove();
                     count--;
