@@ -455,11 +455,11 @@ function recommend(task_id){
         var money = topNum * {:C(TASK_TOP_MONEY)[0]};
         $('#zong').text(money);
     });
-    var p = 0;
+    var r = 0;
     //发布任务界面的置顶 ———— 确定按钮
     function  addRecommend() {
-        p ++ ;
-        if(p > 1){
+        r ++ ;
+        if(r > 1){
             return
         }
         var id = $('#recommend-time-sure').attr('name');
@@ -516,6 +516,7 @@ function recommend(task_id){
             $("#top-time").css('display', 'block');
             $('#top-time-sure').attr('name',task_id);
     }
+    var p = 0;
     function onTop(){
         $('#top-time-sure').attr('disabled','disabled');
         p ++ ;
