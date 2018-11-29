@@ -50,7 +50,7 @@
         <div id="makemoney-info-item1" class="mui-control-content mui-active">
             <div class="mui-scroll-content">
                 <div class="mui-scroll">
-                    <ul class="mui-table-view make-money-info">
+                    <ul id="list" class="mui-table-view make-money-info">
 
                         <foreach name="taskLogInfo['list']" item="v">
                             <li class="mui-table-view-cell make-money-info-li">
@@ -109,11 +109,11 @@
     var p = 1;
     var type = 5;
     /*跳转链接*/
-    function task(num){
+    function task(type){
+        $('#list').innerHTML =  '';
         p = 1;
-        type = num;
-        window.location.href = "{:U('TaskLog/getTaskLog')}/type/"+num;
-        // loadMore();
+        window.location.href = "{:U('TaskLog/getTaskLog')}/type/"+type +'/p/' + p;
+        loadMore();
     }
     if("{$type}" == 4){
         $('#makemoney-info').hide();
@@ -219,7 +219,7 @@
             }
         });
     }
-    // loadMore();
+    loadMore();
 
 </script>
 </html>
