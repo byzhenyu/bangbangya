@@ -113,21 +113,7 @@
             </div>
         </div>
     </div>
-    <div class="pop-ups">
-        <button id="close" class="iconfont icon-common_icon_close"></button>
-        <div class="invite-code">
-            <h1>提示</h1>
-            <textarea placeholder="请输入投诉理由和内容"></textarea>
-        </div>
-        <div class="pro-btng">
-            <button class="pro-confirm">
-                确定
-            </button>
-            <button class="pro-cancel">
-                取消
-            </button>
-        </div>
-    </div>
+
     <div class="model" id="model">
         <div class="pop-no">
             <h1>不合格原因</h1>
@@ -160,12 +146,8 @@
     <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.iframe-transport.js"></script>
     <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.fileupload.js"></script>
     <script>
-        $(".review-complaint").click(function () {
-            $(".pop-ups").show();
-        });
-        $("#close").click(function () {
-            $(".pop-ups").hide();
-        });
+
+
         function off() {
             $(".model").hide();
         }
