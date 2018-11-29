@@ -224,10 +224,11 @@ class TaskLogController extends UserCommonController{
         $data  = I('post.', 3);
         $data['valid_status']  = 2;
         $data['valid_pic']  = rtrim($data['valid_pic'], ',');
+        $taskModel = D('Home/Task');
         $tasklogInfo = $this->TaskLogModel->where(array('id'=>$data['id']))->find();
         M()->startTrans();
         $tasklogRes = $this->TaskLogModel->where(array('id'=>$data['id']))->save($data);
-        $taskRes = $this->TaskModel->where(array('id' =>$tasklogInfo['task_id']))->setInc('task_num');
+        $taskRes = $taskModel->where(array('id' =>$tasklogInfo['task_id']))->setInc('task_num');
         $ChatModel = D('Home/Chat');
         $CharData['user_id'] = $tasklogInfo['user_id'];
         $CharData['task_user_id'] = UID;
