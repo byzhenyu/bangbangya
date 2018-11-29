@@ -16,6 +16,8 @@ class LoginController extends CommonController {
      * 登录页
      **/
     public function login(){
+        $disable = I('disable', 0 ,'intval');
+        $this->assign('disable',$disable);
         if(is_login()) {
             $this->redirect('Mobile/User/personalCenter');
         } else{
@@ -44,7 +46,7 @@ class LoginController extends CommonController {
         $userInfo = $userModel->doLogin($weiChatData['openid']);
         /*判断账号是否封停*/
         if($userInfo['status'] == 0){
-            $this->redirect('Mobile/User/personalCenter/login/2');
+            $this->redirect('Mobile/Login/login/disable/1');
             exit;
         }
         if ($userInfo['status'] == 1) { //登录成功
