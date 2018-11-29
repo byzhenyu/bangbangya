@@ -125,7 +125,8 @@
                 <img class="up-task" src="__PUBLIC__/mobile/images/commom_btn_upload.png">
                 <img class="re-task" src="__PUBLIC__/mobile/images/commom_btn_giveup.png">
             <elseif condition="($taskDetail['task_log_id'] neq 0) AND ($taskDetail['log_valid_status'] eq 3)" />
-
+            <img class="grab-single" src="__PUBLIC__/mobile/images/commom_btn_grab.png">
+            <img class="discard-task" src="__PUBLIC__/mobile/images/commom_btn_giveup.png">
             <else />
                 <img id="grab-single" src="__PUBLIC__/mobile/images/commom_btn_grab.png">
                 <img id="discard-task" src="__PUBLIC__/mobile/images/commom_btn_giveup.png">
@@ -144,7 +145,7 @@
     mui.init();
 </script>
 <script>
-    $(".fix-content").on('tap', '#discard-task', function () {
+    $(".fix-content").on('tap', '.discard-task', function () {
         var delArray = ['取消','确定'];
         mui.confirm('选择丢弃该任务将不再对您展示，您确定丢弃吗？', '提示', delArray, function(e) {
             if (e.index == 0) {
@@ -162,7 +163,7 @@
     })
 
 
-    $(".fix-content").on('tap', '#grab-single', function () {
+    $(".fix-content").on('tap', '.grab-single', function () {
         $("#grap-order-gray").addClass("mui-popup-backdrop mui-active");
         $("#grap-order-content").css("display","block");
     })
