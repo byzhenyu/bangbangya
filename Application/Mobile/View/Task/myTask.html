@@ -352,6 +352,15 @@ function addPrice(task_id) {
                 if (e.index == 1) {
                     var task_num = $('#add-price-btn').attr('name');
                     var newPrice = e.value;
+                    //判断是否是小数
+                    var y = String(newPrice).indexOf(".") + 1;
+                    if(y > 0) {
+                        //判断有几位小数
+                        if((newPrice.toString().split(".")[1].length) > 2){
+                            mui.toast( '只能保留两位小数/ 分');
+                            return
+                        }
+                    }
                     var price = Number($('#price').text());
                     if(newPrice  <= price){
                         mui.toast('金额必须大于当前单价!');
