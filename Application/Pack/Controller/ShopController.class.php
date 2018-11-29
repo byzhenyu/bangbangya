@@ -97,12 +97,14 @@ class ShopController extends CommonController {
         $taskModel = D('Home/Task');
         $where['t.user_id']  =  $user_id;
         $where['t.end_time']  =  array('gt', NOW_TIME);
+        $where['t.audit_status'] = array('eq', 1);
         $taskField = 't.id, t.price, t.task_num, t.title, c.category_name , c.category_img';
         $taskInfo = $taskModel->getTaskList($where, $taskField);
-        $where['t.end_time'] =  array(array('gt',NOW_TIME - 172800),array('lt',NOW_TIME)) ;
-        $where['t.audit_status'] =  3;
-        $last_taskInfo = $taskModel->getTaskList($where, $taskField);
-        //p($ShopInfo);
+        $pastwhere['t.user_id']  =  $user_id;
+        $pastwhere['t.end_time'] =  array(array('gt',NOW_TIME - 172800),array('lt',NOW_TIME)) ;
+        $pastwhere['t.audit_status'] =  3;
+        $last_taskInfo = $taskModel->getTaskList($pastwhere, $taskField);
+
         $this->assign('ShopInfo', $ShopInfo);
         $this->assign('last_taskInfo', $last_taskInfo['list']);
         $this->assign('taskInfo', $taskInfo['list']);
