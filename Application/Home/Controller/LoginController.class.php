@@ -29,6 +29,7 @@ class LoginController extends CommonController{
         $weiChatData = $this->getWeiChatInfo($weiChat_token['access_token'], $weiChat_token['openid']);
         $userModel = D('Home/User');
         $userInfo = $userModel->doLogin($weiChatData['openid']);
+        /*判断账号是否封停*/
         if($userInfo['status'] == 0){
             $this->redirect('Home/index/index/login/2');
             exit;
