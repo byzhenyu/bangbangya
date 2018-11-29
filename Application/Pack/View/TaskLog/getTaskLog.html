@@ -113,7 +113,7 @@
     function task(num){
         p = 1;
         type = num;
-        window.location.href = "{:U('TaskLog/getTaskLog')}/type/"+num;
+        self.location.href = "{:U('TaskLog/getTaskLog')}/type/"+num;
         loadMore();
     }
     if("{$type}" == 4){
