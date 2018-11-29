@@ -196,7 +196,7 @@ class TaskModel extends Model{
     * @param  UID
     * @return mixed
     */
-    public function getMyTask($where = [],$field = null, $sort = ' t.add_time DESC'){
+    public function getMyTask($where = [],$field = null, $sort = ' t.id DESC'){
           $where['t.status'] = 1;
           $count = $this->alias('t')
                  ->join('__TASK_CATEGORY__ as c on  c.id = t.category_id', 'LEFT')
@@ -227,15 +227,37 @@ class TaskModel extends Model{
                       $taskInfo[$key]['recommend']  = 0;
                       $this->where('id = '.$value['id'])->save(array('recommend' => 0));
                   }
-                  if($value['audit_status'] !== 0){
-                      $taskInfo[$key]['beginNum'] = $taskLogModel ->where('task_id = '.$value['id'].' and valid_status  = 0')->count();
-                      $taskInfo[$key]['sucNum'] = $taskLogModel ->where('task_id = '.$value['id'].'  and valid_status  = 3')->count();
-                      $taskInfo[$key]['auditNum'] = $taskLogModel ->where('task_id = '.$value['id'].'  and valid_status  = 1')->count();
-                  }else{
+
+
+                  if($value['audit_status'] !== 0) {
+                      // 统计任务各状态的数量
                       $taskInfo[$key]['beginNum'] = 0;
                       $taskInfo[$key]['sucNum'] = 0;
                       $taskInfo[$key]['auditNum'] = 0;
+                      $logwhere['task_id'] = array('eq', $value['id']);
+                      $logwhere['valid_status'] = array('in', [0, 1, 3]);
+                      $taskLogInfo = $taskLogModel->where($logwhere)->field('id,valid_status')->select();
+                      if ($taskLogInfo) {
+                          foreach ($taskLogInfo as $k => $v) {
+                              if ($v['valid_status'] == 0) {
+                                  $taskInfo[$key]['beginNum'] += 1;
+                              } else if ($v['valid_status'] == 3) {
+                                  $taskInfo[$key]['sucNum'] += 1;
+                              } else {
+                                  $taskInfo[$key]['auditNum'] += 1;
+                              }
+                          }
+                      }
+
                   }
+//                      $taskInfo[$key]['beginNum'] = $taskLogModel ->where('task_id = '.$value['id'].' and valid_status  = 0')->count();
+//                      $taskInfo[$key]['sucNum'] = $taskLogModel ->where('task_id = '.$value['id'].'  and valid_status  = 3')->count();
+//                      $taskInfo[$key]['auditNum'] = $taskLogModel ->where('task_id = '.$value['id'].'  and valid_status  = 1')->count();
+//                  }else{
+//                      $taskInfo[$key]['beginNum'] = 0;
+//                      $taskInfo[$key]['sucNum'] = 0;
+//                      $taskInfo[$key]['auditNum'] = 0;
+//                  }
                   if($value['audit_status'] == 1 || $value['audit_status'] == 5){
                       $taskRes = $taskLogModel->where(array('task_id'=> $value['id'],'valid_status' => array('NEQ', 0)))->find();
                       if($taskRes){
