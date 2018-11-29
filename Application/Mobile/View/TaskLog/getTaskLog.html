@@ -112,9 +112,9 @@
     function task(num){
         p = 1;
         type = num;
-        mui.openWindow({
-            url:  url + 'Mobile/TaskLog/getTaskLog/type' + num
-        });
+        alert(type);
+        window.location.href = "{:U('TaskLog/getTaskLog')}/type/"+num;
+        alert('aaa');
         loadMore();
     }
     if("{$type}" == 4){

@@ -48,9 +48,7 @@
     <script type="text/javascript">
         /*跳转链接*/
         function task(num){
-            mui.openWindow({
-                url:  url + 'Mobile/TaskLog/getTaskLog/type' + num
-            });
+            window.location.href = "{:U('TaskLog/getTaskLog')}/type/"+num;
         }
 
         /*开始加载*/
