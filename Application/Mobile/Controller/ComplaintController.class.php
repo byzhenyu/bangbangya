@@ -22,6 +22,9 @@ class ComplaintController extends CommonController{
     */
     public function addComplaint(){
          $data = I('post.');
+         if (empty($data['information'])) {
+             $this->ajaxReturn(V(0, '理由不能为空!'));
+         }
          $taskLogModel = D('Home/TaskLog');
          $taskLogInfo = $taskLogModel->field('task_id, user_id, task_price')->where('id = '.$data['tid'])->find();
          unset($data['tid']);
