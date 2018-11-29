@@ -9,8 +9,8 @@ use Think\Model\RelationModel;
 
 /*class ArticleModel extends Model { */
 class ArticleModel extends RelationModel {
-    protected $insertFields = array('title', 'introduce','content', 'thumb_img','display','addtime','sort','keywords','click_count','article_cat_id', 'description', 'agent_id');
-    protected $updateFields = array('article_id','title', 'introduce','content','thumb_img','display','addtime','sort','keywords','click_count','article_cat_id', 'description');
+    protected $insertFields = array('title', 'content', 'display','addtime','sort','keywords','click_count','article_cat_id', 'description', 'agent_id');
+    protected $updateFields = array('article_id','title','content' , 'display','addtime','sort','keywords','click_count','article_cat_id', 'description');
     protected $_validate = array(
         array('title', 'require', '标题不能为空！', 1, 'regex', 3),
         array('title', 'checkTitleLength', '标题不能超过30个字！', 2, 'callback', 3),
