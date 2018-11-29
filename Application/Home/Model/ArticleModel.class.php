@@ -33,7 +33,7 @@ class ArticleModel extends Model {
     }
     //详情
     public function getArticleDetail($where=[],$field='') {
-
+        $where['display'] = 1;
         if ($field == '') {
             $field = $this->selectFields;
         }
