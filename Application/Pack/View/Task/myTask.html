@@ -339,7 +339,8 @@
                 })
             }
     }
-function addPrice(task_id) {
+
+    function addPrice(task_id) {
         var pause = $('#my-release-pause').val();
         if (pause == '开启') {
             $("#add-price-pause").css('display', 'flex');
@@ -353,11 +354,17 @@ function addPrice(task_id) {
                     var task_num = $('#add-price-btn').attr('name');
                     var newPrice = e.value;
                     var price = Number($('#price').text());
+                    var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+                    if (!reg.test(newPrice)) {
+                        mui.toast('请输入有效金额!');
+                        return false;
+                    }
                     if(newPrice  <= price){
                         mui.toast('金额必须大于当前单价!');
                         return
                     }else if(isNaN(newPrice)) {
-                        mui.toast('请你输入数字!');
+
+                        mui.toast('请你输入有效金额!');
                         return
                     }else if(newPrice * task_num > {$total_money}){
                         mui.confirm('您的余额不足!', '您是否去充值?', addPriceArray, function(e) {
@@ -401,7 +408,7 @@ function addPrice(task_id) {
             })
         }
 
-}
+    }
 function soldOut(task_id){
         var pause = $('#my-release-pause').val();
         if(pause == '开启'){
