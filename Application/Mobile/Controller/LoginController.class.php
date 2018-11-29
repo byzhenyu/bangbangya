@@ -42,11 +42,12 @@ class LoginController extends CommonController {
         $weiChatData = $this->getWeiChatInfo($weiChat_token['access_token'], $weiChat_token['openid']);
         $userModel = D('Home/User');
         $userInfo = $userModel->doLogin($weiChatData['openid']);
+        /*判断账号是否封停*/
+        if($userInfo['status'] == 0){
+            $this->redirect('Mobile/User/personalCenter/login/2');
+            exit;
+        }
         if ($userInfo['status'] == 1) { //登录成功
-            if ($userInfo['data']['disabled'] == 0) {
-                $this->redirect('Mobile/index/index/login/2');
-                die;
-            }
             /* 存入session */
             session('user_auth', $userInfo['data']);
             define('UID', session('user_auth')['user_id']);
