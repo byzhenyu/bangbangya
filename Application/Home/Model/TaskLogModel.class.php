@@ -44,12 +44,13 @@ class TaskLogModel extends  Model{
                 ->limit($page['limit'])
                 ->order($sort)
                 ->select();
-        /*判断任务是否失效 过期改变valid_status 2 不合格*/
+        /*判断任务是否失效 直接删除 status 0 不合格*/
+        $taskModel = D('Admin/Task');
         foreach($list as $key=>$value){
             if($value['valid_status'] == 0){
                 if($value['valid_time'] < NOW_TIME){
-                   $this->where('id = '.$value['id'])->save(array('valid_status' => 2));
-                   $list[$key]['valid_status'] =  2;
+                   $this->where('id = '.$value['id'])->save(array('status' => 0));
+                   $taskModel->where('id = '.$value['task_id'])->setInc('task_num');
                 }
             }
             unset($value['valid_time']);
