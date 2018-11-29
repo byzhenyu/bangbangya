@@ -29,11 +29,11 @@ class LoginController extends CommonController{
         $weiChatData = $this->getWeiChatInfo($weiChat_token['access_token'], $weiChat_token['openid']);
         $userModel = D('Home/User');
         $userInfo = $userModel->doLogin($weiChatData['openid']);
+        if($userInfo['status'] == 0){
+            $this->redirect('Home/index/index/login/2');
+            exit;
+        }
         if ($userInfo['status'] == 1) { //登录成功
-            if ($userInfo['data']['disabled'] == 0) {
-                $this->redirect('Home/index/index/login/2');
-                exit;
-            }
             /* 存入session */
             session('user_auth', $userInfo['data']);
             define('UID', session('user_auth')['user_id']);
