@@ -139,6 +139,8 @@
         var login  = {$login};
         if(login == 1){
             mui.toast('登录成功');
+        }else if(login == 2){
+            mui.alert('您的账号已被封停!');
         }
         $('.item-wapper').on('click', 'a', function () {
             if (login != 1) {
