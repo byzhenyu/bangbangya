@@ -511,8 +511,13 @@ function recommend(task_id){
             $("#top-time").css('display', 'block');
             $('#top-time-sure').attr('name',task_id);
     }
+    var p = 0;
     function onTop(){
-        var id = $('#top-time-sure').attr('name');
+        $('#top-time-sure').attr('disabled','disabled');
+        p ++ ;
+        if(p > 1){
+            return
+        }
         var topNum  =   $("#zhiding").val();
         var money  = Number($('#zong1').text());
         if(!is_num(topNum)) {
