@@ -414,6 +414,11 @@
                                 return
                             }
                         }
+                        var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+                        if (!reg.test(newPrice)) {
+                            mui.toast('请输入有效金额!');
+                            return false;
+                        }
                         if(newPrice  <= price){
                             mui.toast('金额必须大于当前单价!');
                             return

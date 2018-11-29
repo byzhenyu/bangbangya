@@ -228,7 +228,7 @@ class TaskModel extends Model{
                       $this->where('id = '.$value['id'])->save(array('recommend' => 0));
                   }
                   if($value['audit_status'] !== 0){
-                      $taskInfo[$key]['beginNum'] = $taskLogModel ->where('task_id = '.$value['id'].' and valid_status  = 1')->count();
+                      $taskInfo[$key]['beginNum'] = $taskLogModel ->where('task_id = '.$value['id'].' and valid_status  = 0')->count();
                       $taskInfo[$key]['sucNum'] = $taskLogModel ->where('task_id = '.$value['id'].'  and valid_status  = 3')->count();
                       $taskInfo[$key]['auditNum'] = $taskLogModel ->where('task_id = '.$value['id'].'  and valid_status  = 1')->count();
                   }else{
