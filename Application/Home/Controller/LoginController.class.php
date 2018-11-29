@@ -15,7 +15,7 @@ class LoginController extends CommonController{
     public function dologin()
     {
         /*测试打开*/
-        $userModel = D('Home/User');
+//        $userModel = D('Home/User');
 //        $userInfo = $userModel->doLogin('olI8S1dXlD9JEWiJOdZff1ICYsC0');
 //        session('user_auth', $userInfo['data']);
 //        define(UID, session('user_auth')['user_id']);
@@ -31,7 +31,8 @@ class LoginController extends CommonController{
         $userInfo = $userModel->doLogin($weiChatData['openid']);
         if ($userInfo['status'] == 1) { //登录成功
             if ($userInfo['data']['disabled'] == 0) {
-                $this->redirect('Home/index/index/login/2');
+                $this->redirect('index/index/login/2');
+                exit;
             }
             /* 存入session */
             session('user_auth', $userInfo['data']);
