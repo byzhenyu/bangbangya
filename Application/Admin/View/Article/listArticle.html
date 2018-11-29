@@ -19,9 +19,9 @@
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs">
                                         <a type="button" class="am-btn am-btn-default am-btn-success" href="{:U('Article/editArticle')}"><span class="am-icon-plus"></span> 新增</a>
-                                        <button type="button" class="am-btn am-btn-default am-btn-danger" onclick="javascript:recycle('chkbId', '确认删除?! 删除后无法恢复!', true)">
-                                            <span class="am-icon-trash-o"></span> 批量删除
-                                        </button>
+                                        <!--<button type="button" class="am-btn am-btn-default am-btn-danger" onclick="javascript:recycle('chkbId', '确认删除?! 删除后无法恢复!', true)">-->
+                                            <!--<span class="am-icon-trash-o"></span> 批量删除-->
+                                        <!--</button>-->
                                     </div>
                                 </div>
                             </div>
@@ -78,8 +78,9 @@
                                             <td class="center">
                                                 {:time_format($v['addtime'])}
                                             </td>
-                                            <td class="center">{:show_dispaly($v['display'])}</td>
                                             <td class="center">{$v['sort']}</td>
+                                            <td class="center">{:show_dispaly($v['display'])}</td>
+
                                             <td class="f-14">
                                                 <div class="tpl-table-black-operation">
                                                     <a href="{:U('Article/editArticle',array('article_id'=>$v['article_id']))}">

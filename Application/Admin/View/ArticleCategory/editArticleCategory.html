@@ -25,43 +25,6 @@
                             </div>
 
                             <div class="am-form-group">
-                                <label class="am-u-sm-2 am-form-label">
-                                    排序 <span class="tpl-form-line-small-title must-input">*</span>
-                                </label>
-                                <div class="am-u-sm-10">
-                                    <div class="row">
-                                        <div class="am-u-sm-3">
-                                            <input type="text" placeholder="从小到大排序" id="sort" name="sort" value="{$catInfo['sort']}">
-                                            <small>请输入整数类型</small>
-                                        </div>
-                                        <div class="am-u-sm-9"></div></div>
-                                </div>
-                            </div>
-
-                            <div class="am-form-group">
-                                <label class="am-u-sm-2 am-form-label">是否显示</label>
-                                <div class="am-u-sm-10">
-                                    <div class="am-form-group">
-                                        <label class="am-radio-inline">
-                                            <input type="radio" name="display" id="display" value="1" data-am-ucheck> 显示
-                                        </label>
-                                        <label class="am-radio-inline">
-                                            <input type="radio" name="display" id="hide" value="0" data-am-ucheck> 隐藏
-                                        </label>
-                                    </div>
-                                    <if condition="$articleInfo['display'] eq 1 or $articleInfo['display'] eq ''">
-                                        <script>
-                                            $('#display').attr('checked','true');
-                                        </script>
-                                        <else/>
-                                        <script>
-                                            $('#hide').attr('checked','true');
-                                        </script>
-                                    </if>
-                                </div>
-                            </div>
-
-                            <div class="am-form-group">
                                 <div class="am-u-sm-10 am-u-sm-push-2">
                                     <input type="hidden" name="article_cat_id" value="{$catInfo['article_cat_id']}">
                                     <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
