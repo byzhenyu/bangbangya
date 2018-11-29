@@ -31,8 +31,7 @@ class LoginController extends CommonController{
         $userInfo = $userModel->doLogin($weiChatData['openid']);
         if ($userInfo['status'] == 1) { //登录成功
             if ($userInfo['data']['disabled'] == 0) {
-                $this->redirect('index/index/login/2');
-                exit;
+                V(3, '您的账号已被停用');
             }
             /* 存入session */
             session('user_auth', $userInfo['data']);
