@@ -34,7 +34,7 @@ class TaskLogModel extends  Model{
                  ->where($where)
                  ->where($map)
                  ->count();
-        $page = get_page($count,10);
+        $page = get_page($count,500);
         $list = $this->alias('l')
                 ->join('__TASK__ as t on t.id = l.task_id', 'LEFT')
                 ->join('__TASK_CATEGORY__ as c on c.id = t.category_id')
