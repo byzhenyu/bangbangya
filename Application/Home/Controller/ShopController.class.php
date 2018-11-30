@@ -97,7 +97,7 @@ class ShopController extends UserCommonController {
         $where['t.user_id']  =  $user_id;
         $where['t.end_time']  =  array('gt', NOW_TIME);
         $where['t.audit_status'] = array('eq', 1);
-        $taskField = 't.id, t.price, t.task_num, t.title, c.category_name , c.category_img';
+        $taskField = 't.id, t.price, t.task_num, t.title,t.discard_id, c.category_name , c.category_img';
         $taskInfo = $taskModel->getTaskList($where, $taskField);
         $pastwhere['t.user_id']  =  $user_id;
         $pastwhere['t.end_time'] =  array(array('gt',NOW_TIME - 172800),array('lt',NOW_TIME)) ;
