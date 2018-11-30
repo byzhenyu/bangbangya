@@ -150,8 +150,8 @@
             });
         }
         function bindAlipay(){
-            var alipay_num = $('#alipay_num').val();
-            var alipay_name = $('#alipay_name').val();
+            var alipay_num = $.trim($('#alipay_num').val());
+            var alipay_name = $.trim($('#alipay_name').val());
             if(alipay_num == ''){
                 mui.toast('请你输入支付宝账号');
                 return;
