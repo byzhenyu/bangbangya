@@ -37,6 +37,9 @@ class LoginController extends CommonController {
 //        $this->redirect('Pack/User/Invitation/user_id/'.UID);
 //        $this->ajaxReturn(V(1, '登录成功',$userInfo));
         $code = $_GET['code'];
+        if (empty($code)) {
+            $this->redirect('Login/login');
+        }
         $weiChat_token = $this->getWeiChat($code);
         $weiChatData = $this->getWeiChatInfo($weiChat_token['access_token'], $weiChat_token['openid']);
         $userModel = D('Home/User');
@@ -100,7 +103,7 @@ class LoginController extends CommonController {
         $where['status'] = array('eq', 1);
 
         $userModel = D('Home/User');
-        $select = 'u.user_id,u.head_pic,u.nick_name,u.invitation_code,u.open_id,s.shop_accounts,s.top_time,s.shop_type,s.partner_time,s.take_task,s.task_count,s.task_num,s.vol,s.appeal_num,s.be_appeal_num,s.complain_num,s.be_complain_num';
+        $select = 'u.user_id,u.head_pic,u.nick_name,u.invitation_code,u.open_id,s.shop_accounts,s.top_time,s.shop_type,s.partner_time,s.take_task,s.task_count,s.task_num,s.vol,s.appeal_num,s.be_appeal_num,s.complain_num,s.be_complain_num,u.display';
         $user = $userModel->getUserInfo(array('open_id'=>$open_id), $select);
 
         unset($where);
@@ -133,6 +136,9 @@ class LoginController extends CommonController {
             }
 
         } else {
+            if ($user['display'] == 0) {
+                $this->ajaxReturn(V(0, '账号被禁用'));
+            }
             session('user_auth', $user);
             define(UID, session('user_auth')['user_id']);
 
