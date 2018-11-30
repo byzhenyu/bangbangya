@@ -140,7 +140,7 @@ class TaskLogModel extends  Model{
           $taskLogDel = $this->where('id = '.$id)->save(array('status' => 0));
           if($taskLogDel) {
               /*task 更新的数据  如果是没有做的任务,更新任务数量*/
-              if($taskLogDel['valid_status']  == 0){
+              if($taskLogDel['valid_status']  == 0 || $taskLogDel['valid_status'] == 1){
                   $where['task_num'] = array('exp', ' task_num + 1');
               }
               if($taskInfo !== ',' || strpos($taskInfo, ','.$taskInfo['user_id'].',')  === false){
