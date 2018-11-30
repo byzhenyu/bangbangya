@@ -384,7 +384,7 @@ class TaskController extends UserCommonController{
     public function taskSold(){
         $taskLogModel = D('Home/TaskLog');
         $where['task_id'] = I('id', 0 ,'intval');
-        $where['valid_status']  = array('in','1,2');
+        $where['valid_status']  = array('in','0,1');
         /*计算正在进行时  和未审核的 钱数*/
         $taskLogInfo = $taskLogModel->field('task_price,user_id, task_id')->where($where)->select();
         $money = 0;
