@@ -233,6 +233,7 @@
             if (data.status == 1) {
                 count-- ;
                 $(obj).parent().remove();
+                mui.toast('删除成功');
                 $('#upload').attr('disabled',false);
             }
         })
