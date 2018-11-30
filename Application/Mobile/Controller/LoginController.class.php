@@ -31,13 +31,13 @@ class LoginController extends CommonController {
     {
           /*测试打开*/
 //        $userModel = D('Home/User');
-//        $userInfo = $userModel->doLogin('olI8S1ebg7dfKQ-Na_44NPixMkjw');
+//        $userInfo = $userModel->doLogin('o_l6z0iWc1b2kklfSu7j3BiqQ2zw');
 //        define(UID, session('user_auth')['user_id']);
-//        $this->redirect('Mobile/User/Invitation/user_id/'.UID);
+//        $this->redirect('Mobile/User/personalCenter/login/1');
 //        $this->ajaxReturn(V(1, '登录成功',$userInfo));
         $code = $_GET['code'];
         if (empty($code)) {
-            $this->redirect('Login/login');
+            $this->redirect('Mobile/Login/login');
         }
         $weiChat_token = $this->getWeiChat($code);
         $weiChatData = $this->getWeiChatInfo($weiChat_token['access_token'], $weiChat_token['openid']);
@@ -45,7 +45,7 @@ class LoginController extends CommonController {
         $userInfo = $userModel->doLogin($weiChatData['unionid']);
         /*判断账号是否封停*/
         if($userInfo['status'] == 0){
-            $this->redirect('Login/login/disable/1');
+            $this->redirect('Mobile/Login/login/disable/1');
             exit;
         }
         if ($userInfo['status'] == 1) { //登录成功
@@ -76,12 +76,12 @@ class LoginController extends CommonController {
                 session('user_auth', $userInfo['data']);
                 define(UID, session('user_auth')['user_id']);
 
-            $this->redirect('User/Invitation');
+            $this->redirect('Mobile/User/Invitation');
             } else {
-                $this->redirect('Login/login/disable/2');
+                $this->redirect('Mobile/Login/login/disable/2');
             }
         }
-        $this->redirect('User/personalCenter/login/1');
+        $this->redirect('Mobile/User/personalCenter/login/1');
     }
     /**
      * 退出登录

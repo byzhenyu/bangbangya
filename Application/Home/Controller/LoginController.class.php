@@ -23,7 +23,7 @@ class LoginController extends CommonController{
 //        $this->ajaxReturn(V(1, '登录成功',$userInfo));
         $code = $_GET['code'];
         if (empty($code)) {
-            $this->redirect('Index/Index');
+            $this->redirect('Index/index');
         }
         $weiChat_token = $this->getWeiChat($code);
         $weiChatData = $this->getWeiChatInfo($weiChat_token['access_token'], $weiChat_token['openid']);
@@ -31,7 +31,7 @@ class LoginController extends CommonController{
         $userInfo = $userModel->doLogin($weiChatData['unionid']);
         /*判断账号是否封停*/
         if($userInfo['status'] == 0){
-            $this->redirect('Home/Index/Index/login/2');
+            $this->redirect('Home/index/index/login/2');
             exit;
         }
         if ($userInfo['status'] == 1) { //登录成功
@@ -61,12 +61,11 @@ class LoginController extends CommonController{
                 $userInfo = $userModel->doLogin($weiChatData['unionid']);
                 session('user_auth', $userInfo['data']);
                 define(UID, session('user_auth')['user_id']);
-                $this->redirect('Home/Index/Index/login/1');
             } else {
-                $this->redirect('Home/Index/Index/login/3');
+                $this->redirect('Home/Index/index/login/3');
             }
         }
-        $this->redirect('Home/Index/Index/login/1');
+        $this->redirect('Home/Index/index/login/1');
     }
     /**
      * 退出登录
