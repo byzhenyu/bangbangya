@@ -38,7 +38,8 @@ class TaskController extends CommonController {
         $taskModel = D('Admin/Task');
         if (IS_POST) {
             $data = I('post.', '');
-
+            $price= I('price', 0, 'intval');
+            $task_num= I('task_num', 0, 'intval');
             if($data['audit_status'] == 0){
                 $this->ajaxReturn(V(0, '请您审核!'));
             }
@@ -52,7 +53,16 @@ class TaskController extends CommonController {
                 if ($data['audit_status'] == 1) {
                     $userModel = M('User');
                     $total_money = $userModel->where(array('user_id'=>$data['user_id']))->getField('total_money');
-                    $feeMoney = $data['total_price'] - ($data['price'] * $data['task_zong']);
+                    $shopInfo = M('Shop')->where(array('user_id'=>$data['user_id']))->field('shop_type,partner_time')->find();
+                    $orderFee = C('BASE_ORDER_FEE');
+                    if ($shopInfo['partner_time'] > NOW_TIME && $shopInfo['shop_type'] > 0) {
+                        $vipFee = M('Vip_Level')->where(array('type'=>$shopInfo['shop_type'],'status'=>1))->getField('order_fee');
+                        if ($vipFee) {
+                            $orderFee = $vipFee;
+                        }
+                    }
+
+                    $feeMoney = $price * $task_num * $orderFee / 100;
                     if ($feeMoney > $total_money) {
                         M()->rollback();
                         $this->ajaxReturn(V(0, '用户余额不足'));
@@ -63,6 +73,7 @@ class TaskController extends CommonController {
                         M()->rollback();
                         $this->ajaxReturn(V(0, '扣除手续费失败'));
                     }
+                    account_log($data['user_id'], $feeMoney, 3, '任务手续费扣除', $id);
                     $pushRes = D('Common/Push')->push("任务处理结果", $data['user_id'], '任务审核通过', '任务名称: '.$id, '通知类型： 代办', $data['audit_info']);
                     if ($pushRes['status'] == 0) {
                         M()->rollback();
