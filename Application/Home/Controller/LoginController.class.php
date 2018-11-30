@@ -61,7 +61,6 @@ class LoginController extends CommonController{
                 $userInfo = $userModel->doLogin($weiChatData['unionid']);
                 session('user_auth', $userInfo['data']);
                 define(UID, session('user_auth')['user_id']);
-                $this->redirect('Index/index/login/1');
             } else {
                 $this->redirect('Home/Index/index/login/3');
             }
