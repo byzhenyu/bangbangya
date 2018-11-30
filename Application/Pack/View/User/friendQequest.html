@@ -19,8 +19,8 @@
             <div class="friends-invit-id">
                 <label>{$userInfo['nick_name']}</label>
                 <p>您的邀请码（ID）</p>
-                <span>{$userInfo['invitation_code']}</span>
-                <button>复制</button>
+                <span  id="code">{$userInfo['invitation_code']}</span>
+                <button onclick="copyUrl2()">复制</button>
             </div>
             <div class="friends-invit-qr">
                 <img src="__PUBLIC__/mobile/images/QR-code.png">
@@ -55,6 +55,18 @@
 <script src="__PUBLIC__/mobile/js/mui.min.js"></script>
 <script type="text/javascript" charset="utf-8">
     mui.init();
+    function copyUrl2()
+    {
+        var Url2=document.getElementById("code").innerText;
+        var oInput = document.createElement('input');
+        oInput.value = Url2;
+        document.body.appendChild(oInput);
+        oInput.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        oInput.className = 'oInput';
+        oInput.style.display='none';
+        mui.toast('复制成功');
+    }
 </script>
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
