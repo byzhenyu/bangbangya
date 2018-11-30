@@ -38,7 +38,7 @@
                                 ￥{:fen_to_yuan($taskDetail['shop_accounts'])}
                             </div>
                         </if>
-                        <div onclick="shopInfo({$taskDetail['user_id']})" class="jd_store">店铺</div>
+                        <div onclick="shopInfo({$taskDetail['task_user_id']})" class="jd_store">店铺</div>
                     </div>
                     <div class="jd_info">
                         <div class="jd_utitle">编号</div>
@@ -84,7 +84,7 @@
                     </div>
                     <div>
                         <volist name="taskDetail['check_info']" id="v" key="k">
-                            <img src="{$v}">
+                            <a href="{$v}" target="_Blank"><img src="{$v}"></a>
                         </volist>
                     </div>
                     <div class="jd_ubottom">
@@ -102,7 +102,7 @@
                         </div>
                         <div class="jd_ewms">
                             <div class="jd_ewm">
-                                <img src="{$v['step_img']}">
+                                <a href="{$v['step_img']}" target="_Blank"><img src="{$v['step_img']}"></a>
                             </div>
                         </div>
                     </volist>
