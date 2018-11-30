@@ -56,17 +56,19 @@ class TaskController extends CommonController {
                     $shopInfo = M('Shop')->where(array('user_id'=>$data['user_id']))->field('shop_type,partner_time')->find();
                     $orderFee = C('BASE_ORDER_FEE');
                     if ($shopInfo['partner_time'] > NOW_TIME && $shopInfo['shop_type'] > 0) {
-                        $vipFee = M('Vip_Level')->where(array('type'=>$shopInfo['shop_type'],'status'=>1))->getField('order_fee');
+                        $vipFee = M('VipLevel')->where(array('type'=>$shopInfo['shop_type'],'status'=>1))->getField('order_fee');
                         if ($vipFee) {
                             $orderFee = $vipFee;
                         }
                     }
 
                     $feeMoney = $price * $task_num * $orderFee / 100;
+
                     if ($feeMoney > $total_money) {
                         M()->rollback();
                         $this->ajaxReturn(V(0, '用户余额不足'));
                     }
+                    p($feeMoney);die();
                     $res = $userModel->where(array('user_id'=>$data['user_id']))->setDec('total_money',$feeMoney);
 
                     if ($res === false) {
