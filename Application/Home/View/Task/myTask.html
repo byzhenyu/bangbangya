@@ -9,6 +9,16 @@
               left: 8em;
              display:none;
          }
+         .check-more {
+             width: 310px;
+             height: 40px;
+             border: 1px solid #6F75FE;
+             color: #6F75FE;
+             font-size: 20px;
+             display: block;
+             margin: 60px auto;
+             border-radius: 6px;
+         }
     </style>
 </block>
 <block name="body">
@@ -115,7 +125,9 @@
                         </div>
                     </li>
                 </volist>
-
+                <if condition="count($taskList) eq 0">
+                    <button class="check-more" id="no" style="">没有更多了</button>
+                </if>
             </ul>
         </div>
     </div>

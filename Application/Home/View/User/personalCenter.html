@@ -112,10 +112,16 @@
         var login  = {$login};
         if(login == 1){
             mui.toast('登录成功');
+            setTimeout(function () {
+                window.location.href =  url + 'Home/User/personalCenter';
+            },1000);
         }
         var id_band  = {$id_band};
         if(id_band == 1){
             mui.alert('请您绑定支付宝');
+            setTimeout(function () {
+                window.location.href =  url + 'Home/User/personalCenter';
+            },1000);
         }
         mui.init();
         function btn(){

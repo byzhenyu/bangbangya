@@ -307,8 +307,14 @@
     var login  = "{$login}";
     if(login == 1){
         mui.toast('登录成功');
+        setTimeout(function () {
+            window.location.href =  url + 'Mobile/User/personalCenter';
+        },1000);
     }else if(login == 2){
         mui.alert('您的账号已被封停!');
+        setTimeout(function () {
+            window.location.href =  url + 'Mobile/User/personalCenter';
+        },1000);
     }
 </script>
 </html>

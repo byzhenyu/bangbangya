@@ -64,8 +64,7 @@ class TaskLogController extends UserCommonController{
         if($result)
         {
             $this->ajaxReturn(V(1,'删除成功'));
-        }
-        else{
+        } else{
             $this->ajaxReturn(V(0, '删除失败'));
         }
     }
