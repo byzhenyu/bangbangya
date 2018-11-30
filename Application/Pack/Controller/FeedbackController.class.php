@@ -9,22 +9,27 @@
  * @CreateBy       PhpStorm
  */
 namespace Pack\Controller;
-use Common\Controller\CommonController;
-class FeedbackController extends CommonController {
+use Common\Controller\UserCommonController;
+class FeedbackController extends UserCommonController {
     public function _initialize() {
         $this->Feedback = D("Home/FeedBack");
     }
-      public function feedback(){
-          if(IS_POST){
-                 $data = I('post.', 1);
-                 $data['user_id'] = UID;
-                 $insRes = $this->Feedback->add($data);
-                 if($insRes){
-                     $this->ajaxReturn(V(1,'反馈成功'));
-                 }else{
-                     $this->ajaxReturn(V(2,$this->Feedback->getDbError()));
-                 }
-          }
-          $this->display();
-      }
+
+    public function feedback(){
+        if(IS_POST){
+            $data = I('post.', 1);
+            $data['user_id'] = UID;
+            $feedBackModel = D('Home/FeedBack');
+            if ($feedBackModel->create($data) ===false) {
+                $this->ajaxReturn(V(0, $feedBackModel->getError()));
+            }
+            $insRes = $this->Feedback->add($data);
+            if($insRes){
+                $this->ajaxReturn(V(1,'反馈成功'));
+            }else{
+                $this->ajaxReturn(V(0, '保存失败'));
+            }
+        }
+        $this->display();
+    }
 }

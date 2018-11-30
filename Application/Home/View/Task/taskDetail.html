@@ -7,7 +7,7 @@
             position: absolute;
             width: 100px;
             height: 150px;
-            bottom: 38%;
+            bottom: 30%;
             right: 5%;
             z-index: 5;
         }
@@ -96,6 +96,11 @@
             z-index: 998;
             opacity: 1;
         }
+        .check-img .check-item {
+            width: 45%;
+            height: auto;
+            display: inline-block;
+        }
         .check-img img {
             max-width: 200px;
             text-align: center;
@@ -182,7 +187,10 @@
                     <div class="check-img">
 
                         <volist name="taskDetail['check_info']" id="v" key="k">
-                            <img src="{$v}">
+                            <div class="check-item">
+                                <img src="{$v}">
+                            </div>
+
                         </volist>
                     </div>
                     <div class="jd_ubottom">

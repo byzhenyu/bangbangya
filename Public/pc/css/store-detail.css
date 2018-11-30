@@ -229,6 +229,7 @@
 }
 
 .jd_store {
+    height: 30px;
     text-align: center;
     padding-top: 3px;
     color: #6F75FE;
@@ -259,6 +260,7 @@
 
 .jd_uyanz div img {
     margin: 20px 40px 0px 40px;
+    max-width: 200px;
 }
 
 .js_op {
@@ -303,7 +305,11 @@
 }
 
 .jd_ewm {
+    margin: 0 auto;
     margin-top: 20px;
+}
+.jd_ewm img {
+    max-width: 200px;
 }
 
 .jd_uop {
