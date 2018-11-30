@@ -22,11 +22,31 @@ class TaskModel extends Model{
         array('end_time', 'require', '任务截止时间不能为空！', 1, 'regex', 3),
         array('end_time', 'checkEndTime', '任务截止时间已过期！', 1, 'callback', 3),
         array('price', 'require', '任务价格不能为空！', 1, 'regex', 3),
+        array('price,category_id', 'checkLimitMoney', '价格不能低于最低价', 1, 'callback', 3),
         array('task_num', 'number', '任务数量必须是一个数字！', 1, 'regex', 3),
+        array('task_num,category_id', 'checkLimitNum', '不能低于最低任务数量', 1, 'callback', 3),
         array('validate_words', 'checkTitleLength', '文字验证说明30个字以内', 2, 'callback', 3),
         array('remark', 'checkRemarkLength', '备注150个字以内', 2, 'callback', 3),
     );
 
+    protected function checkLimitMoney($data) {
+        $where['id'] = $data['category_id'];
+        $limitmoney = M('TaskCategory')->where($where)->getField('limit_money');
+        if ($data['price'] < $limitmoney) {
+            return false;
+        }else {
+            return true;
+        }
+    }
+    protected function checkLimitNum($data) {
+        $where['id'] = $data['category_id'];
+        $limitmoney = M('TaskCategory')->where($where)->getField('limit_num');
+        if ($data['price'] < $limitmoney) {
+            return false;
+        }else {
+            return true;
+        }
+    }
     protected function checkTitleLength($data) {
         $length = mb_strlen($data, 'utf-8');
         if ($length > 30) {
