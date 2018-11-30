@@ -25,7 +25,7 @@ class ShopController extends CommonController {
         $taskModel = D('Home/Task');
         $where['t.user_id']  =  $user_id;
         $where['t.end_time']  =  array('gt', NOW_TIME);
-        $taskField = 't.id, t.price, t.task_num, t.title, c.category_name , c.category_img';
+        $taskField = 't.id, t.price, t.task_num, t.title, t.discard_id, c.category_name , c.category_img';
         $taskInfo = $taskModel->getTaskList($where, $taskField);
         $where['t.end_time'] =  array(array('gt',NOW_TIME - 172800),array('lt',NOW_TIME)) ;
         $where['t.audit_status'] =  3;
