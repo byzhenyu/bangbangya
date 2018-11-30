@@ -14,7 +14,7 @@ class FeedBackModel extends Model{
     protected $insertFields = array('comment', 'user_id', 'mobile', 'create_time');
     protected $_validate = array(
 
-        array('comment', 'require', '发布内容不能为空！', 1, 'regex', 3),
+        array('comment', 'require', '反馈信息不能为空！', 1, 'regex', 3),
         array('comment', '1,255', '反馈信息长度在1-255字符之间', 1, 'length', 3)
     );
     protected function _before_insert(&$data, $option){
