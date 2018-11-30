@@ -28,7 +28,7 @@ class LoginController extends CommonController{
         $weiChat_token = $this->getWeiChat($code);
         $weiChatData = $this->getWeiChatInfo($weiChat_token['access_token'], $weiChat_token['openid']);
         $userModel = D('Home/User');
-        $userInfo = $userModel->doLogin($weiChatData['openid']);
+        $userInfo = $userModel->doLogin($weiChatData['unionid']);
         /*判断账号是否封停*/
         if($userInfo['status'] == 0){
             $this->redirect('Home/index/index/login/2');
@@ -43,7 +43,7 @@ class LoginController extends CommonController{
                 'head_pic' => $weiChatData['headimgurl'],
                 'nick_name' => $weiChatData['nickname'],
                 'head_pic' => $weiChatData['headimgurl'],
-                'open_id' => $weiChatData['openid'],
+                'open_id' => $weiChatData['unionid'],
                 'register_time' => NOW_TIME
             );
             $userid = $userModel->add($userData);
@@ -58,13 +58,15 @@ class LoginController extends CommonController{
                     'add_time' => NOW_TIME
                 );
                 D('Home/Shop')->add($shopDate);
-                $userInfo = $userModel->doLogin($weiChatData['openid']);
+                $userInfo = $userModel->doLogin($weiChatData['unionid']);
                 session('user_auth', $userInfo['data']);
                 define(UID, session('user_auth')['user_id']);
+                $this->redirect('Index/Index/login/1');
+            } else {
+                $this->redirect('Home/Index/Index/login/3');
             }
-            $this->redirect('Home/index/index/login/1');
         }
-        $this->redirect('Home/index/index/login/1');
+        $this->redirect('Home/Index/Index/login/1');
     }
     /**
      * 退出登录
