@@ -26,6 +26,6 @@ class IndexController extends CommonController {
            $this->assign('bannerList', $bannerList);
            $this->assign('userList',$userList);
            $this->assign('login',$login);
-       	   $this->display();
+       	   $this->display('index');
        }
 }
