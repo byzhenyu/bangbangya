@@ -87,7 +87,7 @@ class TaskModel extends Model{
 
         foreach ($list  as  $key=> $value) {
             if (strpos($value['discard_id'], ',' . UID . ',') !== false) {
-                    unset($list[$key]);
+
             } else {
                 $new[] = $value;
             }
