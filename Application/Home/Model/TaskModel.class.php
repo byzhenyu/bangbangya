@@ -64,9 +64,12 @@ class TaskModel extends Model{
 //        $map['t.end_time'] = array('gt', NOW_TIME); //未结束
         $map['t.is_show'] = array('eq', 1);//已发布
 //        $map['t.audit_status'] = array('eq', 1);//审核通过
+        $map['u.status'] = array('eq', 1);
+        $map['u.disabled'] = array('eq', 1);
         $count = $this->alias('t')
               ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')
               ->join('__SHOP__ as s on s.user_id = t.user_id')
+              ->join('__USER__ as u on t.user_id = u.user_id')
               ->where($where)
               ->where($map)
               ->count();
@@ -75,6 +78,7 @@ class TaskModel extends Model{
         $list = $this->alias('t')
               ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')
               ->join('__SHOP__ as s on s.user_id = t.user_id')
+              ->join('__USER__ as u on t.user_id = u.user_id')
               ->field($field)
               ->where($map)
               ->where($where)
