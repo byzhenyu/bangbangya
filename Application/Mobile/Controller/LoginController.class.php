@@ -81,7 +81,7 @@ class LoginController extends CommonController {
                 $this->redirect('Mobile/Login/login/disable/2');
             }
         }
-        $this->redirect('User/personalCenter/login/1');
+        $this->redirect('Mobile/User/personalCenter/login/1');
     }
     /**
      * 退出登录
