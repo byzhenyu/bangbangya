@@ -49,7 +49,7 @@ class RechargeModel extends Model{
 
         $invitation_uid  =  is_inviter($recharge['user_id']);
         if($invitation_uid  != 0){
-            inviterBonus($recharge['user_id'], $invitation_uid ,fen_to_yuan($recharge['recharge_money']));
+            inviterBonus($recharge['user_id'], $invitation_uid ,$recharge['recharge_money']);
         }
         $accountRes = account_log($recharge['user_id'], $recharge['recharge_money'] ,0,'充值',$out_trade_no);
         if($rechargeRes === false || $userRes === false){
