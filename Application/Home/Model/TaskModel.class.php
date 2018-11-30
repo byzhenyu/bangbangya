@@ -40,8 +40,8 @@ class TaskModel extends Model{
     }
     protected function checkLimitNum($data) {
         $where['id'] = $data['category_id'];
-        $limitmoney = M('TaskCategory')->where($where)->getField('limit_num');
-        if ($data['price'] < $limitmoney) {
+        $limitnum = M('TaskCategory')->where($where)->getField('limit_num');
+        if ($data['task_num'] < $limitnum) {
             return false;
         }else {
             return true;
