@@ -62,7 +62,7 @@ class TaskController extends CommonController {
                         }
                     }
 
-                    $feeMoney = $price * $task_num * $orderFee / 100;
+                    $feeMoney = $price * $task_num * ($orderFee / 100);
 
                     if ($feeMoney > $total_money) {
                         M()->rollback();
