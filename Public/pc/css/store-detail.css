@@ -260,6 +260,7 @@
 
 .jd_uyanz div img {
     margin: 20px 40px 0px 40px;
+    max-width: 200px;
 }
 
 .js_op {
