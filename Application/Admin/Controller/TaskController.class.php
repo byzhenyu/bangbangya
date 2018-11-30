@@ -68,7 +68,7 @@ class TaskController extends CommonController {
                         M()->rollback();
                         $this->ajaxReturn(V(0, '用户余额不足'));
                     }
-                    p($feeMoney);die();
+
                     $res = $userModel->where(array('user_id'=>$data['user_id']))->setDec('total_money',$feeMoney);
 
                     if ($res === false) {
