@@ -19,7 +19,7 @@ class LoginController extends CommonController {
         $disable = I('disable', 0 ,'intval');
         $this->assign('disable',$disable);
         if(is_login()) {
-            $this->redirect('Mobile/User/personalCenter');
+            $this->redirect('User/personalCenter');
         } else{
             $this->display();
         }
@@ -42,10 +42,10 @@ class LoginController extends CommonController {
         $weiChat_token = $this->getWeiChat($code);
         $weiChatData = $this->getWeiChatInfo($weiChat_token['access_token'], $weiChat_token['openid']);
         $userModel = D('Home/User');
-        $userInfo = $userModel->doLogin($weiChatData['openid']);
+        $userInfo = $userModel->doLogin($weiChatData['unionid']);
         /*判断账号是否封停*/
         if($userInfo['status'] == 0){
-            $this->redirect('Mobile/Login/login/disable/1');
+            $this->redirect('Login/login/disable/1');
             exit;
         }
         if ($userInfo['status'] == 1) { //登录成功
@@ -57,27 +57,31 @@ class LoginController extends CommonController {
                 'head_pic' => $weiChatData['headimgurl'],
                 'nick_name' => $weiChatData['nickname'],
                 'head_pic' => $weiChatData['headimgurl'],
-                'open_id' => $weiChatData['openid'],
+                'open_id' => $weiChatData['unionid'],
                 'register_time' => NOW_TIME
             );
             $userid = $userModel->add($userData);
             /*生成邀请码*/
+            if ($userid) {
             $invitation_code = $userModel->createCode($userid);
             $userModel->where('user_id = '.$userid)->setField('invitation_code',$invitation_code);
-            if ($userid) {
+
                 $shopDate = array(
                     'user_id' => $userid,
                     'shop_name' => $weiChatData['nickname'] . '的店铺',
                     'shop_img' => $weiChatData['headimgurl']
                 );
-                D('Home/Shop')->add($shopDate);
-                $userInfo = $userModel->doLogin($weiChatData['openid']);
+                $res = D('Home/Shop')->add($shopDate);
+                $userInfo = $userModel->doLogin($weiChatData['unionid']);
                 session('user_auth', $userInfo['data']);
                 define(UID, session('user_auth')['user_id']);
+
+            $this->redirect('User/Invitation');
+            } else {
+                $this->redirect('Login/login/disable/2');
             }
-            $this->redirect('Mobile/User/Invitation');
         }
-        $this->redirect('Mobile/User/personalCenter/login/1');
+        $this->redirect('User/personalCenter/login/1');
     }
     /**
      * 退出登录

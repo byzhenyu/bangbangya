@@ -23,7 +23,7 @@ class UserModel extends Model
     public function doLogin($open_id,$where=[], $field=null){
         if ($open_id == '' || $open_id == null) return false;
         $where['u.status'] = 1; // 用户未被逻辑删除
-        $where['u.open_id'] = $open_id; // 用户未被逻辑删除
+        $where['u.open_id'] = $open_id; // 用户unionid
         /* 获取用户数据 */
         $user = $this->alias('u')
              ->join('__SHOP__ as s on s.user_id = u.user_id','LEFT')
@@ -37,9 +37,8 @@ class UserModel extends Model
                 unset($user['password']);
                 $user['token'] = $this->_createTokenAndSave($user); //生成登录token并保存
                 return V(1, '登录成功', $user);
-        } else {
-            return V(2, '登录名或者密码错误');
         }
+        return V(2, '账号不存在');
 
     }
     /**
