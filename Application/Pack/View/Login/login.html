@@ -98,7 +98,7 @@
 
      function getWechatLoginInfo(json_data) {
          $.post("{:U('thirdLogin')}", json_data,function (data) {
-
+             alert(data.info);
              if (data.status == 1) {
                  if (/(Android)/i.test(navigator.userAgent)) {
                      window.AndroidJS.sendUserId(data.data);
@@ -106,8 +106,6 @@
 
                  }
 
-             } else {
-                 alert(data.info);
              }
 
          })
