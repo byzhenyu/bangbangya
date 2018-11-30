@@ -43,7 +43,7 @@ class LoginController extends CommonController {
         $weiChat_token = $this->getWeiChat($code);
         $weiChatData = $this->getWeiChatInfo($weiChat_token['access_token'], $weiChat_token['openid']);
         $userModel = D('Home/User');
-        $userInfo = $userModel->doLogin($weiChatData['openid']);
+        $userInfo = $userModel->doLogin($weiChatData['unionID']);
         /*判断账号是否封停*/
         if($userInfo['status'] == 0){
             $this->redirect('Mobile/Login/login/disable/1');
