@@ -214,8 +214,7 @@ class TaskLogController extends UserCommonController {
              $ShopModel->where('user_id = '.UID)->setInc('vol');
              $taskUser = array(
                  'task_suc_money' => array('exp','task_suc_money + '.$tasklogInfo['task_price']),
-                 'task_zong' => array('exp','task_zong + '.$tasklogInfo['task_price']),
-                 'total_money' => array('exp', 'total_money +'.$tasklogInfo['task_price'] ),
+                 'total_money' => array('exp','total_money + '.$tasklogInfo['task_price'])
              );
              $userModel->where('user_id = '.$tasklogInfo['user_id'])->save($taskUser);
              account_log($tasklogInfo['user_id'], $tasklogInfo['task_price'], 4,'完成任务', $tasklog_id);
