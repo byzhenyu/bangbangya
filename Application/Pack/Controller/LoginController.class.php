@@ -19,7 +19,7 @@ class LoginController extends CommonController {
         $disable = I('disable', 0 ,'intval');
         $this->assign('disable',$disable);
         if(is_login()) {
-            $this->redirect('User/personalCenter');
+            $this->redirect('Pack/User/personalCenter');
         } else{
             $this->display();
         }
@@ -38,7 +38,7 @@ class LoginController extends CommonController {
 //        $this->ajaxReturn(V(1, '登录成功',$userInfo));
         $code = $_GET['code'];
         if (empty($code)) {
-            $this->redirect('Login/login');
+            $this->redirect('Pack/Login/login');
         }
         $weiChat_token = $this->getWeiChat($code);
         $weiChatData = $this->getWeiChatInfo($weiChat_token['access_token'], $weiChat_token['openid']);
@@ -46,7 +46,7 @@ class LoginController extends CommonController {
         $userInfo = $userModel->doLogin($weiChatData['openid']);
         /*判断账号是否封停*/
         if($userInfo['status'] == 0){
-            $this->redirect('Login/login/disable/1');
+            $this->redirect('Pack/Login/login/disable/1');
             exit;
         }
         if ($userInfo['status'] == 1) { //登录成功
@@ -76,9 +76,9 @@ class LoginController extends CommonController {
                 session('user_auth', $userInfo['data']);
                 define(UID, session('user_auth')['user_id']);
             }
-            $this->redirect('User/Invitation');
+            $this->redirect('Pack/User/Invitation');
         }
-        $this->redirect('User/personalCenter/login/1');
+        $this->redirect('Pack/User/personalCenter/login/1');
     }
     /**
      * 退出登录
