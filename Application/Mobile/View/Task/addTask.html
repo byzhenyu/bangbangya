@@ -122,8 +122,14 @@
             <div class="task-type-row">
             <foreach name="taskCategoryInfo" item="v" key="k">
                 <div class="task-type-single">
-                    <input data-money="{$v.limit_money}" data-num="{$v.limit_num}" name="task[category_id]" type="radio" {$v['id'] == $taskInfo['category_id'] ? 'checked':''} value="{$v.id}">
+                    <if condition="($id eq 0) AND($k eq 0) ">
+                        <input class="cate_{$k}" data-money="{$v.limit_money}" data-num="{$v.limit_num}" name="task[category_id]" type="radio" checked value="{$v.id}">
+                        <else/>
+                        <input class="cate_{$k}" data-money="{$v.limit_money}" data-num="{$v.limit_num}" name="task[category_id]" type="radio" {$v['id'] == $taskInfo['category_id'] ? 'checked':''} value="{$v.id}">
+                    </if>
+
                     <label>{$v.category_name}</label>
+
                 </div>
             </foreach>
             </div>
@@ -166,7 +172,7 @@
                    <div class="task-min">
                        <div>
                            <p>出价</p>
-                           <span>最低出价<i id="limit_money">{$taskCategoryInfo[0]['limit_money']}</i>元</span>
+                           <span>最低出价<i id="limit_money">{$limitData['limit_money']}</i>元</span>
                        </div>
                    </div>
                     <div>
@@ -179,7 +185,7 @@
                     <div class="task-min">
                         <div>
                             <p>数量</p>
-                            <span>最少<i id="limit_num">{$taskCategoryInfo[0]['limit_num']}</i>单</span>
+                            <span>最少<i id="limit_num">{$limitData['limit_num']}</i>单</span>
                         </div>
                     </div>
                     <div>

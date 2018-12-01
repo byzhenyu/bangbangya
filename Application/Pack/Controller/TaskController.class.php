@@ -103,10 +103,10 @@ class TaskController extends UserCommonController {
         $this->display();
     }
     /**
-    * @desc 发布任务
-    * @param $POST['data']
-    * @return mixed       发布任务只需要判断用户现在的余额  不冻结资金 改动   用户审批一个扣一个的钱
-    */
+     * @desc 发布任务
+     * @param $POST['data']
+     * @return mixed       发布任务只需要判断用户现在的余额  不冻结资金 改动   用户审批一个扣一个的钱
+     */
     public function addTask(){
         $id = I('id', 0 ,'intval');
         $where['user_id'] = UID;
@@ -116,6 +116,7 @@ class TaskController extends UserCommonController {
         $taskCategoryField = 'id, category_name, limit_num, limit_money';
         /*任务分类信息*/
         $taskCategoryInfo = $taskCategoryModel->getTaskCategory(array('status'=>1), $taskCategoryField);
+
 
         /*用户总金额金额*/
         $userInfo  = D('Home/User')->getUserInfoWithShop(array('u.user_id'=>UID), 'shop_type,partner_time, total_money');
@@ -188,9 +189,16 @@ class TaskController extends UserCommonController {
 
         }
 
+        $limitData = $taskCategoryInfo[0];
+
         $taskInfo = $taskModel->getMyTaskDetail($id);
+        if ($id > 0) {
+            $limitData = $taskCategoryModel->where(array('id'=>$taskInfo['category_id']))->field('limit_money,limit_num')->find();         $limitData['limit_money'] = fen_to_yuan($limitData['limit_money']);
+        }
+
         $base = $taskInfo['step_info'] ? count($taskInfo['step_info']) : 0;
         $this->count = $taskInfo['check_info'] ? count($taskInfo['check_info']) : 0;
+        $this->assign('limitData',$limitData);
         $this->base = $base;
         $this->assign('id', $id);
         $this->assign('orderFee',$orderFee);
