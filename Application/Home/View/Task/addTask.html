@@ -81,17 +81,10 @@
                     </span>
                     <div class="pj_iradio">
                         <div>
-                            <volist name="taskCategoryInfo" id="v" key="k">
-                                <if condition="($id eq 0) AND($k eq 0) ">
-                                    <div>
-                                        <input data-money="{$v.limit_money}" data-num="{$v.limit_num}" name="task[category_id]" type="radio" checked value="{$v.id}">{$v.category_name}
-                                    </div>
-                                    <else/>
-                                    <div>
-                                        <input data-money="{$v.limit_money}" data-num="{$v.limit_num}" name="task[category_id]" type="radio" {$v['id'] == $taskInfo['category_id'] ? 'checked':''} value="{$v.id}">{$v.category_name}
-                                    </div>
-                                </if>
-
+                            <volist name="taskCategoryInfo" id="v">
+                                <div>
+                                    <input data-money="{$v.limit_money}" data-num="{$v.limit_num}" name="task[category_id]" type="radio" {$v['id'] == $taskInfo['category_id'] ? 'checked':''} value="{$v.id}">{$v.category_name}
+                                </div>
                             </volist>
 
                         </div>
