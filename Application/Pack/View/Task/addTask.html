@@ -202,7 +202,7 @@
                     </div>
                 </div>
                 <div>
-                    <input disabled="disabled" type="number" value="{:fen_to_yuan($taskInfo['total_price'])}" id="total_price">
+                    <input disabled="disabled" type="number" value="<if condition="$taskInfo['id'] gt 0">{:fen_to_yuan($taskInfo['price'])}<else/></if> " id="total_price">
                     <p>元</p>
                 </div>
             </div>

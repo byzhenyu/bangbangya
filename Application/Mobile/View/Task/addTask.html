@@ -176,7 +176,7 @@
                        </div>
                    </div>
                     <div>
-                        <input type="text" name="task[price]" id="price" value="{:fen_to_yuan($taskInfo['price'])}">
+                        <input type="text" name="task[price]" id="price" value="<if condition="$taskInfo['id'] gt 0">{:fen_to_yuan($taskInfo['price'])}<else/></if> ">
                         <p>元</p>
                     </div>
                 </div>
