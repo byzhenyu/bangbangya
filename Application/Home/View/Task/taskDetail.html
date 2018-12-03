@@ -240,6 +240,28 @@
                             <img onclick="taskVerify()" src="__PUBLIC__/pc/images/common_btn_upload@2x.png">
                         </span>
                     </div>
+                    <elseif condition="($taskDetail['task_log_id'] neq 0) AND ($taskDetail['log_valid_status'] eq 3)"/>
+                    <div class="jd_uop1">
+                        <!--抢单-->
+                        <span class="jd_ugrab">
+                            <img id="show-opcity" src="__PUBLIC__/pc/images/common_btn_grab@2x.png">
+                        </span>
+                        <!--丢弃-->
+                        <span class="jd_ugiveup">
+                            <img onclick="discardTask()" src="__PUBLIC__/pc/images/common_btn_giveup@2x.png">
+                        </span>
+                    </div>
+                    <elseif condition="($taskDetail['task_log_id'] neq 0) AND ($taskDetail['log_valid_status'] eq 2)"/>
+                        <div class="jd_uop1">
+                            <!--重做-->
+                            <span class="jd_ugrab">
+                                <img onclick="taskVerify()" src="__PUBLIC__/pc/images/common_btn_upload@2x.png">
+                            </span>
+                            <!--放弃-->
+                            <span class="re-task" class="jd_ugiveup">
+                                <img src="__PUBLIC__/pc/images/common_btn_giveup@2x.png">
+                            </span>
+                        </div>
                     <else/>
                 </if>
             </div>
@@ -305,6 +327,11 @@
         function taskVerify() {
             window.location.href = "{:U('TaskLog/taskVerify', array('id'=>$taskDetail['task_log_id']))}";
         }
+
+        //放弃任务
+        $(".fix-content").on('tap', '.re-task', function () {
+            window.location.href = "{:U('TaskLog/delTaskLog', array('id'=>$taskDetail['task_log_id']))}";
+        })
     </script>
 </block>
 </html>
