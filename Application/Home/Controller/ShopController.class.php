@@ -35,6 +35,7 @@ class ShopController extends UserCommonController {
         $this->assign('ShopInfo', $ShopInfo);
         $this->assign('last_taskInfo', $last_taskInfo['list']);
         $this->assign('taskInfo', $taskInfo['list']);
+        p($taskInfo);
         $this->display();
     }
     /*获取店铺信息*/
@@ -103,7 +104,6 @@ class ShopController extends UserCommonController {
         $pastwhere['t.end_time'] =  array(array('gt',NOW_TIME - 172800),array('lt',NOW_TIME)) ;
         $pastwhere['t.audit_status'] =  3;
         $last_taskInfo = $taskModel->getTaskList($pastwhere, $taskField);
-
         $this->assign('ShopInfo', $ShopInfo);
         $this->assign('last_taskInfo', $last_taskInfo['list']);
         $this->assign('taskInfo', $taskInfo['list']);

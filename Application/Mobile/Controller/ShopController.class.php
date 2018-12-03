@@ -107,13 +107,12 @@ class ShopController extends CommonController {
         if (!empty($log_ids)) {
             $where['t.id'] = array('not in', $log_ids);
         }
-        $taskField = 't.id, t.price, t.task_num, t.title, c.category_name , c.category_img';
+        $taskField = 't.id, t.price, t.task_num,t.discard_id, t.title, c.category_name , c.category_img';
         $taskInfo = $taskModel->getTaskList($where, $taskField);
         $pastwhere['t.user_id']  =  $user_id;
         $pastwhere['t.end_time'] =  array(array('gt',NOW_TIME - 172800),array('lt',NOW_TIME)) ;
         $pastwhere['t.audit_status'] =  3;
         $last_taskInfo = $taskModel->getTaskList($pastwhere, $taskField);
-
         $this->assign('ShopInfo', $ShopInfo);
         $this->assign('last_taskInfo', $last_taskInfo['list']);
         $this->assign('taskInfo', $taskInfo['list']);

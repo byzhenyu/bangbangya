@@ -37,7 +37,7 @@ class HelpModel extends Model {
             $field = $this->selectFields;
         }
         $count = $this->where($where)->count();
-        $page = get_page($count, 10);
+        $page = get_page($count, 100);
         $Helplist = $this->field($field)->where($where)->limit($page['limit'])->order($sort)->select();
         return array(
             'Helplist'=>$Helplist,

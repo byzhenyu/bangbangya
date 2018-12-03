@@ -48,6 +48,7 @@ class TaskLogController extends UserCommonController{
         $field = 'l.id, l.task_id, l.task_name,l.valid_time, l.valid_status, t.price, c.category_name, c.category_img';
         $taskLogModel = D('Home/TaskLog');
         $taskLogInfo = $taskLogModel->getTaskLog($where,$field);
+//        p($taskLogInfo);
         $this->list = $taskLogInfo['list'];
         $this->display();
     }

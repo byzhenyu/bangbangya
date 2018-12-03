@@ -31,7 +31,7 @@ class LoginController extends CommonController {
     {
           /*测试打开*/
 //        $userModel = D('Home/User');
-//        $userInfo = $userModel->doLogin('123456');
+//        $userInfo = $userModel->doLogin('o_l6z0iWc1b2kklfSu7j3BiqQ2zw');
 //        session('user_auth', $userInfo['data']);
 //        define(UID, session('user_auth')['user_id']);
 //        $this->redirect('Pack/User/Invitation/user_id/'.UID);

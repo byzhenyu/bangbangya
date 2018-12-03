@@ -92,7 +92,7 @@
         <span>（共{:count($taskDetail['check_info'])}张）</span>
     </div>
     <volist name="taskDetail['check_info']" id="v" key="k">
-        <img src="{$v}">
+        <a href="{$v}"  target="_blank"><img src="{$v}"></a>
         <span>图{$k}</span>
     </volist>
 
@@ -108,8 +108,7 @@
             <span>{$v['step_text']}</span>
         </div>
         <div class="task-bottom-qr">
-            <img src="{$v['step_img']}">
-
+            <a href="{$v['step_img']}"  target="_blank"><img src="{$v['step_img']}"></a>
         </div>
     </volist>
 
