@@ -25,6 +25,7 @@ class HelpModel extends Model {
      */
     public function getHelpList($where, $field = false, $sort = 'sort asc , add_time desc')
     {
+        $where['status'] = 1;
         if(is_null($field)){
             $field = $this->selectFields;
         }
