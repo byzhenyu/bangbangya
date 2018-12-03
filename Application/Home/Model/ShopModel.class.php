@@ -165,6 +165,18 @@ class ShopModel extends Model{
             ->where($where)
             ->field($field)
             ->find();
+        /*判断是否是自己的店铺 && 是否是置顶的状态*/
+
+        if($info['top_time'] > NOW_TIME){
+            $info['is_top']  = 1;
+        }else{
+            $info['is_top'] = 0;
+        }
+        if($user_id == UID){
+            $info['is_me'] = 1;
+        }else{
+            $info['is_me'] = 0;
+        }
         $info['is_fans'] = 0;
         $count = M('Fans')->where(array('fans_user_id'=>$user_id,'user_id'=>UID,'status'=>1))->count();
         if ($count > 0) {
