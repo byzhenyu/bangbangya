@@ -94,7 +94,7 @@ class TaskModel extends Model{
               ->where($map)
               ->count();
 
-        $page = get_page($count,10);
+        $page = get_page($count,100);
         $list = $this->alias('t')
               ->join('__TASK_CATEGORY__ as c on t.category_id = c.id', 'LEFT')
               ->join('__SHOP__ as s on s.user_id = t.user_id')
