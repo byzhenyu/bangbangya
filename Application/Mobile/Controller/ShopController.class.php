@@ -25,11 +25,14 @@ class ShopController extends CommonController {
         $taskModel = D('Home/Task');
         $where['t.user_id']  =  $user_id;
         $where['t.end_time']  =  array('gt', NOW_TIME);
+        $where['t.audit_status'] = array('eq', 1);//审核通过
         $taskField = 't.id, t.price, t.task_num, t.title, t.discard_id, c.category_name , c.category_img';
         $taskInfo = $taskModel->getTaskList($where, $taskField);
-        $where['t.end_time'] =  array(array('gt',NOW_TIME - 172800),array('lt',NOW_TIME)) ;
-        $where['t.audit_status'] =  3;
-        $last_taskInfo = $taskModel->getTaskList($where, $taskField);
+        $where1['t.user_id']  =  $user_id;
+        $where1['t.end_time']  =  array('gt', NOW_TIME);
+        $where1['t.end_time'] =  array(array('gt',NOW_TIME - 172800),array('lt',NOW_TIME)) ;
+        $where1['t.audit_status'] =  3;
+        $last_taskInfo = $taskModel->getTaskList($where1, $taskField);
         $this->assign('ShopInfo', $ShopInfo);
         $this->assign('last_taskInfo', $last_taskInfo['list']);
         $this->assign('taskInfo', $taskInfo['list']);
@@ -96,6 +99,14 @@ class ShopController extends CommonController {
         $where['t.user_id']  =  $user_id;
         $where['t.end_time']  =  array('gt', NOW_TIME);
         $where['t.audit_status'] = array('eq', 1);
+        $logwhere['user_id'] = array('eq', UID);
+        $logwhere['valid_status'] = array('in', [0,1,2]);
+        $logwhere['status'] = array('eq', 1);
+        $log_ids = M('TaskLog')->where($logwhere)->getField('task_id',true);
+
+        if (!empty($log_ids)) {
+            $where['t.id'] = array('not in', $log_ids);
+        }
         $taskField = 't.id, t.price, t.task_num, t.title, c.category_name , c.category_img';
         $taskInfo = $taskModel->getTaskList($where, $taskField);
         $pastwhere['t.user_id']  =  $user_id;
