@@ -41,17 +41,20 @@
             </div>
             <div class="top-shop-btn">
                 <if condition="$ShopInfo['is_me'] eq 0">
-                    <if condition="$ShopInfo['is_fans'] ">
+                    <if condition="$ShopInfo['is_fans'] eq 0">
                         <button onclick="addFans({$ShopInfo['user_id']})" class="my-shop-top">+关注</button>
                         <else />
                         <button onclick="delFans({$ShopInfo['user_id']})" class="my-shop-top">取消</button>
                     </if>
-                </if>
-                <if condition="$ShopInfo['is_top'] eq 0">
-                    <a style="width: auto" onclick="topShop()"><button class="my-shop-top">置顶店铺</button></a>
-                    <else /><a style="width: auto" ><button onclick="topShop()" class="my-shop-top">已置顶</button></a>
+                    <else />
+                    <if condition="$ShopInfo['is_top'] eq 0 ">
+                        <a style="width: auto" onclick="topShop()"><button class="my-shop-top">置顶店铺</button></a>
+                        <else /><a style="width: auto" ><button onclick="topShop()" class="my-shop-top">已置顶</button></a>
+                    </if>
                 </if>
 
+
+                </div>
             </div>
         </div>
         <div class="top-shop-num">
