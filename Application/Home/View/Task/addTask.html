@@ -278,8 +278,8 @@
                     <input type="hidden" name="id" value="{$id}">
                     <input id="is_show" type="hidden" name="task[is_show]" value="0">
                     <input id="total_money" type="hidden" value="{$userMoney}">
-                    <button type="submit" id="save-btn">保存</button>
-                    <button type="submit" id="balance-insufficient">发布</button>
+                    <button type="button" id="save-btn">保存</button>
+                    <button type="button" id="balance-insufficient">发布</button>
                 </div>
                 <div class="pj_downtip">
                     <span>提示！平台禁止发布黄赌毒及涉政等一切法律所禁止的内容，另外与本平台又同类性质功能的软件或平台禁止在本平台发布推广任<br>务，如发现将查封账户，余款不退，敬请周知</span>
@@ -460,11 +460,11 @@
         });
         $(document)
             .ajaxStart(function(){
-                $("button:submit").attr("disabled", true);
+                $("button").attr("disabled", true);
             })
             .ajaxStop(function(){
                 setTimeout(function () {
-                    $("button:submit").attr("disabled", false);
+                    $("button").attr("disabled", false);
                 },1000);
             });
         function validate() {
@@ -499,7 +499,20 @@
                 return false;
             }
             $('#is_show').val('0');
-            submitForm();
+            if (typeof(validate) != 'undefined' && $.isFunction(validate)) {
+                if ( eval(validate)() == false ) {
+                    return false;
+                }
+            }
+            var data = $("form").serialize();
+            $.post("{:U('Task/addTask')}", data, function(data){
+                mui.toast(data.info);
+                if(data.status == 1){
+                    setTimeout(function() {
+                        window.location.href = "{:U('Task/myTask')}";
+                    },1500);
+                }
+            }, "json");
         })
         $('#balance-insufficient').on('click', function() {
             console.log(1);
@@ -519,31 +532,22 @@
                 });
                 return false;
             }
-            submitForm();
-        });
-        function submitForm() {
-
-            $("form").submit(function(){
-                if (typeof(validate) != 'undefined' && $.isFunction(validate)) {
-                    if ( eval(validate)() == false ) {
-                        return false;
-                    }
+            if (typeof(validate) != 'undefined' && $.isFunction(validate)) {
+                if ( eval(validate)() == false ) {
+                    return false;
                 }
-                var self = $(this);
-                var data = self.serialize();
+            }
+            var data = $("form").serialize();
+            $.post("{:U('Task/addTask')}", data, function(data){
+                mui.toast(data.info);
+                if(data.status == 1){
+                    setTimeout(function() {
+                        window.location.href = "{:U('Task/myTask')}";
+                    },1500);
+                }
+            }, "json");
+        });
 
-                $.post("{:U('Task/addTask')}", data, function(data){
-                    mui.toast(data.info);
-                    if(data.status == 1){
-                        setTimeout(function() {
-                            window.location.href = "{:U('Task/myTask')}";
-                        },1500);
-                    }
-                }, "json");
-
-                return false;
-            });
-        }
 
     </script>
 </block>
