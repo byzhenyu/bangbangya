@@ -35,7 +35,6 @@ class RechargeController extends CommonController {
     public function editRecharge() {
         $id = I('id');
         $rechargeModel = D('Admin/Recharge');
-        
         if (IS_POST) {
             if ($rechargeModel->create() === false) {
                 $this->ajaxReturn(V(0, $rechargeModel->getError()));
@@ -53,6 +52,7 @@ class RechargeController extends CommonController {
         }
         
         $info = $rechargeModel->find($id);
+        $info['nick_name'] = D('Home/User')->where(array('user_id'=> $info['user_id']))->getField('nick_name');
         $this->assign('info', $info);
         $this->display();
     }
