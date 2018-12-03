@@ -50,7 +50,7 @@ class ShopModel extends Model{
     	         ->field($field) 
     	         ->where($where)
     	         ->count(); 
-        $page = get_page($count,1000);
+        $page = get_page($count,100);
         $shopList = $this->alias('s')
                  ->join('__USER__ as u on u.user_id = s.user_id','LEFT')
                  ->field($field)
