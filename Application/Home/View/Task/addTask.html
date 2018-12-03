@@ -523,14 +523,12 @@
         });
         function submitForm() {
 
-            $("form").submit(function(){
                 if (typeof(validate) != 'undefined' && $.isFunction(validate)) {
                     if ( eval(validate)() == false ) {
                         return false;
                     }
                 }
-                var self = $(this);
-                var data = self.serialize();
+                var data = $("form").serialize();
 
                 $.post("{:U('Task/addTask')}", data, function(data){
                     mui.toast(data.info);
@@ -541,8 +539,6 @@
                     }
                 }, "json");
 
-                return false;
-            });
         }
 
     </script>
