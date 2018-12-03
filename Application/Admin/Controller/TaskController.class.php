@@ -76,7 +76,7 @@ class TaskController extends CommonController {
                         $this->ajaxReturn(V(0, '扣除手续费失败'));
                     }
                     account_log($data['user_id'], $feeMoney, 3, '任务手续费扣除', $id);
-                    $pushRes = D('Common/Push')->push("任务处理结果", $data['user_id'], '任务审核通过', '任务名称: '.$id, '通知类型： 代办', $data['audit_info']);
+                    $pushRes = D('Common/Push')->push("任务处理结果", $data['user_id'], '任务审核通过', '任务名称: '.$id, '通知类型： 通知', $data['audit_info']);
                     if ($pushRes['status'] == 0) {
                         M()->rollback();
                         $this->ajaxReturn($pushRes);
@@ -90,7 +90,7 @@ class TaskController extends CommonController {
                         $this->ajaxReturn(V(0, '更新发单数量失败'));
                     }
                 } else if ($data['audit_status'] == 2) {
-                    $pushRes = D('Common/Push')->push("任务处理结果", $data['user_id'], '任务审核未通过', '任务名称: '.$id, '通知类型： 代办', $data['audit_info']);
+                    $pushRes = D('Common/Push')->push("任务处理结果", $data['user_id'], '任务审核未通过', '任务名称: '.$id, '通知类型： 通知', $data['audit_info']);
                     if ($pushRes['status'] == 0) {
                         M()->rollback();
                         $this->ajaxReturn($pushRes);
