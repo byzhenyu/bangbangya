@@ -19,7 +19,7 @@
 <block name="body">
     <body class="home">
     <div class="header header-w">
-        <div class="head w1200 cf">
+        <div id="loginStatus" class="head w1200 cf">
             <a class="h-logo fl">
                 <img  src="__PUBLIC__/pc/images/logo.png" />
             </a>
@@ -143,12 +143,16 @@
             mui.alert('您的账号已被封停!');
         } else if(login ==3) {
             mui.alert('账号注册失败!');
+        }else if(login == 4){
+            mui.toast('请您登陆后操作!');
         }
         $('.item-wapper').on('click', 'a', function () {
-            if (login != 1) {
-                mui.toast('请登录');
-                return false;
-            }
+            // if (login != 1) {
+            //     mui.toast('状态已失效,请重新登录');
+            //     $('.h-user').hide();
+            //     $('#loginStatus').append('<button class="login fr">登录</button>');
+            //     return false;
+            // }
             var urls = $(this).data('url');
             window.location.href = urls;
         })
@@ -160,6 +164,7 @@
                 mui.toast('更换成功');
             }
         });
+
         function openUrl(jump_url){
              alert(jump_url);
             if(jump_url != '' || jump_url.length != 0){

@@ -19,7 +19,7 @@ class UserCommonController extends CommonController
         if( !UID ){// 还没登录 跳转到登录页面
 
             if (MODULE_NAME == 'Home') {
-                $this->redirect('Home/Index/index');
+                $this->redirect('Home/Index/index/login/4');
             } else {
                 $this->redirect('Login/login');
             }
@@ -32,7 +32,7 @@ class UserCommonController extends CommonController
         if ($disabled == 0) {
             session(null);
             if (MODULE_NAME =='Home') {
-                $this->redirect('Home/Index/index');
+                $this->redirect('Home/Index/index/login/4');
             } else {
                 $this->redirect('Login/login');
             }
