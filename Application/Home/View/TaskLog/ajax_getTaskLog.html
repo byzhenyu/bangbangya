@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <if condition="$type eq 4">
+        <if condition="$type eq 4  && $v[valid_status] neq 0 && $v[valid_status] neq 1">
             <button class="fr task-btn" onclick="del({$v['id']})">删除</button>
             <else />
 
