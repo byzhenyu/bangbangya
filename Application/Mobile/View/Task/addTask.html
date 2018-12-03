@@ -53,7 +53,7 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             margin-bottom: .32rem;
         }
     </style>
@@ -122,8 +122,14 @@
             <div class="task-type-row">
             <foreach name="taskCategoryInfo" item="v" key="k">
                 <div class="task-type-single">
-                    <input data-money="{$v.limit_money}" data-num="{$v.limit_num}" name="task[category_id]" type="radio" {$v['id'] == $taskInfo['category_id'] ? 'checked':''} value="{$v.id}">
+                    <if condition="($id eq 0) AND($k eq 0) ">
+                        <input class="cate_{$k}" data-money="{$v.limit_money}" data-num="{$v.limit_num}" name="task[category_id]" type="radio" checked value="{$v.id}">
+                        <else/>
+                        <input class="cate_{$k}" data-money="{$v.limit_money}" data-num="{$v.limit_num}" name="task[category_id]" type="radio" {$v['id'] == $taskInfo['category_id'] ? 'checked':''} value="{$v.id}">
+                    </if>
+
                     <label>{$v.category_name}</label>
+
                 </div>
             </foreach>
             </div>
@@ -166,11 +172,11 @@
                    <div class="task-min">
                        <div>
                            <p>出价</p>
-                           <span>最低出价<i id="limit_money">{$taskCategoryInfo[0]['limit_money']}</i>元</span>
+                           <span>最低出价<i id="limit_money">{$limitData['limit_money']}</i>元</span>
                        </div>
                    </div>
                     <div>
-                        <input type="text" name="task[price]" id="price" value="{:fen_to_yuan($taskInfo['price'])}">
+                        <input type="text" name="task[price]" id="price" value="<if condition="$taskInfo['id'] gt 0">{:fen_to_yuan($taskInfo['price'])}<else/></if> ">
                         <p>元</p>
                     </div>
                 </div>
@@ -179,7 +185,7 @@
                     <div class="task-min">
                         <div>
                             <p>数量</p>
-                            <span>最少<i id="limit_num">{$taskCategoryInfo[0]['limit_num']}</i>单</span>
+                            <span>最少<i id="limit_num">{$limitData['limit_num']}</i>单</span>
                         </div>
                     </div>
                     <div>
@@ -282,8 +288,8 @@
             <input type="hidden" name="id" value="{$id}">
             <input id="is_show" type="hidden" name="task[is_show]" value="0">
             <input id="total_money" type="hidden" value="{$userMoney}">
-            <button type="submit" id="save-btn" type="button">保存</button>
-            <button type="submit" id="balance-insufficient">发布</button>
+            <button type="button" id="save-btn" >保存</button>
+            <button type="button" id="balance-insufficient">发布</button>
         </div>
     </form>
     <p class="release-task-tip">提示！平台禁止发布黄赌毒及涉政等一切法律所禁止的内容，另外与本平台又同类性质功能的软件或平台禁止在本平台发布推广任务，如发现将查封账户，余款不退，敬请周知。</p>
@@ -464,65 +470,78 @@
         }
 
     }
+    $(document)
+        .ajaxStart(function(){
+            $("button").attr("disabled", true);
+        })
+        .ajaxStop(function(){
+            setTimeout(function () {
+                $("button").attr("disabled", false);
+            },2000);
+
+        });
     $("#save-btn").on('click', function () {
         if ($(this).prop('disabled')) {
             return false;
         }
         $('#is_show').val('0');
-        submitForm();
 
-    })
-$('#balance-insufficient').on('click', function() {
-    if ($(this).prop('disabled')) {
-        return false;
-    }
-    $('#is_show').val('1');
-    var zong = $('#total_price').val();
-    if (zong > (user_total/100)) {
-        var delArray = ['确定'];
-        mui.confirm('您账户余额不足，请到个人中心充值后再发布', '提示', delArray, function(e) {
-            if (e.index == 0) {
-                // 点击了确定
-                window.location.href = "{:U('Pay/topUpsPage')}";
+        if (typeof(validate) != 'undefined' && $.isFunction(validate)) {
+            if ( eval(validate)() == false ) {
+                return false;
             }
+        }
+        var data = $("form").serialize();
 
-        });
-        return false;
-    }
-    submitForm();
-});
-    function submitForm() {
-        $(document)
-            .ajaxStart(function(){
-                $("button:submit").attr("disabled", true);
-            })
-            .ajaxStop(function(){
-                setTimeout(function () {
-                    $("button:submit").attr("disabled", false);
-                },1000);
-
-            });
-        $("form").submit(function(){
-            if (typeof(validate) != 'undefined' && $.isFunction(validate)) {
-                if ( eval(validate)() == false ) {
-                    return false;
-                }
-            }
-            var self = $(this);
-            var data = self.serialize();
-
-            $.post(self.attr("action"), data, function(data){
-                mui.toast(data.info);
-                if(data.status == 1){
+        $.post("{:U('Task/addTask')}", data, function(data){
+            mui.toast(data.info);
+            if(data.status == 1){
                 setTimeout(function() {
                     window.location.href = "{:U('Task/myTask')}";
                 },1500);
-                }
-            }, "json");
+            }
+        }, "json");
 
+
+    })
+    $('#balance-insufficient').on('click', function() {
+        if ($(this).prop('disabled')) {
             return false;
-        });
-    }
+        }
+        $('#is_show').val('1');
+        var zong = $('#total_price').val();
+        if (zong > (user_total/100)) {
+            var delArray = ['确定'];
+            mui.confirm('您账户余额不足，请到个人中心充值后再发布', '提示', delArray, function(e) {
+                if (e.index == 0) {
+                    // 点击了确定
+                    window.location.href = "{:U('Pay/topUpsPage')}";
+                }
+
+            });
+            return false;
+        }
+
+        if (typeof(validate) != 'undefined' && $.isFunction(validate)) {
+            if ( eval(validate)() == false ) {
+
+                return false;
+            }
+        }
+
+        var data = $("form").serialize();
+
+        $.post("{:U('Task/addTask')}", data, function(data){
+            mui.toast(data.info);
+            if(data.status == 1){
+                setTimeout(function() {
+                    window.location.href = "{:U('Task/myTask')}";
+                },1500);
+            }
+        }, "json");
+
+    });
+
 
 </script>
 

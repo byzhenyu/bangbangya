@@ -53,7 +53,7 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             margin-bottom: .32rem;
         }
     </style>
@@ -106,187 +106,193 @@
     </script>
 </head>
 <body style="background: #f6f6f6">
-    <header class="mui-bar mui-bar-nav help-duck-head">
-        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-        <p class="mui-title">发布任务</p>
-        <a href="{:U('Article/articleDetail',array('category_id'=>3))}">发布规则</a>
-    </header>
-    <form action="{:U('addTask')}" method="post" class="ajaxFrom">
+<header class="mui-bar mui-bar-nav help-duck-head">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <p class="mui-title">发布任务</p>
+    <a href="{:U('Article/articleDetail',array('category_id'=>3))}">发布规则</a>
+</header>
+<form action="{:U('addTask')}" method="post" class="ajaxFrom">
 
-        <div class="task-type-title">
-            <span>选择类型</span>
-            <a href="{:U('Article/articleDetail',array('category_id'=>2))}"><p>类别说明</p></a>
-        </div>
+    <div class="task-type-title">
+        <span>选择类型</span>
+        <a href="{:U('Article/articleDetail',array('category_id'=>2))}"><p>类别说明</p></a>
+    </div>
 
-        <div class="task-type-list">
-            <div class="task-type-row">
+    <div class="task-type-list">
+        <div class="task-type-row">
             <foreach name="taskCategoryInfo" item="v" key="k">
                 <div class="task-type-single">
-                    <input data-money="{$v.limit_money}" data-num="{$v.limit_num}" name="task[category_id]" type="radio" {$v['id'] == $taskInfo['category_id'] ? 'checked':''} value="{$v.id}">
+                    <if condition="($id eq 0) AND($k eq 0) ">
+                        <input class="cate_{$k}" data-money="{$v.limit_money}" data-num="{$v.limit_num}" name="task[category_id]" type="radio" checked value="{$v.id}">
+                        <else/>
+                        <input class="cate_{$k}" data-money="{$v.limit_money}" data-num="{$v.limit_num}" name="task[category_id]" type="radio" {$v['id'] == $taskInfo['category_id'] ? 'checked':''} value="{$v.id}">
+                    </if>
+
                     <label>{$v.category_name}</label>
+
                 </div>
             </foreach>
-            </div>
         </div>
-        <div class="task-type-info">
-            <div class="task-choose-system">
-                <p>支持设备</p>
-                <div class="phone-sysytem">
-                    <div>
-                        <input type="radio" name="task[mobile_type]" value="全部" <if condition="$taskInfo['mobile_type'] eq '全部'">checked<else/></if>>
-                        <label>全部</label>
-                    </div>
-                    <div>
-                        <input type="radio" name="task[mobile_type]" value="安卓" <if condition="$taskInfo['mobile_type'] eq '安卓'">checked<else/></if> >
-                        <label>安卓</label>
-                    </div>
-                    <div>
-                        <input type="radio" name="task[mobile_type]" value="苹果" <if condition="$taskInfo['mobile_type'] eq '苹果'">checked<else/></if>>
-                        <label>苹果</label>
-                    </div>
+    </div>
+    <div class="task-type-info">
+        <div class="task-choose-system">
+            <p>支持设备</p>
+            <div class="phone-sysytem">
+                <div>
+                    <input type="radio" name="task[mobile_type]" value="全部" <if condition="$taskInfo['mobile_type'] eq '全部'">checked<else/></if>>
+                    <label>全部</label>
                 </div>
-            </div>
-            <div class="task-type-basic">
-                <div class="task-basic-row">
-                    <div>
-                        <span>标题</span>
-                        <input value="{$taskInfo['title']}" id="task_title" type="text"  name="task[title]" placeholder="请您输入任务标题" style="padding-left: .24rem;width: 7rem;">
-                    </div>
+                <div>
+                    <input type="radio" name="task[mobile_type]" value="安卓" <if condition="$taskInfo['mobile_type'] eq '安卓'">checked<else/></if> >
+                    <label>安卓</label>
                 </div>
-
-                <a  class="task-basic-row">
-                   <div>
-                       <span>截止时间</span>
-                       <input value="{$taskInfo['end_time']|time_format}" type="text" id="end_time" name="task[end_time]" placeholder="请选择结束时间" readonly>
-                   </div>
-                    <img src="__PUBLIC__/mobile/images/common_icon_more.png">
-                </a>
-
-                <div class="task-basic-row">
-                   <div class="task-min">
-                       <div>
-                           <p>出价</p>
-                           <span>最低出价<i id="limit_money">{$taskCategoryInfo[0]['limit_money']}</i>元</span>
-                       </div>
-                   </div>
-                    <div>
-                        <input type="text" name="task[price]" id="price" value="{:fen_to_yuan($taskInfo['price'])}">
-                        <p>元</p>
-                    </div>
-                </div>
-
-                <div class="task-basic-row">
-                    <div class="task-min">
-                        <div>
-                            <p>数量</p>
-                            <span>最少<i id="limit_num">{$taskCategoryInfo[0]['limit_num']}</i>单</span>
-                        </div>
-                    </div>
-                    <div>
-                        <input type="number" name="task[task_num]" id="task_num" value="{$taskInfo['task_num']}">
-                        <p>单</p>
-                    </div>
-                </div>
-
-                <div class="task-basic-row">
-                    <div class="task-min">
-                        <div>
-                            <p>合计</p>
-                            <span>服务费：成交额{$orderFee}%，最低1元</span>
-                        </div>
-                    </div>
-                    <div>
-                        <input disabled="disabled" type="number" value="{:fen_to_yuan($taskInfo['total_price'])}" id="total_price">
-                        <p>元</p>
-                    </div>
+                <div>
+                    <input type="radio" name="task[mobile_type]" value="苹果" <if condition="$taskInfo['mobile_type'] eq '苹果'">checked<else/></if>>
+                    <label>苹果</label>
                 </div>
             </div>
         </div>
+        <div class="task-type-basic">
+            <div class="task-basic-row">
+                <div>
+                    <span>标题</span>
+                    <input value="{$taskInfo['title']}" id="task_title" type="text"  name="task[title]" placeholder="请您输入任务标题" style="padding-left: .24rem;width: 7rem;">
+                </div>
+            </div>
 
-        <div class="task-audit-imgs">
-            <p>审核图样</p>
-            <span>上传验证图样例，<i>最多可上传5张</i></span>
+            <a  class="task-basic-row">
+                <div>
+                    <span>截止时间</span>
+                    <input value="{$taskInfo['end_time']|time_format}" type="text" id="end_time" name="task[end_time]" placeholder="请选择结束时间" readonly>
+                </div>
+                <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+            </a>
+
+            <div class="task-basic-row">
+                <div class="task-min">
+                    <div>
+                        <p>出价</p>
+                        <span>最低出价<i id="limit_money">{$limitData['limit_money']}</i>元</span>
+                    </div>
+                </div>
+                <div>
+                    <input type="text" name="task[price]" id="price" value="{:fen_to_yuan($taskInfo['price'])}">
+                    <p>元</p>
+                </div>
+            </div>
+
+            <div class="task-basic-row">
+                <div class="task-min">
+                    <div>
+                        <p>数量</p>
+                        <span>最少<i id="limit_num">{$limitData['limit_num']}</i>单</span>
+                    </div>
+                </div>
+                <div>
+                    <input type="number" name="task[task_num]" id="task_num" value="{$taskInfo['task_num']}">
+                    <p>单</p>
+                </div>
+            </div>
+
+            <div class="task-basic-row">
+                <div class="task-min">
+                    <div>
+                        <p>合计</p>
+                        <span>服务费：成交额{$orderFee}%，最低1元</span>
+                    </div>
+                </div>
+                <div>
+                    <input disabled="disabled" type="number" value="<if condition="$taskInfo['id'] gt 0">{:fen_to_yuan($taskInfo['price'])}<else/></if> " id="total_price">
+                    <p>元</p>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <div class="weui-uploader__bd task-audit-imgs-add">
-            <ul class="weui-uploader__files" id="uploaderFiles">
-                <li class="weui-uploader__input-box" >
-                    <img src="__PUBLIC__/mobile/images/common_icon_addpicture.png">
-                    <input id="upload" class="weui-uploader__input" type="file" accept="image/*">
-                </li>
-                <volist name="taskInfo['check_info']" id="v">
-                    <li class="weui-uploader__file" ><img src="{$v}"><div class="file-del"><a href="javascript:void(0)" onclick="delPic(this)">X</a></div>
+    <div class="task-audit-imgs">
+        <p>审核图样</p>
+        <span>上传验证图样例，<i>最多可上传5张</i></span>
+    </div>
+
+    <div class="weui-uploader__bd task-audit-imgs-add">
+        <ul class="weui-uploader__files" id="uploaderFiles">
+            <li class="weui-uploader__input-box" >
+                <img src="__PUBLIC__/mobile/images/common_icon_addpicture.png">
+                <input id="upload" class="weui-uploader__input" type="file" accept="image/*">
+            </li>
+            <volist name="taskInfo['check_info']" id="v">
+                <li class="weui-uploader__file" ><img src="{$v}"><div class="file-del"><a href="javascript:void(0)" onclick="delPic(this)">X</a></div>
                     <input type="hidden" name="step[0][][step_img]" value="{$v}">
-                    </li>
-                </volist>
-            </ul>
-        </div>
-        <div class="mui-table-view-cell mui-collapse task-operation-explain <if condition='$id neq 0'> mui-active <else/> </if>">
-            <a class="mui-navigate-right">操作说明</a>
-            <div class="mui-collapse-content">
-                <div class="step-content">
-                    <volist name="taskInfo['step_info']" id="v" key = "k">
-                        <div class="task-operation-row1">
-                            <div>
-                                <p>{$k}</p>
-                                <p class="del-item" data-num="{$k}" id="del_{$k-1}">删除</p>
-                            </div>
-                            <img id="img_{$k-1}" src="{$v['step_img']}" onerror="this.src='__PUBLIC__/mobile/images/common_icon_addpicture_small.png'">
-                            <button id="btnUpload_{$k-1}" type="button" class="uploader-img"></button>
-                            <input id="img{$k-1}" type="hidden" name="step[1][{$k-1}][step_img]" value="{$v['step_img']}">
-                            <textarea name="step[1][{$k-1}][step_text]" class="step-text" placeholder="请填写步骤" id="step_text_{$k-1}">{$v['step_text']}</textarea>
+                </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="mui-table-view-cell mui-collapse task-operation-explain <if condition='$id neq 0'> mui-active <else/> </if>">
+        <a class="mui-navigate-right">操作说明</a>
+        <div class="mui-collapse-content">
+            <div class="step-content">
+                <volist name="taskInfo['step_info']" id="v" key = "k">
+                    <div class="task-operation-row1">
+                        <div>
+                            <p>{$k}</p>
+                            <p class="del-item" data-num="{$k}" id="del_{$k-1}">删除</p>
                         </div>
-                        <script>
-                            var m = "{$k-1}";
-                            $('.del-item').hide();
-                            $("#del_"+m).show();
-                            ajaxUpload("#btnUpload_"+m, $("#img_"+m), "Task", m);
-                        </script>
-                    </volist>
+                        <img id="img_{$k-1}" src="{$v['step_img']}" onerror="this.src='__PUBLIC__/mobile/images/common_icon_addpicture_small.png'">
+                        <button id="btnUpload_{$k-1}" type="button" class="uploader-img"></button>
+                        <input id="img{$k-1}" type="hidden" name="step[1][{$k-1}][step_img]" value="{$v['step_img']}">
+                        <textarea name="step[1][{$k-1}][step_text]" class="step-text" placeholder="请填写步骤" id="step_text_{$k-1}">{$v['step_text']}</textarea>
+                    </div>
+                    <script>
+                        var m = "{$k-1}";
+                        $('.del-item').hide();
+                        $("#del_"+m).show();
+                        ajaxUpload("#btnUpload_"+m, $("#img_"+m), "Task", m);
+                    </script>
+                </volist>
 
-                </div>
-
-                <div class="task-operation-row3">
-                    <button type="button" id="add-step-btn">添加步骤</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="task-type-other">
-            <div class="type-other-link">
-                <span>链接</span>
-                <input name="task[link_url]" type="text" placeholder="请输入准确链接地址，如无链接可不填" value="{$taskInfo['link_url']}">
             </div>
 
-            <div class="type-other-row">
-                <div class="mui-input-row">
-                    <p>文字验证</p>
-                    <textarea name="task[validate_words]" rows="3" placeholder="如需接单者提供文字信息，请在此输入内容，如不需要可不填">{$taskInfo['validate_words']}</textarea>
-                </div>
-                <div class="mui-input-row">
-                    <p>备注</p>
-                    <textarea name="task[remark]" rows="3" placeholder="150字以内">{$taskInfo['remark']}</textarea>
-                </div>
+            <div class="task-operation-row3">
+                <button type="button" id="add-step-btn">添加步骤</button>
             </div>
         </div>
+    </div>
 
-        <div class="release-task-agree">
-            <label class="release-task-check">
-                <input name="task[agree]" class="check-task" type="checkbox" id="agree" checked>
-                <i></i>
-                <span>我已阅读、理解并同意<a href="{:U('Article/articleDetail',array('category_id'=>3))}">《发布规则》</a>的全部内容</span>
-            </label>
+    <div class="task-type-other">
+        <div class="type-other-link">
+            <span>链接</span>
+            <input name="task[link_url]" type="text" placeholder="请输入准确链接地址，如无链接可不填" value="{$taskInfo['link_url']}">
         </div>
 
-        <div class="release-task-btns">
-            <input type="hidden" name="id" value="{$id}">
-            <input id="is_show" type="hidden" name="task[is_show]" value="0">
-            <input id="total_money" type="hidden" value="{$userMoney}">
-            <button type="submit" id="save-btn" type="button">保存</button>
-            <button type="submit" id="balance-insufficient">发布</button>
+        <div class="type-other-row">
+            <div class="mui-input-row">
+                <p>文字验证</p>
+                <textarea name="task[validate_words]" rows="3" placeholder="如需接单者提供文字信息，请在此输入内容，如不需要可不填">{$taskInfo['validate_words']}</textarea>
+            </div>
+            <div class="mui-input-row">
+                <p>备注</p>
+                <textarea name="task[remark]" rows="3" placeholder="200字以内">{$taskInfo['remark']}</textarea>
+            </div>
         </div>
-    </form>
-    <p class="release-task-tip">提示！平台禁止发布黄赌毒及涉政等一切法律所禁止的内容，另外与本平台又同类性质功能的软件或平台禁止在本平台发布推广任务，如发现将查封账户，余款不退，敬请周知。</p>
+    </div>
+
+    <div class="release-task-agree">
+        <label class="release-task-check">
+            <input name="task[agree]" class="check-task" type="checkbox" id="agree" checked>
+            <i></i>
+            <span>我已阅读、理解并同意<a href="{:U('Article/articleDetail',array('category_id'=>3))}">《发布规则》</a>的全部内容</span>
+        </label>
+    </div>
+
+    <div class="release-task-btns">
+        <input type="hidden" name="id" value="{$id}">
+        <input id="is_show" type="hidden" name="task[is_show]" value="0">
+        <input id="total_money" type="hidden" value="{$userMoney}">
+        <button type="button" id="save-btn" >保存</button>
+        <button type="button" id="balance-insufficient">发布</button>
+    </div>
+</form>
+<p class="release-task-tip">提示！平台禁止发布黄赌毒及涉政等一切法律所禁止的内容，另外与本平台又同类性质功能的软件或平台禁止在本平台发布推广任务，如发现将查封账户，余款不退，敬请周知。</p>
 
 
 </body>
@@ -336,7 +342,7 @@
         var obj = obj;
         var img_src = $(obj).parent().next('input').val();
         $.post("{:U('oss_delet_object')}",{'img_src':img_src}, function (data) {
-
+            mui.toast('删除成功');
             if (data.status == 1) {
                 $(obj).parent().parent().remove();
                 count--;
@@ -366,7 +372,7 @@
         }
 
         $(".step-content").append(
-        '<div class="task-operation-row1">'+
+            '<div class="task-operation-row1">'+
             '<div>'+
             '<p>'+n+'</p>'+
             '<p class="del-item" data-num="'+n+'" id="del_'+base+'">删除</p>'+
@@ -410,7 +416,7 @@
         }
         if(price && task_num)
         {
-             var zong =  (price * task_num *  all).toFixed(2);
+            var zong =  (price * task_num *  all).toFixed(2);
             $('#total_price').val(zong);
         }
     });
@@ -464,64 +470,78 @@
         }
 
     }
+    $(document)
+        .ajaxStart(function(){
+            $("button").attr("disabled", true);
+        })
+        .ajaxStop(function(){
+            setTimeout(function () {
+                $("button").attr("disabled", false);
+            },2000);
+
+        });
     $("#save-btn").on('click', function () {
         if ($(this).prop('disabled')) {
             return false;
         }
         $('#is_show').val('0');
-        submitForm();
-    })
-$('#balance-insufficient').on('click', function() {
-    if ($(this).prop('disabled')) {
-        return false;
-    }
-    $('#is_show').val('1');
-    var zong = $('#total_price').val();
-    if (zong > (user_total/100)) {
-        var delArray = ['确定'];
-        mui.confirm('您账户余额不足，请到个人中心充值后再发布', '提示', delArray, function(e) {
-            if (e.index == 0) {
-                // 点击了确定
-                window.location.href = "{:U('Pay/topUpsPage')}";
+
+        if (typeof(validate) != 'undefined' && $.isFunction(validate)) {
+            if ( eval(validate)() == false ) {
+                return false;
             }
+        }
+        var data = $("form").serialize();
 
-        });
-        return false;
-    }
-    submitForm();
-});
-    function submitForm() {
-        $(document)
-            .ajaxStart(function(){
-                $("button:submit").attr("disabled", true);
-            })
-            .ajaxStop(function(){
-                setTimeout(function () {
-                    $("button:submit").attr("disabled", false);
-                },1000);
-
-            });
-        $("form").submit(function(){
-            if (typeof(validate) != 'undefined' && $.isFunction(validate)) {
-                if ( eval(validate)() == false ) {
-                    return false;
-                }
-            }
-            var self = $(this);
-            var data = self.serialize();
-
-            $.post(self.attr("action"), data, function(data){
-                mui.toast(data.info);
-                if(data.status == 1){
+        $.post("{:U('Task/addTask')}", data, function(data){
+            mui.toast(data.info);
+            if(data.status == 1){
                 setTimeout(function() {
                     window.location.href = "{:U('Task/myTask')}";
                 },1500);
-                }
-            }, "json");
+            }
+        }, "json");
 
+
+    })
+    $('#balance-insufficient').on('click', function() {
+        if ($(this).prop('disabled')) {
             return false;
-        });
-    }
+        }
+        $('#is_show').val('1');
+        var zong = $('#total_price').val();
+        if (zong > (user_total/100)) {
+            var delArray = ['确定'];
+            mui.confirm('您账户余额不足，请到个人中心充值后再发布', '提示', delArray, function(e) {
+                if (e.index == 0) {
+                    // 点击了确定
+                    window.location.href = "{:U('Pay/topUpsPage')}";
+                }
+
+            });
+            return false;
+        }
+
+        if (typeof(validate) != 'undefined' && $.isFunction(validate)) {
+            if ( eval(validate)() == false ) {
+
+                return false;
+            }
+        }
+
+        var data = $("form").serialize();
+
+        $.post("{:U('Task/addTask')}", data, function(data){
+            mui.toast(data.info);
+            if(data.status == 1){
+                setTimeout(function() {
+                    window.location.href = "{:U('Task/myTask')}";
+                },1500);
+            }
+        }, "json");
+
+    });
+
 
 </script>
 
