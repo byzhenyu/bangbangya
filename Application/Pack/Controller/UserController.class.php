@@ -186,6 +186,7 @@ class UserController extends UserCommonController {
                  $oss->deleteObject($bucket,$object);
             }
             $this->user->where('user_id = '.UID)->save(array('head_pic'=>$data['nameosspath']));
+            D('Home/Shop')->where('user_id = '.UID)->save(array('shop_img'=>$data['nameosspath']));
             $this->ajaxReturn(V(1, '更换头像成功', $data));
         }
       }
