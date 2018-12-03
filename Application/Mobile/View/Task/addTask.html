@@ -56,6 +56,44 @@
             justify-content: flex-start;
             margin-bottom: .32rem;
         }
+        .task-type-basic .task-basic-row .task-basic-title,
+        .task-basic-row .task-min .task-basic-num,
+        .task-basic-row .task-min .task-basic-all {
+
+            font-size: .28rem;
+            color: #555;
+        }
+
+        .task-type-basic .task-basic-row .task-basic-title {
+            width: 1rem;
+        }
+
+        .task-basic-row .task-min .task-basic-num {
+            width: 1rem;
+        }
+
+        .task-basic-row .task-min .task-basic-all {
+            width: 1rem;
+        }
+
+        .task-basic-row .task-title-inp::placeholder {
+            text-align: left;
+        }
+        .task-basic-row .task-title-inp {
+            text-align: left;
+        }
+
+        .task-basic-row .task-price-inp {
+            width: 2.5rem;
+        }
+
+        .task-basic-row .task-service-inp {
+            width: 2.5rem;
+        }
+
+        .task-basic-row .task-basic-price {
+            width: 1rem;
+        }
     </style>
     <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload/ajaxupload.js?v=1.0"></script>
@@ -155,8 +193,8 @@
             <div class="task-type-basic">
                 <div class="task-basic-row">
                     <div>
-                        <span>标题</span>
-                        <input value="{$taskInfo['title']}" id="task_title" type="text"  name="task[title]" placeholder="请您输入任务标题" style="padding-left: .24rem;width: 7rem;">
+                        <p class="task-basic-title">标题</p>
+                        <input class="task-title-inp" value="{$taskInfo['title']}" id="task_title" type="text"  name="task[title]" placeholder="请您输入任务标题" style="padding-left: .24rem;width: 7rem;">
                     </div>
                 </div>
 
@@ -171,12 +209,12 @@
                 <div class="task-basic-row">
                    <div class="task-min">
                        <div>
-                           <p>出价</p>
+                           <p class="task-basic-price">出价</p>
                            <span>最低出价<i id="limit_money">{$limitData['limit_money']}</i>元</span>
                        </div>
                    </div>
                     <div>
-                        <input type="text" name="task[price]" id="price" value="<if condition="$taskInfo['id'] gt 0">{:fen_to_yuan($taskInfo['price'])}<else/></if> ">
+                        <input class="task-price-inp" type="text" name="task[price]" id="price" value="<if condition="$taskInfo['id'] gt 0">{:fen_to_yuan($taskInfo['price'])}<else/></if> ">
                         <p>元</p>
                     </div>
                 </div>
@@ -184,7 +222,7 @@
                 <div class="task-basic-row">
                     <div class="task-min">
                         <div>
-                            <p>数量</p>
+                            <p class="task-basic-num">数量</p>
                             <span>最少<i id="limit_num">{$limitData['limit_num']}</i>单</span>
                         </div>
                     </div>
@@ -197,12 +235,12 @@
                 <div class="task-basic-row">
                     <div class="task-min">
                         <div>
-                            <p>合计</p>
+                            <p class="task-basic-all">合计</p>
                             <span>服务费：成交额{$orderFee}%，最低1元</span>
                         </div>
                     </div>
                     <div>
-                        <input disabled="disabled" type="number" value="{:fen_to_yuan($taskInfo['total_price'])}" id="total_price">
+                        <input class="task-service-inp" disabled="disabled" type="number" value="{:fen_to_yuan($taskInfo['total_price'])}" id="total_price">
                         <p>元</p>
                     </div>
                 </div>
