@@ -319,7 +319,7 @@ class TaskModel extends Model{
         $logWhere['valid_status'] = array('in', array(0,1));
         $taskLogRes = M('TaskLog')->where($logWhere)->count();
         if ($taskLogRes > 0) {
-            return V(0, '存在未审核任务不能删除');
+            return V(0, '存在未审核任务和进行中的任务不能删除');
         }
         $res = $this->where(array('id'=>$id))->setField('status', 0);
         if ($res ===false) {

@@ -31,7 +31,8 @@ class LoginController extends CommonController {
     {
           /*测试打开*/
 //        $userModel = D('Home/User');
-//        $userInfo = $userModel->doLogin('o_l6z0iWc1b2kklfSu7j3BiqQ2zw');
+//        $userInfo = $userModel->doLogin('o_l6z0m2Cn59YjvQXa7xVelMXEy4');
+//        session('user_auth', $userInfo['data']);
 //        define(UID, session('user_auth')['user_id']);
 //        $this->redirect('Mobile/User/personalCenter/login/1');
 //        $this->ajaxReturn(V(1, '登录成功',$userInfo));

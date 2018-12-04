@@ -16,10 +16,10 @@ class LoginController extends CommonController{
     {
         /*测试打开*/
 //        $userModel = D('Home/User');
-//        $userInfo = $userModel->doLogin('olI8S1dXlD9JEWiJOdZff1ICYsC0');
+//        $userInfo = $userModel->doLogin('o_l6z0iWc1b2kklfSu7j3BiqQ2zw');
 //        session('user_auth', $userInfo['data']);
 //        define(UID, session('user_auth')['user_id']);
-//        $this->redirect('Home/User/personalCenter/login/1');
+//        $this->redirect('Home/Index/index/login/1');
 //        $this->ajaxReturn(V(1, '登录成功',$userInfo));
         $code = $_GET['code'];
         if (empty($code)) {
