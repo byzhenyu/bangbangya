@@ -6,6 +6,18 @@
     <title>店铺详情</title>
     <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+    <style>
+        .top-ups-sure button {
+            width: 6.38rem;
+            height: .88rem;
+            color: #fff;
+            background: #6f75ef;
+            font-size: .34rem;
+            text-align: center;
+            line-height: .88rem;
+            border-radius: .1rem;
+        }
+    </style>
 </head>
 <body>
     <header class="mui-bar mui-bar-nav help-duck-head">
@@ -124,6 +136,11 @@
             <div id="item1" class="mui-control-content mui-active">
                 <div class="mui-scroll-content">
                     <div class="mui-scroll">
+                        <if condition="empty($taskInfo)">
+                            <div class="top-ups-sure">
+                                <button id="load">没有数据</button>
+                            </div>
+                        </if>
                         <foreach name="taskInfo" item="v">
                             <ul class="mui-table-view top-shop-view">
                                 <li class="mui-table-view-cell top-shop-li">
@@ -161,6 +178,11 @@
 
             <div id="item2" class="mui-control-content">
                 <ul class="mui-table-view">
+                    <if condition="empty($last_taskInfo)">
+                        <div class="top-ups-sure">
+                            <button id="load">没有数据</button>
+                        </div>
+                    </if>
                     <foreach name="last_taskInfo" item="v">
                     <li class="mui-table-view-cell top-shop-li">
                         <a class="top-shop-task" href="{:U('Task/taskDetail',array('id'=>$v['id']))}">

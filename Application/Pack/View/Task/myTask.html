@@ -6,6 +6,18 @@
     <title>我的发布</title>
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
     <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
+    <style>
+        .top-ups-sure button {
+            width: 6.38rem;
+            height: .88rem;
+            color: #fff;
+            background: #6f75ef;
+            font-size: .34rem;
+            text-align: center;
+            line-height: .88rem;
+            border-radius: .1rem;
+        }
+    </style>
 </head>
 <body style="background: #fff;">
 <header class="mui-bar mui-bar-nav help-duck-head">
@@ -58,6 +70,11 @@
 </div>
 
 <div class="my-release-list">
+    <if condition="empty($taskList)">
+        <div class="top-ups-sure">
+            <button id="load">没有数据</button>
+        </div>
+    </if>
     <foreach name="taskList" item="v" key="k">
         <div class="my-release-item">
             <div class="my-release-left">
