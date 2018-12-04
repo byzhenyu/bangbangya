@@ -25,6 +25,7 @@ class TaskModel extends Model{
         array('price,category_id', 'checkLimitMoney', '价格不能低于最低价', 1, 'callback', 3),
         array('task_num', 'number', '任务数量必须是一个数字！', 1, 'regex', 3),
         array('task_num,category_id', 'checkLimitNum', '不能低于最低任务数量', 1, 'callback', 3),
+        array('total_price', 'checkTotal','总价不能低于一元', 1, 'callback', 3),
         array('validate_words', 'checkTitleLength', '文字验证说明30个字以内', 2, 'callback', 3),
         array('remark', 'checkRemarkLength', '备注150个字以内', 2, 'callback', 3),
     );
@@ -37,6 +38,12 @@ class TaskModel extends Model{
         }else {
             return true;
         }
+    }
+    public function checkTotal($data) {
+        if ($data < 100) {
+            return false;
+        }
+        return true;
     }
     protected function checkLimitNum($data) {
         $where['id'] = $data['category_id'];
