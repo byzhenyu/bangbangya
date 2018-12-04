@@ -106,7 +106,7 @@
 
                     var html1 = '';
                     for (var i=0; i < data.data.length; i++) {
-                        html1 += '<li class="mui-table-view-cell my-fans-li">'+
+                        html1 += '<li onclick="shopInfo('+data.data.user_id+')" class="mui-table-view-cell my-fans-li">'+
                             '<a data-user="'+data.data[i].user_id+'" class="my-fans-item">'+
                             '<div class="my-fans-user">'+
                             '<div class="my-fans-left">'+
