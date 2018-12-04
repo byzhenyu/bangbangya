@@ -2280,6 +2280,7 @@ input[type="checkbox"]:checked + i {
 }
 
 .top-user-list {
+    margin-bottom: 50px;
     padding-left: .3rem;
 }
 

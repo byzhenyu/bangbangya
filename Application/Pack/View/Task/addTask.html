@@ -56,7 +56,6 @@
             justify-content: flex-start;
             margin-bottom: .32rem;
         }
-
         .task-type-basic .task-basic-row .task-basic-title,
         .task-basic-row .task-min .task-basic-num,
         .task-basic-row .task-min .task-basic-all {
@@ -82,6 +81,7 @@
         }
         .task-basic-row .task-title-inp {
             text-align: left;
+            width: 6rem;
         }
 
         .task-basic-row .task-price-inp {
@@ -215,7 +215,7 @@
                     </div>
                 </div>
                 <div>
-                    <input class="task-price-inp" type="text" name="task[price]" id="price" value="{:fen_to_yuan($taskInfo['price'])}">
+                    <input class="task-price-inp" type="text" name="task[price]" id="price" value="<if condition="$taskInfo['id'] gt 0">{:fen_to_yuan($taskInfo['price'])}<else/></if> ">
                     <p>元</p>
                 </div>
             </div>
@@ -241,7 +241,7 @@
                     </div>
                 </div>
                 <div>
-                    <input class="task-service-inp" disabled="disabled" type="number" value="<if condition="$taskInfo['id'] gt 0">{:fen_to_yuan($taskInfo['price'])}<else/></if> " id="total_price">
+                    <input class="task-service-inp" disabled="disabled" type="number" value="{:fen_to_yuan($taskInfo['total_price'])}" id="total_price">
                     <p>元</p>
                 </div>
             </div>
@@ -365,15 +365,18 @@
         dataType: 'json',
         done: function (e, data) {
             console.log(data);
-            $('#uploaderFiles').append('<li class="weui-uploader__file" ><img src="'+data.result.data.nameosspath+'"><div class="file-del"><a href="javascript:void(0)" onclick="delPic(this)">X</a></div>'+
-                '<input type="hidden" name="step[0][][step_img]" value="'+data.result.data.nameosspath+'">'+
-                '</li>');
+            if (data.result.data.nameosspath) {
+                $('#uploaderFiles').append('<li class="weui-uploader__file" ><img src="'+data.result.data.nameosspath+'"><div class="file-del"><a href="javascript:void(0)" onclick="delPic(this)">X</a></div>'+
+                    '<input type="hidden" name="step[0][][step_img]" value="'+data.result.data.nameosspath+'">'+
+                    '</li>');
 
-            count++;
-            if (count>4) {
+                count++;
+                if (count>4) {
 
-                $('#upload').attr('disabled','disabled');
+                    $('#upload').attr('disabled','disabled');
+                }
             }
+
         }
     }).prop('disabled', !$.support.fileInput)
         .parent().addClass($.support.fileInput ? undefined : 'disabled');
