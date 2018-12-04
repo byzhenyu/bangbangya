@@ -71,9 +71,9 @@ class TaskLogController extends CommonController {
             $where['add_time'] = array('elt', $datemax);
         }
 
-        $data = D('TaskLog')->getTaskRankByTime($where);
+        $data = D('User')->getUsersListByPage($where, '', 'task_suc_money desc');
 
-        $this->assign('list', $data['info']);
+        $this->assign('list', $data['userslist']);
         $this->assign('page', $data['page']);
         $this->assign('count', $data['count']);
         $this->display();

@@ -37,7 +37,8 @@ class UserModel extends Model{
         $userslist = $this->field($field)->where($where)->limit($page['limit'])->order($sort)->select();
         return array(
             'userslist'=>$userslist,
-            'page'=>$page['page']
+            'page'=>$page['page'],
+            'count'=>$count
         );
 
 
