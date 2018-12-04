@@ -10,6 +10,11 @@
         .withdrawals-money div input {
             color: #666;
         }
+        .withdrawals-input {
+            caret-color: #333;
+            color: #333;
+            font-size: .14rem;
+        }
     </style>
 </head>
 <body style="background: #f6f6f6">
@@ -37,7 +42,7 @@
     <div class="withdrawals-money">
         <p>提现金额</p>
         <div>
-            <input type="number" name="money" onkeyup="num(this)"  id="money" placeholder="请输入提现金额">
+            <input  class="withdrawals-input" type="number" name="money" onkeyup="num(this)"  id="money" placeholder="请输入提现金额">
             <p>元</p>
         </div>
     </div>
@@ -117,6 +122,11 @@
                 mui.toast('您取消了操作!')
             }
         });
+    })
+</script>
+<script>
+    $('.withdrawals-input').on('touchstart',function () {
+        $(this).focus();
     })
 </script>
 </html>
