@@ -42,22 +42,30 @@ class ComplaintController extends CommonController {
                     $data = I('post.','');
                     $userModel = D('Home/User');
                     $shopModel = D('Home/Shop');
-                    $ComplaintModel->save();
                     if($data['audit_status'] == 1){
+                        $ComplaintRes = $ComplaintModel->save();
                         $ComplaintInfo = $ComplaintModel ->getComplaintInfo($data['id']);
                         if($data['type'] == 0){
                             $usershopRes = $shopModel->where('user_id = '.$ComplaintInfo['be_user_id'])->setInc('be_complain_num');
                             $beusershopRes = $shopModel->where('user_id = '.$ComplaintInfo['user_id'])->setInc('complain_num');
-                            if($usershopRes && $beusershopRes){
+                            if($usershopRes && $beusershopRes  && $ComplaintRes ){
                                 $this->ajaxReturn(V(1, '操作成功'));
                             }else{
                                 $this->ajaxReturn(V(0, '失败'));
                             }
                         }else{
                             M()->startTrans();
+                            $ComplaintModel->save();
+                            /*改变任务的状态*/
+                            D('Home/TaskLog')->where(array('task_id' => $ComplaintInfo['task_id'],'user_id' => $ComplaintInfo['user_id'],'valid_status' =>2 ))->save(array('valid_status' => 3));
+                            $taskNum = D('Home/Task')->where(array('id'=> $ComplaintInfo['task_id']))->getField('task_num');
+                            if($taskNum){
+                                D('Home/Task')->where(array('id'=> $ComplaintInfo['task_id']))->setDec('task_num');
+                            }
+                            /* end */
                             $userData = array(
-                                  'task_suc_money' => array('exp','task_suc_money + '.$ComplaintInfo['price']),
-                                  'total_money' => array('exp','total_money + '.$ComplaintInfo['price']),
+                                'task_suc_money' => array('exp','task_suc_money + '.$ComplaintInfo['price']),
+                                'total_money' => array('exp','total_money + '.$ComplaintInfo['price']),
                             );
                             $userRes = $userModel->where('user_id = '.$ComplaintInfo['user_id'])->save($userData);
                             $usershopRes = $shopModel->where('user_id = '.$ComplaintInfo['user_id'])->setInc('appeal_num');
@@ -74,7 +82,7 @@ class ComplaintController extends CommonController {
                                 M()->commit();
                                 $this->ajaxReturn(V(1, '操作成功'));
                             }else{
-                                M()->rollback();
+//                                M()->rollback();
                                 $this->ajaxReturn(V(0, '失败'));
                             }
                         }
