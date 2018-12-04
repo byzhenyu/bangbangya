@@ -16,7 +16,7 @@
     <div class="bind-zfb-box">
         <div class="bind-zfb-info">
             <p>账号</p>
-            <input type="text" name="alipay_num"  id="alipay_num"  value="{$alipay.alipay_num}" placeholder="请输入支付宝账号">
+            <input type="text" name="alipay_num" onkeyup="value=value.replace(/[\u4e00-\u9fa5]/ig,'')"   id="alipay_num"  value="{$alipay.alipay_num}" placeholder="请输入支付宝账号">
         </div>
 
         <div class="bind-zfb-info">
@@ -48,6 +48,10 @@
     function bindAlipay(){
           var alipay_num = $.trim($('#alipay_num').val());
           var alipay_name = $.trim($('#alipay_name').val());
+          if(!$(alipay_num).val().match(/^[\u4e00-\u9fa5]+$/)){
+              mui.toast('账号禁止输入汉字');
+              return;
+          }
           if(alipay_num == ''){
                mui.toast('请你输入支付宝账号');
                return;
