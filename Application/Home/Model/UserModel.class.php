@@ -183,6 +183,7 @@ class UserModel extends Model
     * 赚钱排名
     */
    public function getRankList($where = [],$field = "", $sort = ' task_suc_money DESC',$page = 0){
+       $where['status']  = 1;
        if(is_null($field))  $field = $this->findFields;
        $count = $this->where($where)->count();
        $page = get_page($count, 100);
