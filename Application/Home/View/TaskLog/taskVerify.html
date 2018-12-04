@@ -103,8 +103,9 @@
                     '<div class="upload-img fl">' +
                         '<img src="'+data.result.data.nameosspath+'">' +
                         '<button class="upload-delete iconfont icon-common_icon_close" onclick="delPic(this)"></button>' +
-                    '</div>' +
-                    '<input type="hidden" name="valid_img[]" value="'+data.result.data.nameosspath+'">');
+
+                    '<input type="hidden" name="valid_img[]" value="'+data.result.data.nameosspath+'">'+
+                '</div>');
                 count++;
                 if(count>4){
                     $('#hide').hide();
