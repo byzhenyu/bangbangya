@@ -13,6 +13,7 @@ class FansController extends CommonController {
     public function listFans() {
         $user_id = I('user_id', 0, 'intval');
         $where['f.status'] = array('eq',1);
+        $where['u.status'] = array('eq', 1);
         $where['f.fans_user_id'] = array('eq', $user_id);
         $data = D('Admin/Fans')->getFansList($where);
 
