@@ -452,6 +452,7 @@
         if (task_num < limit_num) {
             mui.toast('最小数量为'+limit_num);
             $('#task_num').val('');
+            $('#total_price').val('');
             return false;
         }
         if(price && task_num)
@@ -467,6 +468,7 @@
         if (price < limit_money) {
             mui.toast('最小金额为'+limit_money+ '元');
             $('#price').val('');
+            $('#total_price').val('');
             return false;
         }
         if(price && task_num)
