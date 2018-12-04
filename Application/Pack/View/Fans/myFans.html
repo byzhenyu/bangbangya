@@ -7,49 +7,50 @@
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
 </head>
 <body>
-    <header class="mui-bar mui-bar-nav help-duck-head">
-        <a href="{:U('User/personalCenter')}" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
-        <p class="mui-title">粉丝关注</p>
-        <a></a>
-    </header>
+<header class="mui-bar mui-bar-nav help-duck-head">
+    <a href="{:U('User/personalCenter')}" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <p class="mui-title">粉丝关注</p>
+    <a></a>
+</header>
 
-    <div class="my-fans-top">
-        <div class="my-img-info">
-            <img src="{$userInfo['headPic']}">
-            <div class="my-fans-basic">
-                <p>{$userInfo['nickName']}</p>
-                <span>ID</span><span>{$userInfo['user_id']}</span>
-            </div>
-        </div>
-        <div class="my-fans-data">
-            <div>
-                <span>我的粉丝</span>
-                <p><span>{$fansCount}</span>人</p>
-            </div>
-            <div>
-                <span>我的关注</span>
-                <p><span>{$focusCount}</span>人</p>
-            </div>
+<div class="my-fans-top">
+    <div class="my-img-info">
+        <img src="{$userInfo['headPic']}">
+        <div class="my-fans-basic">
+            <p>{$userInfo['nickName']}</p>
+            <span>ID</span><span>{$userInfo['user_id']}</span>
         </div>
     </div>
-
-    <div class="mui-content" id="top-shop-content">
-        <div id="my-fans-info" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary top-shop-choose my-fans-attention" >
-            <a data-type="0" class="mui-control-item mui-active my-fans">
-                <p>我的粉丝</p>
-            </a>
-            <a data-type="1" class="mui-control-item my-attention">
-                <p>我的关注</p>
-            </a>
-        </div>
-
+    <div class="my-fans-data">
         <div>
-            <div id="item1" class="mui-control-content mui-active">
-                <div class="mui-scroll-content">
-                    <div class="mui-scroll">
-                        <ul class="mui-table-view my-fans-view msg-list">
-                            <foreach name="fanslist" item="v">
-                                <li class="mui-table-view-cell my-fans-li">
+            <span>我的粉丝</span>
+            <p><span>{$fansCount}</span>人</p>
+        </div>
+        <div>
+            <span>我的关注</span>
+            <p><span>{$focusCount}</span>人</p>
+        </div>
+    </div>
+</div>
+
+<div class="mui-content" id="top-shop-content">
+    <div id="my-fans-info" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary top-shop-choose my-fans-attention" >
+        <a data-type="0" class="mui-control-item mui-active my-fans">
+            <p>我的粉丝</p>
+        </a>
+        <a data-type="1" class="mui-control-item my-attention">
+            <p>我的关注</p>
+        </a>
+    </div>
+
+    <div>
+        <div id="item1" class="mui-control-content mui-active">
+            <div class="mui-scroll-content">
+                <div class="mui-scroll">
+                    <ul class="mui-table-view my-fans-view msg-list">
+                        <foreach name="fanslist"  item="v">
+                            <li class="mui-table-view-cell my-fans-li">
+                                <if condition="$type eq 0">
                                     <a href="{:U('Shop/shopDetail', array('user_id'=>$v['user_id']))}" data-user="{$v['user_id']}" class="my-fans-item">
                                         <div class="my-fans-user">
                                             <div class="my-fans-left">
@@ -64,22 +65,39 @@
                                             <img src="__PUBLIC__/mobile/images/common_icon_more.png">
                                         </div>
                                     </a>
-                                </li>
-                            </foreach>
-                        </ul>
-                        <div class="top-ups-sure">
-                            <button id="load">加载更多</button>
-                        </div>
-                    </div>
-                    <div class="mui-scrollbar mui-scrollbar-vertical">
-                        <div class="mui-scrollbar-indicator"></div>
+                                    <else />
+
+                                    <a href="{:U('Shop/shopDetail', array('user_id'=>$v['fans_user_id']))}" data-user="{$v['user_id']}" class="my-fans-item">
+                                        <div class="my-fans-user">
+                                            <div class="my-fans-left">
+                                                <img src="{$v.head_pic}">
+                                                <div class="fans-user-info">
+                                                    <p>{$v.nick_name}</p>
+                                                    <div>
+                                                        <span>{:time_format($v['add_time'])}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+                                        </div>
+                                    </a>
+                                </if>
+                            </li>
+                        </foreach>
+                    </ul>
+                    <div class="top-ups-sure">
+                        <button id="load">加载更多</button>
                     </div>
                 </div>
+                <div class="mui-scrollbar mui-scrollbar-vertical">
+                    <div class="mui-scrollbar-indicator"></div>
+                </div>
             </div>
-
         </div>
 
     </div>
+
+</div>
 
 </body>
 <script src="__PUBLIC__/mobile/js/mui.min.js"></script>
@@ -106,19 +124,24 @@
 
                     var html1 = '';
                     for (var i=0; i < data.data.length; i++) {
-                        html1 += '<li class="mui-table-view-cell my-fans-li">'+
-                            '<a data-user="'+data.data[i].user_id+'" class="my-fans-item">'+
+                        if (type == 0) {
+                            html1 += '<li onclick="shopInfo('+data.data[i].user_id+')" class="mui-table-view-cell my-fans-li">';
+                        } else {
+                            html1 += '<li onclick="shopInfo('+data.data[i].fans_user_id+')" class="mui-table-view-cell my-fans-li">';
+                        }
+
+                        html1+='<a data-user="'+data.data[i].user_id+'" class="my-fans-item">'+
                             '<div class="my-fans-user">'+
                             '<div class="my-fans-left">'+
                             '<img src="'+data.data[i].head_pic+'">'+
                             '<div class="fans-user-info">'+
                             '<p>'+data.data[i].nick_name+'</p>'+
-                        '<div>'+
-                        '<span>'+data.data[i].add_time+'</span>'+
-                        '</div>'+
-                        '</div>'+
-                        '</div>'+
-                        '<img src="__PUBLIC__/mobile/images/common_icon_more.png">'+
+                            '<div>'+
+                            '<span>'+data.data[i].add_time+'</span>'+
+                            '</div>'+
+                            '</div>'+
+                            '</div>'+
+                            '<img src="__PUBLIC__/mobile/images/common_icon_more.png">'+
                             '</div>'+
                             '</a>'+
                             '</li>';
@@ -171,12 +194,10 @@
                 }
             }
         })
-    })
-    //跳转店铺
-
-    $('.msg-list').on('tap', '.my-fans-item', function () {
-        var user_id = $(this).data('user');
-        window.location.href = "{:U('Shop/shopDetail')}/user_id/"+user_id;
     });
+    //跳转店铺
+    function shopInfo(user_id){
+        window.location.href = "{:U('Shop/shopDetail')}/user_id/"+user_id;
+    }
 </script>
 </html>

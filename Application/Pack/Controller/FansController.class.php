@@ -27,7 +27,7 @@ class FansController extends CommonController {
             $where['f.user_id']  =  array('eq', UID);
         }
 
-        $field = 'f.user_id,u.head_pic,u.nick_name,f.add_time';
+        $field = 'f.user_id,f.fans_user_id,u.head_pic,u.nick_name,f.add_time';
 
         $list =  $this->Fans->getFansList($where, $field, '', $type);
         if (IS_POST) {
@@ -38,6 +38,7 @@ class FansController extends CommonController {
             }
             $this->ajaxReturn(V(1,'列表', $list));
         }
+        $this->assign('type', $type);
         $count = $this->Fans->getFansCount();
         $this->assign('userInfo', $this->userInfo);
         $this->assign('fanslist',$list);
