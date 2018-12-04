@@ -801,8 +801,8 @@ input[type="checkbox"]:checked + i {
 }
 
 .task-operation-row1 img {
-    width: 1.1rem;
-    height: 1.1rem;
+    width: 55px;
+    height: 55px;
     margin-right: .24rem;
 }
 
@@ -1475,7 +1475,7 @@ input[type="checkbox"]:checked + i {
 }
 
 .task-publish-info span {
-    margin-right: .48rem;
+    margin-right: .25rem;
 }
 
 .task-publish-info i {
@@ -4056,7 +4056,7 @@ input[type="checkbox"]:checked + i {
   .weui-uploader__bd{width: 100%;}
         .weui-uploader__files{  overflow: hidden;  width: 98%;  margin: auto;  text-align: center;  }
         .weui-uploader__file{  float: left;  width: 33%;  text-align: center;  position: relative;  }
-        .weui-uploader__file img{  width: 2rem;  height:2rem;  }
+        /*.weui-uploader__file img{  width: 2rem;  height:2rem;  }*/
         .weui-uploader__file .file-del{  position: absolute;  top:1px;  right: 0;  }
         .weui-uploader__file .file-del a{  color: #fff;  background-color: rgba(0,0,0,.3);  padding: 2px 7px;  border-radius: 15px;cursor:pointer  }
         .weui-uploader__input-box{ position: relative;
