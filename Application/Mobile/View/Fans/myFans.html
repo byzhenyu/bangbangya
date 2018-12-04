@@ -50,20 +50,38 @@
                         <ul class="mui-table-view my-fans-view msg-list">
                             <foreach name="fanslist"  item="v">
                                 <li class="mui-table-view-cell my-fans-li">
-                                    <a href="{:U('Shop/shopDetail', array('user_id'=>$v['user_id']))}" data-user="{$v['user_id']}" class="my-fans-item">
-                                        <div class="my-fans-user">
-                                            <div class="my-fans-left">
-                                                <img src="{$v.head_pic}">
-                                                <div class="fans-user-info">
-                                                    <p>{$v.nick_name}</p>
-                                                    <div>
-                                                        <span>{:time_format($v['add_time'])}</span>
+                                    <if condition="$type eq 0">
+                                        <a href="{:U('Shop/shopDetail', array('user_id'=>$v['user_id']))}" data-user="{$v['user_id']}" class="my-fans-item">
+                                            <div class="my-fans-user">
+                                                <div class="my-fans-left">
+                                                    <img src="{$v.head_pic}">
+                                                    <div class="fans-user-info">
+                                                        <p>{$v.nick_name}</p>
+                                                        <div>
+                                                            <span>{:time_format($v['add_time'])}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <img src="__PUBLIC__/mobile/images/common_icon_more.png">
                                             </div>
-                                            <img src="__PUBLIC__/mobile/images/common_icon_more.png">
-                                        </div>
-                                    </a>
+                                        </a>
+                                            <else />
+
+                                        <a href="{:U('Shop/shopDetail', array('user_id'=>$v['fans_user_id']))}" data-user="{$v['user_id']}" class="my-fans-item">
+                                            <div class="my-fans-user">
+                                                <div class="my-fans-left">
+                                                    <img src="{$v.head_pic}">
+                                                    <div class="fans-user-info">
+                                                        <p>{$v.nick_name}</p>
+                                                        <div>
+                                                            <span>{:time_format($v['add_time'])}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+                                            </div>
+                                        </a>
+                                    </if>
                                 </li>
                             </foreach>
                         </ul>
@@ -106,8 +124,13 @@
 
                     var html1 = '';
                     for (var i=0; i < data.data.length; i++) {
-                        html1 += '<li onclick="shopInfo('+data.data[i].fans_user_id+')" class="mui-table-view-cell my-fans-li">'+
-                            '<a data-user="'+data.data[i].user_id+'" class="my-fans-item">'+
+                        if (type == 0) {
+                            html1 += '<li onclick="shopInfo('+data.data[i].user_id+')" class="mui-table-view-cell my-fans-li">';
+                        } else {
+                            html1 += '<li onclick="shopInfo('+data.data[i].fans_user_id+')" class="mui-table-view-cell my-fans-li">';
+                        }
+
+                        html1+='<a data-user="'+data.data[i].user_id+'" class="my-fans-item">'+
                             '<div class="my-fans-user">'+
                             '<div class="my-fans-left">'+
                             '<img src="'+data.data[i].head_pic+'">'+
