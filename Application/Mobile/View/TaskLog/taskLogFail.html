@@ -75,7 +75,7 @@
     </div>
     <div class="unqualified-details-img">
         <foreach name="taskLogInfo['valid_pic']" item="v">
-            <img src="{$v}">
+            <a href="{$v}"  target="_blank"><img src="{$v}"></a>
         </foreach>
         <div class="unqualified-details-btns">
             <button class="give-up-task" onclick="giveUp({$taskLogInfo[id]},{$taskLogInfo[task_id]})">放弃</button>
