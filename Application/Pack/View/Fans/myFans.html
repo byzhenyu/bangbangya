@@ -50,7 +50,7 @@
                         <ul class="mui-table-view my-fans-view msg-list">
                             <foreach name="fanslist" item="v">
                                 <li class="mui-table-view-cell my-fans-li">
-                                    <a data-user="{$v['user_id']}" class="my-fans-item">
+                                    <a href="{:U('Shop/shopDetail', array('user_id'=>$v['user_id']))}" data-user="{$v['user_id']}" class="my-fans-item">
                                         <div class="my-fans-user">
                                             <div class="my-fans-left">
                                                 <img src="{$v.head_pic}">
