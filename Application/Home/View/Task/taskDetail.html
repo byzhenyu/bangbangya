@@ -132,7 +132,7 @@
                         <div class="jd_utitle">发布方</div>
                         <div class="jd_pub">
                         <span>
-                            <img style="border-radius: 50%;" src="{$taskDetail['head_pic']}"/>
+                            <img style="border-radius: 50%; width: 30px; height: 30px;" src="{$taskDetail['head_pic']}"/>
                         </span>
                             {$taskDetail['nick_name']}
                         </div>
@@ -226,6 +226,7 @@
                 </div>
             </div>
             <div class="fix-content">
+                <if condition="$taskDetail['user_id'] neq UID">
                 <if condition="($taskDetail['task_log_id'] eq 0) AND ($taskDetail['is_stale'] eq 1)">
 
                     <div class="jd_uop1">
@@ -267,6 +268,7 @@
                             </span>
                         </div>
                     <else/>
+                </if>
                 </if>
             </div>
         </div>
