@@ -203,7 +203,7 @@ class TaskModel extends Model{
             $logwhere['user_id'] = array('eq', UID);
             $logwhere['valid_time'] = array('gt', NOW_TIME);
             $logwhere['valid_status'] = array('in', [0,1,2,3]);
-            $logInfo  = M('TaskLog')->where($logwhere)->field('id, valid_time,valid_status')->find();
+            $logInfo  = M('TaskLog')->where($logwhere)->field('id, valid_time,valid_status')->order('id desc')->find();
             if (!empty($logInfo)) {
                 $taskDetail['task_log_id'] = $logInfo['id']; //用于判断是否接单
                 $taskDetail['log_valid_status'] = $logInfo['valid_status']; //0显示上传 2显示重做 3 已完成
