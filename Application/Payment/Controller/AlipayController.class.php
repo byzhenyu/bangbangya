@@ -29,7 +29,9 @@ class AlipayController extends CommonController {
         $data['total_amount'] = '0.01';
         header("Content-type: text/html; charset=utf-8");
         require_once("./Plugins/AliPay/AliPay.php");
-        $alipay = new \AliPay();
+        $aliData = C('AliPay');
+        $aliData['returnUrl'] =  'http://bby.host5.liuniukeji.net/index.php/Home/Pay/myWallet';
+        $alipay = new \AliPay($aliData);
         echo '页面跳转中, 请稍后...';
         echo $alipay->AliPayWeb($data);
     }
@@ -54,9 +56,10 @@ class AlipayController extends CommonController {
         $data['subject'] = C('APP_NAME').'H5充值';
         $data['out_trade_no'] =  $data['order_sn'];
         $data['total_amount'] = '0.01';
-
+        $aliData = C('AliPay');
+        $aliData['returnUrl'] =  'http://bby.host5.liuniukeji.net/index.php/Mobile/User/personalCenter';
         require_once("./Plugins/AliPay/AliPay.php");
-        $alipay =new \AliPay();
+        $alipay =new \AliPay($aliData);
         echo '页面跳转中, 请稍后...';
         echo $alipay->AliPayMobileWeb($data);
 
