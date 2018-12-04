@@ -48,6 +48,8 @@ class ComplaintController extends CommonController {
                         if($data['type'] == 0){
                             $usershopRes = $shopModel->where('user_id = '.$ComplaintInfo['be_user_id'])->setInc('be_complain_num');
                             $beusershopRes = $shopModel->where('user_id = '.$ComplaintInfo['user_id'])->setInc('complain_num');
+                            D('Common/Push')->push('投诉处理结果', $ComplaintInfo['user_id'], '投诉成功', '任务编号'.$ComplaintInfo['task_id'], '已警告该用户!', '');
+                            D('Common/Push')->push('投诉处理结果', $ComplaintInfo['be_user_id'], '被投诉', '任务编号'.$ComplaintInfo['be_user_id'], '您的操作违规,多次封号处理!', '');
                             if($usershopRes && $beusershopRes  && $ComplaintRes ){
                                 $this->ajaxReturn(V(1, '操作成功'));
                             }else{
@@ -70,14 +72,14 @@ class ComplaintController extends CommonController {
                             $userRes = $userModel->where('user_id = '.$ComplaintInfo['user_id'])->save($userData);
                             $usershopRes = $shopModel->where('user_id = '.$ComplaintInfo['user_id'])->setInc('appeal_num');
                             account_log($ComplaintInfo['user_id'], $ComplaintInfo['price'],4,'申诉获得任务金额',$ComplaintInfo['task_id']);
-                            D('Common/Push')->push('申诉处理结果', $ComplaintInfo['user_id'], '申诉成功', '任务'.$ComplaintInfo['task_id'], '收入金额'.(fen_to_yuan($ComplaintInfo['price'])), '');
+                            D('Common/Push')->push('申诉处理结果', $ComplaintInfo['user_id'], '申诉成功', '任务编号'.$ComplaintInfo['task_id'], '收入金额'.(fen_to_yuan($ComplaintInfo['price'])), '');
                             $beuserData = array(
                                 'total_money' => array('exp','total_money - '.$ComplaintInfo['price'])
                             );
                             $beuserRes = $userModel->where('user_id = '.$ComplaintInfo['be_user_id'])->save($beuserData);
                             $beusershopRes = $shopModel->where('user_id = '.$ComplaintInfo['be_user_id'])->setInc('be_appeal_num');
                             account_log($ComplaintInfo['be_user_id'], $ComplaintInfo['price'],3,'被申诉扣除任务的金额',$ComplaintInfo['task_id']);
-                            D('Common/Push')->push('申诉处理结果', $ComplaintInfo['user_id'], '被申诉', '任务'.$ComplaintInfo['be_user_id'], '减去金额'.(fen_to_yuan($ComplaintInfo['price'])), '');
+                            D('Common/Push')->push('申诉处理结果', $ComplaintInfo['user_id'], '被申诉', '任务编号'.$ComplaintInfo['task_id'], '减去金额'.(fen_to_yuan($ComplaintInfo['price'])), '');
                             if($usershopRes && $beusershopRes  && $userRes && $beuserRes){
                                 M()->commit();
                                 $this->ajaxReturn(V(1, '操作成功'));
