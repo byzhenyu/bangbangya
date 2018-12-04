@@ -35,7 +35,7 @@
                     <foreach name="topShop" item="v">
                         <a href="{:U('Shop/shopDetail',array('user_id'=>$v['user_id']))}" class="topshop-box fl">
                             <div class="topshop-img">
-                                <span class="topshop-i"><img src="{$v.shop_img}"></span>
+                                <span class="topshop-i" ><img style="width:50px;height:50px;" src="{$v.shop_img}"></span>
                                 <span class="topshop-topi"><img src="__PUBLIC__/pc/images/jdzq_img_shop.png" /></span>
                             </div>
                             <p>{$v.shop_name}</p>
