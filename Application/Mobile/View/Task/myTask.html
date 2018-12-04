@@ -117,15 +117,15 @@
                                         <input onclick="audit({$v[id]},{$v[is_task_num]})" type="button" value="审核">
                                     </a>
                                     <input id="my-release-pause{$v['id']}" type="button" onclick="pause({$v['id']},5)" value="开启">
-                                    <input class="add-num-btn1"  type="button"  value="追加数量" onclick="addNum({$v[id]})">
-                                    <input id="add-price-btn" type="button" name="{$v['task_num']}" onclick="addPrice({$v[id]})" value="上调出价">
+                                    <input class="add-num-btn1"  type="button"  value="追加数量" onclick="tosay(0)" >
+                                    <input id="add-price-btn" type="button" name="{$v['task_num']}" onclick="tosay(1)"  value="上调出价">
                                 </div>
 
                                 <div>
-                                    <input id="cancel-release-btn" type="button" onclick="soldOut({$v[id]})"  value="下架">
-                                    <input id="flush-release-btn" type="button" onclick="refresh()" value="刷新">
-                                    <input id="recommend-release-btn" type="button"  onclick="recommend({$v[id]})" value="{$v['recommend'] == 1?'已推荐': '推荐'}">
-                                    <input id="top-btn" type="button"   onclick="taskTop({$v[id]})"  value="{$v['top'] == 1?'已置顶': '置顶'}">
+                                    <input id="cancel-release-btn" type="button"  onclick="tosay(2)"   value="下架">
+                                    <input id="flush-release-btn" type="button"  onclick="tosay(3)" value="刷新">
+                                    <input id="recommend-release-btn" type="button"  onclick="tosay(4)"  value="{$v['recommend'] == 1?'已推荐': '推荐'}">
+                                    <input id="top-btn" type="button"    onclick="tosay(5)"   value="{$v['top'] == 1?'已置顶': '置顶'}">
                                 </div>
                             </div>
                             <div class="task-details-box">
@@ -227,6 +227,22 @@
     mui.init();
 </script>
 <script>
+    function tosay(type){
+         if(type == 1){
+             type  = '上调出价';
+         }else if(type == 2){
+             type = '下架';
+         }else if(type == 3){
+             type = '刷新';
+         }else if(type == 4){
+             type = '推荐';
+         }else if(type == 5){
+             type = '置顶';
+         }else if(type == 0){
+             type = '追加数量';
+         }
+         mui.toast(type + '前,请暂停任务!');
+    }
     function del(id){
         var delArray = ['取消', '确定'];
         mui.confirm('确定要删除该任务吗?', '提示', delArray, function(e) {
