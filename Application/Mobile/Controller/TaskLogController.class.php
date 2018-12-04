@@ -115,7 +115,7 @@ class TaskLogController extends UserCommonController {
                  break;
           }
           $where['l.user_id'] = UID;
-          $field = 'l.id, l.task_id, l.task_name,l.valid_time, l.valid_status, t.price, c.category_name, c.category_img';
+          $field = 'l.id, l.task_id, l.task_name,l.valid_time, l.valid_status,l.task_price, t.price, c.category_name, c.category_img';
           $taskLogModel = D('Home/TaskLog');
           $taskLogInfo = $taskLogModel->getTaskLog($where,$field);
 
