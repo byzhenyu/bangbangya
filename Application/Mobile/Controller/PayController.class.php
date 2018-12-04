@@ -122,6 +122,9 @@ class PayController  extends CommonController{
         $user_id = UID;
         if(IS_POST){
             $data = I('post.', 2);
+            if(preg_match('/[\x{4e00}-\x{9fa5}]/u', $data['alipay_num'])>0) {
+                $this->ajaxReturn(V(0, '绑定失败,支付宝账号不能含有汉字!'));
+            }
             $userRes = $this->user->where(array('alipay_num'=>$data['alipay_num']))->find();
             if ($userRes) {
                 $this->ajaxReturn(V(0, '绑定失败,已有账号绑定该支付宝!'));
