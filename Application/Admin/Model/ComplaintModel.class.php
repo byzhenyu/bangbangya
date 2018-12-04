@@ -29,7 +29,7 @@ class ComplaintModel extends Model {
      * @param $sort string 排序顺序
      * @return mixed
      */
-    public function getComplaintList($where, $field = false, $sort = 'c.audit_status ASC')
+    public function getComplaintList($where, $field = false, $sort = 'c.id desc')
     {
         /*status 状态查询 0 被删除的信息 1 正常显示的信息*/
         $where['c.status'] = 1;
