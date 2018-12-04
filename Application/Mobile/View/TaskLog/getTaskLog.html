@@ -88,7 +88,7 @@
                                     <else />
                                     <if condition="$v['valid_status'] eq 0">
                                     <label name="caozuo" class="upload-verification" onclick="verify({$v['id']})">上传验证</label>
-                                    <elseif condition="$v['valid_status'] eq 1"/><label  name="caozuo"  class="audit-ing">审核中</label>
+                                    <elseif condition="$v['valid_status'] eq 1"/><label  name="caozuo"  onclick="tosay(1)" class="audit-ing">审核中</label>
                                     <elseif condition="$v['valid_status'] eq 2"/><label  name="caozuo" onclick="fail({$v[id]})" class="no-qualified">不合格</label>
                                     <else /><label name="caozuo"   class="task-finshed">已完成</label>
                                     </if>
@@ -121,6 +121,12 @@
 <script src="__PUBLIC__/mobile/js/url.js"></script>
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
+    function tosay(type){
+        if(type == 1){
+            type = '审核中';
+        }
+        mui.toast(type);
+    }
     mui.init();
     var p = 1;
     var type = 5;
