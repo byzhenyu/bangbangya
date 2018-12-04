@@ -26,7 +26,7 @@ class AlipayController extends CommonController {
         $data['body'] = C('APP_NAME').'网页充值';
         $data['subject'] = C('APP_NAME').'网页充值';
         $data['out_trade_no'] =  $data['order_sn'];
-        $data['total_amount'] = $data['recharge_money'];
+        $data['total_amount'] = '0.01';
         header("Content-type: text/html; charset=utf-8");
         require_once("./Plugins/AliPay/AliPay.php");
         $alipay = new \AliPay();
