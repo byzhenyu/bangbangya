@@ -259,6 +259,7 @@ class TaskLogController extends UserCommonController{
             $userModel->where('user_id = '.UID)->setDec('total_money',$tasklogInfo['task_price']);
             account_log( UID,$tasklogInfo['task_price'],3,'任务结算',$tasklog_id);
             $ShopModel->where('user_id = '.UID)->setInc('vol');
+            D('Common/Push')->push('支出提醒',UID,'亲，您发布的任务已被完成！','任务名称:'.$tasklogInfo['task_name'],'支出金额：￥'.$tasklogInfo['task_price'] /100,'置顶您的店铺或任务才能被更好的接单呦！');
             $taskUser = array(
                 'task_suc_money' => array('exp','task_suc_money + '.$tasklogInfo['task_price']),
                 'total_money' => array('exp', 'total_money +'.$tasklogInfo['task_price'] ),
@@ -266,7 +267,7 @@ class TaskLogController extends UserCommonController{
             $userModel->where('user_id = '.$tasklogInfo['user_id'])->save($taskUser);
             account_log($tasklogInfo['user_id'], $tasklogInfo['task_price'], 4,'完成任务', $tasklog_id);
             $ShopModel->where('user_id = '.$tasklogInfo['user_id'])->setInc('take_task');
-            D('Common/Push')->push('收入提醒',$tasklogInfo['user_id'],'亲，您有一笔收入到账！','任务名称:'.$tasklogInfo['task_name'].'获得','收入金额：￥'.$tasklogInfo['task_price'] /100,'劳动换来的果实特别甜，继续加油吧！');
+            D('Common/Push')->push('收入提醒',$tasklogInfo['user_id'],'亲，您有一笔收入到账！','任务名称:'.$tasklogInfo['task_name'],'收入金额：￥'.$tasklogInfo['task_price'] /100,'劳动换来的果实特别甜，继续加油吧！');
             $tasklogRes = $this->TaskLogModel->where('id = '.$tasklog_id)->save(array('valid_status' => 3));
             if($tasklogRes){
                 M()->commit();
