@@ -226,7 +226,8 @@
                 </div>
             </div>
             <div class="fix-content">
-                <if condition="($taskDetail['task_log_id'] eq 0) AND ($taskDetail['is_stale'] eq 1) AND ($taskDetail['user_id'] neq UID)">
+                <if condition="$taskDetail['user_id'] neq UID">
+                <if condition="($taskDetail['task_log_id'] eq 0) AND ($taskDetail['is_stale'] eq 1)">
 
                     <div class="jd_uop1">
                         <!--抢单-->
@@ -267,6 +268,7 @@
                             </span>
                         </div>
                     <else/>
+                </if>
                 </if>
             </div>
         </div>
