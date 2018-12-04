@@ -28,7 +28,7 @@ class FansModel extends Model {
         $count = $this->alias('f')->where($where)->count();
         $page = get_page($count);
         $list = $this->alias('f')
-            ->join('__USER__ u on f.fans_user_id = u.user_id')
+            ->join('__USER__ u on f.user_id = u.user_id')
             ->field($field)
             ->where($where)
             ->limit($page['limit'])
