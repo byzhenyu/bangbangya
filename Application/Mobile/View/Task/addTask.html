@@ -365,15 +365,18 @@
         dataType: 'json',
         done: function (e, data) {
             console.log(data);
-            $('#uploaderFiles').append('<li class="weui-uploader__file" ><img src="'+data.result.data.nameosspath+'"><div class="file-del"><a href="javascript:void(0)" onclick="delPic(this)">X</a></div>'+
-                '<input type="hidden" name="step[0][][step_img]" value="'+data.result.data.nameosspath+'">'+
-                '</li>');
+            if (data.result.data.nameosspath) {
+                $('#uploaderFiles').append('<li class="weui-uploader__file" ><img src="'+data.result.data.nameosspath+'"><div class="file-del"><a href="javascript:void(0)" onclick="delPic(this)">X</a></div>'+
+                    '<input type="hidden" name="step[0][][step_img]" value="'+data.result.data.nameosspath+'">'+
+                    '</li>');
 
-            count++;
-            if (count>4) {
+                count++;
+                if (count>4) {
 
-                $('#upload').attr('disabled','disabled');
+                    $('#upload').attr('disabled','disabled');
+                }
             }
+
         }
     }).prop('disabled', !$.support.fileInput)
         .parent().addClass($.support.fileInput ? undefined : 'disabled');
