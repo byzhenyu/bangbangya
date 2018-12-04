@@ -166,12 +166,12 @@
                         <div class="jd_utitle">备注</div>
                         <div class="jd_uvalue">{$taskDetail['remark']}</div>
                     </div>
-                    <!--<if condition="$taskDetail['top_time'] gt 0">-->
-                        <!--<div class="jd_info">-->
-                            <!--<div class="jd_utitle">置顶到期</div>-->
-                            <!--<div class="jd_uvalue">{$taskDetail['top_time']|time_format}</div>-->
-                        <!--</div>-->
-                    <!--</if>-->
+                    <if condition="($taskDetail['top_time'] gt time()) AND ($taskDetail['user_id'] eq UID)">
+                        <div class="jd_info">
+                            <div class="jd_utitle">置顶到期</div>
+                            <div class="jd_uvalue">{$taskDetail['top_time']|time_format}</div>
+                        </div>
+                    </if>
                     <div class="jd_info">
                         <div class="jd_utitle">截止时间</div>
                         <div class="jd_uvalue">{$taskDetail['end_time']|time_format}</div>
