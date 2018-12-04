@@ -30,11 +30,11 @@ class LoginController extends CommonController {
     public function dologin()
     {
           /*测试打开*/
-        $userModel = D('Home/User');
-        $userInfo = $userModel->doLogin('o_l6z0m2Cn59YjvQXa7xVelMXEy4');
-        session('user_auth', $userInfo['data']);
-        define(UID, session('user_auth')['user_id']);
-        $this->redirect('Mobile/User/personalCenter/login/1');
+//        $userModel = D('Home/User');
+//        $userInfo = $userModel->doLogin('o_l6z0m2Cn59YjvQXa7xVelMXEy4');
+//        session('user_auth', $userInfo['data']);
+//        define(UID, session('user_auth')['user_id']);
+//        $this->redirect('Mobile/User/personalCenter/login/1');
 //        $this->ajaxReturn(V(1, '登录成功',$userInfo));
         $code = $_GET['code'];
         if (empty($code)) {
