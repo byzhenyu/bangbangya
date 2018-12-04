@@ -66,7 +66,9 @@
         <p>链接</p>
         <div>
             <span id="url1">{$taskDetail['link_url']}</span>
-            <button onclick="copyUrl2()">复制</button>
+            <if condition="$taskDetail['link_url']  neq ''">
+                <button onclick="copyUrl2()">复制</button>
+            </if>
         </div>
     </div>
     <div class="task-details-remarks">
