@@ -646,7 +646,7 @@ input[type="checkbox"]:checked + i {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    padding: .24rem .58rem .24rem .3rem ;
+    padding: .24rem ;
     justify-content: space-between;
     background: #fff;
 }
@@ -660,6 +660,7 @@ input[type="checkbox"]:checked + i {
 }
 
 .task-type-single {
+    min-width: 20%;
     display: flex;
     align-items: center;
     /*margin-left: .71rem;*/

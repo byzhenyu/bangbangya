@@ -96,6 +96,7 @@
             width: 1rem;
         }
     </style>
+    <script src="__PUBLIC__/mobile/js/mui.min.js"></script>
     <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload/ajaxupload.js?v=1.0"></script>
 
@@ -121,8 +122,8 @@
                 data:{},  //附加参数值
                 dataType : 'text',
                 onSubmit : function(file, ext){
-                    if(!(ext && /^(jpg|png|gif|jpeg)$/.test(ext.toLowerCase()))){
-                        toastr('图片格式不支持, 请上传jpg, png, gif, jpeg格式图片');
+                    if(!(ext && /^(jpg|png|jpeg)$/.test(ext.toLowerCase()))){
+                        mui.toast('图片格式不支持, 请上传jpg, png, jpeg格式图片');
                         return false;
                     }
                     this.setData({'oldImg':filename, 'savePath':savePath});
@@ -337,7 +338,7 @@
 
 </body>
 
-<script src="__PUBLIC__/mobile/js/mui.min.js"></script>
+
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
 <!--<script type="text/javascript" src="__STATIC__/js/ajaxForm.js"></script>-->
 <script type="text/javascript" src="__ADMIN__/layDate-v5.0.9/laydate/laydate.js"></script>
