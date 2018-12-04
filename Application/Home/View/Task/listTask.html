@@ -120,9 +120,7 @@
         /*搜索加载*/
         $('.seach-btn').click(function () {
             var keyword = $("input[name='keyword']").val();
-            if (keyword) {
-                ajax_listTask({'keyword':keyword},'');
-            }
+            ajax_listTask({'keyword':keyword},'');
         });
 
         /*开始加载*/
