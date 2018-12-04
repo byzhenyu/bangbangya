@@ -48,10 +48,6 @@
     function bindAlipay(){
           var alipay_num = $.trim($('#alipay_num').val());
           var alipay_name = $.trim($('#alipay_name').val());
-          if(!$(alipay_num).val().match(/^[\u4e00-\u9fa5]+$/)){
-              mui.toast('账号禁止输入汉字');
-              return;
-          }
           if(alipay_num == ''){
                mui.toast('请你输入支付宝账号');
                return;
