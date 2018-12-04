@@ -79,7 +79,7 @@ class ComplaintController extends CommonController {
                             $beuserRes = $userModel->where('user_id = '.$ComplaintInfo['be_user_id'])->save($beuserData);
                             $beusershopRes = $shopModel->where('user_id = '.$ComplaintInfo['be_user_id'])->setInc('be_appeal_num');
                             account_log($ComplaintInfo['be_user_id'], $ComplaintInfo['price'],3,'被申诉扣除任务的金额',$ComplaintInfo['task_id']);
-                            D('Common/Push')->push('申诉处理结果', $ComplaintInfo['user_id'], '被申诉', '任务编号'.$ComplaintInfo['task_id'], '减去金额'.(fen_to_yuan($ComplaintInfo['price'])), '');
+                            D('Common/Push')->push('申诉处理结果', $ComplaintInfo['user_id'], '被申诉', '任务编号'.$ComplaintInfo['task_id'], '支出金额'.(fen_to_yuan($ComplaintInfo['price'])), '');
                             if($usershopRes && $beusershopRes  && $userRes && $beuserRes){
                                 M()->commit();
                                 $this->ajaxReturn(V(1, '操作成功'));
