@@ -122,7 +122,7 @@
                         <foreach name="taskInfo" item="v">
                             <ul class="mui-table-view top-shop-view">
                                 <li class="mui-table-view-cell top-shop-li">
-                                    <a class="top-shop-task">
+                                    <a class="top-shop-task" href="{:U('Task/taskDetail',array('id'=>$v['id']))}">
                                         <div class="top-shop-task-all">
                                             <div class="top-shop-task-left">
                                                 <img src="{$v.category_img}">
