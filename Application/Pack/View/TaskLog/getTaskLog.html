@@ -154,7 +154,11 @@
                                     </div>
                                 </div>
                                 <if condition="$type eq 4">
-                                    <input class="order-task-del" type="button" value="删除" onclick="del({$v['id']})">
+                                    <if condition="$v[valid_status] eq 0 || $v[valid_status] eq 1">
+                                        <input class="order-task-del" type="button" value="审核中" onclick="JavaScript:(mui.toast('正在审核中...'))">
+                                        <else />
+                                        <input class="order-task-del" type="button" value="删除" onclick="del({$v['id']})">
+                                    </if>
                                     <else />
                                     <if condition="$v['valid_status'] eq 0">
                                     <label name="caozuo" class="upload-verification" onclick="verify({$v['id']})">上传验证</label>
