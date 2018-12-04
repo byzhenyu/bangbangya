@@ -148,7 +148,10 @@
                             </div>
                         </if>
                         <if condition="$v['audit_status'] eq 4">
-                            <div class="my-release-btns">
+                            <div class="my-release-btns ">
+                                <!--<a class="mui-btn mui-btn-outlined my-release-btn del-btn">-->
+                                    <input  class="mui-btn mui-btn-outlined my-release-btn del-btn" onclick="audit({$v[id]},{$v[is_task_num]})" type="button" value="审核">
+                                <!--</a>-->
                                 <input type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn"  onclick="del({$v['id']})" value="删除">
                                 <p class="my-release-btn release-audit-ing">已结束</p>
                             </div>
@@ -177,7 +180,7 @@
                        </if>
                 </if>
             </div>
-            <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+            <img onclick="myTaskDetail({$v['id']})" src="__PUBLIC__/mobile/images/common_icon_more.png">
         </div>
     </foreach>
 </div>
@@ -609,7 +612,7 @@ function recommend(task_id){
     }
     /*审核*/
     function audit(task_id,is_task_num){
-            if(is_task_num  == 0){
+            if(is_task_num  == 0 || is_task_num == undefined){
                 mui.toast('没有需要审核的信息!');
             }else{
                 mui.openWindow({
