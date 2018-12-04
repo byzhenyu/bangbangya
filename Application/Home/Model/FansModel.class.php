@@ -27,6 +27,7 @@ class FansModel extends Model
         $user_id = $type == 0 ? 'user_id' :  'fans_user_id';
         /*粉丝条件*/
         $where['f.status'] = 1;
+        $where['u.status'] =array('eq', 1);
         // return P($where);
         $count = $this->alias('f')
                  ->join('__USER__ as u  on f.'.$user_id.' = u.user_id','LEFT')

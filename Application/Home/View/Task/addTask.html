@@ -418,13 +418,17 @@
 
         var charge = "{$orderFee}";
         var all = 1 + (charge/100);
-        var limit_num = "{$taskCategoryInfo[0]['limit_num']}";
-        var limit_money = "{$taskCategoryInfo[0]['limit_money']}";
+        var limit_num = 0;
+        var limit_money = 0;
         var user_total = $('#total_money').val();
         /*判断任务价钱*/
         $("#task_num").blur(function() {
             var price =  +$('#price').val();
             var task_num = +$('#task_num').val();
+            if (limit_num ==0) {
+                mui.toast('请选择任务分类');
+                return false;
+            }
             if (task_num < limit_num) {
                 mui.toast('最小数量为'+limit_num);
                 $('#task_num').val('');
@@ -440,7 +444,10 @@
         $("#price").focusout(function() {
             var price = +$('#price').val();
             var task_num = $('#task_num').val();
-
+            if (limit_num ==0) {
+                mui.toast('请选择任务分类');
+                return false;
+            }
             if (price < limit_money) {
                 mui.toast('最小金额为'+limit_money+ '元');
                 $('#price').val('');
