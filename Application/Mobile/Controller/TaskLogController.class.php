@@ -353,7 +353,6 @@ class TaskLogController extends UserCommonController {
     public function taskLogDetail() {
         $id = I('id', 0, 'intval');
         $info = D('Home/TaskLog')->getTaskLogDetail(array('l.id'=>$id));
-
         $this->assign('taskDetail', $info);
         $this->display();
     }
