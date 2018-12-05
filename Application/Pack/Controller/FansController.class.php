@@ -59,7 +59,9 @@ class FansController extends CommonController {
         /*查看是否有信息*/
         if (fansSverify($where['user_id'], $where['fans_user_id'])){
 	        $result = $this->Fans->where($where)->save(array('status' => 1));
-        	$this->ajaxReturn(V(1, '关注成功'));
+            if($result){
+                $this->ajaxReturn(V(1, '关注成功'));
+            }
         }else{
         	if ($this->Fans->add($where) !== false){
 	            $this->ajaxReturn(V(1, '关注成功'));

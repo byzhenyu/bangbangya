@@ -89,6 +89,7 @@ class ComplaintController extends CommonController {
                             }
                         }
                     }else{
+                            $ComplaintModel->save();
                             $this->ajaxReturn(V(1, '操作成功'));
                     }
                 }else{
