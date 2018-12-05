@@ -152,8 +152,8 @@
                                 </label>
                                 <div class="am-u-sm-7 am-u-sm-pull-2">
                                     <notempty name="info['stepInfo']">
-                                        <volist name="info['stepInfo']" id="v">
-                                            <div class="text-box">{$v['step_text']}</div>
+                                        <volist name="info['stepInfo']" id="v" key="k">
+                                            <div class="text-box">步骤{$k} : {$v['step_text']}</div>
                                             <div class="img-box">
                                                 <a href="{$v['step_img']}" target="_blank"><img src="{$v['step_img']}" /></a>
                                             </div>
