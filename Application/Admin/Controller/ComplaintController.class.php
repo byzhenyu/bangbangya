@@ -42,22 +42,21 @@ class ComplaintController extends CommonController {
                     $data = I('post.','');
                     $userModel = D('Home/User');
                     $shopModel = D('Home/Shop');
-                    $ComplaintInfo = $ComplaintModel ->getComplaintInfo($data['id']);
+                    $ComplaintModel->save();
+                    $ComplaintInfo = $ComplaintModel ->where(array('id'=>$data['id']))->find();
                     if($data['audit_status'] == 1){
-                        $ComplaintRes = $ComplaintModel->save();
                         if($data['type'] == 0){
                             $usershopRes = $shopModel->where('user_id = '.$ComplaintInfo['be_user_id'])->setInc('be_complain_num');
                             $beusershopRes = $shopModel->where('user_id = '.$ComplaintInfo['user_id'])->setInc('complain_num');
                             D('Common/Push')->push('投诉处理结果', $ComplaintInfo['user_id'], '投诉成功', '任务编号'.$ComplaintInfo['task_id'], '已警告该用户!', '');
                             D('Common/Push')->push('投诉处理结果', $ComplaintInfo['be_user_id'], '被投诉', '任务编号'.$ComplaintInfo['be_user_id'], '您的操作违规,多次封号处理!', '');
-                            if($usershopRes && $beusershopRes  && $ComplaintRes ){
+                            if($usershopRes && $beusershopRes  ){
                                 $this->ajaxReturn(V(1, '操作成功'));
                             }else{
                                 $this->ajaxReturn(V(0, '失败'));
                             }
                         }else{
                             M()->startTrans();
-                            $ComplaintModel->save();
                             /*改变任务的状态*/
                             D('Home/TaskLog')->where(array('task_id' => $ComplaintInfo['task_id'],'user_id' => $ComplaintInfo['user_id'],'valid_status' =>2 ))->save(array('valid_status' => 3));
                             $taskNum = D('Home/Task')->where(array('id'=> $ComplaintInfo['task_id']))->getField('task_num');
@@ -94,8 +93,7 @@ class ComplaintController extends CommonController {
                             }else{
                                   $desc = '申诉';
                             }
-                            D('Common/Push')->push($desc.'处理结果', $ComplaintInfo['user_id'], $desc.'失败', '任务编号'.$ComplaintInfo['task_id'], '您的'.$desc.'审核失败', '');
-                            $ComplaintModel->save();
+                            D('Common/Push')->push($desc.'处理结果', $ComplaintInfo['user_id'], $desc.'通知', '任务编号'.$ComplaintInfo['task_id'], '您的'.$desc.'审核失败', '');
                             $this->ajaxReturn(V(1, '操作成功'));
                     }
                 }else{

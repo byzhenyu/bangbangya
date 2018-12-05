@@ -37,6 +37,9 @@
                 </div>
             </div>
             <ul class="sess-wapper release">
+                <if condition="empty($taskList)">
+                    <button class="check-more"  style="">没有数据</button>
+                </if>
                 <volist name="taskList" id="v">
                     <li class="release-wapper cf">
                         <div class="release-sess fl cf">

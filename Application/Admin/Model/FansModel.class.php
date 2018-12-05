@@ -25,7 +25,10 @@ class FansModel extends Model {
         if ($field == '') {
             $field = 'f.*,u.nick_name';
         }
-        $count = $this->alias('f')->where($where)->count();
+        $count = $this->alias('f')
+                ->join('__USER__ u on f.user_id = u.user_id')
+                ->where($where)
+                ->count();
         $page = get_page($count);
         $list = $this->alias('f')
             ->join('__USER__ u on f.user_id = u.user_id')

@@ -395,6 +395,10 @@ class TaskController extends UserCommonController {
         if(!$res){
             $this->ajaxReturn(V(2, '余额不足'));
         }else{
+            $taskPrice = $this->Task->where(array('id'=>$data['id']))->getField('price');
+            if($taskPrice > $data['price']){
+                $this->ajaxReturn(V(2, '上调的价格应该大于现在的价格!'));
+            }
             M()->startTrans();
             $taskRes = $this->Task->where(array('id'=>$data['id']))->save($data);
             if($taskRes){
@@ -436,7 +440,7 @@ class TaskController extends UserCommonController {
                   $userRes = true;
               }
               account_log(UID, $money, 3,'任务结算',$where['task_id']);
-            D('Common/Push')->push('支出提醒',UID,'亲，您发布的任务下架操作！','任务编号:'.$where['task_id'],'支出金额：￥'.$money /100,'置顶您的店铺或任务才能被更好的接单呦！');
+              D('Common/Push')->push('支出提醒',UID,'亲，您发布的任务下架操作！','任务编号:'.$where['task_id'],'支出金额：￥'.$money /100,'置顶您的店铺或任务才能被更好的接单呦！');
               foreach ($taskLogInfo as $key=>$value){
                        $userMoney = array(
                               'task_suc_money' => array('exp','task_suc_money + '.$value['task_price']),

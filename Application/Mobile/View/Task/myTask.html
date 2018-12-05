@@ -118,7 +118,7 @@
                                     </a>
                                     <input id="my-release-pause{$v['id']}" type="button" onclick="pause({$v['id']},5)" value="开启">
                                     <input class="add-num-btn1"  type="button"  value="追加数量" onclick="tosay(0)" >
-                                    <input id="add-price-btn" type="button" name="{$v['task_num']}" onclick="tosay(1)"  value="上调出价">
+                                    <input id="add-price-btn{$v['id']}" type="button" name="{$v['task_num']}" onclick="tosay(1)"  value="上调出价">
                                 </div>
 
                                 <div>
@@ -164,7 +164,7 @@
                                    </a>
                                    <input id="my-release-pause{$v['id']}" type="button" onclick="pause({$v['id']},1)" value="暂停">
                                    <input class="add-num-btn"  type="button" onclick="addNum({$v[id]})"  value="追加数量" >
-                                   <input class="add-price-btn" name="{$v['task_num']}" onclick="addPrice({$v[id]})" type="button" value="上调出价">
+                                   <input id="add-price-btn{$v['id']}" name="{$v['task_num']}" onclick="addPrice({$v[id]},{$v[price]})" type="button" value="上调出价">
                                </div>
                                <div>
                                    <input class="cancel-release-btn" type="button" onclick="soldOut({$v[id]})"  value="下架">
@@ -375,8 +375,8 @@
                 })
             }
     }
-function addPrice(task_id) {
-        var pause = $('#my-release-pause').val();
+function addPrice(task_id,price) {
+        var pause = $('#my-release-pause' + task_id).val();
         if (pause == '开启') {
             $("#add-price-pause").css('display', 'flex');
             setTimeout(function () {
@@ -386,7 +386,7 @@ function addPrice(task_id) {
             var addPriceArray = ['取消', '确定'];
             mui.prompt('', '金额必须大于当前单价 / 元', '上调出价', addPriceArray, function(e) {
                 if (e.index == 1) {
-                    var task_num = $('#add-price-btn').attr('name');
+                    var task_num = $('#add-price-btn' + task_id).attr('name');
                     var newPrice = e.value;
                     //判断是否是小数
                     var y = String(newPrice).indexOf(".") + 1;
@@ -397,8 +397,7 @@ function addPrice(task_id) {
                             return
                         }
                     }
-                    var price = Number($('#price').text());
-                    if(newPrice  <= price){
+                    if(newPrice * 100  <= price){
                         mui.toast('金额必须大于当前单价!');
                         return
                     }else if(isNaN(newPrice)) {
@@ -448,7 +447,7 @@ function addPrice(task_id) {
 
 }
 function soldOut(task_id){
-        var pause = $('#my-release-pause').val();
+        var pause = $('#my-release-pause' + task_id).val();
         if(pause == '开启'){
                 $("#cancel-release-pause").css('display', 'flex');
                 setTimeout(function () {
