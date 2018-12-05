@@ -61,7 +61,8 @@
                       mui.ajax(url + 'mobile/Pay/bindAlipay',{
                           data:{
                               alipay_num:alipay_num,
-                              alipay_name:alipay_name
+                              alipay_name:alipay_name,
+                              type : "{$type}"
                           },
                           dataType:'json',//服务器返回json格式数据
                           type:'post',//HTTP请求类型
@@ -70,11 +71,11 @@
                               mui.toast(data['info']);
                               // alert(JSON.stringify(data));
                               if(data['status'] == 1){
-                                  setTimeout(function(){
-                                      mui.openWindow({
-                                          url:  url + 'Mobile/User/personalCenter'
-                                      });
-                                  }, 1500);
+                                      setTimeout(function(){
+                                          mui.openWindow({
+                                              url:  url + 'Mobile/Pay/withdraw/type/' + data['data']
+                                          });
+                                      }, 1500);
                               }
                           },
                           error:function(xhr,type,errorThrown){
