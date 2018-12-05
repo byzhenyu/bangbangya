@@ -50,12 +50,12 @@ class FansModel extends Model
     public function getFansCount() {
         $fansCount = $this->alias('f')
             ->join('__USER__ as u  on f.user_id = u.user_id','LEFT')
-            ->where(array('f.fans_user_id'=>UID,'f.status'=>1))
+            ->where(array('f.fans_user_id'=>UID,'f.status'=>1,'u.status'=>1))
             ->count();
         //关注数量
         $focusCount = $this->alias('f')
             ->join('__USER__ as u  on f.fans_user_id = u.user_id','LEFT')
-            ->where(array('f.user_id'=>UID,'f.status'=>1))
+            ->where(array('f.user_id'=>UID,'f.status'=>1,'u.status'=>1))
             ->count();
 
         return array(
