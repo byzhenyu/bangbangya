@@ -455,8 +455,7 @@ function soldOut(task_id){
                 },1000);
         }else{
             var delArray = ['取消', '确定'];
-            mui.confirm('下架后当前任务进行中及未审核的任务\n' +
-                '都将视为合格，确定下架吗', '提示', delArray, function(e) {
+            mui.confirm('下架后当前任务进行中及未审核的任务都将视为合格，确定下架吗', '提示', delArray, function(e) {
                 if (e.index == 1) {
                     mui.ajax(url + 'Mobile/Task/taskSold/id/'+ task_id,{
                         dataType:'json',//服务器返回json格式数据
