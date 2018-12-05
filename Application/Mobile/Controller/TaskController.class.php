@@ -396,6 +396,10 @@ class TaskController extends UserCommonController {
             $this->ajaxReturn(V(2, '余额不足'));
         }else{
             M()->startTrans();
+            $taskPrice = $this->Task->where(array('id'=>$data['id']))->getFiled('price');
+            if($taskPrice > $data['price']){
+                $this->ajaxReturn(V(2, '上调的价格大于现在的价格!'));
+            }
             $taskRes = $this->Task->where(array('id'=>$data['id']))->save($data);
             if($taskRes){
                 M()->commit();
