@@ -42,9 +42,9 @@ class ComplaintController extends CommonController {
                     $data = I('post.','');
                     $userModel = D('Home/User');
                     $shopModel = D('Home/Shop');
+                    $ComplaintInfo = $ComplaintModel ->getComplaintInfo($data['id']);
                     if($data['audit_status'] == 1){
                         $ComplaintRes = $ComplaintModel->save();
-                        $ComplaintInfo = $ComplaintModel ->getComplaintInfo($data['id']);
                         if($data['type'] == 0){
                             $usershopRes = $shopModel->where('user_id = '.$ComplaintInfo['be_user_id'])->setInc('be_complain_num');
                             $beusershopRes = $shopModel->where('user_id = '.$ComplaintInfo['user_id'])->setInc('complain_num');
@@ -84,11 +84,17 @@ class ComplaintController extends CommonController {
                                 M()->commit();
                                 $this->ajaxReturn(V(1, '操作成功'));
                             }else{
-//                                M()->rollback();
+                                M()->rollback();
                                 $this->ajaxReturn(V(0, '失败'));
                             }
                         }
                     }else{
+                            if($data['type'] == 0){
+                                  $desc = '投诉';
+                            }else{
+                                  $desc = '申诉';
+                            }
+                            D('Common/Push')->push($desc.'处理结果', $ComplaintInfo['user_id'], $desc.'失败', '任务编号'.$ComplaintInfo['task_id'], '您的'.$desc.'审核失败', '');
                             $ComplaintModel->save();
                             $this->ajaxReturn(V(1, '操作成功'));
                     }
