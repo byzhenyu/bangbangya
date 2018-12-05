@@ -431,7 +431,7 @@ class TaskController extends UserCommonController {
               M()->startTrans();
               $userModel = D('Home/User');
               if($money != 0){
-                  $userRes  = $userModel->where(array('user_id'=>UID))->fetchSql(true)->setDec('total_money',$money);
+                  $userRes  = $userModel->where(array('user_id'=>UID))->setDec('total_money',$money);
               }else{
                   $userRes = true;
               }
