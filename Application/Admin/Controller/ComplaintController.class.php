@@ -84,7 +84,7 @@ class ComplaintController extends CommonController {
                                 M()->commit();
                                 $this->ajaxReturn(V(1, '操作成功'));
                             }else{
-//                                M()->rollback();
+                                M()->rollback();
                                 $this->ajaxReturn(V(0, '失败'));
                             }
                         }
