@@ -93,7 +93,7 @@ class ComplaintController extends CommonController {
                             }else{
                                   $desc = '申诉';
                             }
-                            D('Common/Push')->push($desc.'处理结果', $ComplaintInfo['user_id'], $desc.'失败', '任务编号'.$ComplaintInfo['task_id'], '您的'.$desc.'审核失败', '');
+                            D('Common/Push')->push($desc.'处理结果', $ComplaintInfo['user_id'], $desc.'通知', '任务编号'.$ComplaintInfo['task_id'], '您的'.$desc.'审核失败', '');
                             $this->ajaxReturn(V(1, '操作成功'));
                     }
                 }else{
