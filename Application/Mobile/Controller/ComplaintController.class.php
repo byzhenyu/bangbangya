@@ -54,7 +54,7 @@ class ComplaintController extends CommonController{
         $data = I('post.', 4);
         $taskModel = D('Home/Task');
         $taskInfo = $taskModel->field('user_id, price')->where('id = '.$data['task_id'])->find();
-        $complaintInfo = $this->Complaint->where('user_id ='.$data['user_id'].' and  be_user_id = '.$taskInfo['user_id'].' and task_id = '.$taskLogInfo['task_id'].' and audit_status = 0')->find();
+        $complaintInfo = $this->Complaint->where('user_id ='.$data['user_id'].' and  be_user_id = '.$taskInfo['user_id'].' and task_id = '.$data['task_id'].' and audit_status = 0')->find();
         if(!$complaintInfo){
             $data['be_user_id'] = $taskInfo['user_id'];
             $data['price'] = $taskInfo['price'];
