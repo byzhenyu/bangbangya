@@ -436,6 +436,7 @@ class TaskController extends UserCommonController {
                   $userRes = true;
               }
               account_log(UID, $money, 3,'任务结算',$where['task_id']);
+            D('Common/Push')->push('支出提醒',UID,'亲，您发布的任务下架操作！','任务编号:'.$where['task_id'],'支出金额：￥'.$money /100,'置顶您的店铺或任务才能被更好的接单呦！');
               foreach ($taskLogInfo as $key=>$value){
                        $userMoney = array(
                               'task_suc_money' => array('exp','task_suc_money + '.$value['task_price']),
@@ -444,6 +445,7 @@ class TaskController extends UserCommonController {
                        $userModel ->where('user_id = '.$value['user_id'])->save($userMoney);
                        account_log( $value['user_id'], $value['task_price'], 4,'完成任务',$where['task_id']);
                        $taskLogModel->where('task_id = '.$value['task_id'])->save(array('valid_status' => 3));
+                  D('Common/Push')->push('收入提醒',$value['user_id'],'亲，您有一笔收入到账！','任务名称:'.$value['task_name'],'收入金额：￥'.$value['task_price'] /100,'劳动换来的果实特别甜，继续加油吧！');
               }
               $taskRes = $this->Task->where('id = '.$where['task_id'])->save(array('audit_status' => 3,'end_time' => NOW_TIME));
               if($userRes && $taskRes){
