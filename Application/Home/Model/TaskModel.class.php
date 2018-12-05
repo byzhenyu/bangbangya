@@ -267,6 +267,7 @@ class TaskModel extends Model{
                       $taskInfo[$key]['auditNum'] = 0;
                       $logwhere['task_id'] = array('eq', $value['id']);
                       $logwhere['valid_status'] = array('in', [0, 1, 3]);
+                      $logwhere['status'] = array('eq', 1);
                       $taskLogInfo = $taskLogModel->where($logwhere)->field('id,valid_status')->select();
                       if ($taskLogInfo) {
                           foreach ($taskLogInfo as $k => $v) {
