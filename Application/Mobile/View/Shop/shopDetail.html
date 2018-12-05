@@ -52,6 +52,14 @@
 
                         </div>
                     </div>
+                    <if condition="$ShopInfo.top_time gt time()">
+                        <div class="top-basic-time">
+                            <p>置顶到期</p>
+                            <span>{$ShopInfo['top_time']|time_format}</span>
+
+                        </div>
+                    </if>
+
                 </div>
             </div>
             <div class="top-shop-btn">
