@@ -6,6 +6,15 @@
     <title>每周排名</title>
     <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+    <style>
+        .no-msg {
+            font-size: .38rem;
+            color: #666;
+            width: 100%;
+            text-align: center;
+            margin-top: 5rem;
+        }
+    </style>
 </head>
 <body style="background: #f6f6f6">
     <header class="mui-bar mui-bar-nav help-duck-head">
@@ -14,8 +23,8 @@
         <a></a>
     </header>
     <div class="message-list">
-        <if condition="empty($pushList['list'])">
-
+        <if condition="!empty($pushList['list'])">
+            <p class="no-msg">暂无消息...</p>
         </if>
          <foreach name="pushList['list']" item="v">
              <div class="message-item">
