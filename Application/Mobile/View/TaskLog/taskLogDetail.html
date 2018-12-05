@@ -75,7 +75,7 @@
         <p>备注</p>
         <span>{$taskDetail['remark']}</span>
     </div>
-    <if condition="$taskDetail['top_time'] gt 0">
+    <if condition="($taskDetail['top_time'] gt 0) AND ($taskDetail['user_id'] neq UID)">
         <div class="task-top-time">
             <p>置顶到期</p>
             <span>{$taskDetail['top_time']|time_format}</span>
