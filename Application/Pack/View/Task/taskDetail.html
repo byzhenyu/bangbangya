@@ -116,7 +116,7 @@
 
 </div>
 <div class="fix-content">
-    <if condition="$taskDetail['user_id'] neq UID">
+    <if condition="($taskDetail['user_id'] neq UID) AND ($taskDetail['audit_status'] eq 1)">
 
         <if condition="($taskDetail['task_log_id'] neq 0) AND ($taskDetail['log_valid_status'] eq 0)">
 
