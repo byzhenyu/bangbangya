@@ -103,79 +103,81 @@
                         <a href="{:U('addTask', array('id'=>$v['id']))}"><input type="button" class="mui-btn mui-btn-outlined my-release-btn modify-btn" value="修改"/></a>
                         <input type="button" class="mui-btn mui-btn-outlined my-release-btn release-btn" onclick="fabu({$v['id']})" value="发布"/>
                     </div>
-                      <else />
-                        <if condition="$v['audit_status'] eq 0">
-                            <div class="my-release-btns">
-                                <input type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn"  onclick="del({$v['id']})" value="删除">
-                                <p class="my-release-btn release-audit-ing">审核中</p>
+                    <else />
+                    <if condition="$v['audit_status'] eq 0">
+                        <div class="my-release-btns">
+                            <input type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn"  onclick="del({$v['id']})" value="删除">
+                            <p class="my-release-btn release-audit-ing">审核中</p>
+                        </div>
+                    </if>
+                    <if condition="$v['audit_status'] eq 1">
+                        <div class="my-release-btns release-high-price">
+                            <div>
+                                <a>
+                                    <input onclick="audit({$v[id]},{$v[is_task_num]})" type="button" value="审核">
+                                </a>
+                                <input id="my-release-pause{$v['id']}" type="button" onclick="pause({$v['id']},5)" value="开启">
+                                <input class="add-num-btn1"  type="button"  value="追加数量" onclick="tosay(0)" >
+                                <input id="add-price-btn{$v['id']}" type="button" name="{$v['task_num']}" onclick="tosay(1)"  value="上调出价">
                             </div>
-                        </if>
-                        <if condition="$v['audit_status'] eq 1">
-                            <div class="my-release-btns release-high-price">
-                                <div>
-                                    <a>
-                                        <input onclick="audit({$v[id]},{$v[is_task_num]})" type="button" value="审核">
-                                    </a>
-                                    <input class="my-release-pause" type="button" onclick="pause({$v['id']},5)" value="开启">
-                                    <input class="add-num-btn1"  type="button"  value="追加数量"  onclick="tosay(0)" >
-                                    <input id="add-price-btn" type="button" name="{$v['task_num']}"  onclick="tosay(1)"  value="上调出价">
-                                </div>
 
-                                <div>
-                                    <input id="cancel-release-btn" type="button"  onclick="tosay(2)"   value="下架">
-                                    <input id="flush-release-btn" type="button" onclick="tosay(3)"  value="刷新">
-                                    <input id="recommend-release-btn" type="button"  onclick="tosay(4)"  value="{$v['recommend'] == 1?'已推荐': '推荐'}">
-                                    <input id="top-btn" type="button"    onclick="tosay(5)"   value="{$v['top'] == 1?'已置顶': '置顶'}">
-                                </div>
+                            <div>
+                                <input id="cancel-release-btn" type="button"  onclick="tosay(2)"   value="下架">
+                                <input id="flush-release-btn" type="button"  onclick="tosay(3)" value="刷新">
+                                <input id="recommend-release-btn" type="button"  onclick="tosay(4)"  value="{$v['recommend'] == 1?'已推荐': '推荐'}">
+                                <input id="top-btn" type="button"    onclick="tosay(5)"   value="{$v['top'] == 1?'已置顶': '置顶'}">
                             </div>
-                            <div class="task-details-box">
-                                <p class="high-price-font">发布：<span>{:time_format($v['add_time'])}</span></p>
-                                <p class="high-price-font">截止：<span>{:time_format($v['end_time'])}</span></p>
+                        </div>
+                        <div class="task-details-box">
+                            <p class="high-price-font">发布：<span>{:time_format($v['add_time'])}</span></p>
+                            <p class="high-price-font">截止：<span>{:time_format($v['end_time'])}</span></p>
+                        </div>
+                    </if>
+                    <if condition="$v['audit_status'] eq 2">
+                        <div class="my-release-btns">
+                            <input type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn" value="删除">
+                            <a href="{:U('addTask',array('id'=>$v['id']))}"><input type="button" class="mui-btn mui-btn-outlined my-release-btn modify-btn" value="修改"/></a>
+                            <p class="my-release-btn release-audit-fail">审核失败</p>
+                        </div>
+                        <p class="task-details-font">失败原因：<span>{$v.audit_info}</span></p>
+                    </if>
+                    <if condition="$v['audit_status'] eq 3">
+                        <div class="my-release-btns">
+                            <input type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn"  onclick="del({$v['id']})" value="删除">
+                            <p class="my-release-btn release-audit-ing">已下架</p>
+                        </div>
+                    </if>
+                    <if condition="$v['audit_status'] eq 4">
+                        <div class="my-release-btns ">
+                            <!--<a class="mui-btn mui-btn-outlined my-release-btn del-btn">-->
+                            <input  class="mui-btn mui-btn-outlined my-release-btn del-btn" onclick="audit({$v[id]},{$v[is_task_num]})" type="button" value="审核">
+                            <!--</a>-->
+                            <input type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn"  onclick="del({$v['id']})" value="删除">
+                            <p class="my-release-btn release-audit-ing">已结束</p>
+                        </div>
+                    </if>
+                    <if condition="$v['audit_status'] eq 5">
+                        <div class="my-release-btns release-high-price">
+                            <div>
+                                <a>
+                                    <input  onclick="audit({$v[id]},{$v[is_task_num]})" type="button" value="审核">
+                                </a>
+                                <input id="my-release-pause{$v['id']}" type="button" onclick="pause({$v['id']},1)" value="暂停">
+                                <input class="add-num-btn"  type="button" onclick="addNum({$v[id]})"  value="追加数量" >
+                                <input id="add-price-btn{$v['id']}" name="{$v['task_num']}" onclick="addPrice({$v[id]},{$v[price]})" type="button" value="上调出价">
                             </div>
-                        </if>
-                         <if condition="$v['audit_status'] eq 2">
-                             <div class="my-release-btns">
-                                 <input type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn" value="删除">
-                                 <a href="{:U('addTask',array('id'=>$v['id']))}"><input type="button" class="mui-btn mui-btn-outlined my-release-btn modify-btn" value="修改"/></a>
-                                 <p class="my-release-btn release-audit-fail">审核失败</p>
-                             </div>
-                             <p class="task-details-font">失败原因：<span>{$v.audit_info}</span></p>
-                         </if>
-                        <if condition="$v['audit_status'] eq 3">
-                            <div class="my-release-btns">
-                                <input type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn"  onclick="del({$v['id']})" value="删除">
-                                <p class="my-release-btn release-audit-ing">已下架</p>
+                            <div>
+                                <input class="cancel-release-btn" type="button" onclick="soldOut({$v[id]})"  value="下架">
+                                <input class="flush-release-btn" type="button"  onclick="refresh()" value="刷新">
+                                <input class="recommend-release-btn" onclick="recommend({$v[id]})"  type="button" value="{$v['recommend'] == 1?'已推荐': '推荐'}">
+                                <input class="top-btn" type="button" onclick="taskTop({$v[id]})"  value="{$v['top'] == 1?'已置顶': '置顶'}">
                             </div>
-                        </if>
-                        <if condition="$v['audit_status'] eq 4">
-                            <div class="my-release-btns">
-                                <input  class="mui-btn mui-btn-outlined my-release-btn del-btn" onclick="audit({$v[id]},{$v[is_task_num]})" type="button" value="审核">
-                                <input type="button" class="mui-btn mui-btn-outlined my-release-btn del-btn"  onclick="del({$v['id']})" value="删除">
-                                <p class="my-release-btn release-audit-ing">已结束</p>
-                            </div>
-                        </if>
-                       <if condition="$v['audit_status'] eq 5">
-                           <div class="my-release-btns release-high-price">
-                               <div>
-                                   <a>
-                                       <input  onclick="audit({$v[id]},{$v[is_task_num]})" type="button" value="审核">
-                                   </a>
-                                   <input class="my-release-pause" type="button" onclick="pause({$v['id']},1)" value="暂停">
-                                   <input class="add-num-btn"  type="button" onclick="addNum({$v[id]})"  value="追加数量" >
-                                   <input class="add-price-btn" name="{$v['task_num']}" onclick="addPrice({$v[id]})" type="button" value="上调出价">
-                               </div>
-                               <div>
-                                   <input class="cancel-release-btn" type="button" onclick="soldOut({$v[id]})"  value="下架">
-                                   <input class="flush-release-btn" type="button"  onclick="refresh()" value="刷新">
-                                   <input class="recommend-release-btn" onclick="recommend({$v[id]})"  type="button" value="{$v['recommend'] == 1?'已推荐': '推荐'}">
-                                   <input class="top-btn" type="button" onclick="taskTop({$v[id]})"  value="{$v['top'] == 1?'已置顶': '置顶'}">
-                               </div>
-                           </div>
-                           <div class="task-details-box">
-                               <p class="high-price-font">发布：<span>{:time_format($v['add_time'])}</span></p>
-                               <p class="high-price-font">截止：<span>{:time_format($v['end_time'])}</span></p>
-                           </div>
-                       </if>
+                        </div>
+                        <div class="task-details-box">
+                            <p class="high-price-font">发布：<span>{:time_format($v['add_time'])}</span></p>
+                            <p class="high-price-font">截止：<span>{:time_format($v['end_time'])}</span></p>
+                        </div>
+                    </if>
                 </if>
             </div>
             <img onclick="myTaskDetail({$v['id']})" src="__PUBLIC__/mobile/images/common_icon_more.png">
@@ -210,10 +212,10 @@
     </div>
 </div>
 <!--<div class="add-price-pause flush-num" id="flush-num-pause">-->
-    <!--<div>-->
-        <!--<span>刷新次数已用完</span>-->
-        <!--<span>请明天再来</span>-->
-    <!--</div>-->
+<!--<div>-->
+<!--<span>刷新次数已用完</span>-->
+<!--<span>请明天再来</span>-->
+<!--</div>-->
 <!--</div>-->
 
 </body>
@@ -258,15 +260,15 @@
 
     function refresh(){
         $("#flush-num-pause").css('display', 'block');
-            setTimeout(function () {
-                $("#flush-num-pause").fadeOut(500);
-                mui.openWindow({
-                    url:  url + 'Mobile/Task/myTask'
-                });
-                },1000);
-            setTimeout(function () {
-                mui.toast('刷新成功');
-            },1500);
+        setTimeout(function () {
+            $("#flush-num-pause").fadeOut(500);
+            mui.openWindow({
+                url:  url + 'Pack/Task/myTask'
+            });
+        },1000);
+        setTimeout(function () {
+            mui.toast('刷新成功');
+        },1500);
     }
     function pause(id,audit_status){
         var message = '';
@@ -292,7 +294,7 @@
                         if(data['status'] == 1){
                             setTimeout(function(){
                                 mui.openWindow({
-                                    url:  url + 'Mobile/Task/myTask'
+                                    url:  url + 'Pack/Task/myTask'
                                 });
                             }, 1000);
                         }
@@ -310,72 +312,71 @@
     }
 
     function addNum(task_id) {
-            var pause = $('.my-release-pause').val();
-            // alert(pause);
-            if(pause == '开启'){
-                $("#add-num-pause1").css('display', 'flex');
-                setTimeout(function () {
-                    $("#add-num-pause1").fadeOut(300);
-                },1000);
-            }else{
-                var addPriceArray = ['取消', '确定'];
-                mui.prompt('', '请输入追加数量', '追加数量', addPriceArray, function(e) {
-                    if (e.index == 1) {
-                        var num = e.value;
-                        var price = Number($('#price').text());
-                        if(price * num > {$total_money}){
-                            mui.confirm('您的余额不足!', '您是否去充值?', addPriceArray, function(e) {
-                                if (e.index == 1) {
-                                    mui.openWindow({
-                                        url:url + 'Mobile/Pay/topUpsPage',
-                                    });
-                                }
-                            });
-                            return;
-                        }else{
-                            if(isNaN(num)){
-                                mui.toast('请你输入数字');
-                                return;
-                            }else if(!is_num(num)){
-                                mui.toast('请你输入正整数');
-                                return;
+        var pause = $("#my-release-pause"+task_id).val();
+
+        if(pause == '开启'){
+            $("#add-num-pause1").css('display', 'flex');
+            setTimeout(function () {
+                $("#add-num-pause1").fadeOut(300);
+            },1000);
+        }else{
+            var addPriceArray = ['取消', '确定'];
+            mui.prompt('', '请输入追加数量', '追加数量', addPriceArray, function(e) {
+                if (e.index == 1) {
+                    var num = e.value;
+                    var price = Number($('#price').text());
+                    if(price * num > {$total_money}){
+                        mui.confirm('您的余额不足!', '您是否去充值?', addPriceArray, function(e) {
+                            if (e.index == 1) {
+                                mui.openWindow({
+                                    url:url + 'Pack/Pay/topUpsPage',
+                                });
                             }
-                            var money = num * price;
-                            mui.ajax(url + 'Mobile/Task/addTaskNum',{
-                                data:{
-                                    'id' : task_id,
-                                    'num' : num,
-                                    'money':money * 100
-                                },
-                                dataType:'json',//服务器返回json格式数据
-                                type:'post',//HTTP请求类型
-                                timeout:10000,//超时时间设置为10秒；
-                                success:function(data){
-                                    mui.toast(data['info']);
-                                    // alert(JSON.stringify(data));
-                                    if(data['status'] == 1){
-                                        setTimeout(function(){
-                                            mui.openWindow({
-                                                url:  url + 'Mobile/Task/myTask'
-                                            });
-                                        }, 1000);
-                                    }
-                                },
-                                error:function(xhr,type,errorThrown){
-                                    //异常处理；
-                                    console.log(type);
-                                }
-                            });
+                        });
+                        return;
+                    }else{
+                        if(isNaN(num)){
+                            mui.toast('请你输入数字');
+                            return;
+                        }else if(!is_num(num)){
+                            mui.toast('请你输入正整数');
+                            return;
                         }
-                    } else {
-
+                        var money = num * price;
+                        mui.ajax(url + 'Mobile/Task/addTaskNum',{
+                            data:{
+                                'id' : task_id,
+                                'num' : num,
+                                'money':money * 100
+                            },
+                            dataType:'json',//服务器返回json格式数据
+                            type:'post',//HTTP请求类型
+                            timeout:10000,//超时时间设置为10秒；
+                            success:function(data){
+                                mui.toast(data['info']);
+                                // alert(JSON.stringify(data));
+                                if(data['status'] == 1){
+                                    setTimeout(function(){
+                                        mui.openWindow({
+                                            url:  url + 'Pack/Task/myTask'
+                                        });
+                                    }, 1000);
+                                }
+                            },
+                            error:function(xhr,type,errorThrown){
+                                //异常处理；
+                                console.log(type);
+                            }
+                        });
                     }
-                })
-            }
-    }
+                } else {
 
-    function addPrice(task_id) {
-        var pause = $('#my-release-pause').val();
+                }
+            })
+        }
+    }
+    function addPrice(task_id,price) {
+        var pause = $('#my-release-pause' + task_id).val();
         if (pause == '开启') {
             $("#add-price-pause").css('display', 'flex');
             setTimeout(function () {
@@ -385,7 +386,7 @@
             var addPriceArray = ['取消', '确定'];
             mui.prompt('', '金额必须大于当前单价 / 元', '上调出价', addPriceArray, function(e) {
                 if (e.index == 1) {
-                    var task_num = $('#add-price-btn').attr('name');
+                    var task_num = $('#add-price-btn' + task_id).attr('name');
                     var newPrice = e.value;
                     //判断是否是小数
                     var y = String(newPrice).indexOf(".") + 1;
@@ -396,19 +397,17 @@
                             return
                         }
                     }
-                    var price = Number($('#price').text());
-                    if(newPrice  <= price){
+                    if(newPrice * 100  <= price){
                         mui.toast('金额必须大于当前单价!');
                         return
                     }else if(isNaN(newPrice)) {
-
-                        mui.toast('请你输入有效金额!');
+                        mui.toast('请你输入数字!');
                         return
                     }else if(newPrice * task_num > {$total_money}){
                         mui.confirm('您的余额不足!', '您是否去充值?', addPriceArray, function(e) {
                             if (e.index == 1) {
                                 mui.openWindow({
-                                    url:url + 'Mobile/Pay/topUpsPage',
+                                    url:url + 'Pack/Pay/topUpsPage',
                                 });
                             }
                         });
@@ -430,7 +429,7 @@
                             if(data['status'] == 1){
                                 setTimeout(function(){
                                     mui.openWindow({
-                                        url:  url + 'Mobile/Task/myTask'
+                                        url:  url + 'Pack/Task/myTask'
                                     });
                                 }, 1000);
                             }
@@ -447,13 +446,13 @@
         }
 
     }
-function soldOut(task_id){
-        var pause = $('#my-release-pause').val();
+    function soldOut(task_id){
+        var pause = $('#my-release-pause' + task_id).val();
         if(pause == '开启'){
-                $("#cancel-release-pause").css('display', 'flex');
-                setTimeout(function () {
-                    $("#cancel-release-pause").fadeOut(300);
-                },1000);
+            $("#cancel-release-pause").css('display', 'flex');
+            setTimeout(function () {
+                $("#cancel-release-pause").fadeOut(300);
+            },1000);
         }else{
             var delArray = ['取消', '确定'];
             mui.confirm('下架后当前任务进行中及未审核的任务\n' +
@@ -469,7 +468,7 @@ function soldOut(task_id){
                             if(data['status'] == 1){
                                 setTimeout(function(){
                                     mui.openWindow({
-                                        url:  url + 'Mobile/Task/myTask'
+                                        url:  url + 'Pack/Task/myTask'
                                     });
                                 }, 1000);
                             }
@@ -484,12 +483,12 @@ function soldOut(task_id){
                 }
             })
         }
-}
-function recommend(task_id){
+    }
+    function recommend(task_id){
         $("#grap-order-gray").addClass('mui-popup-backdrop mui-active');
         $("#recommend-time").css('display', 'block');
         $('#recommend-time-sure').attr('name',task_id);
-}
+    }
     $("#zhiding").focusout(function() {
         var topNum = $(this).val();
         var money = topNum * {:C(TASK_TOP_MONEY)[1]};
@@ -517,7 +516,7 @@ function recommend(task_id){
             mui.confirm('您的余额不足!', '您是否去充值?', '', function(e) {
                 if (e.index == 1) {
                     mui.openWindow({
-                        url:url + 'Mobile/Pay/topUpsPage',
+                        url:url + 'Pack/Pay/topUpsPage',
                     });
                 }else{
                     mui.toast('您取消了操作!');
@@ -541,7 +540,7 @@ function recommend(task_id){
                 if(data['status'] == 1){
                     setTimeout(function(){
                         mui.openWindow({
-                            url:  url + 'Mobile/Task/myTask'
+                            url:  url + 'Pack/Task/myTask'
                         });
                     }, 1000);
                 }
@@ -557,17 +556,17 @@ function recommend(task_id){
         $("#recommend-time").css('display', 'none');
     }
     function taskTop(task_id){
-            $("#grap-order-gray").addClass('mui-popup-backdrop mui-active');
-            $("#top-time").css('display', 'block');
-            $('#top-time-sure').attr('name',task_id);
+        $("#grap-order-gray").addClass('mui-popup-backdrop mui-active');
+        $("#top-time").css('display', 'block');
+        $('#top-time-sure').attr('name',task_id);
     }
-    var p = 0;
+    var  p =  0;
     function onTop(){
-        $('#top-time-sure').attr('disabled','disabled');
         p ++ ;
         if(p > 1){
             return
         }
+        var id = $('#top-time-sure').attr('name');
         var topNum  =   $("#zhiding").val();
         var money  = Number($('#zong1').text());
         if(!is_num(topNum)) {
@@ -577,7 +576,7 @@ function recommend(task_id){
             mui.confirm('您的余额不足!', '您是否去充值?', '', function(e) {
                 if (e.index == 1) {
                     mui.openWindow({
-                        url:url + 'Mobile/Pay/topUpsPage',
+                        url:url + 'Pack/Pay/topUpsPage',
                     });
                 }else{
                     mui.toast('您取消了操作!');
@@ -601,7 +600,7 @@ function recommend(task_id){
                 if(data['status'] == 1){
                     setTimeout(function(){
                         mui.openWindow({
-                            url:  url + 'Mobile/Task/myTask'
+                            url:  url + 'Pack/Task/myTask'
                         });
                     }, 1000);
                 }
@@ -628,18 +627,18 @@ function recommend(task_id){
     }
     /*审核*/
     function audit(task_id,is_task_num){
-            if(is_task_num  == 0 || is_task_num == undefined){
-                mui.toast('没有需要审核的信息!');
-            }else{
-                mui.openWindow({
-                    url:  url + 'Mobile/TaskLog/auditTask/task_id/' + task_id
-                });
-            }
+        if(is_task_num  == 0 || is_task_num == undefined){
+            mui.toast('没有需要审核的信息!');
+        }else{
+            mui.openWindow({
+                url:  url + 'Pack/TaskLog/auditTask/task_id/' + task_id
+            });
+        }
     }
 
     function myTaskDetail(task_id) {
         mui.openWindow({
-            url:  url + 'Mobile/Task/myTaskDetail/id/' + task_id
+            url:  url + 'Pack/Task/myTaskDetail/id/' + task_id
         });
     }
 
