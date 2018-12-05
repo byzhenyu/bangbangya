@@ -114,18 +114,18 @@ input[type=radio]{
     border-radius: 50%;
     position: relative;
 }
-input[type=radio]:checked:before{
-    content: "";
-    display: inline-block;
-    height: 0.24rem;
-    width: 0.24rem;
-    background: url(../images/common_icon_singlebox_n.png) no-repeat;
-    background-size: 100% 100%;
-    border-radius: 50%;
-    position: absolute;
-    top: -0.04rem;
-    left: -0.04rem;
-}
+/*input[type=radio]:checked:before{*/
+    /*content: "";*/
+    /*display: inline-block;*/
+    /*height: 0.24rem;*/
+    /*width: 0.24rem;*/
+    /*background: url(../images/common_icon_singlebox_n.png) no-repeat;*/
+    /*background-size: 100% 100%;*/
+    /*border-radius: 50%;*/
+    /*position: absolute;*/
+    /*top: -0.04rem;*/
+    /*left: -0.04rem;*/
+/*}*/
 
 input[type=radio]:checked:after{
     content: "";
@@ -136,7 +136,7 @@ input[type=radio]:checked:after{
     background-size: 100% 100%;
     border-radius: 50%;
     position: absolute;
-    top: -0.04rem;
+    top: -0.03rem;
     left: -0.04rem;
 }
 
