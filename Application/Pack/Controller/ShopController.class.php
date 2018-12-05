@@ -18,18 +18,21 @@ class ShopController extends CommonController {
     /*获取我的店铺信息*/
     public function myShopInfo()
     {
-    	$user_id = UID;
+        $user_id = UID;
         $ShopModel = D('Home/Shop');
         $field= 'u.head_pic,u.user_id,u.total_money,u.nick_name,shop_accounts, s.top_time,s.shop_name,s.take_task,s.task_count,s.task_num,s.vol,s.appeal_num,s.be_appeal_num,s.complain_num,s.be_complain_num,s.top_time';
         $ShopInfo = $ShopModel->getShopInfo($user_id, '', $field);
         $taskModel = D('Home/Task');
         $where['t.user_id']  =  $user_id;
         $where['t.end_time']  =  array('gt', NOW_TIME);
+        $where['t.audit_status'] = array('eq', 1);//审核通过
         $taskField = 't.id, t.price, t.task_num, t.title, t.discard_id, c.category_name , c.category_img';
         $taskInfo = $taskModel->getTaskList($where, $taskField);
-        $where['t.end_time'] =  array(array('gt',NOW_TIME - 172800),array('lt',NOW_TIME)) ;
-        $where['t.audit_status'] =  3;
-        $last_taskInfo = $taskModel->getTaskList($where, $taskField);
+        $where1['t.user_id']  =  $user_id;
+        $where1['t.end_time']  =  array('gt', NOW_TIME);
+        $where1['t.end_time'] =  array(array('gt',NOW_TIME - 172800),array('lt',NOW_TIME)) ;
+        $where1['t.audit_status'] =  3;
+        $last_taskInfo = $taskModel->getTaskList($where1, $taskField);
         $this->assign('ShopInfo', $ShopInfo);
         $this->assign('last_taskInfo', $last_taskInfo['list']);
         $this->assign('taskInfo', $taskInfo['list']);
@@ -38,18 +41,18 @@ class ShopController extends CommonController {
     /*获取店铺信息*/
     public function getShopInfo()
     {
-    	$ShopModel = D('Home/Shop');
+        $ShopModel = D('Home/Shop');
         $ShopInfo = $ShopModel->getAllShop();
         p($ShopInfo);
         exit;
     }
     /**
-    * @desc 我的店铺置顶
-    * @param UID
-    * @return mixed
-    */
+     * @desc 我的店铺置顶
+     * @param UID
+     * @return mixed
+     */
     public function myTopShop(){
-        $total_money = D('Home/User')->where(array('user_id'=>UID))->getField('total_money');
+        $total_money = D('Home/User')->where('user_id = '.UID)->getField('total_money');
         if(IS_POST){
             $data = I('post.', '', 'strip_tags');
             $res  =  user_money(UID, $data['zong']);
@@ -65,9 +68,6 @@ class ShopController extends CommonController {
                 }
             }
         }
-        $topPriceInfo = C('TOP_CONF'); //店铺置顶费用
-        // p($topPriceInfo);
-        $this->assign('topPriceInfo', $topPriceInfo);
         $this->assign('total_money', $total_money);
         $this->display();
     }
@@ -87,10 +87,11 @@ class ShopController extends CommonController {
                 $this->ajaxReturn(V(1, '恭喜您,'.C(	VIP_LEVEL)[$data['type']].'开通成功'));
             }
         }
-            $this->ajaxReturn(V(2, $this->shop->getError()));
+        $this->ajaxReturn(V(2, $this->shop->getError()));
     }
 
     public function shopDetail() {
+
         $user_id = I('user_id', 0, 'intval');
         $ShopModel = D('Home/Shop');
         $ShopInfo = $ShopModel->shopDetail($user_id);
@@ -98,13 +99,20 @@ class ShopController extends CommonController {
         $where['t.user_id']  =  $user_id;
         $where['t.end_time']  =  array('gt', NOW_TIME);
         $where['t.audit_status'] = array('eq', 1);
-        $taskField = 't.id, t.price, t.task_num, t.title,t.discard_id, c.category_name , c.category_img';
+        $logwhere['user_id'] = array('eq', UID);
+        $logwhere['valid_status'] = array('in', [0,1,2]);
+        $logwhere['status'] = array('eq', 1);
+        $log_ids = M('TaskLog')->where($logwhere)->getField('task_id',true);
+
+        if (!empty($log_ids)) {
+            $where['t.id'] = array('not in', $log_ids);
+        }
+        $taskField = 't.id, t.price, t.task_num,t.discard_id, t.title, c.category_name , c.category_img';
         $taskInfo = $taskModel->getTaskList($where, $taskField);
         $pastwhere['t.user_id']  =  $user_id;
         $pastwhere['t.end_time'] =  array(array('gt',NOW_TIME - 172800),array('lt',NOW_TIME)) ;
         $pastwhere['t.audit_status'] =  3;
         $last_taskInfo = $taskModel->getTaskList($pastwhere, $taskField);
-
         $this->assign('ShopInfo', $ShopInfo);
         $this->assign('last_taskInfo', $last_taskInfo['list']);
         $this->assign('taskInfo', $taskInfo['list']);
