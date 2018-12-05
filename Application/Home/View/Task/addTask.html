@@ -37,6 +37,7 @@
 
             width: 80px!important;
             height: 80px!important;
+            left: 80px;
             margin-right: .24rem;
         }
         .task-submit-detail textarea{
@@ -208,7 +209,7 @@
                                     <div class="pj_optext">
                                         <textarea id="step_text_{$k-1}" name="step[1][{$k-1}][step_text]" class="pj_opinput" placeholder="请填写步骤">{$v['step_text']}</textarea>
                                     </div>
-                                    <div class="pj_opbt">
+                                    <div class="pj_opbt del-item">
                                         <span  data-num="{$k}" id="del_{$k-1}">删除</span>
                                     </div>
                                 </div>
