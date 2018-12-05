@@ -110,6 +110,7 @@ class PayController  extends CommonController{
               $this->assign('shopInfo',$shopInfo);
                   $this->display();
           }else{
+              $this->assign('type', $type);
               $this->display('Pay/bindAlipay');
           }
       }
@@ -119,29 +120,31 @@ class PayController  extends CommonController{
      * @return mixed
      */
       public function bindAlipay(){
-        $user_id = UID;
-        if(IS_POST){
-            $data = I('post.', 2);
-            if(preg_match('/[\x{4e00}-\x{9fa5}]/u', $data['alipay_num'])>0) {
-                $this->ajaxReturn(V(0, '绑定失败,支付宝账号不能含有汉字!'));
+            $type = I('type', 0 ,'intval');
+            $user_id = UID;
+            if(IS_POST){
+                $data = I('post.', 2);
+                if(preg_match('/[\x{4e00}-\x{9fa5}]/u', $data['alipay_num'])>0) {
+                    $this->ajaxReturn(V(0, '绑定失败,支付宝账号不能含有汉字!'));
+                }
+                $userRes = $this->user->where(array('alipay_num'=>$data['alipay_num']))->find();
+                if ($userRes) {
+                    $this->ajaxReturn(V(0, '绑定失败,已有账号绑定该支付宝!'));
+                }
+                $result = $this->user->where(array('user_id'=>UID))->save($data);
+                if($result){
+                    $this->ajaxReturn(V(1, '绑定成功',$type));
+                }else{
+                    $this->ajaxReturn(V(0, $this->user->getError()));
+                }
             }
-            $userRes = $this->user->where(array('alipay_num'=>$data['alipay_num']))->find();
-            if ($userRes) {
-                $this->ajaxReturn(V(0, '绑定失败,已有账号绑定该支付宝!'));
-            }
-            $result = $this->user->where(array('user_id'=>UID))->save($data);
-            if($result){
-                $this->ajaxReturn(V(1, '绑定成功',$data['user_id']));
-            }else{
-                $this->ajaxReturn(V(0, $this->user->getError()));
-            }
-        }
-        $where['user_id'] = $user_id;
-        $is_bind = is_bind($where);
-        $alipay = $this->user->field('alipay_num, alipay_name')->where(array('user_id'=>UID))->find();
-        $this->assign('alipay',$alipay);
-        $this->assign('is_bind',$is_bind);
-        $this->display();
+            $where['user_id'] = $user_id;
+            $is_bind = is_bind($where);
+            $alipay = $this->user->field('alipay_num, alipay_name')->where(array('user_id'=>UID))->find();
+            $this->assign('alipay',$alipay);
+            $this->assign('is_bind',$is_bind);
+            $this->assign('type',$type);
+            $this->display();
        }
     /**
      * @desc 收入分红

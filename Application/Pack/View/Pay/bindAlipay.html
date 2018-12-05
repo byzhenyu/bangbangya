@@ -58,12 +58,14 @@
               var delArray = ['取消','确定'];
               mui.confirm('请核对您的支付宝账号姓名', '提示', delArray, function(e) {
                   if (e.index == 1) {
-                      $.post("{:U('Pay/bindAlipay')}", {"alipay_num":alipay_num,"alipay_name":alipay_name}, function (data) {
+                      $.post("{:U('Pay/bindAlipay')}", {"alipay_num":alipay_num,"alipay_name":alipay_name, "type" : "{$type}"}, function (data) {
                           mui.toast(data['info']);
                           // alert(JSON.stringify(data));
                           if(data['status'] == 1){
                               setTimeout(function(){
-                                  window.location.href = "{:U('User/personalCenter')}"
+                                  mui.openWindow({
+                                      url:  url + 'Mobile/Pay/withdraw/type/' + data['data']
+                                  });
                               }, 1500);
                           }
                       })
