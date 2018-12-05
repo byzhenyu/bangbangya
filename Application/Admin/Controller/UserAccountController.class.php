@@ -97,7 +97,8 @@ class UserAccountController extends CommonController {
                                 $acc_where['order_sn'] = array('eq', $accountInfo['id']);
                             }
                             $logRes = M('AccountLog')->where($acc_where)->setField('change_desc', $change_desc);
-                            if ($logRes === false) {
+                            $pushRes = $pushModel->push('提现审核通知',$accountInfo['user_id'], '提现成功', $change_desc, '通知类型：审核通知',$accountInfo['admin_note']);
+                            if ($logRes === false ||$pushRes ===false) {
                                 M()->rollback(); // 事务回滚
                                 $this->ajaxReturn(V(0, '修改日志操作失败'));
                             }
@@ -149,11 +150,13 @@ class UserAccountController extends CommonController {
                                 $acc_where['change_type'] = 1;
                                 $acc_where['order_sn'] = array('eq', $accountInfo['id']);
 
+
                             }
+                            $pushRes = $pushModel->push('提现审核通知',$accountInfo['user_id'], '提现失败', '提现金额'.fen_to_yuan($accountInfo['drawmoney']), '通知类型：审核通知',$accountInfo['admin_note']);
                             //增加会员余额
                             $setUserMoney = D('Admin/User')->where($user_where)->save($saveData);
 
-                            if ($setUserMoney === false) {
+                            if ($setUserMoney === false || $pushRes ===false) {
                                 M()->rollback(); // 事务回滚
                                 $this->ajaxReturn(V(0, '操作失败'));
                             }
