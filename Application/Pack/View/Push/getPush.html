@@ -23,7 +23,7 @@
         <a></a>
     </header>
     <div class="message-list">
-        <if condition="!empty($pushList['list'])">
+        <if condition="empty($pushList['list'])">
             <p class="no-msg">暂无消息...</p>
         </if>
          <foreach name="pushList['list']" item="v">
