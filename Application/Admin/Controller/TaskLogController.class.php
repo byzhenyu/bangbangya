@@ -70,7 +70,7 @@ class TaskLogController extends CommonController {
         } elseif (!empty($datemax)) {
             $where['add_time'] = array('elt', $datemax);
         }
-
+        $where['task_suc_money'] =  array('neq', 0);
         $data = D('User')->getUsersListByPage($where, '', 'task_suc_money desc');
 
         $this->assign('list', $data['userslist']);
