@@ -290,7 +290,7 @@ class TaskModel extends Model{
 //                      $taskInfo[$key]['sucNum'] = 0;
 //                      $taskInfo[$key]['auditNum'] = 0;
 //                  }
-                  if($value['audit_status'] == 1 || $value['audit_status'] == 5){
+                  if($value['audit_status'] == 1 || $value['audit_status'] == 5 || $value['audit_status'] == 4){
                       $taskRes = $taskLogModel->where(array('task_id'=> $value['id'],'valid_status' => array('NEQ', 0)))->find();
                       if($taskRes){
                           $taskInfo[$key]['is_task_num']  = 1;
