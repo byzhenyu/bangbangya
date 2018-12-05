@@ -116,5 +116,18 @@
     function shopInfo(user_id) {
         window.location.href = "{:U('Shop/shopDetail')}/user_id/"+user_id;
     }
+    //复制到剪切板
+    function copyUrl2()
+    {
+        var Url2=document.getElementById("url1").innerText;
+        var oInput = document.createElement('input');
+        oInput.value = Url2;
+        document.body.appendChild(oInput);
+        oInput.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        oInput.className = 'oInput';
+        oInput.style.display='none';
+        mui.toast('复制成功');
+    }
 </script>
 </html>
