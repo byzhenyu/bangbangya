@@ -20,149 +20,149 @@
     </style>
 </head>
 <body>
-    <header class="mui-bar mui-bar-nav help-duck-head">
-        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-        <p class="mui-title">我的店铺</p>
-        <a></a>
-    </header>
+<header class="mui-bar mui-bar-nav help-duck-head">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <p class="mui-title">我的店铺</p>
+    <a></a>
+</header>
 
-    <div class="top-shop-info">
-        <div class="top-shop-basic">
-            <div class="top-shop-left">
-                <img style="border-radius:50%;"  src="{$ShopInfo.head_pic}">
-                <div class="top-basic-middle">
-                    <div class="top-basic-name">
-                        <p>{$ShopInfo.nick_name}的店铺</p>
-                        <img src="__PUBLIC__/mobile/images/commom_icon_baijin.png">
+<div class="top-shop-info">
+    <div class="top-shop-basic">
+        <div class="top-shop-left">
+            <img style="border-radius:50%;"  src="{$ShopInfo.head_pic}">
+            <div class="top-basic-middle">
+                <div class="top-basic-name">
+                    <p>{$ShopInfo.nick_name}的店铺</p>
+                    <img  src="__PUBLIC__/mobile/images/commom_icon_baijin.png">
+                </div>
+                <div class="top-basic-id">
+                    <div>
+                        <p>ID</p>
+                        <span>{$ShopInfo.user_id}</span>
                     </div>
-                    <div class="top-basic-id">
-                        <div>
-                            <p>ID</p>
-                            <span>{$ShopInfo.user_id}</span>
-                        </div>
-                        <div>
-                            <img src="__PUBLIC__/mobile/images/commom_icon_promise_white.png">
-                            <span>￥{$ShopInfo.shop_accounts}</span>
-                        </div>
+                    <div>
+                        <img src="__PUBLIC__/mobile/images/commom_icon_promise_white.png">
+                        <span>￥{:fen_to_yuan($ShopInfo['shop_accounts'])}</span>
                     </div>
                 </div>
-            </div>
-            <div class="top-shop-btn">
-                <if condition="$ShopInfo['is_top'] eq 0">
-                    <a style="width: auto" onclick="topShop()"><button class="my-shop-top">置顶店铺</button></a>
-                    <else /><a style="width: auto" ><button onclick="topShop()" class="my-shop-top">已置顶</button></a>
-                </if>
-                <if condition="$ShopInfo['isOwnShop'] eq 0">
-                    <button onclick="fans({$ShopInfo['user_id']})">+关注</button>
-                        <else />
-                </if>
             </div>
         </div>
-        <div class="top-shop-num">
-            <div class="top-shop-column">
-                <div>
-                    <p>总发单</p>
-                    <span>{$ShopInfo['task_num']}单</span>
-                </div>
-                <div>
-                    <p>被申诉</p>
-                    <span>{$ShopInfo['be_appeal_num']}个</span>
-                </div>
-                <div>
-                    <p>被投诉</p>
-                    <span>{$ShopInfo['be_complain_num']}个</span>
-                </div>
+        <div class="top-shop-btn">
+            <if condition="$ShopInfo['is_top'] eq 0">
+                <a style="width: auto" onclick="topShop()"><button class="my-shop-top">置顶店铺</button></a>
+                <else /><a style="width: auto" ><button onclick="topShop()" class="my-shop-top">已置顶</button></a>
+            </if>
+            <if condition="$ShopInfo['isOwnShop'] eq 0">
+                <button onclick="fans({$ShopInfo['user_id']})">+关注</button>
+                <else />
+            </if>
+        </div>
+    </div>
+    <div class="top-shop-num">
+        <div class="top-shop-column">
+            <div>
+                <p>总发单</p>
+                <span>{$ShopInfo['task_num']}单</span>
             </div>
-            <div class="top-shop-column">
-                <div>
-                    <p>总成交</p>
-                    <span>{$ShopInfo['vol']}单</span>
-                </div>
-                <div class="top-shop-short">
-                    <p>申诉</p>
-                    <span>{$ShopInfo['appeal_num']}次</span>
-                </div>
-                <div class="top-shop-short">
-                    <p>投诉</p>
-                    <span>{$ShopInfo['complain_num']}次</span>
-                </div>
+            <div>
+                <p>被申诉</p>
+                <span>{$ShopInfo['be_appeal_num']}个</span>
             </div>
-            <div class="top-shop-column">
-                <div>
-                    <p>发任务</p>
-                    <span>{$ShopInfo['task_count']}个</span>
-                </div>
-                <div>
-                    <p>接任务</p>
-                    <span>{$ShopInfo['take_task']}单</span>
-                </div>
+            <div>
+                <p>被投诉</p>
+                <span>{$ShopInfo['be_complain_num']}个</span>
+            </div>
+        </div>
+        <div class="top-shop-column">
+            <div>
+                <p>总成交</p>
+                <span>{$ShopInfo['vol']}单</span>
+            </div>
+            <div class="top-shop-short">
+                <p>申诉</p>
+                <span>{$ShopInfo['appeal_num']}次</span>
+            </div>
+            <div class="top-shop-short">
+                <p>投诉</p>
+                <span>{$ShopInfo['complain_num']}次</span>
+            </div>
+        </div>
+        <div class="top-shop-column">
+            <div>
+                <p>发任务</p>
+                <span>{$ShopInfo['task_count']}个</span>
+            </div>
+            <div>
+                <p>接任务</p>
+                <span>{$ShopInfo['take_task']}单</span>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="mui-content" id="top-shop-content">
-        <div id="top-shop-details" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary top-shop-choose" >
-            <a class="mui-control-item mui-active top-shop-now" href="#item1">
-                <p>进行中</p>
-            </a>
-            <a class="mui-control-item top-shop-finish" href="#item2">
-                <p>已下架（48小时内）</p>
-            </a>
-        </div>
+<div class="mui-content" id="top-shop-content">
+    <div id="top-shop-details" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary top-shop-choose" >
+        <a class="mui-control-item mui-active top-shop-now" href="#item1">
+            <p>进行中</p>
+        </a>
+        <a class="mui-control-item top-shop-finish" href="#item2">
+            <p>已下架（48小时内）</p>
+        </a>
+    </div>
 
-        <div>
-            <div id="item1" class="mui-control-content mui-active">
-                <div class="mui-scroll-content">
-                    <div class="mui-scroll">
-                        <if condition="empty($taskInfo)">
-                            <div class="top-ups-sure">
-                                <button id="load">没有数据</button>
-                            </div>
-                        </if>
-                        <foreach name="taskInfo" item="v">
-                            <ul class="mui-table-view top-shop-view">
-                                <li class="mui-table-view-cell top-shop-li">
-                                    <a class="top-shop-task" href="{:U('Task/taskDetail',array('id'=>$v['id']))}">
-                                        <div class="top-shop-task-all">
-                                            <div class="top-shop-task-left">
-                                                <img src="{$v.category_img}">
-                                                <div class="top-task-basic">
-                                                    <div class="top-task-name">
-                                                        <p>{$v.category_name}</p>
-                                                        <span>{$v.title}</span>
-                                                    </div>
-                                                    <div class="top-task-no">
-                                                        <span>编号：{$v.id}</span>
-                                                        <span>单价：￥{:fen_to_yuan($v['price'])}</span>
-                                                    </div>
-                                                    <div class="top-task-surplus">
-                                                        <span>剩余单数：{$v.task_num}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <img src="__PUBLIC__/mobile/images/common_icon_more.png">
-                                        </div>
-
-                                    </a>
-                                </li>
-                            </ul>
-                        </foreach>
-                    </div>
-                    <div class="mui-scrollbar mui-scrollbar-vertical">
-                        <div class="mui-scrollbar-indicator"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="item2" class="mui-control-content">
-                <ul class="mui-table-view">
-                    <if condition="empty($last_taskInfo)">
+    <div>
+        <div id="item1" class="mui-control-content mui-active">
+            <div class="mui-scroll-content">
+                <div class="mui-scroll">
+                    <if condition="empty($taskInfo)">
                         <div class="top-ups-sure">
                             <button id="load">没有数据</button>
                         </div>
                     </if>
-                    <foreach name="last_taskInfo" item="v">
-                    <li class="mui-table-view-cell top-shop-li">
+                    <foreach name="taskInfo" item="v">
+                        <ul class="mui-table-view top-shop-view" >
+                            <li class="mui-table-view-cell top-shop-li">
+                                <a class="top-shop-task" href="{:U('Task/taskDetail',array('id'=>$v['id']))}">
+                                    <div class="top-shop-task-all">
+                                        <div class="top-shop-task-left">
+                                            <img src="{$v.category_img}">
+                                            <div class="top-task-basic">
+                                                <div class="top-task-name">
+                                                    <p>{$v.category_name}</p>
+                                                    <span>{$v.title}</span>
+                                                </div>
+                                                <div class="top-task-no">
+                                                    <span>编号：{$v.id}</span>
+                                                    <span>单价：￥{:fen_to_yuan($v['price'])}</span>
+                                                </div>
+                                                <div class="top-task-surplus">
+                                                    <span>剩余单数：{$v.task_num}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <img src="__PUBLIC__/mobile/images/common_icon_more.png">
+                                    </div>
+
+                                </a>
+                            </li>
+                        </ul>
+                    </foreach>
+                </div>
+                <div class="mui-scrollbar mui-scrollbar-vertical">
+                    <div class="mui-scrollbar-indicator"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="item2" class="mui-control-content">
+            <ul class="mui-table-view">
+                <if condition="empty($last_taskInfo)">
+                    <div class="top-ups-sure">
+                        <button id="load">没有数据</button>
+                    </div>
+                </if>
+                <foreach name="last_taskInfo" item="v">
+                    <li  class="mui-table-view-cell top-shop-li">
                         <a class="top-shop-task" href="{:U('Task/taskDetail',array('id'=>$v['id']))}">
                             <div class="top-shop-task-all">
                                 <div class="top-shop-task-left">
@@ -185,15 +185,15 @@
                             </div>
                         </a>
                     </li>
-                    </foreach>
-                </ul>
-                <div class="mui-scrollbar mui-scrollbar-vertical">
-                    <div class="mui-scrollbar-indicator"></div>
-                </div>
+                </foreach>
+            </ul>
+            <div class="mui-scrollbar mui-scrollbar-vertical">
+                <div class="mui-scrollbar-indicator"></div>
             </div>
         </div>
-
     </div>
+
+</div>
 
 
 </body>
@@ -202,8 +202,9 @@
 <script type="text/javascript" charset="utf-8">
     mui.init();
     function topShop(){
-        window.location.href = "{:U('shop/myTopShop')}";
-
+        mui.openWindow({
+            url:url + 'mobile/shop/myTopShop',
+        });
     }
 </script>
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
