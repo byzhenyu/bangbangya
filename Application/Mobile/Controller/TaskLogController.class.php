@@ -118,10 +118,8 @@ class TaskLogController extends UserCommonController {
           $field = 'l.id, l.task_id, l.task_name,l.valid_time, l.valid_status,l.task_price, t.price, c.category_name, c.category_img';
           $taskLogModel = D('Home/TaskLog');
           $taskLogInfo = $taskLogModel->getTaskLog($where,$field);
-
           if (IS_POST) {
               $this->ajaxReturn(V(1, '接单记录', $taskLogInfo['list']));
-
           }
           $this->assign('type', $type);
           $this->assign('taskLogInfo', $taskLogInfo);
