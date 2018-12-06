@@ -9,14 +9,6 @@ class UserModel extends Model{
     protected $insertFields = array('password','mobile','head_pic','nick_name', 'bonus_money', 'total_money', 'alipay_num', 'alipay_name', 'invitation_code', 'invitation_uid', 'open_id', 'disabled', 'register_time','status','invitation_num');
     protected $selectFields = array('user_id','mobile','head_pic','nick_name','bonus_money', 'total_money', 'alipay_num', 'alipay_name', 'invitation_code', 'invitation_uid', 'open_id', 'disabled', 'register_time','status','invitation_num');
     protected $findFileds = array('user_id','mobile','head_pic','nick_name', 'bonus_money', 'total_money', 'alipay_num', 'alipay_name', 'invitation_code', 'invitation_uid', 'open_id', 'disabled', 'register_time','status','invitation_num');
-    protected $_validate = array(
-        array('valid_info', 'require', '验证信息不能为空！', 1, 'regex', 3),
-        array('mobile','isMobile','不是有效的手机号码',1,'function', 3),
-        array('valid_time', 'require', '任务有效期不能为空', 1, 'regex', 1),
-    	array('password', '6,20', '密码长度有误', 1, 'length', 1),
-    	array('password', '6,20', '密码长度有误', 2, 'length', 12),
-
-    );
 
     /**
      * @desc 获取会员列表
