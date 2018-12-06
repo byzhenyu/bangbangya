@@ -155,7 +155,8 @@ class UserModel extends Model
         $info = $this->alias('u')
                ->join('__SHOP__ as s on u.user_id = s.user_id','LEFT')
                ->field($field)
-               -> where($where)
+               ->where($where)
+                ->where(array('u.status'=>1))
                ->find();
         /*判断是否缴纳保证金*/
         if($info['shop_accounts'] > 0) {
@@ -199,6 +200,7 @@ class UserModel extends Model
             ->join('__SHOP__ s on s.user_id = u.user_id')
             ->field($field)
             ->where($where)
+            ->where(array('u.status'=>1))
             ->find();
 
         return $info;
