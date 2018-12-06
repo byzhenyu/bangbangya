@@ -73,6 +73,7 @@
                 bridge.registerHandler('Refresh Login Page', function (data, responseCallback) {
 
                     if (1 == "{IS_NEW}") {
+                        alert("{IS_NEW}");
                         window.location.href = "{:U('User/Invitation')}";
                     } else {
                         window.location.reload();
