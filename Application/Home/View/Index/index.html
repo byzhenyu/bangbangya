@@ -28,7 +28,7 @@
                 <else />
                 <div class="h-user fr cf">
                     <div class="user-i fl">
-                        <span style="position:relative;" ><img  id="head-img"  src="{$userList['head_pic']}"><input type="file" id="upload" accept="image/jpeg, image/gif" /></span>
+                        <span style="position:relative;" ><img onclick="myInfo()" id="head-img"  src="{$userList['head_pic']}"></span>
                         <p>{$userList['nick_name']}</p>
                     </div>
                     <i class="iconfont icon-nav_icon_dropdown fl">
@@ -166,10 +166,14 @@
         });
 
         function openUrl(jump_url){
-             alert(jump_url);
             if(jump_url != '' || jump_url.length != 0){
                 window.open(jump_url);
             }
+        }
+        function myInfo(){
+            mui.openWindow({
+                url: url + '/Home/User/personalCenter'
+            });
         }
     </script>
 </block>

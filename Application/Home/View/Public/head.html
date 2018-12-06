@@ -26,7 +26,7 @@
             <else />
             <div class="h-user fr cf">
                 <div class="user-i fl">
-                    <span style="position:relative;"><img id="head-img"  src="{:session('user_auth')['head_pic']}"><input type="file" id="upload-head" accept="image/jpeg, image/gif" /></span>
+                    <span style="position:relative;"><img onclick="myInfo()"  id="head-img"  src="{:session('user_auth')['head_pic']}"></span>
                     <p>{:session('user_auth')['nick_name']}</p>
                 </div>
                 <i class="iconfont icon-nav_icon_dropdown fl">
@@ -73,12 +73,17 @@
 
         })
     }
-    $('#upload-head').fileupload({
-        url: "{:U('User/uploadImg')}",
-        dataType: 'json',
-        done: function (e, data) {
-            $('#head-img').attr('src',data.result.data.nameosspath);
-            mui.toast('更换成功');
-        }
-    });
+    // $('#upload-head').fileupload({
+    //     url: "{:U('User/uploadImg')}",
+    //     dataType: 'json',
+    //     done: function (e, data) {
+    //         $('#head-img').attr('src',data.result.data.nameosspath);
+    //         mui.toast('更换成功');
+    //     }
+    // });
+    function myInfo(){
+        mui.openWindow({
+            url: url + '/Home/User/personalCenter'
+        });
+    }
 </script>
