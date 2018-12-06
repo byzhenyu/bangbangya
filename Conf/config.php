@@ -104,7 +104,7 @@
         ),
         'APP_NAME' => '帮帮鸭',
         //极光推送 key secret
-        'USER_PUSH_APIKEY'=>'6acce159b66e2c31030ae9a6',
-        'USER_PUSH_SECRETKEY'=>'25480972b24efa1559349ebf'
+        'USER_PUSH_APIKEY'=>'wx6f5af7c0714dd708',
+        'USER_PUSH_SECRETKEY'=>'c04af325c6b8a440ba484130013e089b'
 
     );
