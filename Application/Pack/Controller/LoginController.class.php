@@ -44,6 +44,7 @@ class LoginController extends CommonController {
         $weiChatData = $this->getWeiChatInfo($weiChat_token['access_token'], $weiChat_token['openid']);
         $userModel = D('Home/User');
         $userInfo = $userModel->doLogin($weiChatData['openid']);
+        LL($userInfo,'./log1.txt');
         /*判断账号是否封停*/
         if($userInfo['status'] == 0){
             $this->redirect('Pack/Login/login/disable/1');
