@@ -164,6 +164,12 @@ class UserModel extends Model
         }else{
             $info['is_accounts'] = 0;
        }
+       /*判断是否是合作商*/
+       if($info['shop_type'] != 0 && $info['partner_time'] > NOW_TIME){
+           $info['shop_type'] = $info['shop_type'];
+       }else{
+           $info['shop_type'] = 0;
+       }
        $info['zong'] = $info['bonus_money'] + $info['task_suc_money'];
         return $info;
    }

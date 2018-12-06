@@ -84,11 +84,15 @@
           <div class="center-item-info">
               <div class="center-item-basic">
                   <img src="__PUBLIC__/mobile/images/my_icon_cooperate.png">
-                  <p>合作商</p>
+                  <if condition="$userList[shop_type] eq 0 ">
+                      <p>合作商</p>
+                      <else />
+                      <p>{:C(VIP_LEVEL)[$userList[shop_type]]}</p>
+                  </if>
               </div>
           </div>
           <div class="center-item-right">
-              <p href="{:U('User/partners')}">申请</p>
+              <p href="{:U('User/partners')}">{$userList[shop_type] == 0?'申请': '查看'}</p>
               <img src="__PUBLIC__/mobile/images/common_icon_more.png">
           </div>
       </a>
