@@ -55,7 +55,7 @@ class AlipayController extends CommonController {
         $data['body'] = C('APP_NAME').'H5充值';
         $data['subject'] = C('APP_NAME').'H5充值';
         $data['out_trade_no'] =  $data['order_sn'];
-        $data['total_amount'] =  $data['recharge_money'];
+        $data['total_amount'] =  $recharge_money;
         $aliData = C('AliPay');
         $aliData['returnUrl'] =  'http://bby.host5.liuniukeji.net/index.php/Mobile/User/personalCenter';
         require_once("./Plugins/AliPay/AliPay.php");
