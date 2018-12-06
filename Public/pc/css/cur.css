@@ -96,20 +96,40 @@ html body{
   position: relative;
 }
 .h-outbtn{
-  width: 64px;
-  height: 36px;
+  width: 100px;
+  /*height: 36px;*/
   font-size: 16px;
   color: #6F75FE;
   position: absolute;
-  top: 16px;
+  top: 18px;
   box-shadow: 0 3px 6px rgba(119, 133, 255, 0.57);
   border-radius: 5px;
   left: 50%;
   margin-left: -30px;
   display: none;
+  background: #fff;
+  padding: 0 10px;
+  z-index: 9999;
+}
+.h-outbtn li{
+  line-height: 35px;
+  font-size: 14px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+.h-outbtn li a{
+  display: block;
+  width: 100%;
+}
+.h-outbtn li button{
+  width: 100%;
+  display: block;
+  line-height: 35px;
+  font-size: 14px;
 }
 .h-user i:hover .h-outbtn{
   display: block;
+
 }
 .nav{
   display: flex;

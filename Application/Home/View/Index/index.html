@@ -28,11 +28,27 @@
                 <else />
                 <div class="h-user fr cf">
                     <div class="user-i fl">
-                        <span style="position:relative;" ><img  id="head-img"  src="{$userList['head_pic']}"><input type="file" id="upload" accept="image/jpeg, image/gif" /></span>
+                        <span style="position:relative;" ><img onclick="myInfo()" id="head-img"  src="{$userList['head_pic']}"></span>
                         <p>{$userList['nick_name']}</p>
                     </div>
                     <i class="iconfont icon-nav_icon_dropdown fl">
-                        <button class="h-outbtn" onclick="logOut()">退出</button>
+                        <ul class="h-outbtn">
+                            <li>
+                                <a href="{:U('User/personalCenter')}">个人中心</a>
+                            </li>
+                            <li>
+                                <a href="{:U('Task/listTask')}">接单赚钱</a>
+                            </li>
+                            <li>
+                                <a href="{:U('Task/addTask')}"" >发布任务</a>
+                            </li>
+                            <li>
+                                <a href="{:U('Pay/myWallet')}">我的钱包</a>
+                            </li>
+                            <li>
+                                <button  class="loginOut" onclick="logOut()">退出</button>
+                            </li>
+                        </ul>
                     </i>
                 </div>
             </if>
@@ -166,10 +182,14 @@
         });
 
         function openUrl(jump_url){
-             alert(jump_url);
             if(jump_url != '' || jump_url.length != 0){
                 window.open(jump_url);
             }
+        }
+        function myInfo(){
+            mui.openWindow({
+                url: url + '/Home/User/personalCenter'
+            });
         }
     </script>
 </block>

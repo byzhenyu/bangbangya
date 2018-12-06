@@ -62,6 +62,9 @@ class TaskController extends UserCommonController{
                 $where['t.mobile_type'] = '苹果';
                 $order = 't.top_time DESC,t.re_time DESC,t.add_time DESC';
                 break;
+            case 6:
+                $order = 't.price DESC,t.top_time DESC,t.re_time DESC,t.add_time DESC';
+                break;
             default:
                 $order = 't.top_time DESC, t.re_time DESC, t.add_time DESC';
                 break;

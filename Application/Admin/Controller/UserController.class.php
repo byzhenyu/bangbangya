@@ -48,6 +48,17 @@ class UserController extends CommonController {
         $user_id = I('user_id', 0, 'intval');
         $where['user_id'] = $user_id;
         $userModel = D('Admin/User');
+        if (IS_POST) {
+             $data = I('post.');
+             $data['total_money']  = yuan_to_fen($data['total_money']);
+             if($userModel->create($data)  !== false){
+                 $userRes = $userModel->save();
+                 if($userRes){
+                     $this->ajaxReturn(V(1, '更新成功'));
+                 }
+             }
+            $this->ajaxReturn(V(0, $userModel->getDbError()));
+        }
         $userInfo = $userModel->getUserInfo($where);
         $this->userInfo = $userInfo;
         $this->display();
@@ -98,5 +109,18 @@ class UserController extends CommonController {
     // 上传图片
     public function uploadImg() {
         $this->_uploadImg();
+    }
+    /**
+    * @desc  金额明细
+    * @param  User_id
+    * @return mixed
+    */
+    public function userMoney(){
+        $user_id = I('user_id',0,'intval');
+        $AccountLogModel = D('AccountLog');
+        $userAccountLog = $AccountLogModel->userMoneyDetail($user_id);
+        $this->list = $userAccountLog['list'];
+        $this->page = $userAccountLog['page'];
+        $this->display();
     }
 }

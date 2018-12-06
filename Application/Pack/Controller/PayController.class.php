@@ -88,6 +88,8 @@ class PayController  extends CommonController{
       */
       public  function withdraw()
       {
+          /*提现手续费*/
+          $drawCharge = M('VipLevel')->where(array('vip_type' => 1))->getField('withdraw_fee',true);
           /*判断是余额提现  还是分红提现  type 0 余额提现 1分红提现*/
           $type = I('type', 0, 'intval');
           $where['user_id'] = UID;
@@ -107,9 +109,11 @@ class PayController  extends CommonController{
                   $drawRes = $userAccountModel ->withdraw($data);
                   $this->ajaxReturn($drawRes);
               }
+              $this->assign('drawCharge',$drawCharge);
               $this->assign('shopInfo',$shopInfo);
-                  $this->display();
+              $this->display();
           }else{
+              $this->assign('drawCharge',$drawCharge);
               $this->assign('type', $type);
               $this->display('Pay/bindAlipay');
           }

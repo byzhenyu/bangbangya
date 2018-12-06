@@ -4,15 +4,14 @@
     <link rel="stylesheet" href="__PUBLIC__/pc/css/wallet.css">
     <link rel="stylesheet" href="__PUBLIC__/pc/css/iconfont.css">
     <style>
-        p {
+        .userMoney{
             display: block;
-            color:white;
             -webkit-margin-before: 1em;
             -webkit-margin-after: 1em;
             -webkit-margin-start: 0px;
             -webkit-margin-end: 0px;
         }
-        a {
+        .userMoney{
             color : white;
         }
     </style>
@@ -28,7 +27,7 @@
             </div>
             <div class="sess-wapper income">
                 <div class="incom-wapper">
-                    <p>收入分红</p>
+                    <p class="userMoney">收入分红</p>
                     <h1>￥{:fen_to_yuan($bonus_money)}</h1>
                     <a href="{:U('Pay/withdraw1',array('type' => 1))}"><button class="income-btn">提现</button></a>
                 </div>
