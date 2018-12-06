@@ -62,7 +62,7 @@ class UserAccountController extends CommonController {
                         $this->ajaxReturn(V(0, '操作失败'));
                     }
                     $where['id'] = $id;
-                    $accountInfo = $UserAccountModel->getUserAccountDetail($where, 'id, user_id, money, account_fee, drawmoney,type');
+                    $accountInfo = $UserAccountModel->getUserAccountDetail($where, 'id, user_id, money, admin_note, account_fee, drawmoney,type');
                     $user_where['user_id'] = array('eq', $accountInfo['user_id']);
                     if ($state == 1) { //完成审核
 
