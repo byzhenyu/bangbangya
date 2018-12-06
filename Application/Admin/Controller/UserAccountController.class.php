@@ -98,7 +98,7 @@ class UserAccountController extends CommonController {
                             }
                             $logRes = M('AccountLog')->where($acc_where)->setField('change_desc', $change_desc);
                             $pushRes = $pushModel->push('提现审核通知',$accountInfo['user_id'], '提现成功', $change_desc, '通知类型：审核通知',$accountInfo['admin_note']);
-                            if ($logRes === false ||$pushRes ===false) {
+                            if ($logRes === false ||$pushRes['status'] == 0) {
                                 M()->rollback(); // 事务回滚
                                 $this->ajaxReturn(V(0, '修改日志操作失败'));
                             }
@@ -156,7 +156,7 @@ class UserAccountController extends CommonController {
                             //增加会员余额
                             $setUserMoney = D('Admin/User')->where($user_where)->save($saveData);
 
-                            if ($setUserMoney === false || $pushRes ===false) {
+                            if ($setUserMoney === false || $pushRes['status'] == 0) {
                                 M()->rollback(); // 事务回滚
                                 $this->ajaxReturn(V(0, '操作失败'));
                             }
