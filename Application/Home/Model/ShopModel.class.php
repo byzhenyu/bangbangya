@@ -88,7 +88,7 @@ class ShopModel extends Model{
         }else if($timeType == 2){
             $topTime  = $data['num'] * (strtotime('+1week')  - NOW_TIME);
         }else{
-            $topTime  = $data['num'] * (strtotime('+1year')  - NOW_TIME) ;
+            $topTime  = $data['num'] * (strtotime('+1month')  - NOW_TIME) ;
         }
         $userRes =  D('Home/User')->where($where)->setDec('total_money',$data['zong']);
         $shopTopTime = $this->where($where)->getField('top_time');
