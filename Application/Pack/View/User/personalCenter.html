@@ -275,8 +275,15 @@
                     if(data['status'] == 1){
                         if (/(Android)/i.test(navigator.userAgent)) {
                             window.AndroidJS.Logout();
-                        } else if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                            setTimeout(function(){
+                                window.location.href = "{:U('Login/login')}";
 
+                            }, 1500);
+                        } else if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                            setTimeout(function(){
+                                window.location.href = "{:U('Login/login')}";
+
+                            }, 1500);
                         } else {
                             setTimeout(function(){
                                 window.location.href = "{:U('Login/login')}";
