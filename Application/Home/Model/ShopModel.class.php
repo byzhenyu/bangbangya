@@ -80,7 +80,7 @@ class ShopModel extends Model{
             return false;
         }
         $topTime = array_flip(C(TOP_CONF));
-        $timeType  = $topTime[$data['topMoney']];
+        $timeType  = $topTime[$data['topMoney'] / 100];
         if($timeType == 0){
             $topTime  = $data['num'] *  (strtotime('+1hour') - NOW_TIME);
         }else if($timeType == 1){
