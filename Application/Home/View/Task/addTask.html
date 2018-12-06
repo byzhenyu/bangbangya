@@ -7,13 +7,18 @@
         .weui-uploader__bd{width: 100%;}
         .weui-uploader__files{  overflow: hidden;  width: 98%;  margin: auto;  text-align: center;  }
         .weui-uploader__file{  float: left;  width: 110px;  text-align: center;  position: relative;  }
-        .weui-uploader__file img {  width: 100px;  }
+        .weui-uploader__file img {  width: 100px; height: 100px;object-fit: scale-down;}
         .weui-uploader__file .file-del{  position: absolute;  top:1px;  right: 0;  }
         .weui-uploader__file .file-del a{  color: #fff;  background-color: rgba(0,0,0,.3);  padding: 2px 7px;  border-radius: 15px;cursor:pointer  }
         .weui-uploader__input-box{ position: relative;
             overflow: hidden; float: left;}
         .weui-uploader__input-box img {
             width: 100px;
+        }
+        .pj_opcon {
+            margin-top: 20px;
+            display: inline-flex;
+            position: relative;
         }
         #upload{
             border: none;
@@ -31,13 +36,14 @@
             border: none;
             z-index: 99;
             position: absolute;
+            top:0;
             overflow: hidden;
             opacity: 0;
             -ms-filter: 'alpha(opacity=0)';
 
             width: 80px!important;
             height: 80px!important;
-            left: 80px;
+            /*left: 80px;*/
             margin-right: .24rem;
         }
         .task-submit-detail textarea{
@@ -58,7 +64,8 @@
         }
         .pj_opimg img {
             width: 80px;
-            min-height: 80px;
+            height: 80px;
+            object-fit: scale-down;
         }
     </style>
 
@@ -201,35 +208,24 @@
                                     </div>
 
                                     <div class="pj_opimg">
-                                        <img  id="img_{$k-1}" src="{$v['step_img']}">
+                                        <img  id="img_{$k-1}" src="{$v['step_img']}" />
                                         <!--<button id="btnUpload_{$k-1}" type="button" class="uploader-img"></button>-->
-                                        <input id="upload_{$k-1}" class="weui-uploader__input" type="file" accept="image/*">
-                                        <input id="img{$k-1}" type="hidden" name="step[1][{$k-1}][step_img]" value="{$v['step_img']}">
+                                        <input id="upload_{$k-1}" onclick="upimg(this, {$k-1})" class="weui-uploader__input uploader-img" type="file" accept="image/*">
+                                        <input id="img{$k-1}" type="hidden" name="step[1][{$k-1}][step_img]" value="{$v['step_img']}" >
                                     </div>
                                     <div class="pj_optext">
                                         <textarea id="step_text_{$k-1}" name="step[1][{$k-1}][step_text]" class="pj_opinput" placeholder="请填写步骤">{$v['step_text']}</textarea>
                                     </div>
-                                    <div class="pj_opbt del-item">
-                                        <span  data-num="{$k}" id="del_{$k-1}">删除</span>
+                                    <div class="pj_opbt del-item"   data-num="{$k}" id="del_{$k-1}">
+                                        <span>删除</span>
                                     </div>
                                 </div>
-                                <script>
-                                    var m = "{$k-1}";
-                                    $('.del-item').hide();
-                                    $("#del_"+m).show();
-                                    $("#upload_"+m).fileupload({
-                                        url: "{:U('Task/uploadImg')}",
-                                        dataType: 'json',
-                                        done: function (e, data) {
-                                            $('#img'+m).val(data.result.data.nameosspath);
-                                            $('#img_'+m).attr('src', data.result.data.nameosspath);
-                                        }
-                                    }).prop('disabled', !$.support.fileInput)
-                                        .parent().addClass($.support.fileInput ? undefined : 'disabled');
-
-                                </script>
 
                             </volist>
+                            <script>
+                                $('.del-item').hide();
+                                $(".del-item:last").show();
+                            </script>
                         </div>
 
 
@@ -304,16 +300,35 @@
             $(this).addClass("class-type-active");
         });
 
+        function upimg(obj, id) {
+
+            $(obj).fileupload({
+                url: "{:U('Task/uploadImg')}",
+                dataType: 'json',
+                done: function (e, data) {
+
+                    $('#img'+id).val(data.result.data.nameosspath);
+                    $('#img_'+id).attr('src', data.result.data.nameosspath).show();
+
+                }
+            }).prop('disabled', !$.support.fileInput)
+                .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+        }
+
         laydate.render({
             elem: '#end_time',
             theme: '#6F75FE',
             type: 'datetime',
+            istoday:false,
             min:minDate(),
             trigger: 'click',
+            value:minDate(),
         });
         // 设置最小可选的日期
         function minDate() {
-            var now = new Date();
+            var cur = new Date();
+            var now = new Date(cur.getTime() + 24*60*60*1000);
             return now.getFullYear()+"-" + (now.getMonth()+1) + "-" + now.getDate() +" "+ now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
         }
         var count = "{$count}";
@@ -350,6 +365,8 @@
 
         }
 
+
+
         //操作步骤计数
         var base = "{$base}";
 //        for(var i = base; i < base; i++) {
@@ -377,7 +394,7 @@
                     '</div>'+
                     '<div class="pj_opimg">'+
                     '<img id="img_'+base+'" src="" style="display: none">'+
-                    '<input id="upload_'+base+'" class="uploader-img" type="file" accept="img/*" >'+
+                    '<input id="upload_'+base+'" onclick="upimg(this,'+base+')" class="uploader-img" type="file" accept="img/*" >'+
                     '<input id="img'+base+'" type="hidden" name="step[1]['+base+'][step_img]" value="">'+
                     '</div>'+
                     '<div class="pj_optext">'+
@@ -387,24 +404,9 @@
                     '<span>删除</span>'+
                     '</div>'+
                 '</div>'
-
             );
             $("#del_"+(base-1)).css('display','none');
-
-            $("#upload_"+base).fileupload({
-                url: "{:U('Task/uploadImg')}",
-                dataType: 'json',
-                done: function (e, data) {
-
-                    $('#img'+base).val(data.result.data.nameosspath);
-                    $('#img'+base).parent('.pj_opimg').css('background','url('+data.result.data.nameosspath+') no-repeat').css('background-size','80px');
-
-                    base++;
-
-                }
-            }).prop('disabled', !$.support.fileInput)
-                .parent().addClass($.support.fileInput ? undefined : 'disabled');
-
+            base++;
         });
         //删除步骤
         $(".step-content").on('click', '.del-item', function () {
