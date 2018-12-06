@@ -116,7 +116,7 @@
                                     <a>
                                         <input onclick="audit({$v[id]},{$v[is_task_num]})" type="button" value="审核">
                                     </a>
-                                    <input id="my-release-pause{$v['id']}" type="button" onclick="pause({$v['id']},5)" value="开启">
+                                    <input id="my-release-pause{$v['id']}" type="button" onclick="pause({$v['id']},5)" value="点击暂停">
                                     <input class="add-num-btn1"  type="button"  value="追加数量" onclick="tosay(0)" >
                                     <input id="add-price-btn{$v['id']}" type="button" name="{$v['task_num']}" onclick="tosay(1)"  value="上调出价">
                                 </div>
@@ -162,7 +162,7 @@
                                    <a>
                                        <input  onclick="audit({$v[id]},{$v[is_task_num]})" type="button" value="审核">
                                    </a>
-                                   <input id="my-release-pause{$v['id']}" type="button" onclick="pause({$v['id']},1)" value="暂停">
+                                   <input id="my-release-pause{$v['id']}" type="button" onclick="pause({$v['id']},1)" value="点击开启">
                                    <input class="add-num-btn"  type="button" onclick="addNum({$v[id]})"  value="追加数量" >
                                    <input id="add-price-btn{$v['id']}" name="{$v['task_num']}" onclick="addPrice({$v[id]},{$v[price]})" type="button" value="上调出价">
                                </div>
@@ -314,7 +314,7 @@
     function addNum(task_id) {
             var pause = $("#my-release-pause"+task_id).val();
 
-            if(pause == '开启'){
+            if(pause == '点击暂停'){
                 $("#add-num-pause1").css('display', 'flex');
                 setTimeout(function () {
                     $("#add-num-pause1").fadeOut(300);
@@ -377,7 +377,7 @@
     }
 function addPrice(task_id,price) {
         var pause = $('#my-release-pause' + task_id).val();
-        if (pause == '开启') {
+        if (pause == '点击暂停') {
             $("#add-price-pause").css('display', 'flex');
             setTimeout(function () {
                 $("#add-price-pause").fadeOut(300);
@@ -448,7 +448,7 @@ function addPrice(task_id,price) {
 }
 function soldOut(task_id){
         var pause = $('#my-release-pause' + task_id).val();
-        if(pause == '开启'){
+        if(pause == '点击暂停'){
                 $("#cancel-release-pause").css('display', 'flex');
                 setTimeout(function () {
                     $("#cancel-release-pause").fadeOut(300);
