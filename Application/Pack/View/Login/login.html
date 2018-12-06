@@ -71,9 +71,9 @@
                 /* Initialize your app here */
 
                 bridge.registerHandler('Refresh Login Page', function (data, responseCallback) {
+                    var is_new = "{:IS_NEW}";
+                    if (1 == is_new) {
 
-                    if (1 == "{IS_NEW}") {
-                        alert("{IS_NEW}");
                         window.location.href = "{:U('User/Invitation')}";
                     } else {
                         window.location.reload();
@@ -120,8 +120,8 @@
      }
 
     function reloadPage() {
-        alert("{IS_NEW}");
-        if (1 == "{IS_NEW}") {
+        var is_new = "{:IS_NEW}";
+        if (1 == is_new) {
 
             window.location.href = "{:U('User/Invitation')}";
         } else {
