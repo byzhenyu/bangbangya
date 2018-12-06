@@ -279,8 +279,8 @@ function jPush( $alert, $type, $userId = null, $msg = '') {
         $client = $client->addIosNotification( $alert, 'default', null, null, null, $extras );
         //$client = $client->setMessage ( $alert, $alert, 'type', $extras );
         $client = $client->addAndroidNotification( $alert, $alert, null, $extras );
-        //$client = $client->setOptions( 100000, 3600, null, false ); //测试环境
-        $client = $client->setOptions ( 100000, 3600, null, true ); //生产环境
+        $client = $client->setOptions( 100000, 3600, null, false ); //测试环境
+        //$client = $client->setOptions ( 100000, 3600, null, true ); //生产环境
         if ($userId) {
             // $client = $client->addRegistrationId ( $registrationIds );
             $client->addAlias( $userId );
