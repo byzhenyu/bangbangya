@@ -804,6 +804,8 @@ input[type="checkbox"]:checked + i {
     width: 55px;
     height: 55px;
     margin-right: .24rem;
+    flex-shrink: 0;
+
 }
 
 .task-operation-row1 div {
