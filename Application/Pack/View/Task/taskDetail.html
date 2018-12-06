@@ -94,7 +94,8 @@
         <span>（共{:count($taskDetail['check_info'])}张）</span>
     </div>
     <volist name="taskDetail['check_info']" id="v" key="k">
-        <a href="{$v}"  target="_blank"><img src="{$v}"></a>
+        <!--<a href="{$v}"  target="_blank"><img src="{$v}"></a>-->
+        <img src="{$v}">
         <span>图{$k}</span>
     </volist>
 

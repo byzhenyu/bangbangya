@@ -6,6 +6,11 @@
     <title>任务详情</title>
     <link href="__PUBLIC__/mobile/css/mui.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/mobile/css/style.css"/>
+    <style>
+        .verification-imgs-boom {
+
+        }
+    </style>
 </head>
 <body>
 <header class="mui-bar mui-bar-nav help-duck-head">
@@ -94,7 +99,8 @@
         <span>（共{:count($taskDetail['check_info'])}张）</span>
     </div>
     <volist name="taskDetail['check_info']" id="v" key="k">
-        <a href="{$v}"  target="_blank"><img src="{$v}"></a>
+        <!--<a href="{$v}"  target="_blank"><img src="{$v}"></a>-->
+        <img class="verification-img-item" src="{$v}" data-preview-src="" data-preview-group="1">
         <span>图{$k}</span>
     </volist>
 
@@ -110,7 +116,8 @@
             <span>{$v['step_text']}</span>
         </div>
         <div class="task-bottom-qr">
-            <a href="{$v['step_img']}"  target="_blank"><img src="{$v['step_img']}"></a>
+            <img src="{$v['step_img']}">
+            <!--<a href="{$v['step_img']}"  target="_blank"><img src="{$v['step_img']}"></a>-->
         </div>
     </volist>
 
@@ -139,6 +146,23 @@
     <input id="task_id" type="hidden" value="{$id}">
     <p>完成任务后，请到【我的任务】上传任务截图</p>
 </div>
+
+<!--<div id="__MUI_PREVIEWIMAGE" class="mui-slider mui-preview-image mui-fullscreen" data-slider="1" >-->
+    <!--<div class="mui-preview-header">-->
+        <!--<span class="mui-preview-indicator"></span>-->
+    <!--</div>-->
+    <!--<div class="mui-slider-group" >-->
+        <!--<div class="mui-slider-item mui-zoom-wrapper" data-zoomer="">-->
+            <!--<div class="mui-zoom-scroller">-->
+                <!--<img src="{$v}" data-preview-lazyload="">-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="mui-preview-footer mui-hidden"></div>-->
+    <!--<div class="mui-preview-loading">-->
+        <!--<span class="mui-spinner mui-spinner-white"></span>-->
+    <!--</div>-->
+<!--</div>-->
 
 </body>
 <script src="__PUBLIC__/mobile/js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
