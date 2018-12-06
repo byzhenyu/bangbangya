@@ -85,6 +85,8 @@ class ShopController extends UserCommonController {
             $res = $this->shop->getVip(UID, $data['type'], $data['money'] , $data['time']);
             if($res){
                 $this->ajaxReturn(V(1, '恭喜您,'.C(	VIP_LEVEL)[$data['type']].'开通成功'));
+            }else{
+                $this->ajaxReturn(V(2, '余额不足'));
             }
         }
             $this->ajaxReturn(V(2, $this->shop->getError()));

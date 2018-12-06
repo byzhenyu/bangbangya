@@ -182,15 +182,14 @@
                         timeout:10000,//超时时间设置为10秒；
                         success:function(data){
                             // alert(JSON.stringify(data));
+                            mui.toast(data['info']);
                             if(data['status'] == 1){
-                                mui.toast(data['info']);
                                 setTimeout(function(){
                                     mui.openWindow({
                                         url:  url + 'Home/User/partners'
                                     });
                                 }, 1500);
                             }else{
-                                mui.toast('余额不足');
                                 mui.confirm('您的余额不足,是否去充值?', '提示', '', function(e) {
                                     if (e.index == 1) {
                                         mui.openWindow({
