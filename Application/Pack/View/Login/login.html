@@ -120,8 +120,9 @@
      }
 
     function reloadPage() {
-
+        alert("{IS_NEW}");
         if (1 == "{IS_NEW}") {
+
             window.location.href = "{:U('User/Invitation')}";
         } else {
             window.location.reload();
