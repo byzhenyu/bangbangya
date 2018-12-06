@@ -71,7 +71,13 @@
                 /* Initialize your app here */
 
                 bridge.registerHandler('Refresh Login Page', function (data, responseCallback) {
-                    window.location.reload();
+                    var is_new = "{:IS_NEW}";
+                    if (1 == is_new) {
+
+                        window.location.href = "{:U('User/Invitation')}";
+                    } else {
+                        window.location.reload();
+                    }
                     responseCallback(data)
                 })
                 bridge.callHandler('WeChat Login', null, function responseCallback(responseData) {
@@ -114,8 +120,15 @@
      }
 
     function reloadPage() {
+        var is_new = "{:IS_NEW}";
+        alert(is_new);
+        if (1 == is_new) {
 
-        window.location.reload();
+            window.location.href = "{:U('User/Invitation')}";
+        } else {
+            window.location.reload();
+        }
+
     }
 
 </script>
