@@ -32,7 +32,23 @@
                         <p>{$userList['nick_name']}</p>
                     </div>
                     <i class="iconfont icon-nav_icon_dropdown fl">
-                        <button class="h-outbtn" onclick="logOut()">退出</button>
+                        <ul class="h-outbtn">
+                            <li>
+                                <a href="{:U('User/personalCenter')}">个人中心</a>
+                            </li>
+                            <li>
+                                <a href="{:U('Task/listTask')}">接单赚钱</a>
+                            </li>
+                            <li>
+                                <a href="{:U('Task/addTask')}"" >发布任务</a>
+                            </li>
+                            <li>
+                                <a href="{:U('Pay/myWallet')}">我的钱包</a>
+                            </li>
+                            <li>
+                                <button  class="loginOut" onclick="logOut()">退出</button>
+                            </li>
+                        </ul>
                     </i>
                 </div>
             </if>

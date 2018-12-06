@@ -23,7 +23,7 @@
 <script src="__PUBLIC__/mobile/js/public.js" type="text/javascript" charset="utf-8"></script>
 <script src="__PUBLIC__/mobile/js/url.js"></script>
 <script>
-    $('.header').on('click', '.h-outbtn', function () {
+    $('.header').on('click', '.loginOut', function () {
         mui.confirm('您是否退出登录?', '提示', '', function(e) {
             if (e.index == 1) {
                 mui.ajax(url + 'Home/Login/logOut',{
@@ -47,7 +47,6 @@
                     }
                 });
             }else{
-                mui.alert('您取消了操作');
             }
 
         })
