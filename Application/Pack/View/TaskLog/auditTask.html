@@ -277,8 +277,6 @@
             mui.toast('您输入的字符太多!');
             return
         }
-        mui.confirm('这个任务是否不合格?', '提示', '', function(e) {
-            if (e.index == 1) {
                 mui.ajax(url + 'Pack/TaskLog/fail',{
                     data:{
                         id : tid,
@@ -313,10 +311,6 @@
                         console.log(type);
                     }
                 });
-            }else{
-                mui.toast('您取消了操作');
-            }
-        })
     });
     function pass(tid){
         mui.confirm('是否通过这个任务', '提示', '', function(e) {
