@@ -13,7 +13,7 @@ class PublicApiController extends ApiCommonController {
     /**
      * @desc 获取版本更新信息
      */
-    public function getVersionInfo(){
+    public function getVersion(){
         $type = I('post.type', 1, 'intval');
         $type = 1; //TODO 默认1
         $where = array('version_type' => $type);
