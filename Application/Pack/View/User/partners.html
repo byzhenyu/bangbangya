@@ -9,7 +9,7 @@
 </head>
 <body style="background: #f6f6f6">
     <header class="mui-bar mui-bar-nav help-duck-head">
-        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <a href="{:U('User/personalCenter')}" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
         <p class="mui-title">合作商</p>
         <a></a>
     </header>
@@ -84,14 +84,6 @@
     function buy(money,type,time){
               mui.confirm('是否成为合作商', '提示', '', function(e) {
                   if (e.index == 1) {
-                      var json_data = {
-                          "money":money,
-                          "type":type,
-                          "time" : time
-                      };
-                      $.post("{:U('Shop/vip')}", json_data, function (data) {
-
-                      })
                       mui.ajax(url + 'Mobile/Shop/vip',{
                           data:{
                               money:money,
