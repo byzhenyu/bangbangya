@@ -37,7 +37,7 @@ class TaskCategoryModel extends Model{
     * @param  $where
     * @return array
     */
-    public function gettaskCategoryExplain($where = [], $field = '' , $sort = ' id ASC '){
+    public function gettaskCategoryExplain($where = [], $field = '' , $sort = ' sort ASC '){
         if(is_null($field)){
             $field = $this->selectFields;
         }
