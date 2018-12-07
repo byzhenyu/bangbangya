@@ -18,7 +18,7 @@ class TaskCategoryModel extends Model{
      * @param $where
      * @return array
      */
-    public function getTaskCategory($where = [], $field = null, $order = 'id ASC') {
+    public function getTaskCategory($where = [], $field = null, $order = 'sort ASC') {
         $where['status']  =  1;
         if(is_null($field)){
              $field = $this->selectFields;

@@ -15,9 +15,9 @@ use Think\Model;
  * 任务类型模型
  */
 class TaskCategoryModel extends Model {
-    protected $insertFields = array('id', 'category_name', 'category_img', 'status','category_explain','limit_money','limit_num');
-    protected $updateFields = array('id', 'category_name', 'category_img', 'status','category_explain','limit_money','limit_num');
-    protected $selectFields = array('id', 'category_name', 'category_img', 'status','category_explain','limit_money','limit_num');
+    protected $insertFields = array('id', 'category_name', 'category_img', 'status','category_explain','limit_money','limit_num','sort');
+    protected $updateFields = array('id', 'category_name', 'category_img', 'status','category_explain','limit_money','limit_num','sort');
+    protected $selectFields = array('id', 'category_name', 'category_img', 'status','category_explain','limit_money','limit_num','sort');
     protected $_validate = array(
         array('category_name', 'require', '请输入分类名称 ', 1, 'regex', 3),
         array('category_name', '0,5', '您输入的分类名称过长，超过了5个字符数限制', 1, 'length', 3),
@@ -34,7 +34,7 @@ class TaskCategoryModel extends Model {
      * @param $status    0删除  1 正常
      * @return $list  arr
      */
-    public function getTaskCategoryList($where = [], $field = '', $order = 'id desc',$status = null) {
+    public function getTaskCategoryList($where = [], $field = '', $order = 'sort ASC',$status = null) {
         if(is_null($status))
         {
              $where['status'] = 1;
