@@ -13,6 +13,7 @@ use Common\Controller\CommonController;
 class TaskLogController extends CommonController {
     public function _initialize() {
         $this->TaskLogModel = D("Home/TaskLog");
+        $this->TaskModel = D("Home/Task");
     }
      /**
      * @desc  接单
@@ -168,96 +169,97 @@ class TaskLogController extends CommonController {
         $this->assign('id', $id);
         $this->display();
      }
-     /**
+    /**
      * @desc  任务审核
      * @param  task_id
      * @return mixed
      */
-     public function auditTask(){
-         $task_id = I('task_id', 0, 'intval');
-         $p = I('p', 1, 'intval');
-         if($p <= 1){
-             $p  = 1;
-         }
-         $where['task_id'] = $task_id;
-         $field =  'u.user_id, u.head_pic, u.nick_name, t.task_id,t.id as tid, t.valid_info, t.valid_img, t.valid_status  ';
-         $taskLogInfo = $this->TaskLogModel->auditTask($where, $field);
+    public function auditTask(){
+        $task_id = I('task_id', 0, 'intval');
+        $p = I('p', 1, 'intval');
+        if($p <= 1){
+            $p  = 1;
+        }
+        $where['task_id'] = $task_id;
+        $field =  'u.user_id, u.head_pic, u.nick_name, t.task_id,t.id as tid, t.valid_info, t.valid_img, t.valid_status  ';
+        $taskLogInfo = $this->TaskLogModel->auditTask($where, $field);
 //        p($taskLogInfo);
-         $taskAudit = $this->TaskLogModel->taskAudit($task_id);
-         $this->assign('taskAudit',$taskAudit);
-         $this->assign('task_id',$task_id);
-         $this->assign('p',$p);
-         $this->assign('taskLogInfo',$taskLogInfo);
-         $this->display();
-     }
-     /**
+        $taskAudit = $this->TaskLogModel->taskAudit($task_id);
+        $this->assign('taskAudit',$taskAudit);
+        $this->assign('task_id',$task_id);
+        $this->assign('p',$p);
+        $this->assign('taskLogInfo',$taskLogInfo);
+        $this->display();
+    }
+    /**
      * @desc  任务通过
      * @param  tasklog_id
      * @return mixed
      */
-     public function pass(){
-         $tasklog_id = I('id', 0, 'intval');
-         $tasklogInfo = $this->TaskLogModel->where('id = '.$tasklog_id)->find();
-         $res = user_money( UID, $tasklogInfo['task_price']);
-         if(!$res){
-             $this->ajaxReturn(V(2, '您的余额不足,请充值审核!'));
-         }else{
-             $userModel = D('Home/User');
-             $ShopModel = D('Home/Shop');
-             M()->startTrans();
-             $userModel->where('user_id = '.UID)->setDec('total_money',$tasklogInfo['task_price']);
-             account_log( UID,$tasklogInfo['task_price'],3,'任务结算',$tasklog_id);
-             $ShopModel->where('user_id = '.UID)->setInc('vol');
-             $taskUser = array(
-                 'task_suc_money' => array('exp','task_suc_money + '.$tasklogInfo['task_price']),
-                 'total_money' => array('exp','total_money + '.$tasklogInfo['task_price']),
-             );
-             $userModel->where('user_id = '.$tasklogInfo['user_id'])->save($taskUser);
-             account_log($tasklogInfo['user_id'], $tasklogInfo['task_price'], 4,'完成任务', $tasklog_id);
-             $ShopModel->where('user_id = '.$tasklogInfo['user_id'])->setInc('take_task');
-             D('Common/Push')->push('收入提醒',$tasklogInfo['user_id'],'亲，您有一笔收入到账！','任务名称:'.$tasklogInfo['task_name'].'获得','收入金额：￥'.$tasklogInfo['task_price'] /100,'劳动换来的果实特别甜，继续加油吧！');
-             $tasklogRes = $this->TaskLogModel->where('id = '.$tasklog_id)->save(array('valid_status' => 3));
-             if($tasklogRes){
-                 M()->commit();
-                 $this->ajaxReturn(V(1, '完成'));
-             }else{
-                 M()->rollback();
-                 $this->ajaxReturn(V(2, '失败'));
-             }
-             $this->ajaxReturn(V(0, $this->TaskLogModel->getError()));
-         }
-     }
-     /**
+    public function pass(){
+        $tasklog_id = I('id', 0, 'intval');
+        $tasklogInfo = $this->TaskLogModel->where('id = '.$tasklog_id)->find();
+        $res = user_money( UID, $tasklogInfo['task_price']);
+        if(!$res){
+            $this->ajaxReturn(V(2, '您的余额不足,请充值审核!'));
+        }else{
+            $userModel = D('Home/User');
+            $ShopModel = D('Home/Shop');
+            M()->startTrans();
+            /*change shop */
+            $userModel->where('user_id = '.UID)->setDec('total_money',$tasklogInfo['task_price']);
+            account_log( UID,$tasklogInfo['task_price'],3,'任务结算',$tasklog_id);
+            $ShopModel->where('user_id = '.UID)->setInc('vol');
+            $taskUser = array(
+                'task_suc_money' => array('exp','task_suc_money + '.$tasklogInfo['task_price']),
+                'total_money' => array('exp','total_money + '.$tasklogInfo['task_price'])
+            );
+            $userModel->where('user_id = '.$tasklogInfo['user_id'])->save($taskUser);
+            account_log($tasklogInfo['user_id'], $tasklogInfo['task_price'], 4,'完成任务', $tasklog_id);
+            $ShopModel->where('user_id = '.$tasklogInfo['user_id'])->setInc('take_task');
+            D('Common/Push')->push('收入提醒',$tasklogInfo['user_id'],'亲，您有一笔收入到账！','任务名称:'.$tasklogInfo['task_name'].'获得','收入金额：￥'.$tasklogInfo['task_price'] /100,'劳动换来的果实特别甜，继续加油吧！');
+            $tasklogRes = $this->TaskLogModel->where('id = '.$tasklog_id)->save(array('valid_status' => 3));
+            if($tasklogRes){
+                M()->commit();
+                $this->ajaxReturn(V(1, '完成'));
+            }else{
+                M()->rollback();
+                $this->ajaxReturn(V(2, '失败'));
+            }
+            $this->ajaxReturn(V(0, $this->TaskLogModel->getError()));
+        }
+    }
+    /**
      * @desc 任务审核不通过
      * @param  taskLog id
      * @param  valid_text 审核备注
      * @param  valid_pic 审核图片
      * @return mixed
      */
-     public function fail(){
-             $data  = I('post.', 3);
-             $data['valid_status']  = 2;
-             $data['valid_pic']  = rtrim($data['valid_pic'], ',');
-             $tasklogInfo = $this->TaskLogModel->where('id = '.$data['id'])->find();
-             M()->startTrans();
-             $tasklogRes = $this->TaskLogModel->where('id = '.$data['id'])->save($data);
-             $taskRes = $this->TaskModel->where(array('id' =>$tasklogInfo['task_id']))->setInc('task_num');
-             $ChatModel = D('Home/Chat');
-             $CharData['user_id'] = $tasklogInfo['user_id'];
-             $CharData['task_user_id'] = UID;
-             $CharData['task_log_id'] = $tasklogInfo['id'];
-             $CharData['content'] = $data['valid_text'];
-             $chatRes = $ChatModel->add($CharData);
-             if($tasklogRes  && $chatRes && $taskRes){
-                 D('Common/Push')->push('任务处理通知',$tasklogInfo['user_id'],'亲，您的做的任务审核未通过!','任务名称:'.$tasklogInfo['task_name'],'通知类型：失败','失败原因: '.$data['valid_text']);
-                 M()->commit();
-                 $this->ajaxReturn(V(1, '完成'));
-             }else{
-                 M()->rollback();
-                 $this->ajaxReturn(V(0, '失败'));
-             }
-             $this->ajaxReturn(V(0, $this->TaskLogModel->getError()));
-     }
+    public function fail(){
+        $data  = I('post.', 3);
+        $data['valid_status']  = 2;
+        $data['valid_pic']  = rtrim($data['valid_pic'], ',');
+        $tasklogInfo = $this->TaskLogModel->where(array('id'=>$data['id']))->find();
+        M()->startTrans();
+        $tasklogRes = $this->TaskLogModel->where(array('id'=>$data['id']))->save($data);
+        $taskRes = $this->TaskModel->where(array('id' =>$tasklogInfo['task_id']))->setInc('task_num');
+        $ChatModel = D('Home/Chat');
+        $CharData['user_id'] = $tasklogInfo['user_id'];
+        $CharData['task_user_id'] = UID;
+        $CharData['task_log_id'] = $tasklogInfo['id'];
+        $CharData['content'] = $data['valid_text'];
+        $chatRes = $ChatModel->add($CharData);
+        if($tasklogRes  && $chatRes && $taskRes){
+            D('Common/Push')->push('任务处理通知',$tasklogInfo['user_id'],'亲，您的做的任务审核未通过!','任务名称:'.$tasklogInfo['task_name'],'通知类型：失败','失败原因: '.$data['valid_text']);
+            M()->commit();
+            $this->ajaxReturn(V(1, '完成'));
+        }else{
+            M()->rollback();
+            $this->ajaxReturn(V(0, '失败'));
+        }
+        $this->ajaxReturn(V(0, $this->TaskLogModel->getError()));
+    }
     /**
      * @desc  上传审核头像  OSS
      * @return url

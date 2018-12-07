@@ -75,7 +75,7 @@
             <div class="upload-img-add">
                 <span>
                     <img onclick="uploadImg()" src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">
-                    <input id="upload" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                    <input id="upload" class="weui-uploader__input" type="file" accept="image/*">
                 </span>
             </div>
 
@@ -107,14 +107,14 @@
             </div>
             <div id="myMessage" class="unqualified-system-reply">
                 <if condition="count($taskLogInfo['list'][0]['message'][taskChat])  neq 0  ">
-                            <foreach  name="taskLogInfo['list'][0]['message'][taskChat]"  item="v">
-                                     <p>{$v.content}</p>
-                            </foreach>
+                    <foreach  name="taskLogInfo['list'][0]['message'][taskChat]"  item="v">
+                        <p>{$v.content}</p>
+                    </foreach>
                 </if>
             </div>
         </div>
         <div class="task-unqualified-relpy">
-            <button onclick="reply({$taskLogInfo['list'][0]['user_id']},{$taskLogInfo['list'][0]['tid']})">回复</button>
+            <button style="padding:0" onclick="reply({$taskLogInfo['list'][0]['user_id']},{$taskLogInfo['list'][0]['tid']})">回复</button>
         </div>
     </div>
 </if>
@@ -140,11 +140,8 @@
         <div class="unqualified-img">
             <p class="font-audit">{$taskLogInfo['list'][0]['valid_info']}</p>
             <foreach name="taskLogInfo['list'][0]['valid_img']" item="v">
-                <!--<a href="{$v}"  target="_blank"><img src="{$v}"></a>-->
                 <div class="example  col-md-12 col-xs-12 ">
-                    <div class="example  col-md-12 col-xs-12 ">
-                        <img src="{$v}">
-                    </div>
+                    <img src="{$v}">
                 </div>
             </foreach>
             <p>{:show_valid_status($taskLogInfo['list'][0]['valid_status'])}</p>
@@ -189,7 +186,7 @@
                     mui.toast('请输入投诉内容');
                     return
                 }
-                mui.ajax(url + 'Mobile/Complaint/addComplaint',{
+                mui.ajax(url + 'Pack/Complaint/addComplaint',{
                     data:{
                         tid : tid,
                         information: information,
@@ -280,8 +277,6 @@
             mui.toast('您输入的字符太多!');
             return
         }
-        mui.confirm('这个任务是否不合格?', '提示', '', function(e) {
-            if (e.index == 1) {
                 mui.ajax(url + 'Pack/TaskLog/fail',{
                     data:{
                         id : tid,
@@ -316,15 +311,11 @@
                         console.log(type);
                     }
                 });
-            }else{
-                mui.toast('您取消了操作');
-            }
-        })
     });
     function pass(tid){
         mui.confirm('是否通过这个任务', '提示', '', function(e) {
             if (e.index == 1) {
-                mui.ajax(url + 'Mobile/TaskLog/pass',{
+                mui.ajax(url + 'Pack/TaskLog/pass',{
                     data:{
                         id : tid
                     },
@@ -342,7 +333,7 @@
                             mui.confirm('您的余额不足,是否去充值?', '提示', '', function(e) {
                                 if (e.index == 1) {
                                     mui.openWindow({
-                                        url:  url + 'Mobile/Pay/topUpsPage'
+                                        url:  url + 'Pack/Pay/topUpsPage'
                                     });
                                 }else{
                                     mui.toast('您取消了操作');
@@ -372,7 +363,7 @@
                     mui.toast('请输入回复内容');
                     return
                 }
-                mui.ajax(url + 'Mobile/Chat/addChat', {
+                mui.ajax(url + 'Task/Chat/addChat', {
                     data: {
                         user_id: user_id,
                         task_log_id: task_log_id,
@@ -390,7 +381,7 @@
                         //         window.location.reload()
                         //     }, 1000);
                         // }
-                         $('#myMessage').append("<p>"+ content +"</p>");
+                        $('#myMessage').append("<p>"+ content +"</p>");
                     },
                     error: function (xhr, type, errorThrown) {
                         //异常处理；
