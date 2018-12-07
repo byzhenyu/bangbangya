@@ -85,13 +85,16 @@
 
         }
     }
-    if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-        function iOSAutoLogin() {
-            bridge.callHandler('Auto Login', null, function responseCallback(responseData) {
+        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+            setupWebViewJavascriptBridge(function (bridge) {
+                function iOSAutoLogin() {
+                    bridge.callHandler('Auto Login', null, function responseCallback(responseData) {
+                    })
+                };
+                iOSAutoLogin();
             })
-        };
-        iOSAutoLogin();
-    }
+        }
+
     
 
     function setupWebViewJavascriptBridge(callback) {
