@@ -98,7 +98,10 @@
     </div>
     <volist name="taskDetail['check_info']" id="v" key="k">
         <!--<a href="{$v}"  target="_blank"><img src="{$v}"></a>-->
-        <img src="{$v}">
+        <!--<img src="{$v}">-->
+        <div class="example  col-md-12 col-xs-12 ">
+            <img src="{$v}">
+        </div>
         <span>图{$k}</span>
     </volist>
 
@@ -114,7 +117,10 @@
             <span>{$v['step_text']}</span>
         </div>
         <div class="task-bottom-qr">
-            <a href="{$v['step_img']}"  target="_blank"><img src="{$v['step_img']}"></a>
+            <div class="example  col-md-12 col-xs-12 ">
+                <img src="{$v['step_img']}">
+            </div>
+            <!--<a href="{$v['step_img']}"  target="_blank"><img src="{$v['step_img']}"></a>-->
         </div>
     </volist>
 
