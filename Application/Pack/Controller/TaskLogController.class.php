@@ -13,6 +13,7 @@ use Common\Controller\CommonController;
 class TaskLogController extends CommonController {
     public function _initialize() {
         $this->TaskLogModel = D("Home/TaskLog");
+        $this->TaskModel = D("Home/Task");
     }
      /**
      * @desc  接单
