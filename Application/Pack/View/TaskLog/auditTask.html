@@ -186,7 +186,7 @@
                     mui.toast('请输入投诉内容');
                     return
                 }
-                mui.ajax(url + 'Mobile/Complaint/addComplaint',{
+                mui.ajax(url + 'Pack/Complaint/addComplaint',{
                     data:{
                         tid : tid,
                         information: information,
@@ -321,7 +321,7 @@
     function pass(tid){
         mui.confirm('是否通过这个任务', '提示', '', function(e) {
             if (e.index == 1) {
-                mui.ajax(url + 'Mobile/TaskLog/pass',{
+                mui.ajax(url + 'Pack/TaskLog/pass',{
                     data:{
                         id : tid
                     },
@@ -339,7 +339,7 @@
                             mui.confirm('您的余额不足,是否去充值?', '提示', '', function(e) {
                                 if (e.index == 1) {
                                     mui.openWindow({
-                                        url:  url + 'Mobile/Pay/topUpsPage'
+                                        url:  url + 'Pack/Pay/topUpsPage'
                                     });
                                 }else{
                                     mui.toast('您取消了操作');
@@ -369,7 +369,7 @@
                     mui.toast('请输入回复内容');
                     return
                 }
-                mui.ajax(url + 'Mobile/Chat/addChat', {
+                mui.ajax(url + 'Task/Chat/addChat', {
                     data: {
                         user_id: user_id,
                         task_log_id: task_log_id,
