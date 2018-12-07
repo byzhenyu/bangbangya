@@ -103,8 +103,6 @@
         <span>（共{:count($taskDetail['check_info'])}张）</span>
     </div>
     <volist name="taskDetail['check_info']" id="v" key="k">
-        <!--<a href="{$v}"  target="_blank"><img src="{$v}"></a>-->
-        <!--<img class="verification-img-item" src="{$v}" data-preview-src="" data-preview-group="1">-->
         <div class="example  col-md-12 col-xs-12 ">
             <img src="{$v}">
         </div>
@@ -127,8 +125,6 @@
                 <!--<img src="img/1.jpg" alt="">-->
                 <img src="{$v['step_img']}">
             </div>
-            <!--<img src="{$v['step_img']}">-->
-            <!--<a href="{$v['step_img']}"  target="_blank"><img src="{$v['step_img']}"></a>-->
         </div>
     </volist>
 
@@ -182,6 +178,7 @@
 <script src="__PUBLIC__/dist/zoomify.min.js"></script>
 <script type="text/javascript" charset="utf-8">
     mui.init();
+    $('.example img').zoomify();
 </script>
 <script>
     $(".fix-content").on('tap', '.discard-task', function () {
@@ -260,6 +257,5 @@
     function shopInfo(user_id) {
         window.location.href = "{:U('Shop/shopDetail')}/user_id/"+user_id;
     }
-    $('.example img').zoomify();
 </script>
 </html>
