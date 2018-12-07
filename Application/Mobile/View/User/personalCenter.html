@@ -48,7 +48,11 @@
             <if condition="$userList['is_accounts'] eq  0 ">
                 <a  href="{:U('User/securityDeposit')}">
                     <div class="personal-application-protect">
-                        <p>申请</p>
+                        <if condition="$userList.shop_accounts eq 0">
+                               <p>申请</p>
+                               <else />
+                               <p>查看</p>
+                        </if>
                     </div>
                 </a>
                 <else />
