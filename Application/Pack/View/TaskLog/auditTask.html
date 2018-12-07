@@ -75,7 +75,7 @@
             <div class="upload-img-add">
                 <span>
                     <img onclick="uploadImg()" src="__PUBLIC__/mobile/images/common_icon_addpicture_small.png">
-                    <input id="upload" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                    <input id="upload" class="weui-uploader__input" type="file" accept="image/*">
                 </span>
             </div>
 
@@ -107,14 +107,14 @@
             </div>
             <div id="myMessage" class="unqualified-system-reply">
                 <if condition="count($taskLogInfo['list'][0]['message'][taskChat])  neq 0  ">
-                            <foreach  name="taskLogInfo['list'][0]['message'][taskChat]"  item="v">
-                                     <p>{$v.content}</p>
-                            </foreach>
+                    <foreach  name="taskLogInfo['list'][0]['message'][taskChat]"  item="v">
+                        <p>{$v.content}</p>
+                    </foreach>
                 </if>
             </div>
         </div>
         <div class="task-unqualified-relpy">
-            <button onclick="reply({$taskLogInfo['list'][0]['user_id']},{$taskLogInfo['list'][0]['tid']})">回复</button>
+            <button style="padding:0" onclick="reply({$taskLogInfo['list'][0]['user_id']},{$taskLogInfo['list'][0]['tid']})">回复</button>
         </div>
     </div>
 </if>
@@ -140,11 +140,8 @@
         <div class="unqualified-img">
             <p class="font-audit">{$taskLogInfo['list'][0]['valid_info']}</p>
             <foreach name="taskLogInfo['list'][0]['valid_img']" item="v">
-                <!--<a href="{$v}"  target="_blank"><img src="{$v}"></a>-->
                 <div class="example  col-md-12 col-xs-12 ">
-                    <div class="example  col-md-12 col-xs-12 ">
-                        <img src="{$v}">
-                    </div>
+                    <img src="{$v}">
                 </div>
             </foreach>
             <p>{:show_valid_status($taskLogInfo['list'][0]['valid_status'])}</p>
@@ -390,7 +387,7 @@
                         //         window.location.reload()
                         //     }, 1000);
                         // }
-                         $('#myMessage').append("<p>"+ content +"</p>");
+                        $('#myMessage').append("<p>"+ content +"</p>");
                     },
                     error: function (xhr, type, errorThrown) {
                         //异常处理；
