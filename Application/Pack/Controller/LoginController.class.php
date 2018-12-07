@@ -129,7 +129,8 @@ class LoginController extends CommonController {
                     $userInfo = $userModel->doLogin($open_id);
                     session('user_auth', $userInfo['data']);
                     define(UID, session('user_auth')['user_id']);
-                    define(IS_NEW, 1);
+                session('is_new', 1);
+
                 $this->ajaxReturn(V(1, '登录成功', $userInfo['data']['user_id']));
             } else {
                 $this->ajaxReturn(V(0, '登录失败'));
@@ -141,17 +142,19 @@ class LoginController extends CommonController {
             }
             session('user_auth', $user);
             define(UID, session('user_auth')['user_id']);
-            define(IS_NEW, 0);
+            session('is_new', 0);
             $this->ajaxReturn(V(1, '登录成功', $user['user_id']));
         }
 
     }
 
-    public function reloadUrl () {
-        if(IS_NEW) {
+    public function reloadUrl() {
+        if (session('is_new') == 1) {
             $this->redirect('Pack/User/Invitation');
+
         } else {
             $this->redirect('Pack/User/personalCenter/login/1');
+
         }
     }
 }

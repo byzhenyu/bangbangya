@@ -71,13 +71,9 @@
                 /* Initialize your app here */
 
                 bridge.registerHandler('Refresh Login Page', function (data, responseCallback) {
-                    var is_new = "{:IS_NEW}";
-                    if (1 == is_new) {
 
-                        window.location.href = "{:U('User/Invitation')}";
-                    } else {
-                        window.location.reload();
-                    }
+                    window.location.reload();
+
                     responseCallback(data)
                 })
                 bridge.callHandler('WeChat Login', null, function responseCallback(responseData) {
@@ -89,6 +85,7 @@
 
         }
     }
+    dologin();
 
     function setupWebViewJavascriptBridge(callback) {
         if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
