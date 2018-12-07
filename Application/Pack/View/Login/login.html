@@ -85,7 +85,14 @@
 
         }
     }
-    dologin();
+    if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+        function iOSAutoLogin() {
+            bridge.callHandler('Auto Login', null, function responseCallback(responseData) {
+            })
+        };
+        iOSAutoLogin();
+    }
+    
 
     function setupWebViewJavascriptBridge(callback) {
         if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
