@@ -67,15 +67,6 @@
         }
         if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
             setupWebViewJavascriptBridge(function (bridge) {
-
-                /* Initialize your app here */
-
-                bridge.registerHandler('Refresh Login Page', function (data, responseCallback) {
-
-                    window.location.reload();
-
-                    responseCallback(data)
-                })
                 bridge.callHandler('WeChat Login', null, function responseCallback(responseData) {
                 })
             })
@@ -85,15 +76,21 @@
 
         }
     }
-        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-            setupWebViewJavascriptBridge(function (bridge) {
-                function iOSAutoLogin() {
-                    bridge.callHandler('Auto Login', null, function responseCallback(responseData) {
-                    })
-                };
-                iOSAutoLogin();
+
+    if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+        setupWebViewJavascriptBridge(function (bridge) {
+            bridge.registerHandler('Refresh Login Page', function (data, responseCallback) {
+                window.location.reload();
+                responseCallback(data)
             })
-        }
+
+            function iOSAutoLogin() {
+                bridge.callHandler('Auto Login', null, function responseCallback(responseData) {
+                })
+            };
+            iOSAutoLogin();
+        })
+    }
 
     
 
