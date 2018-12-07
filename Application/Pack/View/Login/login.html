@@ -80,7 +80,8 @@
     if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
         setupWebViewJavascriptBridge(function (bridge) {
             bridge.registerHandler('Refresh Login Page', function (data, responseCallback) {
-                window.location.reload();
+
+                window.location.href = "{:U('reloadUrl')}";
                 responseCallback(data)
             })
 
