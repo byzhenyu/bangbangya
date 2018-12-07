@@ -119,11 +119,11 @@
 </div>
 <div class="fix-content">
 
-        <if condition="$taskDetail['valid_status'] eq 0">
-            <img class="up-task" src="__PUBLIC__/mobile/images/commom_btn_upload.png">
-            <else />
+    <if condition="$taskDetail['valid_status'] eq 0">
+        <img class="up-task" src="__PUBLIC__/mobile/images/commom_btn_upload.png">
+        <else />
 
-        </if>
+    </if>
 </div>
 <div class="task-details-tip">
     <input id="task_id" type="hidden" value="{$id}">
@@ -168,11 +168,11 @@
     })
     //上传验证
     $(".fix-content").on('tap', '.up-task', function () {
-        window.location.href = "{:U('TaskLog/taskVerify', array('id'=>$taskDetail['task_log_id']))}";
+        window.location.href = "{:U('TaskLog/taskVerify', array('id'=>$taskDetail['id']))}";
     })
     //放弃任务
     $(".fix-content").on('tap', '.re-task', function () {
-        window.location.href = "{:U('TaskLog/delTaskLog', array('id'=>$taskDetail['task_log_id']))}";
+        window.location.href = "{:U('TaskLog/delTaskLog', array('id'=>$taskDetail['id']))}";
     })
 
     $("#grap-order-btn").on('tap', function () {
