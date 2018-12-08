@@ -80,7 +80,7 @@ class AdminController extends CommonController {
          $taskCount = D('Task')->where(array('audit_status' => 0))->count();
          $UserDrawCount = D('UserAccount')->where(array('state' => 0))->count();
          $userAppeal = D('Complaint')->where(array('type' => 1,'audit_status' => 0))->count();
-         $userComplaint = D('UserAccount')->where(array('type' => 0,'audit_status' => 0))->count();
+         $userComplaint = D('Complaint')->where(array('type' => 0,'audit_status' => 0))->count();
          if($taskCount > 0){
              $message = '您有'.$taskCount.'条任务审核需要处理';
              $this->ajaxReturn(V(0, $message));
