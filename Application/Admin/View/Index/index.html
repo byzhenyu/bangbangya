@@ -147,7 +147,7 @@
             })
         });
         /*系统消息*/
-        changeStatus();
+        // changeStatus();
         function changeStatus(){
             $.get("{:U('Admin/changeStatus')}",  function (data) {
                 $('.player-notice')[data['status']].play();
