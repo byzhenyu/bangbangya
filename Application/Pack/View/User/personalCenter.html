@@ -286,7 +286,7 @@
                         } else if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
                             setupWebViewJavascriptBridge(function (bridge) {
                                 function iOSLogout() {
-                                    bridge.callHandler('Wechat Logout', null, function responseCallback(responseData) {
+                                    bridge.callHandler('WeChat Logout', null, function responseCallback(responseData) {
                                     })
                                 };
                                 iOSLogout();
