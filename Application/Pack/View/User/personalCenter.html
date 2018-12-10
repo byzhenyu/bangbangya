@@ -284,6 +284,13 @@
 
                             }, 1500);
                         } else if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                            setupWebViewJavascriptBridge(function (bridge) {
+                                function iOSLogout() {
+                                    bridge.callHandler('Wechat Logout', null, function responseCallback(responseData) {
+                                    })
+                                };
+                                iOSLogout();
+                            })
                             setTimeout(function(){
                                 window.location.href = "{:U('Login/login')}";
 
@@ -317,6 +324,17 @@
         mui.toast('登录成功');
     }else if(login == 2){
         mui.alert('您的账号已被封停!');
+    }
+
+    function setupWebViewJavascriptBridge(callback) {
+        if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+        if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+        window.WVJBCallbacks = [callback];
+        var WVJBIframe = document.createElement('iframe');
+        WVJBIframe.style.display = 'none';
+        WVJBIframe.src = 'https://__bridge_loaded__';
+        document.documentElement.appendChild(WVJBIframe);
+        setTimeout(function () { document.documentElement.removeChild(WVJBIframe) }, 0)
     }
 </script>
 </html>
