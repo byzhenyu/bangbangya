@@ -145,6 +145,19 @@
             $(window).resize(function(){
                 ResizeWindow();
             })
-        })
+        });
+        /*系统消息*/
+        // changeStatus();
+        function changeStatus(){
+            $.get("{:U('Admin/changeStatus')}",  function (data) {
+                $('.player-notice')[data['status']].play();
+                layer.msg(data['info'], {
+                    time: 5000
+                });
+            });
+            setTimeout(function(){
+                changeStatus();
+            }, 5000);
+        }
     </script>
 </block>

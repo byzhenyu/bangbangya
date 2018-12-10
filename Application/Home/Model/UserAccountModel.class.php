@@ -28,7 +28,10 @@ class UserAccountModel extends Model{
     public function is_draw($data) {
         $userInfo = D('Home/Shop')->where('user_id = '.$data['user_id'])->field('shop_type,partner_time')->find();
         $this->userAuth = $userInfo['shop_type'];
-
+        /*钻石合作商的添加  提现无限次数*/
+        if ($userInfo['shop_type']  = 4 && ($userInfo['partner_time'] > NOW_TIME)) {
+            return true;
+        }
         if ($userInfo['shop_type']  > 0 && ($userInfo['partner_time'] > NOW_TIME)) { //合作商 每天三次
             $where['user_id'] = $data['user_id'];
             $where['add_time']  = array('gt',strtotime(date('Y-m-d',time())));

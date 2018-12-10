@@ -72,4 +72,30 @@ class AdminController extends CommonController {
     public function ajaxUpdateStatus(){
 
     }
+    /**
+    * @desc 获取后台消息提醒
+    * @return json
+    */
+    public function changeStatus(){
+         $taskCount = D('Task')->where(array('audit_status' => 0))->count();
+         $UserDrawCount = D('UserAccount')->where(array('state' => 0))->count();
+         $userAppeal = D('Complaint')->where(array('type' => 1,'audit_status' => 0))->count();
+         $userComplaint = D('Complaint')->where(array('type' => 0,'audit_status' => 0))->count();
+         if($taskCount > 0){
+             $message = '您有'.$taskCount.'条任务审核需要处理';
+             $this->ajaxReturn(V(0, $message));
+         }
+         if($UserDrawCount > 0){
+             $message = '您有'.$UserDrawCount.'条用户提现需要处理';
+             $this->ajaxReturn(V(1, $message));
+         }
+         if($userAppeal > 0){
+             $message = '您有'.$userAppeal.'条用户申诉需要处理';
+             $this->ajaxReturn(V(2, $message));
+         }
+         if($userComplaint > 0){
+             $message = '您有'.$userComplaint.'条用户投诉需要处理';
+             $this->ajaxReturn(V(3, $message));
+         }
+    }
 }
