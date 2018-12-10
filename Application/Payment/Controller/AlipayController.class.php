@@ -12,7 +12,8 @@ class AlipayController extends CommonController {
     public function alipay(){
         $type =  I('type', 0, 'intval');
         $data['user_id'] = UID;
-        $data['recharge_money'] = I('recharge_money',0 , 'intval');
+        $recharge_money = I('recharge_money', 0);
+        $data['recharge_money'] = yuan_to_fen($recharge_money);
         $order_sn = makeOrderSn($data['user_id']);
         if($type == 0){
             $data['order_sn'] = 'T'.$order_sn;
@@ -26,7 +27,7 @@ class AlipayController extends CommonController {
         $data['body'] = C('APP_NAME').'网页充值';
         $data['subject'] = C('APP_NAME').'网页充值';
         $data['out_trade_no'] =  $data['order_sn'];
-        $data['total_amount'] = $data['recharge_money'];
+        $data['total_amount'] = $recharge_money;
         header("Content-type: text/html; charset=utf-8");
         require_once("./Plugins/AliPay/AliPay.php");
         $aliData = C('AliPay');
@@ -39,7 +40,7 @@ class AlipayController extends CommonController {
     public function mobileWebPay() {
         $type =  I('type', 0, 'intval');
         $data['user_id'] = UID;
-        $recharge_money = I('recharge_money',0 , 'intval');
+        $recharge_money = I('recharge_money', 0);
 
         $data['recharge_money'] = yuan_to_fen($recharge_money);
         $order_sn = makeOrderSn($data['user_id']);
@@ -68,8 +69,8 @@ class AlipayController extends CommonController {
     public function appPay() {
         $type =  I('type', 0, 'intval');
         $data['user_id'] = UID;
-        $recharge_money = I('recharge_money',0 , 'intval');
-        $data['recharge_money'] = $recharge_money;
+        $recharge_money = I('recharge_money', 0);
+        $data['recharge_money'] = yuan_to_fen($recharge_money);
         $order_sn = makeOrderSn($data['user_id']);
         if ($type == 0) {
             $data['order_sn'] = 'T'.$order_sn;
