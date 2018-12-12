@@ -46,20 +46,36 @@ class UserController extends CommonController {
      */
     public function userDetail() {
         $user_id = I('user_id', 0, 'intval');
-        $where['user_id'] = $user_id;
+        $where['u.user_id'] = $user_id;
         $userModel = D('Admin/User');
+        $shopModel = D('Admin/Shop');
+        $userInfo = $userModel->getUserInfo($where);
         if (IS_POST) {
              $data = I('post.');
-             $data['total_money']  = yuan_to_fen($data['total_money']);
-             if($userModel->create($data)  !== false){
-                 $userRes = $userModel->save();
-                 if($userRes){
-                     $this->ajaxReturn(V(1, '更新成功'));
-                 }
-             }
-            $this->ajaxReturn(V(0, $userModel->getDbError()));
+            if($userInfo['shop_type'] == $data['shop_type'] && $userInfo['partner_time'] == strtotime($data['partner_time'])){
+                unset($data['shop_type']);
+                unset($data['partner_time']);
+                $data['total_money']  = yuan_to_fen($data['total_money']);
+                if($userModel->create($data)  !== false){
+                    $userRes = $userModel->save();
+                    if($userRes){
+                        $this->ajaxReturn(V(1, '更新成功'));
+                    }
+                }
+            }else{
+                $shopData['shop_type'] = I('post.shop_type');
+                $shopData['partner_time'] = strtotime(I('post.partner_time'));
+                unset($data['shop_type']);
+                unset($data['partner_time']);
+                $data['total_money']  = yuan_to_fen($data['total_money']);
+                $userRes = $userModel->where(array('user_id'=>$data['user_id']))->save($data);
+                $shopRes = $shopModel->where(array('user_id'=>$data['user_id']))->save($shopData);
+                if($userRes || $shopRes){
+                        $this->ajaxReturn(V(1, '更新成功'));
+                }
+            }
+            $this->ajaxReturn(V(0, '更新失败'));
         }
-        $userInfo = $userModel->getUserInfo($where);
         $this->userInfo = $userInfo;
         $this->display();
     }

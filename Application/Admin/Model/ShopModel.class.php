@@ -18,12 +18,6 @@ class ShopModel extends Model {
     protected $insertFields = array('id', 'user_id', 'shop_name', 'shop_img', 'shop_accounts', 'top_time', 'shop_type', 'partner_time', 'add_time');
     protected $updateFields = array('id', 'user_id', 'shop_name', 'shop_img', 'shop_accounts', 'top_time', 'shop_type', 'partner_time', 'add_time');
     protected $selectFields = array('id', 'user_id', 'shop_name', 'shop_img', 'shop_accounts', 'top_time', 'shop_type', 'partner_time', 'add_time');
-    protected $_validate = array(
-        array('user_id', 'require', '请输入所属用户id ', 1, 'regex', 3),
-
-
-    );
-
     public function getShopList($where = [], $field = '', $order = '') {
         $count = $this->where($where)->count();
         

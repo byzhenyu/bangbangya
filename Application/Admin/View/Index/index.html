@@ -147,13 +147,15 @@
             })
         });
         /*系统消息*/
-        // changeStatus();
+        changeStatus();
         function changeStatus(){
             $.get("{:U('Admin/changeStatus')}",  function (data) {
-                $('.player-notice')[data['status']].play();
-                layer.msg(data['info'], {
-                    time: 5000
-                });
+                if(data['status'] < 4){
+                    $('.player-notice')[data['status']].play();
+                    layer.msg(data['info'], {
+                        time: 5000
+                    });
+                }
             });
             setTimeout(function(){
                 changeStatus();

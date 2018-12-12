@@ -28,6 +28,7 @@
 							<tr>
 								<td><div align="right"><strong>昵称：</strong></div></td>
 								<td>{$userInfo['nick_name']}</td>
+
 							</tr>
 							<tr>
 								<td><div align="right"><strong>头像：</strong></div></td>
@@ -59,7 +60,26 @@
 								<td><div align="right"><strong>推荐人：</strong></div></td>
 								<td>{$userInfo['invitation_uid']}</td>
 							</tr>
-
+							<tr>
+								<td><div align="right"><strong>合作商类型：</strong></div></td>
+								<td>
+									<select name="shop_type" id="shop_type">
+									<option value="0">非合作商</option>
+									<option value="1">普通合作商</option>
+									<option value="2">金牌合作商</option>
+									<option value="3">白金合作商</option>
+									<option value="4">钻石合作商</option>
+								    </select>
+								</td>
+							</tr>
+							<script>
+								$('#shop_type').val("{$userInfo['shop_type']}");
+							</script>
+							<tr>
+								<td><div align="right"><strong>合作商截止时间：</strong></div></td>
+								<!--<td>{:time_format($userInfo['partner_time'])}</td>-->
+								<td> <input type="text" id="starttime" name="partner_time" value="{:time_format($userInfo['partner_time'])}" style="width: 200px;" placeholder="请选择合作商截止的日期" /></td>
+							</tr>
 							</tbody>
 						</table>
 						<input type="hidden" name="user_id" value="{$userInfo['user_id']}">
@@ -81,7 +101,12 @@
 	</div>
 </block>
 <block name="script">
+	<script type="text/javascript" src="__ADMIN__/layDate-v5.0.9/laydate/laydate.js"></script>
 	<script>
+        laydate.render({
+            elem: '#starttime'
+            ,type: 'datetime'
+        });
         function btn(){
             $('#userForm').submit();
             // setTimeout(function () {

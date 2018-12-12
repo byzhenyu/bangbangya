@@ -97,5 +97,6 @@ class AdminController extends CommonController {
              $message = '您有'.$userComplaint.'条用户投诉需要处理';
              $this->ajaxReturn(V(3, $message));
          }
+        $this->ajaxReturn(V(4, '暂无信息'));
     }
 }

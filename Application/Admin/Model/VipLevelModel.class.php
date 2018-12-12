@@ -16,9 +16,7 @@ class VipLevelModel extends Model {
     protected $updateFields = array('id','vip_name', 'vip_price', 'vip_type', 'order_fee', 'withdraw_fee', 'add_time', 'type', 'status');
     protected $selectFields = array('id', 'vip_name', 'vip_price', 'vip_type', 'order_fee', 'withdraw_fee', 'add_time', 'type', 'status');
     protected $_validate = array(
-
-        array('type', array(0,1,2,3), '合作商级别非法', 1, 'in', 3),
-        array('vip_type', array(1,2), '合作商类型', 1, 'in', 3),
+        array('type', array(0,1,2,3,4), '合作商级别非法', 1, 'in', 3),
         array('vip_price', 'require', '请输入购买金额', 1, 'regex', 3),
         array('order_fee', 'require', '请输入交易手续费比例', 1, 'regex', 3),
         array('withdraw_fee', 'require', '请输入提现手续费比例', 1, 'regex', 3),

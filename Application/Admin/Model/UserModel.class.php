@@ -102,10 +102,12 @@ class UserModel extends Model{
      * @return mixed
      */
     public function getUserInfo($where=[], $fields = null){
-        if(is_null($fields)){
-            $fields = $this->selectFields;
-        }
-        $userInfo = $this->field($fields)->where($where)->find();
+        $userInfo = $this->alias('u')
+                   ->join('__SHOP__ as s on s.user_id = u.user_id', 'LEFT')
+                   ->field('u.*,s.shop_type,s.partner_time')
+                   ->where($where)
+                   ->find();
+        $userInfo['shop_type'] != 0 && $userInfo['partner_time'] ? $userInfo['shop_type'] = $userInfo['shop_type'] : $userInfo['shop_type'] = 0;
         return $userInfo;
     }
     /**
